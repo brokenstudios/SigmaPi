@@ -35,6 +35,7 @@ public abstract class Timing {
 			}
 		}
 		
+		// Oui mais je l'aime ce commentaire!
 		System.out.println(feverScore);
 		return feverScore;
 	}
