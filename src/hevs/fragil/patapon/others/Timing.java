@@ -35,6 +35,7 @@ public abstract class Timing {
 			}
 		}
 		
+		// La notion fragile n'existe plus
 		System.out.println(feverScore);
 		return feverScore;
 	}
