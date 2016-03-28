@@ -4,8 +4,8 @@ public abstract class Timing {
 	static long timingFirstNote = 0;
 	static long timingSecondNote = 0;
 	static boolean isSecondCall = false;
-	final static int DELTATIMING = 600;
-	final static int TIMINGMARGE = 100;
+	final static int DELTA_TIMING = 500;
+	final static int TIMING_MARGIN = 100;
 	final static int GOOD = 25;
 	final static int EXCELLENT = 50;
 	final static int PERFECT = 75;
@@ -13,8 +13,8 @@ public abstract class Timing {
 	// return a value depending of the user rythm precision
 	public static int inTime(){
 		long dTiming = Math.abs(timingSecondNote - timingFirstNote);
-		int minMargin = DELTATIMING - TIMINGMARGE;
-		int maxMargin = DELTATIMING + TIMINGMARGE;
+		int minMargin = DELTA_TIMING - TIMING_MARGIN;
+		int maxMargin = DELTA_TIMING + TIMING_MARGIN;
 		// Add this to fever to reach this state
 		int feverScore = 0;
 		
