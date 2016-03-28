@@ -22,11 +22,13 @@ public class Map extends PortableApplication {
 	int width;
 	int[] pixels;
 	static int height = 30;
-	public SoundSample s1, s2, s3, s4, snap;
-	public SoundSample t1,t2,t3,t4,t5,t6,t7;
 	private Vector<Company> companies = new Vector<Company>();
 	long musicID;
 	boolean snapEnable = false;
+	private Vector<SoundSample> notes = new Vector<SoundSample>();
+	private Vector<SoundSample> loops = new Vector<SoundSample>();
+	private SoundSample snap;
+	
 	
 	public Map(int width){
 		//TODO organiser l'ordre des sections (peut-être pas là)
@@ -39,81 +41,63 @@ public class Map extends PortableApplication {
 	@Override
 	public void onDispose() {
 		super.onDispose();
-
-		// We must release all the resources we got
-		s1.dispose();
-		s2.dispose();
-		s3.dispose();
-		s4.dispose();
-		t1.dispose();
-		snap.dispose();
+		for (SoundSample note : notes) {
+			note.dispose();
+		}
+		for (SoundSample loop : loops) {
+			loop.dispose();
+		}
 	}
 	@Override
 	public void onInit() {
 		setTitle("Test Map Patapons H-E-S! - by FraGil 2016");
 		// Load the sound files
-		s1 = new SoundSample("data/music/HE.wav");
-		s2 = new SoundSample("data/music/S.wav");
-		s3 = new SoundSample("data/music/SO.wav");
-		s4 = new SoundSample("data/music/YES.wav");
+		notes.add(new SoundSample("data/music/HE.wav"));
+		notes.add(new SoundSample("data/music/S.wav"));
+		notes.add(new SoundSample("data/music/SO.wav"));
+		notes.add(new SoundSample("data/music/YES.wav"));
 		snap = new SoundSample("data/music/loop2.wav");
-		t1 = new SoundSample("data/music/loop1.wav");
-		t2 = new SoundSample("data/music/loop3.wav");
-		t3 = new SoundSample("data/music/loop4.wav");
-		t4 = new SoundSample("data/music/loop5.wav");
-		t5 = new SoundSample("data/music/loop6.wav");
-		t6 = new SoundSample("data/music/loop7.wav");
-		t7 = new SoundSample("data/music/loop8.wav");
-		//launch them at the same time (must be synchronized)
+		loops.add(new SoundSample("data/music/loop1.wav"));
+		loops.add(new SoundSample("data/music/loop3.wav"));
+		loops.add(new SoundSample("data/music/loop4.wav"));
+		loops.add(new SoundSample("data/music/loop5.wav"));
+		loops.add(new SoundSample("data/music/loop6.wav"));
+		loops.add(new SoundSample("data/music/loop7.wav"));
+		loops.add(new SoundSample("data/music/loop8.wav"));
 		snap.loop();
-		t1.loop();
-		t2.loop();
-		t3.loop();
-		t4.loop();
-		t5.loop();
-		t6.loop();
-		t7.loop();
-		//only hear one at time
-		snap.mofidyPlayingVolument(0, 0);
-		t2.mofidyPlayingVolument(0, 2);
-		t3.mofidyPlayingVolument(0, 3);
-		t4.mofidyPlayingVolument(0, 4);
-		t5.mofidyPlayingVolument(0, 5);
-		t6.mofidyPlayingVolument(0, 6);
-		t7.mofidyPlayingVolument(0, 7);
 	}
 	@Override
 	public void onKeyDown(int keycode) {
 		super.onKeyDown(keycode);
 
 		if (keycode == Keys.NUM_1){
-			s1.play();
+			notes.elementAt(0).play();
 			Timing.saveTime();
 		}
 		if (keycode == Keys.NUM_2){
-			s2.play();
+			notes.elementAt(1).play();
 			Timing.saveTime();
 		}
 		if (keycode == Keys.NUM_3){
-			s3.play();
+			notes.elementAt(2).play();
 			Timing.saveTime();
 		}
 		if (keycode == Keys.NUM_4){
-			s4.play();
+			notes.elementAt(3).play();
 			Timing.saveTime();
 		}
 
 		if (keycode == Keys.SPACE) {
-			s1.setPitch(2);
-			s2.setPitch(2);
-			s3.setPitch(2);
-			s4.setPitch(2);
+			notes.elementAt(0).setPitch(2);
+			notes.elementAt(1).setPitch(2);
+			notes.elementAt(2).setPitch(2);
+			notes.elementAt(3).setPitch(2);
 		}
 		if (keycode == Keys.ENTER) {
-			s1.setPitch(1);
-			s2.setPitch(1);
-			s3.setPitch(1);
-			s4.setPitch(1);
+			notes.elementAt(0).setPitch(1);
+			notes.elementAt(1).setPitch(1);
+			notes.elementAt(2).setPitch(1);
+			notes.elementAt(3).setPitch(1);
 		}
 		if (keycode == Keys.A) {//add snaps
 			if(snapEnable)snap.mofidyPlayingVolument(0, 0);
@@ -121,14 +105,7 @@ public class Map extends PortableApplication {
 			snapEnable = !snapEnable;
 		}
 		if (keycode == Keys.D) {//change background music
-			musicID++;
-			snap.mofidyPlayingVolument(0, musicID);
-			snap.mofidyPlayingVolument(1, musicID+1);
-			if(musicID==7){
-				musicID=1;
-				snap.mofidyPlayingVolument(0, musicID);
-				snap.mofidyPlayingVolument(1, musicID+1);
-			}
+			
 		}
 		if (keycode == Keys.LEFT) {//change backgroud music
 			companies.firstElement().moveRelative(-10);
