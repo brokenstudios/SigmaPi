@@ -35,7 +35,7 @@ public abstract class Timing {
 			}
 		}
 		
-		// La notion fragile n'existe plus
+		// La notion fragile n'existe plus mais si quand meme
 		System.out.println(feverScore);
 		return feverScore;
 	}
