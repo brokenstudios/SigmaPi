@@ -1,7 +1,8 @@
 package hevs.fragil.patapon.units;
 import hevs.fragil.patapon.others.*;
+import hevs.gdx2d.lib.interfaces.DrawableObject;
 
-public abstract class Unit {
+public abstract class Unit implements DrawableObject{
 	public int position;
 	int rank;
 	int index;
@@ -24,5 +25,9 @@ public abstract class Unit {
 	}
 	public String toString(){
 		return ", Level : "+ rank + ", Life : " + life;
+	}
+	public void draw() {
+		// TODO Auto-generated method stub
+		
 	}
 }

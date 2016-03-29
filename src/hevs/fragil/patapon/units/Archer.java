@@ -1,6 +1,8 @@
 package hevs.fragil.patapon.units;
 
 import hevs.fragil.patapon.others.Data;
+import hevs.gdx2d.lib.GdxGraphics;
+import hevs.gdx2d.lib.interfaces.DrawableObject;
 
 public class Archer extends Unit {
 	static double modLife = -0.2;
@@ -18,4 +20,11 @@ public class Archer extends Unit {
 	public String toString(){
 		return this.getClass().getSimpleName()+super.toString();
 	}
+
+	@Override
+	public void draw(GdxGraphics g) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
