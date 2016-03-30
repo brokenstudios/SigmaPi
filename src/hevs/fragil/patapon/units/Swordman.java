@@ -13,6 +13,7 @@ public class Swordman extends Unit {
 		super();
 		super.id = Data.SWORDMAN;
 		super.setLife(super.life*(1.0+modLife));
+		super.setImgPath("data/images/brick.png");
 //		super.attack.add(modAttack);
 	}
 	

@@ -18,9 +18,8 @@ import hevs.fragil.patapon.units.*;
 
 public class Map extends PortableApplication {
 	int width;
-	private Vector<Company> companies = new Vector<Company>();
-	long musicID;
 	boolean snapEnable = false;
+	private Vector<Company> companies = new Vector<Company>();
 	private Vector<SoundSample> notes = new Vector<SoundSample>();
 	private SoundSample snap, track;
 	
@@ -45,12 +44,12 @@ public class Map extends PortableApplication {
 	public void onInit() {
 		setTitle("Test Map Patapons H-E-S! - by FraGil 2016");
 		// Load the sound files
-//		notes.add(new SoundSample("data/music/HE.wav"));
-//		notes.add(new SoundSample("data/music/S.wav"));
-//		notes.add(new SoundSample("data/music/SO.wav"));
-//		notes.add(new SoundSample("data/music/YES.wav"));
-//		snap = new SoundSample("data/music/loop2.wav");
-//		track = new SoundSample("data/music/loop1.wav");
+		notes.add(new SoundSample("data/music/HE.wav"));
+		notes.add(new SoundSample("data/music/S.wav"));
+		notes.add(new SoundSample("data/music/SO.wav"));
+		notes.add(new SoundSample("data/music/YES.wav"));
+		snap = new SoundSample("data/music/loop2.wav");
+		track = new SoundSample("data/music/loop1.wav");
 	}
 	@Override
 	public void onKeyDown(int keycode) {
@@ -74,16 +73,14 @@ public class Map extends PortableApplication {
 		}
 
 		if (keycode == Keys.SPACE) {
-			notes.elementAt(0).setPitch(2);
-			notes.elementAt(1).setPitch(2);
-			notes.elementAt(2).setPitch(2);
-			notes.elementAt(3).setPitch(2);
+			for (SoundSample note : notes) {
+				note.setPitch(2);
+			}
 		}
 		if (keycode == Keys.ENTER) {
-			notes.elementAt(0).setPitch(1);
-			notes.elementAt(1).setPitch(1);
-			notes.elementAt(2).setPitch(1);
-			notes.elementAt(3).setPitch(1);
+			for (SoundSample note : notes) {
+				note.setPitch(1);
+			}
 		}
 		if (keycode == Keys.A) {//add snaps
 			if(snapEnable)snap.stop();
@@ -101,16 +98,19 @@ public class Map extends PortableApplication {
 	}
 	public void onGraphicRender(GdxGraphics g) {
 //		clear the screen
-		g.clear(Color.TEAL);
+		g.clear(Color.GRAY);
+		
 //		write help
 		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
 		g.drawStringCentered(470f, "Flèches pour bouger la companie");
 		g.drawStringCentered(450f, "Touches 1 à 4 pour jouer les sons");
 		g.drawStringCentered(430f, "Touche D pour changer de loop sonore");
+		
 //		draw floor
 		g.setColor(Color.DARK_GRAY);
-		float floorY = 20f;
+		float floorY = Data.FLOOR;
 		g.drawFilledRectangle(0, 0, width, floorY, 0);
+		
 //		draw centers
 		float highPos = 10f;
 		g.setColor(Color.BLACK);
@@ -119,20 +119,24 @@ public class Map extends PortableApplication {
 			g.drawLine(compPos, floorY, compPos, floorY+60f);
 			g.drawLine(compPos, floorY+80f, compPos, floorY+120f);
 			g.drawString(compPos, floorY + 140f, "Company " + c.name + " center",3);
-			for (Section section : c.sections) {
+			for (Section s : c.sections) {
 				highPos *= -1;
-				float secPos = section.globalPosition;
+				float secPos = s.globalPosition;
 				g.drawLine(secPos, floorY, secPos, floorY+highPos+50f);
-				g.drawString(secPos, floorY + highPos+50f + 15f, "Section " + section.name +" center",3);
+				g.drawString(secPos, floorY + highPos+50f + 15f, "Section " + s.name +" center",3);
 			}
 		}
-//		draw patapons
+		
+//		draw units
 		for(Company c : companies){
 			for (Section s : c.sections) {
 				for (Unit u : s.units) {
-					u.draw();
+					u.draw(g);
 				}
 			}
 		}
+		
+//		oh yeah
+		g.drawSchoolLogo();
 	}
 }

@@ -13,6 +13,7 @@ public class Shield extends Unit {
 		super();
 		super.id = Data.SHIELD;
 		super.setLife(super.life*(1.0+modLife));
+		super.setImgPath("data/images/brick.png");
 //		super.attack = super.attack.add(modAttack);
 	}
 	
