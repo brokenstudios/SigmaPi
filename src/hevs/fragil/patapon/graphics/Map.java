@@ -1,15 +1,11 @@
 package hevs.fragil.patapon.graphics;
 
 import com.badlogic.gdx.graphics.Color;
-
 import hevs.gdx2d.components.audio.SoundSample;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
-
 import java.util.Vector;
-
 import com.badlogic.gdx.Input.Keys;
-
 import hevs.fragil.patapon.others.Data;
 import hevs.fragil.patapon.others.Timing;
 import hevs.fragil.patapon.units.*;
