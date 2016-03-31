@@ -1,6 +1,6 @@
 package hevs.fragil.patapon.others;
 public class Data {
-	public static final double DEFAULTLIFE = 10;
+	public static final double DEFAULT_LIFE = 10;
 	public static final int HE = 11;
 	public static final String HE_FILE = "";
 	public static final int S = 12;

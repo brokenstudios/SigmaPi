@@ -4,7 +4,7 @@ import hevs.fragil.patapon.units.*;
 
 public class Game {
 	public static void main(String[] args) {
-		//Nouvelles unités
+		//New units
 		Archer a1 = new Archer();
 		Archer a2 = new Archer();
 		Archer a3 = new Archer();
