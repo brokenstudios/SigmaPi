@@ -1,5 +1,6 @@
 package hevs.fragil.patapon.graphics;
 
-public class GraphicsTimings {
+public abstract class GraphicsTimings {
+	// Je me présente je m'appelle Angela
 
 }
