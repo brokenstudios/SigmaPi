@@ -3,10 +3,8 @@ package hevs.fragil.patapon.graphics;
 import com.badlogic.gdx.graphics.Color;
 
 import hevs.gdx2d.components.audio.SoundSample;
-import hevs.gdx2d.demos.scrolling.objects.Sky;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
-import hevs.gdx2d.lib.interfaces.DrawableObject;
 
 import java.util.Vector;
 
@@ -43,13 +41,17 @@ public class Map extends PortableApplication {
 	@Override
 	public void onInit() {
 		setTitle("Test Map Patapons H-E-S! - by FraGil 2016");
-		// Load the sound files
+		//Load the sound files
 		notes.add(new SoundSample("data/music/HE.wav"));
 		notes.add(new SoundSample("data/music/S.wav"));
 		notes.add(new SoundSample("data/music/SO.wav"));
 		notes.add(new SoundSample("data/music/YES.wav"));
 		snap = new SoundSample("data/music/loop2.wav");
 		track = new SoundSample("data/music/loop1.wav");
+		//Load the image files
+		Archer.setImgPath("data/images/Android_PI_48x48.png");
+		Swordman.setImgPath("data/images/Android_PI_48x48.png");
+		Shield.setImgPath("data/images/Android_PI_48x48.png");
 	}
 	@Override
 	public void onKeyDown(int keycode) {
