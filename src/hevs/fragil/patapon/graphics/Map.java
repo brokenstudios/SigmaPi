@@ -1,11 +1,16 @@
 package hevs.fragil.patapon.graphics;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Rectangle;
+
 import hevs.gdx2d.components.audio.SoundSample;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
+
 import java.util.Vector;
+
 import com.badlogic.gdx.Input.Keys;
+
 import hevs.fragil.patapon.others.Data;
 import hevs.fragil.patapon.others.Timing;
 import hevs.fragil.patapon.units.*;
@@ -16,7 +21,7 @@ public class Map extends PortableApplication {
 	private Vector<Company> companies = new Vector<Company>();
 	private Vector<SoundSample> notes = new Vector<SoundSample>();
 	private SoundSample snap, track;
-	
+	private Frame f;
 	
 	public Map(int width){
 		//TODO organiser l'ordre des sections (peut-être pas là)
@@ -48,6 +53,8 @@ public class Map extends PortableApplication {
 		Archer.setImgPath("data/images/Android_PI_48x48.png");
 		Swordman.setImgPath("data/images/Android_PI_48x48.png");
 		Shield.setImgPath("data/images/Android_PI_48x48.png");
+
+		f = new Frame();
 	}
 	@Override
 	public void onKeyDown(int keycode) {
@@ -125,6 +132,7 @@ public class Map extends PortableApplication {
 			}
 		}
 		
+		
 //		draw units
 		for(Company c : companies){
 			for (Section s : c.sections) {
@@ -136,5 +144,7 @@ public class Map extends PortableApplication {
 		
 //		oh yeah
 		g.drawSchoolLogo();
+		// Draw a rectangle to show the rythm
+		f.draw(g);
 	}
 }
