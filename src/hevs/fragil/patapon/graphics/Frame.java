@@ -10,10 +10,9 @@ import com.badlogic.gdx.graphics.Color;
 public class Frame implements DrawableObject{
 	static boolean display = true;
 	
-	static boolean displayRythm(){
-		Gdx.graphics.getFramesPerSecond();
+	private boolean displayRythm(){
 		
-		return true;
+		return display;
 	}
 	
 	@Override
@@ -23,10 +22,9 @@ public class Frame implements DrawableObject{
 		int x = g.getScreenWidth()/2;
 		int y = 0 + heigth/2;
 		
-		if(true){
+		if(displayRythm()){
 		g.setColor(Color.WHITE);
-			//g.drawFilledRectangle(x, y, width, heigth, 0, Color.OLIVE);		
-			g.drawFilledRectangle(50, 50, 100, 100, 0, Color.WHITE);
+			g.drawFilledRectangle(x, y, width, heigth, 0, Color.OLIVE);
 		}
 	}
 

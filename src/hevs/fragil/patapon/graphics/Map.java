@@ -49,6 +49,9 @@ public class Map extends PortableApplication {
 		notes.add(new SoundSample("data/music/YES.wav"));
 		snap = new SoundSample("data/music/loop2.wav");
 		track = new SoundSample("data/music/loop1.wav");
+		track.loop();
+		Data.rythmEnable = true;
+		
 		//Load the image files
 		Archer.setImgPath("data/images/Android_PI_48x48.png");
 		Swordman.setImgPath("data/images/Android_PI_48x48.png");
@@ -62,19 +65,19 @@ public class Map extends PortableApplication {
 
 		if (keycode == Keys.NUM_1){
 			notes.elementAt(0).play();
-			Timing.saveTime();
+			Timing.checkTime();
 		}
 		if (keycode == Keys.NUM_2){
 			notes.elementAt(1).play();
-			Timing.saveTime();
+			Timing.checkTime();
 		}
 		if (keycode == Keys.NUM_3){
 			notes.elementAt(2).play();
-			Timing.saveTime();
+			Timing.checkTime();
 		}
 		if (keycode == Keys.NUM_4){
 			notes.elementAt(3).play();
-			Timing.saveTime();
+			Timing.checkTime();
 		}
 
 		if (keycode == Keys.SPACE) {

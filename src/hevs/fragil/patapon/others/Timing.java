@@ -1,6 +1,10 @@
 package hevs.fragil.patapon.others;
 
-public abstract class Timing {
+import hevs.fragil.patapon.graphics.Frame;
+
+public abstract class Timing{
+	static int bar = 0;
+	static long milliseconds = 0;
 	static long timingFirstNote = 0;
 	static long timingSecondNote = 0;
 	static boolean isSecondCall = false;
@@ -9,6 +13,7 @@ public abstract class Timing {
 	final static int GOOD = 25;
 	final static int EXCELLENT = 50;
 	final static int PERFECT = 75;
+	static Frame f;
 	
 	// return a value depending of the user rythm precision
 	public static int inTime(){
@@ -35,12 +40,10 @@ public abstract class Timing {
 			}
 		}
 		
-		// Oui mais je l'aime ce commentaire!
-		System.out.println(feverScore);
 		return feverScore;
 	}
 	
-	public static void saveTime(){
+	public static void checkTime(){
 		if(!isSecondCall){
 			timingFirstNote = System.currentTimeMillis();
 			isSecondCall = true;
@@ -50,6 +53,28 @@ public abstract class Timing {
 			isSecondCall = false;
 			inTime();
 		}
+	}
+	
+	public static boolean isFrameVisible(){
+		long a = System.currentTimeMillis();
+		
+		
+		
+		return true;
+	}
+	
+	public static int rythm(){
+		if(Data.rythmEnable){
+			if(milliseconds % 500 == 0){
+				if(bar == 8){
+					bar = 0;
+				}
+				else{	
+					bar++;
+				}				
+			}
+		}
+		return bar;
 	}
 
 }
