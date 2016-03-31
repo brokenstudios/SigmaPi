@@ -1,31 +1,23 @@
 package hevs.fragil.patapon.graphics;
 
-import hevs.fragil.patapon.others.Data;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.interfaces.DrawableObject;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 
 public class Frame implements DrawableObject{
 	static boolean display = true;
-	
-	private boolean displayRythm(){
-		
-		return display;
-	}
-	
 	@Override
 	public void draw(GdxGraphics g) {
 		int width = g.getScreenWidth();
-		int heigth = 10;
-		int x = g.getScreenWidth()/2;
-		int y = 0 + heigth/2;
+		int height = g.getScreenHeight();
+		int thickness = 4;
+		//1:up, 2:right, 3:down, 4:left
+		float[] xCenters = {width/2, width-thickness/2, width/2, thickness/2};
+		float[] yCenters = {height-thickness/2, height/2, thickness/2, height/2};
 		
-		if(displayRythm()){
-		g.setColor(Color.WHITE);
-			g.drawFilledRectangle(x, y, width, heigth, 0, Color.OLIVE);
+		for(int i = 0; i < xCenters.length; i++){
+			//rotation in degrees = i*90 
+			g.drawFilledRectangle(xCenters[i], yCenters[i], width, thickness, i*90, Color.WHITE);
 		}
 	}
-
 }

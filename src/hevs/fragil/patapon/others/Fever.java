@@ -1,28 +1,24 @@
 package hevs.fragil.patapon.others;
 
-import hevs.fragil.patapon.graphics.Frame;
-
-public abstract class Timing{
+public abstract class Fever {
+	static int feverScore = 0;
 	static int bar = 0;
 	static long milliseconds = 0;
 	static long timingFirstNote = 0;
 	static long timingSecondNote = 0;
 	static boolean isSecondCall = false;
-	final static int DELTA_TIMING = 500;
-	final static int TIMING_MARGIN = 100;
+	final static int TIMING_MARGIN = 150;
 	final static int GOOD = 25;
 	final static int EXCELLENT = 50;
 	final static int PERFECT = 75;
-	static Frame f;
 	
 	// return a value depending of the user rythm precision
 	public static int inTime(){
 		long dTiming = Math.abs(timingSecondNote - timingFirstNote);
-		int minMargin = DELTA_TIMING - TIMING_MARGIN;
-		int maxMargin = DELTA_TIMING + TIMING_MARGIN;
-		// Add this to fever to reach this state
-		int feverScore = 0;
+		int minMargin = Data.TEMPO_MS - TIMING_MARGIN;
+		int maxMargin = Data.TEMPO_MS + TIMING_MARGIN;
 		
+		// Add this to fever to reach this state
 		if(dTiming > minMargin && dTiming < maxMargin){
 			System.out.println("In time");
 			feverScore = 1;
@@ -54,27 +50,4 @@ public abstract class Timing{
 			inTime();
 		}
 	}
-	
-	public static boolean isFrameVisible(){
-		long a = System.currentTimeMillis();
-		
-		
-		
-		return true;
-	}
-	
-	public static int rythm(){
-		if(Data.rythmEnable){
-			if(milliseconds % 500 == 0){
-				if(bar == 8){
-					bar = 0;
-				}
-				else{	
-					bar++;
-				}				
-			}
-		}
-		return bar;
-	}
-
 }

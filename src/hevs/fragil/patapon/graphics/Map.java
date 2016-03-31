@@ -1,18 +1,18 @@
 package hevs.fragil.patapon.graphics;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Rectangle;
 
 import hevs.gdx2d.components.audio.SoundSample;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
 
+import java.util.Timer;
 import java.util.Vector;
 
 import com.badlogic.gdx.Input.Keys;
 
 import hevs.fragil.patapon.others.Data;
-import hevs.fragil.patapon.others.Timing;
+import hevs.fragil.patapon.others.Fever;
 import hevs.fragil.patapon.units.*;
 
 public class Map extends PortableApplication {
@@ -20,8 +20,11 @@ public class Map extends PortableApplication {
 	boolean snapEnable = false;
 	private Vector<Company> companies = new Vector<Company>();
 	private Vector<SoundSample> notes = new Vector<SoundSample>();
-	private SoundSample snap, track;
+	private Vector<SoundSample> tracks = new Vector<SoundSample>();
+	private SoundSample snap;
 	private Frame f;
+	private Timer timer = new Timer();
+	private int frames = 0;
 	
 	public Map(int width){
 		//TODO organiser l'ordre des sections (peut-être pas là)
@@ -36,8 +39,10 @@ public class Map extends PortableApplication {
 		for (SoundSample note : notes) {
 			note.dispose();
 		}
+		for (SoundSample track : tracks) {
+			track.dispose();
+		}
 		snap.dispose();
-		track.dispose();
 	}
 	@Override
 	public void onInit() {
@@ -48,10 +53,14 @@ public class Map extends PortableApplication {
 		notes.add(new SoundSample("data/music/SO.wav"));
 		notes.add(new SoundSample("data/music/YES.wav"));
 		snap = new SoundSample("data/music/loop2.wav");
-		track = new SoundSample("data/music/loop1.wav");
-		track.loop();
-		Data.rythmEnable = true;
-		
+		tracks.add(new SoundSample("data/music/loop1.wav"));
+		tracks.add(new SoundSample("data/music/loop3.wav"));
+		tracks.add(new SoundSample("data/music/loop4.wav"));
+		tracks.add(new SoundSample("data/music/loop5.wav"));
+		tracks.add(new SoundSample("data/music/loop6.wav"));
+		Data.nbLoops = tracks.size();
+		timer.schedule(new Tempo(), 0, Data.TEMPO_MS);
+
 		//Load the image files
 		Archer.setImgPath("data/images/Android_PI_48x48.png");
 		Swordman.setImgPath("data/images/Android_PI_48x48.png");
@@ -65,19 +74,19 @@ public class Map extends PortableApplication {
 
 		if (keycode == Keys.NUM_1){
 			notes.elementAt(0).play();
-			Timing.checkTime();
+			Fever.checkTime();
 		}
 		if (keycode == Keys.NUM_2){
 			notes.elementAt(1).play();
-			Timing.checkTime();
+			Fever.checkTime();
 		}
 		if (keycode == Keys.NUM_3){
 			notes.elementAt(2).play();
-			Timing.checkTime();
+			Fever.checkTime();
 		}
 		if (keycode == Keys.NUM_4){
 			notes.elementAt(3).play();
-			Timing.checkTime();
+			Fever.checkTime();
 		}
 
 		if (keycode == Keys.SPACE) {
@@ -96,6 +105,7 @@ public class Map extends PortableApplication {
 			snapEnable = !snapEnable;
 		}
 		if (keycode == Keys.D) {//change background music
+			Data.soundFlag++ ;
 		}
 		if (keycode == Keys.LEFT) {//change backgroud music
 			companies.firstElement().moveRelative(-10);
@@ -105,6 +115,15 @@ public class Map extends PortableApplication {
 		}
 	}
 	public void onGraphicRender(GdxGraphics g) {
+//		change music when necessary
+		if(Data.soundChange){
+			for (SoundSample track : tracks)
+				track.stop();
+			tracks.elementAt(Data.soundEnable).loop();
+			Data.soundChange = false;
+			System.out.println("Music changed at " + System.currentTimeMillis()%500);
+		}
+		
 //		clear the screen
 		g.clear(Color.GRAY);
 		
@@ -148,6 +167,13 @@ public class Map extends PortableApplication {
 //		oh yeah
 		g.drawSchoolLogo();
 		// Draw a rectangle to show the rythm
-		f.draw(g);
+		if(Data.rythmEnable){
+			f.draw(g);
+			frames++;
+			if(frames == Data.FRAME_DURATION){
+				Data.rythmEnable = false;
+				frames = 0;
+			}
+		}
 	}
 }
