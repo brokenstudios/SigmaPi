@@ -57,19 +57,19 @@ public class Map extends PortableApplication {
 
 		if (keycode == Keys.NUM_1){
 			notes.elementAt(0).play();
-			Timing.checkTime();
+			Timing.saveTime();
 		}
 		if (keycode == Keys.NUM_2){
 			notes.elementAt(1).play();
-			Timing.checkTime();
+			Timing.saveTime();
 		}
 		if (keycode == Keys.NUM_3){
 			notes.elementAt(2).play();
-			Timing.checkTime();
+			Timing.saveTime();
 		}
 		if (keycode == Keys.NUM_4){
 			notes.elementAt(3).play();
-			Timing.checkTime();
+			Timing.saveTime();
 		}
 
 		if (keycode == Keys.SPACE) {
@@ -101,8 +101,8 @@ public class Map extends PortableApplication {
 		g.clear(Color.GRAY);
 		
 //		write help
-		g.drawStringCentered(490f, "Touche A pour activer/desactiver les claps");
-		g.drawStringCentered(470f, "Fleches pour bouger la companie");
+		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
+		g.drawStringCentered(470f, "Flèches pour bouger la companie");
 		g.drawStringCentered(450f, "Touches 1 à 4 pour jouer les sons");
 		g.drawStringCentered(430f, "Touche D pour changer de loop sonore");
 		

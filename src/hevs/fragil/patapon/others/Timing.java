@@ -35,10 +35,12 @@ public abstract class Timing {
 			}
 		}
 		
+		// Oui mais je l'aime ce commentaire!
+		System.out.println(feverScore);
 		return feverScore;
 	}
 	
-	public static void checkTime(){
+	public static void saveTime(){
 		if(!isSecondCall){
 			timingFirstNote = System.currentTimeMillis();
 			isSecondCall = true;
