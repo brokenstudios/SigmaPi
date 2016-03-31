@@ -14,4 +14,7 @@ public class Data {
 	public static final int UNIT_DISTANCE = 20;
 	public static final int SECTION_DISTANCE = 30;
 	public static final int FLOOR = 30;
+	
+	// TODO place?
+	public static boolean rythmEnable = false;
 }
