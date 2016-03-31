@@ -14,17 +14,16 @@ public class Archer extends Unit {
 		super();
 		super.id = Data.ARCHER;
 		super.setLife(super.life*(1.0+modLife));
+		super.setImgPath("data/images/brick.png");
 //		super.attack = super.attack.add(modAttack);
 	}
 	
 	public String toString(){
-		return this.getClass().getSimpleName()+super.toString();
+		return this.getClass().getSimpleName() + super.toString();
 	}
-
 	@Override
 	public void draw(GdxGraphics g) {
-		// TODO Auto-generated method stub
-		
+		super.draw(g);
 	}
 
 }
