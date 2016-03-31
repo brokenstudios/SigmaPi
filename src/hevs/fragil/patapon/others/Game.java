@@ -41,14 +41,10 @@ public class Game {
 		comp1.add(sec2);
 		comp1.add(sec3);
 		
-		System.out.println(comp1);
-		
 		Map map1 = new Map(1000);
 		map1.add(comp1);
 
-		int initialPos = comp1.getWidth()/2+50;
+		int initialPos = comp1.getWidth()/2 + 50;
 		comp1.moveAbsolute(initialPos);
-		map1.update();
-		System.out.println(map1);
 	}
 }
