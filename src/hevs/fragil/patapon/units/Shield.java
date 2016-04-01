@@ -23,7 +23,7 @@ public class Shield extends Unit {
 
 	@Override
 	public void draw(GdxGraphics g) {
-		int y = Data.FLOOR_DEPTH + 11;
+		int y = Data.FLOOR_DEPTH + 9;
 		g.drawPicture(super.position, y, img);
 	}
 	//Just for onInit method

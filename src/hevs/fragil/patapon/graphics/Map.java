@@ -19,6 +19,7 @@ import hevs.fragil.patapon.others.Data;
 import hevs.fragil.patapon.units.*;
 
 public class Map extends PortableApplication {
+	private int width;
 	private static Vector<Company> companies = new Vector<Company>();
 	private static Vector<SoundSample> notes = new Vector<SoundSample>();
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
@@ -27,8 +28,9 @@ public class Map extends PortableApplication {
 	private static Frame f;
 	private static Timer timer = new Timer();
 	
-	public Map(int width){
-		super(width,500);
+	public Map(int w){
+		super(w, 500);
+		this.width = w;
 	}
 	public static int getNbTracks(){
 		return tracks.size();
@@ -73,7 +75,6 @@ public class Map extends PortableApplication {
 	@Override
 	public void onKeyDown(int keycode) {
 		super.onKeyDown(keycode);
-
 		if (keycode == Keys.NUM_1){
 			notes.elementAt(0).play();
 			s.add(new Note(Drum.HE));
@@ -142,24 +143,28 @@ public class Map extends PortableApplication {
 //		draw floor
 		g.setColor(Color.DARK_GRAY);
 		float fY = Data.FLOOR_DEPTH;
-		g.drawFilledRectangle(0, 0, getWindowWidth(), fY, 0);
+		g.drawFilledRectangle(width/2, 0, width, fY, 0);
 		
 //		draw centers
-		float highPos = 10f;
+		float highPos = -10f;
 		g.setColor(Color.BLACK);
+		
 		for (Company c : companies) {
-			float compPos = c.globalPosition;
-			g.drawLine(compPos, fY, compPos, fY+60f);
-			g.drawLine(compPos, fY+80f, compPos, fY+120f);
-			g.drawString(compPos, fY + 140f, "Company " + c.name + " center",3);
+			float cGP = c.globalPosition;
+			//vertical line on the company center
+			g.drawLine(cGP, fY + 60f, cGP, fY + 160f);
+			g.drawString(cGP, fY + 180f,"Company " + c.name, 3);
+			
 			for (Section s : c.sections) {
+				//1 time up, 1 time down
 				highPos *= -1;
-				float secPos = s.globalPosition;
-				g.drawLine(secPos, fY, secPos, fY+highPos+50f);
-				g.drawString(secPos, fY + highPos+50f + 15f, "Section " + s.name +" center",3);
+				
+				float sGP = s.globalPosition;
+				//vertical line on the section center
+				g.drawLine(sGP, fY + 50f, sGP, fY+highPos+120f);
+				g.drawString(sGP, fY + highPos + 135f, "Section " + s.name, 3);
 			}
 		}
-		
 		
 //		draw units
 		for(Company c : companies){
@@ -171,7 +176,7 @@ public class Map extends PortableApplication {
 		}
 		
 //		oh yeah
-		g.drawSchoolLogo();
+		g.drawSchoolLogoUpperRight();
 		// Draw a rectangle to show the rythm
 		f.draw(g);
 	}

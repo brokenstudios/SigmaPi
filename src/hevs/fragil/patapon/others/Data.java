@@ -27,15 +27,15 @@ public class Data {
 	public static final int FRAME_DURATION = 10;
 	
 	//TODO should we do it with Color class ?
-	public static float backColorR = (float) (Math.random());
-	public static float backColorG = (float) (Math.random());
-	public static float backColorB = (float) (Math.random());
+	public static float backColorR = 1f-((float)Math.random()*0.5f);
+	public static float backColorG = 1f-((float)Math.random()*0.5f);
+	public static float backColorB = 1f-((float)Math.random()*0.5f);
 	public static float frameColorR = 1;
 	public static float frameColorG = 1;
 	public static float frameColorB = 1;
 
 	//Sound Flags TODO should we move it to the Map class ?
-	public static int soundFlag = 0;
+	public static int soundFlag = 1;
 	public static int soundEnable = 0;
 	public static boolean soundChange = false;
 	public static boolean snapFlag = false;
