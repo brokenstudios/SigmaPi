@@ -18,6 +18,9 @@ public class Data {
 	
 	public static int soundFlag = 0;
 	public static int soundEnable = 0;
+	public static boolean snapFlag = false;
+	public static boolean snapEnable = false;
+	public static boolean snapChange = false;
 	public static int nbLoops = 1;
 	public static boolean soundChange = false;
 	

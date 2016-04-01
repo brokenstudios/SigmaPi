@@ -100,9 +100,7 @@ public class Map extends PortableApplication {
 			}
 		}
 		if (keycode == Keys.A) {//add snaps
-			if(snapEnable)snap.stop();
-			else snap.loop();
-			snapEnable = !snapEnable;
+			Data.snapFlag = !Data.snapFlag;
 		}
 		if (keycode == Keys.D) {//change background music
 			Data.soundFlag++ ;
@@ -122,6 +120,12 @@ public class Map extends PortableApplication {
 			tracks.elementAt(Data.soundEnable).loop();
 			Data.soundChange = false;
 			System.out.println("Music changed at " + System.currentTimeMillis()%500);
+		}
+		if(Data.snapChange){
+			if(Data.snapEnable)snap.loop();
+			else snap.stop();
+			Data.snapChange = false;
+			System.out.println("Snap changed at " + System.currentTimeMillis()%500);
 		}
 		
 //		clear the screen
