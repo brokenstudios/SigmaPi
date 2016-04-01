@@ -11,10 +11,11 @@ public class Frame implements DrawableObject{
 	float alphaG = 1f;
 	float alphaB = 1f;
 	private int frames = 0;
+	public static boolean blinkEnable = false;
 
 	@Override
 	public void draw(GdxGraphics g) {
-		if(Data.rythmEnable){
+		if(blinkEnable){
 			int width = g.getScreenWidth();
 			int height = g.getScreenHeight();
 			int thickness = 10;
@@ -37,7 +38,7 @@ public class Frame implements DrawableObject{
 			frames++;
 			
 			if(frames == Data.FRAME_DURATION){
-				Data.rythmEnable = false;
+				blinkEnable = false;
 				alphaR = 1f;
 				alphaG = 1f;
 				alphaB = 1f;

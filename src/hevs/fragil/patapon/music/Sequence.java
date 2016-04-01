@@ -1,4 +1,4 @@
-package hevs.fragil.patapon.others;
+package hevs.fragil.patapon.music;
 
 import java.util.Vector;
 

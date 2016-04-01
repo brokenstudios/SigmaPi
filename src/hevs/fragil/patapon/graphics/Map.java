@@ -11,25 +11,27 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Input.Keys;
 
+import hevs.fragil.patapon.music.Drum;
+import hevs.fragil.patapon.music.Note;
+import hevs.fragil.patapon.music.Sequence;
+import hevs.fragil.patapon.music.Tempo;
 import hevs.fragil.patapon.others.Data;
-import hevs.fragil.patapon.others.Note;
-import hevs.fragil.patapon.others.Sequence;
 import hevs.fragil.patapon.units.*;
 
 public class Map extends PortableApplication {
-	int width;
-	boolean snapEnable = false;
-	private Vector<Company> companies = new Vector<Company>();
-	private Vector<SoundSample> notes = new Vector<SoundSample>();
-	private Vector<SoundSample> tracks = new Vector<SoundSample>();
-	private Sequence s = new Sequence();
-	private SoundSample snap;
-	private Frame f;
-	private Timer timer = new Timer();
+	private static Vector<Company> companies = new Vector<Company>();
+	private static Vector<SoundSample> notes = new Vector<SoundSample>();
+	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
+	private static Sequence s = new Sequence();
+	private static SoundSample snap;
+	private static Frame f;
+	private static Timer timer = new Timer();
 	
 	public Map(int width){
-		//TODO organiser l'ordre des sections (peut-être pas là)
-		this.width = width;
+		super(width,500);
+	}
+	public static int getNbTracks(){
+		return tracks.size();
 	}
 	public void add (Company c){
 		companies.add(c);
@@ -59,8 +61,7 @@ public class Map extends PortableApplication {
 		tracks.add(new SoundSample("data/music/loop4.wav"));
 		tracks.add(new SoundSample("data/music/loop5.wav"));
 		tracks.add(new SoundSample("data/music/loop6.wav"));
-		Data.nbLoops = tracks.size();
-		timer.schedule(new Tempo(), 0, Data.TEMPO_MS);
+		timer.schedule(new Tempo(), 0, Data.BAR);
 
 		//Load the image files
 		Archer.setImgPath("data/images/Android_PI_48x48.png");
@@ -75,19 +76,19 @@ public class Map extends PortableApplication {
 
 		if (keycode == Keys.NUM_1){
 			notes.elementAt(0).play();
-			s.add(new Note(Data.HE));
+			s.add(new Note(Drum.HE));
 		}
 		if (keycode == Keys.NUM_2){
 			notes.elementAt(1).play();
-			s.add(new Note(Data.S));		
+			s.add(new Note(Drum.S));		
 		}
 		if (keycode == Keys.NUM_3){
 			notes.elementAt(2).play();
-			s.add(new Note(Data.SO));		
+			s.add(new Note(Drum.SO));		
 		}
 		if (keycode == Keys.NUM_4){
 			notes.elementAt(3).play();
-			s.add(new Note(Data.YES));		
+			s.add(new Note(Drum.YES));		
 		}
 
 		if (keycode == Keys.SPACE) {
@@ -140,22 +141,22 @@ public class Map extends PortableApplication {
 		
 //		draw floor
 		g.setColor(Color.DARK_GRAY);
-		float floorY = Data.FLOOR;
-		g.drawFilledRectangle(0, 0, width, floorY, 0);
+		float fY = Data.FLOOR_DEPTH;
+		g.drawFilledRectangle(0, 0, getWindowWidth(), fY, 0);
 		
 //		draw centers
 		float highPos = 10f;
 		g.setColor(Color.BLACK);
 		for (Company c : companies) {
 			float compPos = c.globalPosition;
-			g.drawLine(compPos, floorY, compPos, floorY+60f);
-			g.drawLine(compPos, floorY+80f, compPos, floorY+120f);
-			g.drawString(compPos, floorY + 140f, "Company " + c.name + " center",3);
+			g.drawLine(compPos, fY, compPos, fY+60f);
+			g.drawLine(compPos, fY+80f, compPos, fY+120f);
+			g.drawString(compPos, fY + 140f, "Company " + c.name + " center",3);
 			for (Section s : c.sections) {
 				highPos *= -1;
 				float secPos = s.globalPosition;
-				g.drawLine(secPos, floorY, secPos, floorY+highPos+50f);
-				g.drawString(secPos, floorY + highPos+50f + 15f, "Section " + s.name +" center",3);
+				g.drawLine(secPos, fY, secPos, fY+highPos+50f);
+				g.drawString(secPos, fY + highPos+50f + 15f, "Section " + s.name +" center",3);
 			}
 		}
 		

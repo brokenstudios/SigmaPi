@@ -1,11 +1,13 @@
-package hevs.fragil.patapon.others;
+package hevs.fragil.patapon.music;
+
+import hevs.fragil.patapon.others.Data;
 
 public class Note{
 	//delay between tempo and note
 	long delay;
 	int length;
 	int mark;
-	int id;
+	Drum id;
 	static int feverScore = 0;
 	
 	//too late or too early of 250ms
@@ -15,9 +17,9 @@ public class Note{
 	final static int PERFECT = 30;
 	boolean tooLate = false;
 	
-	public Note(int noteID){
-		id = noteID;
-		long late = System.currentTimeMillis() - Data.lastTempo;
+	public Note(Drum d){
+		id = d;
+		long late = System.currentTimeMillis() - Data.lastTempoTime;
 		long early =  500 - late;
 		delay = Math.min(late, early);
 		if(delay == late)tooLate = true;

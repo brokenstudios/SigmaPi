@@ -48,7 +48,7 @@ public class Company {
 			width += section.getWidth();
 		}
 		int nSections = sections.size();
-		return (int)(width + (nSections-1)*Data.SECTION_DISTANCE);
+		return (int)(width + (nSections-1)*Data.SECTION_KEEPOUT);
 	}
 	public void moveAbsolute(int newPos){
 		int width = getWidth();
@@ -59,7 +59,7 @@ public class Company {
 			for (Section section : sections) {
 				tempPos += section.getWidth()/2f;
 				section.move((int)tempPos);
-				tempPos += section.getWidth()/2f + Data.SECTION_DISTANCE;
+				tempPos += section.getWidth()/2f + Data.SECTION_KEEPOUT;
 			}
 		}		
 		System.out.println("Company "+name+" moved to : " + globalPosition);
@@ -73,7 +73,7 @@ public class Company {
 			for (Section section : sections) {
 				tempPos += section.getWidth()/2.0;
 				section.move((int)tempPos);
-				tempPos += section.getWidth()/2.0 + Data.SECTION_DISTANCE;
+				tempPos += section.getWidth()/2.0 + Data.SECTION_KEEPOUT;
 			}
 		}		
 	}

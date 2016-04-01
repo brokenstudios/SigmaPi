@@ -1,15 +1,18 @@
-package hevs.fragil.patapon.graphics;
+package hevs.fragil.patapon.music;
 import java.util.TimerTask;
+
+import hevs.fragil.patapon.graphics.Frame;
+import hevs.fragil.patapon.graphics.Map;
 import hevs.fragil.patapon.others.Data;
 
 public class Tempo extends TimerTask {
 	Frame f = new Frame();
 	@Override
 	public void run() {
-		Data.rythmEnable = true;
-		Data.lastTempo = System.currentTimeMillis();
+		Frame.blinkEnable = true;
+		Data.lastTempoTime = System.currentTimeMillis();
 		//Change sound loop only in time
-		int index = Data.soundFlag % Data.nbLoops;
+		int index = Data.soundFlag % Map.getNbTracks();
 		if(index != Data.soundEnable){
 			Data.soundEnable = index;
 			Data.soundChange = true;
@@ -19,6 +22,5 @@ public class Tempo extends TimerTask {
 			Data.snapEnable = Data.snapFlag;
 			Data.snapChange = true;
 		}
-//		System.out.println("Tempo : " + System.currentTimeMillis()%500);
 	}
 }
