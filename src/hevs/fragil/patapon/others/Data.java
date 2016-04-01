@@ -16,6 +16,14 @@ public class Data {
 	public static final int FLOOR = 30;
 	public static final int FRAME_DURATION = 10;
 	
+	public static float backColorR = (float) (Math.random());
+	public static float backColorG = (float) (Math.random());
+	public static float backColorB = (float) (Math.random());
+
+	public static float frameColorR = 1;
+	public static float frameColorG = 1;
+	public static float frameColorB = 1;
+
 	public static int soundFlag = 0;
 	public static int soundEnable = 0;
 	public static boolean snapFlag = false;
@@ -23,6 +31,8 @@ public class Data {
 	public static boolean snapChange = false;
 	public static int nbLoops = 1;
 	public static boolean soundChange = false;
+	
+	public static long lastTempo = 0;
 	
 	// TODO place?
 	public static boolean rythmEnable = false;

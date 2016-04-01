@@ -12,7 +12,8 @@ import java.util.Vector;
 import com.badlogic.gdx.Input.Keys;
 
 import hevs.fragil.patapon.others.Data;
-import hevs.fragil.patapon.others.Fever;
+import hevs.fragil.patapon.others.Note;
+import hevs.fragil.patapon.others.Sequence;
 import hevs.fragil.patapon.units.*;
 
 public class Map extends PortableApplication {
@@ -21,10 +22,10 @@ public class Map extends PortableApplication {
 	private Vector<Company> companies = new Vector<Company>();
 	private Vector<SoundSample> notes = new Vector<SoundSample>();
 	private Vector<SoundSample> tracks = new Vector<SoundSample>();
+	private Sequence s = new Sequence();
 	private SoundSample snap;
 	private Frame f;
 	private Timer timer = new Timer();
-	private int frames = 0;
 	
 	public Map(int width){
 		//TODO organiser l'ordre des sections (peut-être pas là)
@@ -74,19 +75,19 @@ public class Map extends PortableApplication {
 
 		if (keycode == Keys.NUM_1){
 			notes.elementAt(0).play();
-			Fever.checkTime();
+			s.add(new Note(Data.HE));
 		}
 		if (keycode == Keys.NUM_2){
 			notes.elementAt(1).play();
-			Fever.checkTime();
+			s.add(new Note(Data.S));		
 		}
 		if (keycode == Keys.NUM_3){
 			notes.elementAt(2).play();
-			Fever.checkTime();
+			s.add(new Note(Data.SO));		
 		}
 		if (keycode == Keys.NUM_4){
 			notes.elementAt(3).play();
-			Fever.checkTime();
+			s.add(new Note(Data.YES));		
 		}
 
 		if (keycode == Keys.SPACE) {
@@ -129,7 +130,7 @@ public class Map extends PortableApplication {
 		}
 		
 //		clear the screen
-		g.clear(Color.GRAY);
+		g.clear(new Color(Data.backColorR, Data.backColorG, Data.backColorB,1));
 		
 //		write help
 		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
@@ -171,13 +172,6 @@ public class Map extends PortableApplication {
 //		oh yeah
 		g.drawSchoolLogo();
 		// Draw a rectangle to show the rythm
-		if(Data.rythmEnable){
-			f.draw(g);
-			frames++;
-			if(frames == Data.FRAME_DURATION){
-				Data.rythmEnable = false;
-				frames = 0;
-			}
-		}
+		f.draw(g);
 	}
 }
