@@ -1,4 +1,7 @@
 package hevs.fragil.patapon.others;
+
+import hevs.fragil.patapon.music.Drum;
+
 public class Data {
 	
 	//ID for Notes TODO change to enum !
@@ -8,7 +11,12 @@ public class Data {
 	public static final int YES_ID = 14;
 	
 	//Command references
-	public static final int[] WALK = {HE_ID, HE_ID, HE_ID, S_ID};
+	public static final Drum[] WALK = {Drum.HE, Drum.HE, Drum.HE, Drum.S};
+	public static final Drum[] ATTACK = {Drum.S, Drum.S, Drum.HE, Drum.S};
+	public static final Drum[] DEFEND = {Drum.SO, Drum.SO, Drum.HE, Drum.S};
+	public static final Drum[] MIRACLE = {Drum.YES, Drum.YES, Drum.YES, Drum.YES, Drum.YES};
+	public static final Drum[] RETREAT = {Drum.S, Drum.HE, Drum.S, Drum.HE};
+	public static final Drum[] CHARGE = {Drum.S, Drum.S, Drum.SO, Drum.SO};
 	
 	//Game constants
 	public static final int LIFE_BASE = 10;
