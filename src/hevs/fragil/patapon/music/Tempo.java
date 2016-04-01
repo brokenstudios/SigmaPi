@@ -7,10 +7,11 @@ import hevs.fragil.patapon.others.Data;
 
 public class Tempo extends TimerTask {
 	Frame f = new Frame();
+	static long lastTime;
 	@Override
 	public void run() {
 		Frame.blinkEnable = true;
-		Data.lastTempoTime = System.currentTimeMillis();
+		lastTime = System.currentTimeMillis();
 		//Change sound loop only in time
 		int index = Data.soundFlag % Map.getNbTracks();
 		if(index != Data.soundEnable){

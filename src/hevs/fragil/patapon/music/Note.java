@@ -1,7 +1,4 @@
 package hevs.fragil.patapon.music;
-
-import hevs.fragil.patapon.others.Data;
-
 public class Note{
 	//delay between tempo and note
 	long delay;
@@ -19,7 +16,7 @@ public class Note{
 	
 	public Note(Drum d){
 		id = d;
-		long late = System.currentTimeMillis() - Data.lastTempoTime;
+		long late = System.currentTimeMillis() - Tempo.lastTime;
 		long early =  500 - late;
 		delay = Math.min(late, early);
 		if(delay == late)tooLate = true;

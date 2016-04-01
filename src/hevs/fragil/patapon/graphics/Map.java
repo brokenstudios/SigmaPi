@@ -27,7 +27,9 @@ public class Map extends PortableApplication {
 	private static SoundSample snap;
 	private static Frame f;
 	private static Timer timer = new Timer();
-	
+	public static Color backColor = new Color(	1f-((float)Math.random()*0.5f), 
+												1f-((float)Math.random()*0.5f), 
+												1f-((float)Math.random()*0.5f), 1);
 	public Map(int w){
 		super(w, 500);
 		this.width = w;
@@ -92,28 +94,21 @@ public class Map extends PortableApplication {
 			s.add(new Note(Drum.YES));		
 		}
 
-		if (keycode == Keys.SPACE) {
-			for (SoundSample note : notes) {
+		if (keycode == Keys.SPACE)
+			for (SoundSample note : notes)
 				note.setPitch(2);
-			}
-		}
-		if (keycode == Keys.ENTER) {
-			for (SoundSample note : notes) {
+		if (keycode == Keys.ENTER)
+			for (SoundSample note : notes) 
 				note.setPitch(1);
-			}
-		}
-		if (keycode == Keys.A) {//add snaps
+		
+		if (keycode == Keys.A)
 			Data.snapFlag = !Data.snapFlag;
-		}
-		if (keycode == Keys.D) {//change background music
+		if (keycode == Keys.D)
 			Data.soundFlag++ ;
-		}
-		if (keycode == Keys.LEFT) {//change backgroud music
+		if (keycode == Keys.LEFT)
 			companies.firstElement().moveRelative(-10);
-		}
-		if (keycode == Keys.RIGHT) {//change backgroud music
+		if (keycode == Keys.RIGHT)
 			companies.firstElement().moveRelative(+10);
-		}
 	}
 	public void onGraphicRender(GdxGraphics g) {
 //		change music when necessary
@@ -132,7 +127,7 @@ public class Map extends PortableApplication {
 		}
 		
 //		clear the screen
-		g.clear(new Color(Data.backColorR, Data.backColorG, Data.backColorB,1));
+		g.clear(backColor);
 		
 //		write help
 		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
@@ -177,7 +172,7 @@ public class Map extends PortableApplication {
 		
 //		oh yeah
 		g.drawSchoolLogoUpperRight();
-		// Draw a rectangle to show the rythm
+//		draw a rectangle to show the rythm
 		f.draw(g);
 	}
 }
