@@ -1,26 +1,33 @@
 package hevs.fragil.patapon.others;
+
+
+import hevs.fragil.patapon.music.Drum;
+
 public class Data {
-	public static final double DEFAULTLIFE = 10;
-	public static final int HE = 11;
-	public static final String HE_FILE = "";
-	public static final int S = 12;
-	public static final int SO = 13;
-	public static final int YES = 14;
-	public static final int TEMPO_MS = 500;
-	public static final int NOTHING = 0;
-	public static final int ARCHER = 1;
-	public static final int SHIELD = 2; 
-	public static final int SWORDMAN = 3;
-	public static final int UNIT_DISTANCE = 20;
-	public static final int SECTION_DISTANCE = 30;
-	public static final int FLOOR = 30;
+	//TODO put all of this class content in new classes in a static way ! 
+	//This class normally doesn't need to exist !
+	
+	//Command references
+	public static final Drum[] WALK = {Drum.HE, Drum.HE, Drum.HE, Drum.S};
+	public static final Drum[] ATTACK = {Drum.S, Drum.S, Drum.HE, Drum.S};
+	public static final Drum[] DEFEND = {Drum.SO, Drum.SO, Drum.HE, Drum.S};
+	public static final Drum[] MIRACLE = {Drum.YES, Drum.YES, Drum.YES, Drum.YES, Drum.YES};
+	public static final Drum[] RETREAT = {Drum.S, Drum.HE, Drum.S, Drum.HE};
+	public static final Drum[] CHARGE = {Drum.S, Drum.S, Drum.SO, Drum.SO};
+	
+	//Game constants
+	public static final int LIFE_BASE = 10;
+	public static final int BAR = 500;
+	public static final int UNIT_WIDTH = 20;
+	public static final int SECTION_KEEPOUT = 30;
+	public static final int FLOOR_DEPTH = 30;
 	public static final int FRAME_DURATION = 10;
 	
-	public static int soundFlag = 0;
+	//Sound Flags TODO should we move it to the Map class ?
+	public static int soundFlag = 1;
 	public static int soundEnable = 0;
-	public static int nbLoops = 1;
 	public static boolean soundChange = false;
-	
-	// TODO place?
-	public static boolean rythmEnable = false;
+	public static boolean snapFlag = false;
+	public static boolean snapEnable = false;
+	public static boolean snapChange = false;	
 }

@@ -13,7 +13,6 @@ public class Archer extends Unit {
 	public Archer(){
 //		Adaptation des aptitudes
 		super();
-		super.id = Data.ARCHER;
 		super.setLife(super.life*(1.0+modLife));	
 //		super.attack = super.attack.add(modAttack);
 	}
@@ -23,7 +22,7 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void draw(GdxGraphics g) {
-		int y = Data.FLOOR + 11;
+		int y = Data.FLOOR_DEPTH + 9;
 		g.drawPicture(super.position, y, img);
 	}
 	//Just for onInit method

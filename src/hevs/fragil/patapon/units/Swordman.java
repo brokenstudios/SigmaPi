@@ -13,7 +13,6 @@ public class Swordman extends Unit {
 	public Swordman(){
 //		Adaptation des aptitudes
 		super();
-		super.id = Data.SWORDMAN;
 		super.setLife(super.life*(1.0+modLife));
 //		super.attack.add(modAttack);
 	}
@@ -24,7 +23,7 @@ public class Swordman extends Unit {
 
 	@Override
 	public void draw(GdxGraphics g) {
-		int y = Data.FLOOR + 11;
+		int y = Data.FLOOR_DEPTH + 9;
 		g.drawPicture(super.position, y, img);
 	}
 	//Just for onInit method

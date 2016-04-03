@@ -1,5 +1,5 @@
 package hevs.fragil.patapon.units;
-import java.util.Iterator;
+
 import java.util.Vector;
 
 import hevs.fragil.patapon.others.Data;
@@ -25,17 +25,17 @@ public class Section {
 		this.name = name;   
 	}
 	public int getWidth(){
-		return units.size()*Data.UNIT_DISTANCE;
+		return units.size()*Data.UNIT_WIDTH;
 	}
 	public void move(int newPos){
 		int width = getWidth();
-		double margin = newPos - width/2.0 + Data.UNIT_DISTANCE/2.0;
+		double margin = newPos - width/2.0 + Data.UNIT_WIDTH/2.0;
 		if(margin > 0){
 			globalPosition = newPos;
 			double tempPos = margin;
 			for (Unit unit : units) {
 				unit.move((int)tempPos);
-				tempPos += Data.UNIT_DISTANCE;
+				tempPos += Data.UNIT_WIDTH;
 			}
 		}		
 	}
@@ -50,10 +50,10 @@ public class Section {
 	}
 	public void add(Unit u){
 		units.addElement(u);
-		width += Data.UNIT_DISTANCE;
+		width += Data.UNIT_WIDTH;
 	}
 	public void remove(Unit u){
 		units.remove(u);
-		width -= Data.UNIT_DISTANCE;
+		width -= Data.UNIT_WIDTH;
 	}
 }
