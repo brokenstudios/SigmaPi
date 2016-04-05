@@ -2,7 +2,7 @@ package hevs.fragil.patapon.units;
 import java.util.Iterator;
 import java.util.Vector;
 
-import hevs.fragil.patapon.others.Data;
+import hevs.fragil.patapon.others.Param;
 
 public class Company {
 	public String name = "";
@@ -42,13 +42,16 @@ public class Company {
 		}
 		return s;
 	}
+	public int getNbSections(){
+		return sections.size();
+	}
 	public int getWidth(){
 		int width = 0;
 		for (Section section : sections) {
 			width += section.getWidth();
 		}
 		int nSections = sections.size();
-		return (int)(width + (nSections-1)*Data.SECTION_KEEPOUT);
+		return (int)(width + (nSections-1)*Param.SECTION_KEEPOUT);
 	}
 	public void moveAbsolute(int newPos){
 		int width = getWidth();
@@ -59,7 +62,7 @@ public class Company {
 			for (Section section : sections) {
 				tempPos += section.getWidth()/2f;
 				section.move((int)tempPos);
-				tempPos += section.getWidth()/2f + Data.SECTION_KEEPOUT;
+				tempPos += section.getWidth()/2f + Param.SECTION_KEEPOUT;
 			}
 		}		
 		System.out.println("Company "+name+" moved to : " + globalPosition);
@@ -73,7 +76,7 @@ public class Company {
 			for (Section section : sections) {
 				tempPos += section.getWidth()/2.0;
 				section.move((int)tempPos);
-				tempPos += section.getWidth()/2.0 + Data.SECTION_KEEPOUT;
+				tempPos += section.getWidth()/2.0 + Param.SECTION_KEEPOUT;
 			}
 		}		
 	}

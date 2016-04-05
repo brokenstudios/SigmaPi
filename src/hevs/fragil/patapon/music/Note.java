@@ -1,31 +1,34 @@
 package hevs.fragil.patapon.music;
+
 public class Note{
 	//delay between tempo and note
-	long delay;
-	int length;
-	int mark;
-	Drum id;
+	Drum drum;
 	static int feverScore = 0;
 	
-	//too late or too early of 250ms
+	//margins of acceptance
 	final static int PASS = 100;
 	final static int GOOD = 60;
 	final static int EXCELLENT = 45;
-	final static int PERFECT = 30;
-	boolean tooLate = false;
-	
+	final static int PERFECT = 30;		
+		
 	public Note(Drum d){
-		id = d;
-		long late = System.currentTimeMillis() - Tempo.lastTime;
-		long early =  500 - late;
-		delay = Math.min(late, early);
-		if(delay == late)tooLate = true;
-		else tooLate = false;
-		classify();
+		this.drum = d;
+		long delayNext = System.currentTimeMillis() - Tempo.lastTime;
+		long delayPrev =  500 - delayNext;
+		long delay = Math.min(delayNext, delayPrev);
+		
+		boolean late;
+		if(delay == delayNext)
+			late = true;
+		else 
+			late = false;
+		
+		juge(delay, late);
 	}
 	// return a value depending of the user rythm precision
-	public void classify(){
+	public void juge(long delay, boolean late){
 			//bonus score if well done
+			System.out.print(drum.toString() + " ");
 			if(delay < PERFECT){
 				System.out.print("PERFECT : " + delay);
 				feverScore += 15;
@@ -46,7 +49,7 @@ public class Note{
 				System.out.print("BAD : " + delay);
 				feverScore = 0;
 			}
-			if(tooLate)System.out.println(" ms too late");
+			if(late)System.out.println(" ms too late");
 			else System.out.println(" ms too early");
 	}
 }

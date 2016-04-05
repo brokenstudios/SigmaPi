@@ -14,7 +14,7 @@ public abstract class Unit implements DrawableObject{
 	}
 	Unit(int r){
 		this.rank = r;
-		this.life = Data.LIFE_BASE+rank*5;
+		this.life = Param.LIFE_BASE+rank*5;
 	}	
 	public void move(int newPos){
 		this.position = newPos;
