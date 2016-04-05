@@ -15,7 +15,7 @@ import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.music.Tempo;
-import hevs.fragil.patapon.others.Data;
+import hevs.fragil.patapon.others.Param;
 import hevs.fragil.patapon.units.*;
 
 public class Map extends PortableApplication {
@@ -23,13 +23,12 @@ public class Map extends PortableApplication {
 	private static Vector<Company> companies = new Vector<Company>();
 	private static Vector<SoundSample> notes = new Vector<SoundSample>();
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
-	private static Sequence s = new Sequence();
+	private static Sequence userInput = new Sequence();
 	private static SoundSample snap;
 	private static Frame f;
 	private static Timer timer = new Timer();
-	public static Color backColor = new Color(	1f-((float)Math.random()*0.5f), 
-												1f-((float)Math.random()*0.5f), 
-												1f-((float)Math.random()*0.5f), 1);
+//	public static Color backColor = new Color(	1f-((float)Math.random()*0.5f),1f-((float)Math.random()*0.5f),1f-((float)Math.random()*0.5f), 1);
+	public static Color backColor = Color.ORANGE;
 	public Map(int w){
 		super(w, 500);
 		this.width = w;
@@ -65,7 +64,7 @@ public class Map extends PortableApplication {
 		tracks.add(new SoundSample("data/music/loop4.wav"));
 		tracks.add(new SoundSample("data/music/loop5.wav"));
 		tracks.add(new SoundSample("data/music/loop6.wav"));
-		timer.schedule(new Tempo(), 0, Data.BAR);
+		timer.schedule(new Tempo(), 0, Param.BAR);
 
 		//Load the image files
 		Archer.setImgPath("data/images/Android_PI_48x48.png");
@@ -79,19 +78,19 @@ public class Map extends PortableApplication {
 		super.onKeyDown(keycode);
 		if (keycode == Keys.NUM_1){
 			notes.elementAt(0).play();
-			s.add(new Note(Drum.HE));
+			userInput.add(new Note(Drum.HE));
 		}
 		if (keycode == Keys.NUM_2){
 			notes.elementAt(1).play();
-			s.add(new Note(Drum.S));		
+			userInput.add(new Note(Drum.S));		
 		}
 		if (keycode == Keys.NUM_3){
 			notes.elementAt(2).play();
-			s.add(new Note(Drum.SO));		
+			userInput.add(new Note(Drum.SO));		
 		}
 		if (keycode == Keys.NUM_4){
 			notes.elementAt(3).play();
-			s.add(new Note(Drum.YES));		
+			userInput.add(new Note(Drum.YES));		
 		}
 
 		if (keycode == Keys.SPACE)
@@ -102,9 +101,9 @@ public class Map extends PortableApplication {
 				note.setPitch(1);
 		
 		if (keycode == Keys.A)
-			Data.snapFlag = !Data.snapFlag;
+			Tempo.snapFlag = !Tempo.snapFlag;
 		if (keycode == Keys.D)
-			Data.soundFlag++ ;
+			Tempo.soundFlag++ ;
 		if (keycode == Keys.LEFT)
 			companies.firstElement().moveRelative(-10);
 		if (keycode == Keys.RIGHT)
@@ -112,17 +111,17 @@ public class Map extends PortableApplication {
 	}
 	public void onGraphicRender(GdxGraphics g) {
 //		change music when necessary
-		if(Data.soundChange){
+		if(Tempo.soundChange){
 			for (SoundSample track : tracks)
 				track.stop();
-			tracks.elementAt(Data.soundEnable).loop();
-			Data.soundChange = false;
+			tracks.elementAt(Tempo.soundEnable).loop();
+			Tempo.soundChange = false;
 			System.out.println("Music changed at " + System.currentTimeMillis()%500);
 		}
-		if(Data.snapChange){
-			if(Data.snapEnable)snap.loop();
+		if(Tempo.snapChange){
+			if(Tempo.snapEnable)snap.loop();
 			else snap.stop();
-			Data.snapChange = false;
+			Tempo.snapChange = false;
 			System.out.println("Snap changed at " + System.currentTimeMillis()%500);
 		}
 		
@@ -137,7 +136,7 @@ public class Map extends PortableApplication {
 		
 //		draw floor
 		g.setColor(Color.DARK_GRAY);
-		float fY = Data.FLOOR_DEPTH;
+		float fY = Param.FLOOR_DEPTH;
 		g.drawFilledRectangle(width/2, 0, width, fY, 0);
 		
 //		draw centers

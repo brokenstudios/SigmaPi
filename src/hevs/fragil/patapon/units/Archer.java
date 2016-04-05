@@ -1,6 +1,6 @@
 package hevs.fragil.patapon.units;
 
-import hevs.fragil.patapon.others.Data;
+import hevs.fragil.patapon.others.Param;
 import hevs.gdx2d.components.bitmaps.BitmapImage;
 import hevs.gdx2d.lib.GdxGraphics;
 
@@ -22,7 +22,7 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void draw(GdxGraphics g) {
-		int y = Data.FLOOR_DEPTH + 9;
+		int y = Param.FLOOR_DEPTH + 9;
 		g.drawPicture(super.position, y, img);
 	}
 	//Just for onInit method
