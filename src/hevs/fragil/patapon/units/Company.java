@@ -42,6 +42,9 @@ public class Company {
 		}
 		return s;
 	}
+	public int getNbSections(){
+		return sections.size();
+	}
 	public int getWidth(){
 		int width = 0;
 		for (Section section : sections) {

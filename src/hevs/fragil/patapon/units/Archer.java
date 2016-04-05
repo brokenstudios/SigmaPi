@@ -22,7 +22,7 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void draw(GdxGraphics g) {
-		int y = Param.FLOOR_DEPTH + 9;
+		int y = Param.FLOOR_DEPTH + 30;
 		g.drawPicture(super.position, y, img);
 	}
 	//Just for onInit method
