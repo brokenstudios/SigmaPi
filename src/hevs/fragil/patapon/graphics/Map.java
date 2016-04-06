@@ -25,10 +25,9 @@ public class Map extends PortableApplication {
 	private static Vector<SoundSample> drums = new Vector<SoundSample>();
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
 	private static SoundSample snap;
-	private static Frame f;
+	private static BlinkingBorder f;
 	private static Timer tempoTimer = new Timer();
 	private static Timer actionTimer = new Timer();
-	public static Color backColor = Color.ORANGE;
 	
 	public static void main(String[] args) {
 		new Map(1000);
@@ -113,15 +112,15 @@ public class Map extends PortableApplication {
 		tracks.add(new SoundSample("data/music/loop5.wav"));
 		tracks.add(new SoundSample("data/music/loop6.wav"));
 		
-		tempoTimer.scheduleAtFixedRate(new Tempo(), 0, Param.BAR);
-		actionTimer.scheduleAtFixedRate(new GameDynamic(), 0, Param.ACTION_PERIOD);
+		tempoTimer.scheduleAtFixedRate(new Tempo(), 0, Param.MUSIC_BAR);
+		actionTimer.scheduleAtFixedRate(new GameDynamic(), 0, Param.ACTIONS_BAR);
 
 		//Load the image files
 		Archer.setImgPath("data/images/Archer.png");
 		Swordman.setImgPath("data/images/Swordman.png");
 		Shield.setImgPath("data/images/Shield.png");
 
-		f = new Frame();
+		f = new BlinkingBorder();
 	}
 	@Override
 	public void onKeyDown(int keycode) {
@@ -157,13 +156,13 @@ public class Map extends PortableApplication {
 		if (keycode == Keys.D)
 			Tempo.soundFlag++ ;
 		if (keycode == Keys.LEFT)
-			getCompanies().firstElement().moveRelative(-10,true);
+			getCompanies().firstElement().moveRelative(-10);
 		if (keycode == Keys.RIGHT)
-			getCompanies().firstElement().moveRelative(+10,true);
+			getCompanies().firstElement().moveRelative(+10);
 	}
 	public void onGraphicRender(GdxGraphics g) {		
 		//clear the screen
-		g.clear(backColor);
+		g.clear(Param.BACKGROUND);
 		//write help
 		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
 		g.drawStringCentered(470f, "Flèches pour bouger la companie");
@@ -182,7 +181,6 @@ public class Map extends PortableApplication {
 				}
 			}
 		}
-		
 		//oh yeah
 		g.drawSchoolLogoUpperRight();
 		//draw the frame to show the rythm

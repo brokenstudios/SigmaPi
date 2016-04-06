@@ -1,11 +1,11 @@
 package hevs.fragil.patapon.music;
 import java.util.TimerTask;
 
-import hevs.fragil.patapon.graphics.Frame;
+import hevs.fragil.patapon.graphics.BlinkingBorder;
 import hevs.fragil.patapon.graphics.Map;
 
 public class Tempo extends TimerTask {
-	Frame f = new Frame();
+	BlinkingBorder f = new BlinkingBorder();
 	static long lastTime;
 	public static int soundFlag = 1;
 	public static int soundEnable = 0;
@@ -14,7 +14,7 @@ public class Tempo extends TimerTask {
 	
 	@Override
 	public void run() {
-		Frame.blinkEnable = true;
+		BlinkingBorder.blinkEnable = true;
 		lastTime = System.currentTimeMillis();
 		//Change sound loop only in time
 		int index = soundFlag % Map.getNbTracks();

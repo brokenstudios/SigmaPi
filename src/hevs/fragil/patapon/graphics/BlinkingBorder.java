@@ -5,7 +5,7 @@ import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.interfaces.DrawableObject;
 import com.badlogic.gdx.graphics.Color;
 
-public class Frame implements DrawableObject{
+public class BlinkingBorder implements DrawableObject{
 	static boolean display = true;
 	private int frames = 0;
 	public static boolean blinkEnable = false;
@@ -23,15 +23,15 @@ public class Frame implements DrawableObject{
 			float[] y = {height-thickness/2, height/2, thickness/2, height/2};
 			
 			//linearly graduates to backColor
-			float stepsLeft = Param.FRAME_DURATION - frames;
-			frameColor = frameColor.lerp(Map.backColor, 1/stepsLeft);
+			float stepsLeft = Param.FRAME_DEGRADE_STEPS - frames;
+			frameColor = frameColor.lerp(Param.BACKGROUND, 1/stepsLeft);
 			
 			//rotation in degrees = i*90 			
 			for(int i = 0; i < x.length; i++){
 				g.drawFilledRectangle(x[i], y[i], width, thickness, i*90, frameColor);
 			}
 			frames++;
-			if(frames == Param.FRAME_DURATION){
+			if(frames == Param.FRAME_DEGRADE_STEPS){
 				blinkEnable = false;
 				frameColor.set(Color.WHITE);
 				frames = 0;

@@ -68,20 +68,18 @@ public class Company {
 		}		
 		System.out.println("Company "+name+" moved to : " + globalPosition);
 	}
-	public void moveRelative(int increment, boolean force){
-		if(increment < Param.VISIBLE_INCREMENT){
-			int width = getWidth();
-			double screenMargin = globalPosition + increment - width/2.0;
-			if(screenMargin > 0){
-				globalPosition += increment;
-				double tempPos = screenMargin;
-				for (Section section : sections) {
-					tempPos += section.getWidth()/2.0;
-					section.move((int)tempPos);
-					tempPos += section.getWidth()/2.0 + Param.SECTION_KEEPOUT;
-				}
-			}	
-		}
+	public void moveRelative(int increment){
+		int width = getWidth();
+		double screenMargin = globalPosition + increment - width/2.0;
+		if(screenMargin > 0){
+			globalPosition += increment;
+			double tempPos = screenMargin;
+			for (Section section : sections) {
+				tempPos += section.getWidth()/2.0;
+				section.move((int)tempPos);
+				tempPos += section.getWidth()/2.0 + Param.SECTION_KEEPOUT;
+			}
+		}	
 	}
 	public Vector<Action> getActions(){
 		return toDo;

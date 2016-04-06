@@ -8,7 +8,7 @@ import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.others.Param;
 
 public class GameDynamic extends TimerTask{
-	private static int walkIndex = 0;
+	private static int shiftDestination = 0;
 	private static Vector<Action> toRemove = new Vector<Action>();
 	
 	@Override
@@ -29,42 +29,58 @@ public class GameDynamic extends TimerTask{
 			switch(a){
 				case WALK : 	finished = walk(c);
 								break;
-				case ATTACK : 	System.out.println("Units are attacking");
+				case ATTACK : 	
 								break;
-				case DEFEND : 	System.out.println("Units are defending");
+				case DEFEND : 	
 								break;
-				case MIRACLE : 	System.out.println("Units are *miracling*");
+				case MIRACLE : 	
 								break;
-				case RETREAT : 	System.out.println("Units are retreating");
+				case RETREAT : 	finished = retreat(c);
 								break;
-				case CHARGE : 	System.out.println("Units are charging");
+				case CHARGE : 	
 								break;
-				default : 		System.out.println("I don't know what units are doing !");
+				default : 		
 								break;
 			}	
 			if(finished)
 				toRemove.addElement(a);
 		}
 	}
-	private static boolean walk(Company c){
+	private static boolean shift(double time, int shift, Company c){
 		//add bonus time (faster move with fever)
-		double time = Param.TIME_WALK;
-		time -= Param.TIME_BONUS_WALK/100.0 * Note.getFeverCoefficient();
-		double speed = Param.PIXELS_WALK / time ;
+		int direction = (int)(shift/Math.abs(shift));
+		int leftLimit = c.getWidth()/2 +10 ;
+		double speed = Param.WALK_WIDTH / time * direction ;
 		//first time we get in
-		if(walkIndex==0){
-			System.out.println("Walk routine launched\nFever coefficient : "+ Note.getFeverCoefficient()+" \nSpeed : " + speed*1000 + " pixels/seconds");
-			walkIndex = c.globalPosition + Param.PIXELS_WALK;
+		if(shiftDestination == 0){
+			shiftDestination = c.globalPosition + shift;
+			System.out.println("**Shift routine : " + shift + " pixels to " + shiftDestination);
 		}
 		//time to distance : d = t*v
-		int increment = (int)(Param.ACTION_PERIOD * speed);
-		c.moveRelative(increment, false);
+		int increment = (int)(Param.ACTIONS_BAR * speed);
+		c.moveRelative(increment);
 		//arrived at last position
-		if(c.globalPosition >= walkIndex){
-			walkIndex = 0;
-			System.out.println("Walk routine finished");
+		if(c.globalPosition == shiftDestination || c.globalPosition == leftLimit){
+			shiftDestination = 0;
+			System.out.println("**->Shift routine finished");
 			return true;
 		}
 		return false;
+	}
+	private static boolean walk(Company c){
+		double time = Param.WALK_TIME;
+		time -= Param.WALK_TIME_BONUS/100.0 * Note.getFeverCoefficient();
+		return shift(time, Param.WALK_WIDTH, c);
+	}
+	private static boolean retreat(Company c){
+		double time = Param.RETREAT_TIME;
+		time -= Param.RETREAT_TIME_BONUS/100.0 * Note.getFeverCoefficient();
+		boolean firstShiftEnded = false;
+		//FIXME Does not work correctly, little bug here i suppose !
+		if (!firstShiftEnded) {
+			firstShiftEnded = shift(time/2, -Param.RETREAT_WIDTH, c);
+			return false;
+		}
+		else return shift(time/2, Param.RETREAT_WIDTH, c);
 	}
 }
