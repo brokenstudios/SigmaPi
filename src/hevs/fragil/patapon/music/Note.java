@@ -3,7 +3,7 @@ package hevs.fragil.patapon.music;
 public class Note{
 	//delay between tempo and note
 	Drum drum;
-	static int feverScore = 0;
+	private static int feverScore = 0;
 	
 	//margins of acceptance
 	final static int PASS = 100;
@@ -24,6 +24,16 @@ public class Note{
 			late = false;
 		
 		juge(delay, late);
+	}
+	/**
+	 * @author loicg
+	 * @return value between 0 and 100
+	 */
+	public static int getFeverCoefficient(){
+		return Math.min(feverScore, 100);
+	}
+	public static void badFever(){
+		feverScore = 0;
 	}
 	// return a value depending of the user rythm precision
 	public void juge(long delay, boolean late){

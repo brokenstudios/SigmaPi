@@ -9,4 +9,13 @@ public class Param {
 	public static final int SECTION_KEEPOUT = 30;
 	public static final int FLOOR_DEPTH = 30;
 	public static final int FRAME_DURATION = 10;
+	//width of walk routine
+	public static final int PIXELS_WALK = 200;
+	//time to make the PIXELS_WALK
+	public static final double TIME_WALK = 2000;
+	//Bonus at full fever (time)
+	public static final int TIME_BONUS_WALK = 500;
+	
+	public static final int VISIBLE_INCREMENT = 5;
+	public static final int ACTION_PERIOD = 10;
 }
