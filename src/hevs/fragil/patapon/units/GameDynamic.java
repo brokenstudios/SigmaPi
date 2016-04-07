@@ -9,6 +9,8 @@ import hevs.fragil.patapon.others.Param;
 
 public class GameDynamic extends TimerTask{
 	private static int shiftDestination = 0;
+	private static int shiftIncrement = 0;
+	private static int waitIndex = 0;
 	private static Vector<Action> toRemove = new Vector<Action>();
 	
 	@Override
@@ -48,9 +50,8 @@ public class GameDynamic extends TimerTask{
 	}
 	private static boolean shift(double time, int shift, Company c){
 		//add bonus time (faster move with fever)
-		int direction = (int)(shift/Math.abs(shift));
 		int leftLimit = c.getWidth()/2 +10 ;
-		double speed = Param.WALK_WIDTH / time * direction ;
+		double speed = shift / time ;
 		//first time we get in
 		if(shiftDestination == 0){
 			shiftDestination = c.globalPosition + shift;
@@ -60,12 +61,27 @@ public class GameDynamic extends TimerTask{
 		int increment = (int)(Param.ACTIONS_BAR * speed);
 		c.moveRelative(increment);
 		//arrived at last position
-		if(c.globalPosition == shiftDestination || c.globalPosition == leftLimit){
+		if((c.globalPosition >= shiftDestination)&& shift > 0
+				||(c.globalPosition <= shiftDestination) && shift <0 
+				|| c.globalPosition == leftLimit){
 			shiftDestination = 0;
 			System.out.println("**->Shift routine finished");
 			return true;
 		}
 		return false;
+	}
+	private static boolean wait(double time, Company c){
+		if(waitIndex == 0){
+			System.out.println("**Wait routine : wait " + time + " ms");
+		}
+		waitIndex += Param.ACTIONS_BAR;
+		System.out.println(time + " " + waitIndex);
+		if(waitIndex >= time ){
+			waitIndex = 0;
+			return true ;
+		}
+		else return false ;
+		
 	}
 	private static boolean walk(Company c){
 		double time = Param.WALK_TIME;
@@ -74,13 +90,19 @@ public class GameDynamic extends TimerTask{
 	}
 	private static boolean retreat(Company c){
 		double time = Param.RETREAT_TIME;
-		time -= Param.RETREAT_TIME_BONUS/100.0 * Note.getFeverCoefficient();
-		boolean firstShiftEnded = false;
-		//FIXME Does not work correctly, little bug here i suppose !
-		if (!firstShiftEnded) {
-			firstShiftEnded = shift(time/2, -Param.RETREAT_WIDTH, c);
-			return false;
+		double bonus = Param.RETREAT_TIME_BONUS/100.0 * Note.getFeverCoefficient();
+		if (shiftIncrement == 0) {
+			if(shift(time/4-bonus, -Param.RETREAT_WIDTH, c))
+				shiftIncrement++;
 		}
-		else return shift(time/2, Param.RETREAT_WIDTH, c);
+		else if(shiftIncrement == 1){
+			if(wait(time/2.0, c))
+				shiftIncrement++;
+		}
+		else if (shift(1*time/4, Param.RETREAT_WIDTH, c)){
+			shiftIncrement = 0;
+			return true;
+		}
+		return false;
 	}
 }

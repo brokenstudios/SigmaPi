@@ -24,15 +24,15 @@ public class Param {
 	
 	//Shifting width
 	public static final int WALK_WIDTH = 200;
-	public static final int RETREAT_WIDTH = 300;
+	public static final int RETREAT_WIDTH = 100;
 	
 	//Shifting time
 	public static final int WALK_TIME = 2000;
-	public static final int RETREAT_TIME = 1000;
+	public static final int RETREAT_TIME = 2000;
 	
 	//Shifting time bonus (value at max fever score)
 	public static final int WALK_TIME_BONUS = 500;
-	public static final int RETREAT_TIME_BONUS = 500;
+	public static final int RETREAT_TIME_BONUS = 100;
 	
 	//Colors
 	public static Color BACKGROUND = Color.ORANGE;
