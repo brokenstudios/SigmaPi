@@ -75,8 +75,8 @@ public class GameDynamic extends TimerTask{
 			System.out.println("**Wait routine : wait " + time + " ms");
 		}
 		waitIndex += Param.ACTIONS_BAR;
-		System.out.println(time + " " + waitIndex);
 		if(waitIndex >= time ){
+			System.out.println("**->Wait routine finished");
 			waitIndex = 0;
 			return true ;
 		}
