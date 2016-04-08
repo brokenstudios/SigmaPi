@@ -21,7 +21,7 @@ public abstract class Sequence {
 		melody.add(n);
 		int index;
 		index = recognize();
-		if(index != -1){
+		if(index != -1 && index != -2){
 			return Action.values()[index];
 		}
 		else return null;
@@ -34,19 +34,22 @@ public abstract class Sequence {
 	}
 	/**
 	 * @author loicg
-	 * @returns the index of the table in the COMBOS static table
+	 * @return the index of the table in the COMBOS static table
+	 * @return -2 if bad sequence (not recognized)
+	 * @return -1 if not full sequence (contains less than 4 notes)
 	 * */
 	private static int recognize(){
-		//combo only possible when length >= 4 
 		if(melody.size() >= 4){
-			//compare the last 6 ones
+			//compare the last 5 ones
 			int startIndex = Math.max(melody.size()-5, 0);
 			int lastIndex = Math.min(5, melody.size());
 			Drum[] lastNotes = new Drum[lastIndex];
 			Drum[] tab4 = new Drum[4];
+			//get last notes in an array
 			for(int i = 0 ; i < lastIndex ; i++){
 				lastNotes[i] = melody.elementAt(i + startIndex).drum;
 			}
+			//check if we need another array of 4 elements (equals function)
 			if(lastNotes.length >= 5){
 				tab4 = Arrays.copyOfRange(lastNotes,lastNotes.length-4, lastNotes.length);
 			}
@@ -54,11 +57,14 @@ public abstract class Sequence {
 				if(Arrays.equals(lastNotes,COMBOS[i]) || Arrays.equals(tab4,COMBOS[i])){
 					//now these elements are useless
 					melody.removeAllElements();
-					return i ;				}
+					return i ;				
+				}
 			}
-			return -1;
+			//indicates bad sequence
+			Note.badFever();
+			return -2;
 		}
+		//indicate sequence not terminated
 		else return -1;
 	}
-
 }
