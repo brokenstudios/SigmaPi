@@ -3,8 +3,8 @@ package hevs.fragil.patapon.units;
 import java.util.TimerTask;
 import java.util.Vector;
 
-import hevs.fragil.patapon.graphics.Map;
 import hevs.fragil.patapon.music.Note;
+import hevs.fragil.patapon.others.Map;
 import hevs.fragil.patapon.others.Param;
 
 public class GameDynamic extends TimerTask{
@@ -105,4 +105,7 @@ public class GameDynamic extends TimerTask{
 		}
 		return false;
 	}
+//	private static boolean attack(Company striker, Company victim){
+//		
+//	}
 }

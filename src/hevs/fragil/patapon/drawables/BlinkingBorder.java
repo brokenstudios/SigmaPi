@@ -1,4 +1,4 @@
-package hevs.fragil.patapon.graphics;
+package hevs.fragil.patapon.drawables;
 
 import hevs.fragil.patapon.others.Param;
 import hevs.gdx2d.lib.GdxGraphics;

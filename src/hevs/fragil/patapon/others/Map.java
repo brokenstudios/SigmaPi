@@ -1,4 +1,4 @@
-package hevs.fragil.patapon.graphics;
+package hevs.fragil.patapon.others;
 
 import com.badlogic.gdx.graphics.Color;
 
@@ -12,11 +12,11 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
+import hevs.fragil.patapon.drawables.BlinkingBorder;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.music.Tempo;
-import hevs.fragil.patapon.others.Param;
 import hevs.fragil.patapon.units.*;
 
 public class Map extends PortableApplication {
@@ -34,7 +34,7 @@ public class Map extends PortableApplication {
 		getCompanies().add(newSampleCompany(4,3,3));
 	}
 	/**
-	 * @author loicg
+	 * @author Loïc Gillioz (lg)
 	 * @param nb1 : number of archers
 	 * @param nb2 : number of swordmans
 	 * @param nb3 : number of shields
@@ -51,7 +51,7 @@ public class Map extends PortableApplication {
 			comp.sections.elementAt(0).add(new Archer());
 		}
 		for(int i = 0 ; i < nb2; i++){
-			comp.sections.elementAt(1).add(new Swordman());
+			comp.sections.elementAt(1).add(new Spearman());
 		}
 		for(int i = 0 ; i < nb3; i++){
 			comp.sections.elementAt(2).add(new Shield());
@@ -116,9 +116,9 @@ public class Map extends PortableApplication {
 		actionTimer.scheduleAtFixedRate(new GameDynamic(), 0, Param.ACTIONS_BAR);
 
 		//Load the image files
-		Archer.setImgPath("data/images/Archer.png");
-		Swordman.setImgPath("data/images/Swordman.png");
-		Shield.setImgPath("data/images/Shield.png");
+		Archer.setImgPath("data/images/yumipon48.png");
+		Spearman.setImgPath("data/images/yaripon48.png");
+		Shield.setImgPath("data/images/tatepon48.png");
 
 		f = new BlinkingBorder();
 	}

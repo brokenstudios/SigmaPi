@@ -25,4 +25,5 @@ public abstract class Unit implements DrawableObject{
 	public String toString(){
 		return ", Level : "+ rank + ", Life : " + life;
 	}
+	public abstract void attack();
 }

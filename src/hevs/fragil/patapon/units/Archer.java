@@ -22,11 +22,14 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void draw(GdxGraphics g) {
-		int y = Param.FLOOR_DEPTH + 30;
+		int y = Param.FLOOR_DEPTH+9;
 		g.drawPicture(super.position, y, img);
 	}
 	//Just for onInit method
 	static public void setImgPath(String url){
 		img = new BitmapImage(url);
+	}
+	public void attack(){
+		
 	}
 }
