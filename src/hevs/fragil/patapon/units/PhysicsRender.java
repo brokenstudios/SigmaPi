@@ -7,7 +7,7 @@ import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.others.Map;
 import hevs.fragil.patapon.others.Param;
 
-public class GameDynamic extends TimerTask{
+public class PhysicsRender extends TimerTask{
 	private static int shiftDestination = 0;
 	private static int shiftIncrement = 0;
 	private static int waitIndex = 0;
@@ -57,13 +57,13 @@ public class GameDynamic extends TimerTask{
 			shiftDestination = c.globalPosition + shift;
 			System.out.println("**Shift routine : " + shift + " pixels to " + shiftDestination);
 		}
-		//time to distance : d = t*v
+		//time to distance : d = t*v 
 		int increment = (int)(Param.ACTIONS_BAR * speed);
 		c.moveRelative(increment);
 		//arrived at last position
-		if((c.globalPosition >= shiftDestination)&& shift > 0
-				||(c.globalPosition <= shiftDestination) && shift <0 
-				|| c.globalPosition == leftLimit){
+		if((c.globalPosition >= shiftDestination) && shift > 0 			//right limit
+				||(c.globalPosition <= shiftDestination) && shift < 0 	//left limit
+				|| c.globalPosition == leftLimit){						//window limit
 			shiftDestination = 0;
 			System.out.println("**->Shift routine finished");
 			return true;
