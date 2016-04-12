@@ -81,6 +81,9 @@ public class Company {
 			}
 		}	
 	}
+	public void attack(Company victim){
+		
+	}
 	public Vector<Action> getActions(){
 		return toDo;
 	}

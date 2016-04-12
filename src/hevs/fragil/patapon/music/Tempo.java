@@ -1,8 +1,8 @@
 package hevs.fragil.patapon.music;
 import java.util.TimerTask;
 
-import hevs.fragil.patapon.graphics.BlinkingBorder;
-import hevs.fragil.patapon.graphics.Map;
+import hevs.fragil.patapon.drawables.BlinkingBorder;
+import hevs.fragil.patapon.others.Map;
 
 public class Tempo extends TimerTask {
 	BlinkingBorder f = new BlinkingBorder();
