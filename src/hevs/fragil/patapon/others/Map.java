@@ -1,25 +1,29 @@
 package hevs.fragil.patapon.others;
 
-import com.badlogic.gdx.graphics.Color;
-
-import hevs.gdx2d.components.audio.SoundSample;
-import hevs.gdx2d.lib.GdxGraphics;
-import hevs.gdx2d.lib.PortableApplication;
-
 import java.util.Timer;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 
 import hevs.fragil.patapon.drawables.BlinkingBorder;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.music.Tempo;
-import hevs.fragil.patapon.units.*;
+import hevs.fragil.patapon.units.Archer;
+import hevs.fragil.patapon.units.Company;
+import hevs.fragil.patapon.units.PhysicsRender;
+import hevs.fragil.patapon.units.Section;
+import hevs.fragil.patapon.units.Shield;
+import hevs.fragil.patapon.units.Spearman;
+import hevs.fragil.patapon.units.Unit;
+import hevs.gdx2d.components.audio.SoundSample;
+import hevs.gdx2d.lib.GdxGraphics;
+import hevs.gdx2d.lib.PortableApplication;
 
-public class Map extends PortableApplication {
+public class Map extends PortableApplication{
 	private int width;
 	private static Vector<Company> companies = new Vector<Company>();
 	private static Vector<SoundSample> drums = new Vector<SoundSample>();
@@ -28,6 +32,8 @@ public class Map extends PortableApplication {
 	private static BlinkingBorder f;
 	private static Timer tempoTimer = new Timer();
 	private static Timer actionTimer = new Timer();
+	
+	public float stateTime;
 	
 	public static void main(String[] args) {
 		new Map(1000);
@@ -113,14 +119,18 @@ public class Map extends PortableApplication {
 		tracks.add(new SoundSample("data/music/loop6.wav"));
 		
 		tempoTimer.scheduleAtFixedRate(new Tempo(), 0, Param.MUSIC_BAR);
-		actionTimer.scheduleAtFixedRate(new GameDynamic(), 0, Param.ACTIONS_BAR);
+		actionTimer.scheduleAtFixedRate(new PhysicsRender(), 0, Param.ACTIONS_BAR);
 
 		//Load the image files
-		Archer.setImgPath("data/images/yumipon48.png");
-		Spearman.setImgPath("data/images/yaripon48.png");
-		Shield.setImgPath("data/images/tatepon48.png");
+		Archer.setSpriteSheet("data/images/yumiponsheet.png");
+		Spearman.setSpriteSheet("data/images/yariponsheet.png");
+		Shield.setSpriteSheet("data/images/tateponsheet.png");
 
 		f = new BlinkingBorder();
+		
+		
+        
+        stateTime = 0f;       
 	}
 	@Override
 	public void onKeyDown(int keycode) {
@@ -177,7 +187,7 @@ public class Map extends PortableApplication {
 		for (Company c : getCompanies()) {
 			for (Section s : c.sections) {
 				for (Unit u : s.units) {
-					u.draw(g);
+					u.draw(g, stateTime);
 				}
 			}
 		}
@@ -185,6 +195,8 @@ public class Map extends PortableApplication {
 		g.drawSchoolLogoUpperRight();
 		//draw the frame to show the rythm
 		f.draw(g);
+
+        stateTime += Gdx.graphics.getDeltaTime();
 	}
 	public static Vector<Company> getCompanies() {
 		return companies;
