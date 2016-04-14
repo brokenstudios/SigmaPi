@@ -35,6 +35,6 @@ public class Param {
 	public static final int RETREAT_TIME_BONUS = 100;
 	
 	//Colors
-	public static Color BACKGROUND = Color.LIGHT_GRAY;
+	public static Color BACKGROUND = new Color(1.000f, 0.871f, 0.678f, 0.1f);
 	
 }
