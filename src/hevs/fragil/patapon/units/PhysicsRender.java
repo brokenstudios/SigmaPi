@@ -16,8 +16,6 @@ public class PhysicsRender extends TimerTask{
 	
 	@Override
 	public void run() {
-		Resources.getInstance().titi = 3;
-		
 		for (Company c : Map.getCompanies()) {
 			for (Action a : c.getActions()) {
 				switchAction(a, c);

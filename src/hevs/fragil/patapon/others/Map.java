@@ -7,12 +7,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 
+import hevs.fragil.patapon.Resources;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
+import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.music.Tempo;
 import hevs.fragil.patapon.units.Archer;
+import hevs.fragil.patapon.units.BodyPart;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.PhysicsRender;
 import hevs.fragil.patapon.units.Section;
@@ -122,14 +125,10 @@ public class Map extends PortableApplication{
 		actionTimer.scheduleAtFixedRate(new PhysicsRender(), 0, Param.ACTIONS_BAR);
 
 		//Load the image files
-		Archer.setSpriteSheet("data/images/yumiponsheet.png");
-		Spearman.setSpriteSheet("data/images/yariponsheet.png");
-		Shield.setSpriteSheet("data/images/tateponsheet.png");
-
+		Unit.setLegsSprite("data/images/walk.png", 3, 1);
+		Resources.getInstance().loadEyes();
+		Resources.getInstance().loadBodies();
 		f = new BlinkingBorder();
-		
-		
-        
         stateTime = 0f;       
 	}
 	@Override
@@ -188,6 +187,8 @@ public class Map extends PortableApplication{
 		for (Company c : getCompanies()) {
 			for (Section s : c.sections) {
 				for (Unit u : s.units) {
+					//TODO WHY WHY WHY oooOH WHHYYYY 
+//					u.changeBody(BodyPart.BODY_BLUE);
 					u.draw(g, stateTime);
 				}
 			}
