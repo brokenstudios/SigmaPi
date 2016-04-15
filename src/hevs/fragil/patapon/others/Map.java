@@ -174,6 +174,7 @@ public class Map extends PortableApplication{
 		//clear the screen
 		g.clear(Param.BACKGROUND);
 		//write help
+		g.setColor(Color.BLACK);
 		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
 		g.drawStringCentered(470f, "Flèches pour bouger la companie");
 		g.drawStringCentered(450f, "Touches 1 à 4 pour jouer les sons");

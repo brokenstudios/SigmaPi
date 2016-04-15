@@ -3,6 +3,7 @@ package hevs.fragil.patapon.units;
 import java.util.TimerTask;
 import java.util.Vector;
 
+import hevs.fragil.patapon.Resources;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.others.Map;
 import hevs.fragil.patapon.others.Param;
@@ -15,6 +16,8 @@ public class PhysicsRender extends TimerTask{
 	
 	@Override
 	public void run() {
+		Resources.getInstance().titi = 3;
+		
 		for (Company c : Map.getCompanies()) {
 			for (Action a : c.getActions()) {
 				switchAction(a, c);

@@ -5,19 +5,17 @@ import hevs.gdx2d.lib.interfaces.DrawableObject;
 
 public abstract class Unit implements DrawableObject{
 	public int position;
-	int rank;
-	int index;
+	int level = 1;
+	Breed breed = Breed.Breed1;
 	protected double life;
 	FightFactor attack;
-	protected static final int FRAME_COLS = 2;
-	protected static final int FRAME_ROWS = 1;
 	
 	Unit(){
 		this(1);
 	}
 	Unit(int r){
-		this.rank = r;
-		this.life = Param.LIFE_BASE+rank*5;
+		this.level = r;
+		this.life = Param.LIFE_BASE+level*5;
 	}	
 	public void move(int newPos){
 		this.position = newPos;
@@ -26,7 +24,7 @@ public abstract class Unit implements DrawableObject{
 		this.life = d;
 	}
 	public String toString(){
-		return ", Level : "+ rank + ", Life : " + life;
+		return ", Level : "+ level + ", Life : " + life;
 	}
 	public abstract void attack();
 	public abstract void draw(GdxGraphics g, float stateTime);
