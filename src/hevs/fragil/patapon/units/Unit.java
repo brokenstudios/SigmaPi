@@ -1,6 +1,4 @@
 package hevs.fragil.patapon.units;
-import hevs.fragil.patapon.Resources;
-import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.others.Param;
 import hevs.gdx2d.lib.GdxGraphics;
@@ -9,21 +7,24 @@ import hevs.gdx2d.lib.interfaces.DrawableObject;
 public abstract class Unit implements DrawableObject{
 	public int position;
 	int level = 1;
+	int species = 1;
 	protected double life;
 	FightFactor attack;
 	static SpriteSheet legs;
 	//default values
-	Frame bodyFrame;
-	Frame eyeFrame;
+	SpriteSheet body, eye;
+	int eyeFrame = (int)(Math.random()*5);
 	
 	Unit(){
 		this(1);
 	}
-	Unit(int r){
-		this.level = r;
+	Unit(int lvl){
+		this(1,1);
+	}
+	Unit(int lvl, int species){
+		this.species = species;
+		this.level = lvl;
 		this.life = Param.LIFE_BASE + level * 5;
-		this.bodyFrame = Resources.getInstance().getFrame(BodyPart.EYE_CENTER);
-		this.eyeFrame = Resources.getInstance().getFrame(BodyPart.BODY_BLUE);
 	}	
 	public void move(int newPos){
 		this.position = newPos;
@@ -37,25 +38,24 @@ public abstract class Unit implements DrawableObject{
 	public abstract void attack();
 	public abstract void draw(GdxGraphics g, float time);
 	public void drawLegs(float stateTime){
-		legs.draw(stateTime, position);
+		legs.drawKeyFrames(stateTime, position);
 	}
 	public void drawBody(){
+		body.drawFrame((5*species)-level, position, 17);
+	}
+	public void drawEye() {
 		//TODO Choper l'état ! oui monsieur encore du job
-		//TODO Ask mui why ??? isn't null but nothing to draw WTF
-		if(bodyFrame != null){
-			//NE MARCHE QUE DANS MAP GRAPHIC RENDER ! AUCUN SENS PUTAIN
-			changeBody(BodyPart.BODY_BLUE);
-			bodyFrame.draw(position);
-		}
+		eye.drawFrame(2, position, 10);
 	}
 	//only to load files in the onInit method
-	public void changeBody(BodyPart body){
-		this.bodyFrame = Resources.getInstance().getFrame(body);
-	}
-	public void changeEye(BodyPart eye){
-		this.eyeFrame = Resources.getInstance().getFrame(eye);
-	}
 	public static void setLegsSprite(String url, int cols, int rows){
 		legs = new SpriteSheet(url, cols , rows);
 	}
+	public void setBodySprite(String url, int cols, int rows) {
+		body = new SpriteSheet(url, cols , rows);		
+	}
+	public void setEyeSprite(String url, int cols, int rows) {
+		eye = new SpriteSheet(url, cols , rows);		
+	}
+	
 }

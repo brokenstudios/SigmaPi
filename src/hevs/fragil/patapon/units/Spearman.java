@@ -10,7 +10,10 @@ public class Spearman extends Unit {
 	static SpriteSheet arms;
 	
 	public Spearman(){
-		super();
+		this(1,1);
+	}
+	public Spearman(int lvl, int species){
+		super(lvl,species);
 		super.setLife(super.life*(1.0+modLife));
 	}
 	public String toString(){
@@ -23,8 +26,13 @@ public class Spearman extends Unit {
 	public void attack(){
 		
 	}
-	//Just for onInit method
 	public void draw(GdxGraphics g, float time) {
-		super.legs.draw(time, super.position);
+		super.drawLegs(time);
+		super.drawBody();
+		super.drawEye();
+		drawArms(time);
+	}
+	private void drawArms(float time){
+//		arms.drawKeyFrames(time, super.position);
 	}
 }

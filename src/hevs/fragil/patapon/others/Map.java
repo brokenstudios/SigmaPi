@@ -9,13 +9,11 @@ import com.badlogic.gdx.graphics.Color;
 
 import hevs.fragil.patapon.Resources;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
-import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.music.Tempo;
 import hevs.fragil.patapon.units.Archer;
-import hevs.fragil.patapon.units.BodyPart;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.PhysicsRender;
 import hevs.fragil.patapon.units.Section;
@@ -40,7 +38,7 @@ public class Map extends PortableApplication{
 	
 	public static void main(String[] args) {
 		new Map(1000);
-		getCompanies().add(newSampleCompany(4,3,3));
+		getCompanies().add(randomCompany(4,3,3));
 	}
 	/**
 	 * @author Loïc Gillioz (lg)
@@ -50,20 +48,20 @@ public class Map extends PortableApplication{
 	 * @return a sample company that contains {@code nb1} archers,
 	 * {@code nb2} swordmans and {@code nb3}shields.
 	 */
-	private static Company newSampleCompany(int nb1, int nb2, int nb3){
+	private static Company randomCompany(int nb1, int nb2, int nb3){
 		Company comp = new Company("Patapons");
 		
 		for(int i = 0 ; i < 3; i++){
 			comp.add(new Section(Integer.toString(i)));
 		}
 		for(int i = 0 ; i < nb1; i++){
-			comp.sections.elementAt(0).add(new Archer());
+			comp.sections.elementAt(0).add(new Archer((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
 		}
 		for(int i = 0 ; i < nb2; i++){
-			comp.sections.elementAt(1).add(new Spearman());
+			comp.sections.elementAt(1).add(new Spearman((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
 		}
 		for(int i = 0 ; i < nb3; i++){
-			comp.sections.elementAt(2).add(new Shield());
+			comp.sections.elementAt(2).add(new Shield((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
 		}
 		
 		int initialPos = comp.getWidth()/2 + 50;
@@ -126,8 +124,14 @@ public class Map extends PortableApplication{
 
 		//Load the image files
 		Unit.setLegsSprite("data/images/walk.png", 3, 1);
-		Resources.getInstance().loadEyes();
-		Resources.getInstance().loadBodies();
+		for (Company c : getCompanies()) {
+			for (Section s : c.sections) {
+				for (Unit u : s.units) {
+					u.setBodySprite("data/images/bodies.png", 5, 5);
+					u.setEyeSprite("data/images/eyes.png", 5, 1);
+				}
+			}
+		}
 		f = new BlinkingBorder();
         stateTime = 0f;       
 	}
@@ -187,8 +191,6 @@ public class Map extends PortableApplication{
 		for (Company c : getCompanies()) {
 			for (Section s : c.sections) {
 				for (Unit u : s.units) {
-					//TODO WHY WHY WHY oooOH WHHYYYY 
-//					u.changeBody(BodyPart.BODY_BLUE);
 					u.draw(g, stateTime);
 				}
 			}

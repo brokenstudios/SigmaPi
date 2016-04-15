@@ -10,8 +10,11 @@ public class Archer extends Unit {
 	static SpriteSheet arms;
 	
 	public Archer(){
-		super();
-		super.setLife(super.life*(1.0+modLife));	
+		this(1,1);
+	}
+	public Archer(int lvl, int species){
+		super(lvl,species);
+		super.setLife(super.life*(1.0+modLife));
 	}
 	public String toString(){
 		return this.getClass().getSimpleName() + super.toString();
@@ -24,5 +27,10 @@ public class Archer extends Unit {
 	public void draw(GdxGraphics g, float time) {
 		super.drawLegs(time);
 		super.drawBody();
+		super.drawEye();
+		drawArms(time);
+	}
+	private void drawArms(float time){
+//		arms.drawKeyFrames(time, super.position);
 	}
 }

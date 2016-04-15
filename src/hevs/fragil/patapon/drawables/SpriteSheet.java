@@ -7,15 +7,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import hevs.fragil.patapon.others.Param;
-import hevs.gdx2d.lib.GdxGraphics;
 
 public class SpriteSheet {
-	static Animation animation;
-	static Texture sheet;
-	static TextureRegion[] frames;
-	//for GPU(se)
-	static SpriteBatch spriteBatch;
-	//drawed final frame
+	Animation animation;
+	Texture sheet;
+	TextureRegion[] frames;
+	SpriteBatch spriteBatch;
 	TextureRegion currentFrame;
 	
 	public SpriteSheet(String url, int cols, int rows){
@@ -31,11 +28,15 @@ public class SpriteSheet {
         animation = new Animation(0.150f, frames);
         spriteBatch = new SpriteBatch();
 	}
-	public void draw(float time, int position){
-		currentFrame = animation.getKeyFrame(time, true);
-		//spritebatch call
+	public void drawFrame(int frameIndex, int posX, int posY){
 		spriteBatch.begin();
-		spriteBatch.draw(currentFrame, position, Param.FLOOR_DEPTH - 17);
+		spriteBatch.draw(frames[frameIndex], posX, posY);
+		spriteBatch.end();
+	}
+	public void drawKeyFrames(float time, int posX){
+		currentFrame = animation.getKeyFrame(time, true);
+		spriteBatch.begin();
+		spriteBatch.draw(currentFrame, posX, Param.FLOOR_DEPTH - 17);
 		spriteBatch.end();
 	}
 }
