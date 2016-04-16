@@ -123,12 +123,12 @@ public class Map extends PortableApplication{
 		actionTimer.scheduleAtFixedRate(new PhysicsRender(), 0, Param.ACTIONS_BAR);
 
 		//Load the image files
-		Unit.setLegsSprite("data/images/walk.png", 3, 1);
+		Unit.setLegsSprite("data/images/legs64x42.png", 4, 1);
 		for (Company c : getCompanies()) {
 			for (Section s : c.sections) {
 				for (Unit u : s.units) {
-					u.setBodySprite("data/images/bodies.png", 5, 5);
-					u.setEyeSprite("data/images/eyes.png", 5, 1);
+					u.setBodySprite("data/images/bodies64x102.png", 5, 5);
+					u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
 				}
 			}
 		}

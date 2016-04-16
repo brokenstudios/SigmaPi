@@ -25,7 +25,7 @@ public class SpriteSheet {
                 frames[index++] = tmp[i][j];
             }
         }
-        animation = new Animation(0.150f, frames);
+        animation = new Animation(0.200f, frames);
         spriteBatch = new SpriteBatch();
 	}
 	public void drawFrame(int frameIndex, int posX, int posY){
