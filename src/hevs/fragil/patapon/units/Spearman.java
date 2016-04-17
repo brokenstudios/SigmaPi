@@ -5,16 +5,15 @@ import hevs.gdx2d.lib.GdxGraphics;
 
 public class Spearman extends Unit {
 	static double modLife = +0.2;
-	static FightFactor modAttack;	
-	static FightFactor modDefense;	
+	static Skills modAttack;	
+	static Skills modDefense;	
 	static SpriteSheet arms;
 	
 	public Spearman(){
 		this(1,1);
 	}
 	public Spearman(int lvl, int species){
-		super(lvl,species);
-		super.setLife(super.life*(1.0+modLife));
+		super(lvl, species, 10, 10, 10, 100, 50, 500);
 	}
 	public String toString(){
 		return this.getClass().getSimpleName() + super.toString();
@@ -28,7 +27,7 @@ public class Spearman extends Unit {
 	}
 	public void draw(GdxGraphics g, float time) {
 		super.drawLegs(time);
-		super.drawBody();
+		super.drawBody(time);
 		super.drawEye();
 		drawArms(time);
 	}

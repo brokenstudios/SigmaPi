@@ -1,10 +1,10 @@
 package hevs.fragil.patapon.units;
-public class FightFactor {
+public class Skills {
 	private int range;
 	private int damage;
-	private float cooldown;
+	private int cooldown;
 	
-	FightFactor(int range, int damage, float cooldown){
+	Skills(int range, int damage, int cooldown){
 		this.setRange(range);
 		this.setDamage(damage);
 		this.setCooldown(cooldown);
@@ -24,7 +24,7 @@ public class FightFactor {
 	public float getCooldown() {
 		return cooldown;
 	}
-	public void setCooldown(float cooldown) {
+	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
 	}
 }

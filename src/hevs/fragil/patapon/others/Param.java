@@ -39,6 +39,10 @@ public abstract class Param {
 	//Shifting time bonus (value at max fever score)
 	public static final int WALK_TIME_BONUS = 500;
 	public static final int RETREAT_TIME_BONUS = 100;
+
+	public static final int COOLDOWN_BASE = 500;
+	public static final int ATTACK_BASE = 5;
+	public static final int RANGE_BASE = 0;
 	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(243,100,0);

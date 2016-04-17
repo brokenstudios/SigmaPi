@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 
 import hevs.fragil.patapon.Resources;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
@@ -21,8 +22,13 @@ import hevs.fragil.patapon.units.Shield;
 import hevs.fragil.patapon.units.Spearman;
 import hevs.fragil.patapon.units.Unit;
 import hevs.gdx2d.components.audio.SoundSample;
+import hevs.gdx2d.components.graphics.GeomUtils;
+import hevs.gdx2d.components.physics.PhysicsPolygon;
+import hevs.gdx2d.components.physics.utils.PhysicsScreenBoundaries;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
+import hevs.gdx2d.lib.physics.DebugRenderer;
+import hevs.gdx2d.lib.physics.PhysicsWorld;
 
 public class Map extends PortableApplication{
 	private int width;
@@ -33,9 +39,10 @@ public class Map extends PortableApplication{
 	private static BlinkingBorder f;
 	private static Timer tempoTimer = new Timer();
 	private static Timer actionTimer = new Timer();
+	DebugRenderer debugRenderer;
 	
 	public float stateTime;
-	
+
 	public static void main(String[] args) {
 		new Map(1000);
 		getCompanies().add(randomCompany(4,3,3));
@@ -133,7 +140,10 @@ public class Map extends PortableApplication{
 			}
 		}
 		f = new BlinkingBorder();
-        stateTime = 0f;       
+        stateTime = 0f;   
+        
+		new PhysicsScreenBoundaries(this.getWindowWidth(), this.getWindowHeight());
+		debugRenderer = new DebugRenderer();
 	}
 	@Override
 	public void onKeyDown(int keycode) {
@@ -174,6 +184,9 @@ public class Map extends PortableApplication{
 			getCompanies().firstElement().moveRelative(+10);
 	}
 	public void onGraphicRender(GdxGraphics g) {		
+		PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
+		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
+		
 		//clear the screen
 		g.clear(Param.BACKGROUND);
 		//write help
