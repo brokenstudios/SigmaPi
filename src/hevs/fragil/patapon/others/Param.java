@@ -17,7 +17,7 @@ public abstract class Param {
 	//Style 
 	public static final int FLOOR_DEPTH = 30;
 	public static final int FRAME_DEGRADE_STEPS = 10;
-	//Break the color in case of emergency #wedontneedthatbutitwassocolorfulwhenyoutouchme
+	//Break the color in case of emergency #SoColorful
 	public static final Color Type1 = rgbToFloat(243, 146, 0);
 	public static final Color Type2 = rgbToFloat(227, 6, 19);
 	public static final Color Type3 = rgbToFloat(230, 0, 126);
