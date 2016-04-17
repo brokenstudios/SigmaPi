@@ -6,16 +6,15 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 
 import hevs.fragil.patapon.Resources;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
-import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.music.Tempo;
 import hevs.fragil.patapon.units.Archer;
-import hevs.fragil.patapon.units.BodyPart;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.PhysicsRender;
 import hevs.fragil.patapon.units.Section;
@@ -23,8 +22,13 @@ import hevs.fragil.patapon.units.Shield;
 import hevs.fragil.patapon.units.Spearman;
 import hevs.fragil.patapon.units.Unit;
 import hevs.gdx2d.components.audio.SoundSample;
+import hevs.gdx2d.components.graphics.GeomUtils;
+import hevs.gdx2d.components.physics.PhysicsPolygon;
+import hevs.gdx2d.components.physics.utils.PhysicsScreenBoundaries;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
+import hevs.gdx2d.lib.physics.DebugRenderer;
+import hevs.gdx2d.lib.physics.PhysicsWorld;
 
 public class Map extends PortableApplication{
 	private int width;
@@ -35,12 +39,13 @@ public class Map extends PortableApplication{
 	private static BlinkingBorder f;
 	private static Timer tempoTimer = new Timer();
 	private static Timer actionTimer = new Timer();
+	DebugRenderer debugRenderer;
 	
 	public float stateTime;
-	
+
 	public static void main(String[] args) {
 		new Map(1000);
-		getCompanies().add(newSampleCompany(4,3,3));
+		getCompanies().add(randomCompany(4,3,3));
 	}
 	/**
 	 * @author Loïc Gillioz (lg)
@@ -50,20 +55,20 @@ public class Map extends PortableApplication{
 	 * @return a sample company that contains {@code nb1} archers,
 	 * {@code nb2} swordmans and {@code nb3}shields.
 	 */
-	private static Company newSampleCompany(int nb1, int nb2, int nb3){
+	private static Company randomCompany(int nb1, int nb2, int nb3){
 		Company comp = new Company("Patapons");
 		
 		for(int i = 0 ; i < 3; i++){
 			comp.add(new Section(Integer.toString(i)));
 		}
 		for(int i = 0 ; i < nb1; i++){
-			comp.sections.elementAt(0).add(new Archer());
+			comp.sections.elementAt(0).add(new Archer((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
 		}
 		for(int i = 0 ; i < nb2; i++){
-			comp.sections.elementAt(1).add(new Spearman());
+			comp.sections.elementAt(1).add(new Spearman((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
 		}
 		for(int i = 0 ; i < nb3; i++){
-			comp.sections.elementAt(2).add(new Shield());
+			comp.sections.elementAt(2).add(new Shield((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
 		}
 		
 		int initialPos = comp.getWidth()/2 + 50;
@@ -125,11 +130,20 @@ public class Map extends PortableApplication{
 		actionTimer.scheduleAtFixedRate(new PhysicsRender(), 0, Param.ACTIONS_BAR);
 
 		//Load the image files
-		Unit.setLegsSprite("data/images/walk.png", 3, 1);
-		Resources.getInstance().loadEyes();
-		Resources.getInstance().loadBodies();
+		Unit.setLegsSprite("data/images/legs64x42.png", 4, 1);
+		for (Company c : getCompanies()) {
+			for (Section s : c.sections) {
+				for (Unit u : s.units) {
+					u.setBodySprite("data/images/bodies64x102.png", 5, 5);
+					u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
+				}
+			}
+		}
 		f = new BlinkingBorder();
-        stateTime = 0f;       
+        stateTime = 0f;   
+        
+		new PhysicsScreenBoundaries(this.getWindowWidth(), this.getWindowHeight());
+		debugRenderer = new DebugRenderer();
 	}
 	@Override
 	public void onKeyDown(int keycode) {
@@ -170,6 +184,9 @@ public class Map extends PortableApplication{
 			getCompanies().firstElement().moveRelative(+10);
 	}
 	public void onGraphicRender(GdxGraphics g) {		
+		PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
+		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
+		
 		//clear the screen
 		g.clear(Param.BACKGROUND);
 		//write help
@@ -187,8 +204,6 @@ public class Map extends PortableApplication{
 		for (Company c : getCompanies()) {
 			for (Section s : c.sections) {
 				for (Unit u : s.units) {
-					//TODO WHY WHY WHY oooOH WHHYYYY 
-//					u.changeBody(BodyPart.BODY_BLUE);
 					u.draw(g, stateTime);
 				}
 			}

@@ -32,7 +32,7 @@ public class PhysicsRender extends TimerTask{
 			switch(a){
 				case WALK : 	finished = walk(c);
 								break;
-				case ATTACK : 	
+				case ATTACK : 	finished = attack(c);
 								break;
 				case DEFEND : 	
 								break;
@@ -106,7 +106,8 @@ public class PhysicsRender extends TimerTask{
 		}
 		return false;
 	}
-//	private static boolean attack(Company striker, Company victim){
-//		
-//	}
+	private static boolean attack(Company striker){
+		striker.attack();
+		return true;
+	}
 }
