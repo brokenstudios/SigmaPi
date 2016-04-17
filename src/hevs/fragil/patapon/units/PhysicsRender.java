@@ -16,8 +16,6 @@ public class PhysicsRender extends TimerTask{
 	
 	@Override
 	public void run() {
-		Resources.getInstance().titi = 3;
-		
 		for (Company c : Map.getCompanies()) {
 			for (Action a : c.getActions()) {
 				switchAction(a, c);
@@ -34,7 +32,7 @@ public class PhysicsRender extends TimerTask{
 			switch(a){
 				case WALK : 	finished = walk(c);
 								break;
-				case ATTACK : 	
+				case ATTACK : 	finished = attack(c);
 								break;
 				case DEFEND : 	
 								break;
@@ -108,7 +106,8 @@ public class PhysicsRender extends TimerTask{
 		}
 		return false;
 	}
-//	private static boolean attack(Company striker, Company victim){
-//		
-//	}
+	private static boolean attack(Company striker){
+		striker.attack();
+		return true;
+	}
 }

@@ -81,8 +81,13 @@ public class Company {
 			}
 		}	
 	}
-	public void attack(Company victim){
-		
+	public void attack(){
+		System.out.println("A l'attaque !");
+		for (Section section : sections) {
+			for (Unit unit : section.units) {
+				unit.attack();
+			}
+		}
 	}
 	public Vector<Action> getActions(){
 		return toDo;
