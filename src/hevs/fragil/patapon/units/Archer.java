@@ -1,11 +1,10 @@
 package hevs.fragil.patapon.units;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.fragil.patapon.others.Map;
+import hevs.gdx2d.components.graphics.GeomUtils;
 import hevs.gdx2d.components.physics.PhysicsPolygon;
 import hevs.gdx2d.lib.GdxGraphics;
 
@@ -14,7 +13,7 @@ public class Archer extends Unit {
 	static Skills modAttack;
 	static Skills modDefense;	
 	static SpriteSheet arms;
-	static PhysicsPolygon arrow = null;
+	PhysicsPolygon arrow = null;
 	public Archer(){
 		this(1,1);
 	}
@@ -35,19 +34,24 @@ public class Archer extends Unit {
 		super.drawEye();
 		drawArms(time);
 		if(arrow != null)
-			g.drawFilledPolygon(arrow.getPolygon(), Color.YELLOW);
+			g.drawFilledPolygon(arrow.getPolygon(), Color.BLACK);
 	}
 	private void drawArms(float time){
 		
 	}
-
 	private void fire(){
+		if(arrow != null)
+			arrow.destroy();
 		Vector2[] p ={
-				new Vector2(0,100),  
-				new Vector2(100,100),
-				new Vector2(0,110)
+				new Vector2(0,0),  
+				new Vector2(0,50),
+				new Vector2(5,50),
+				new Vector2(5,0)
 				};
+		
+		GeomUtils.translate(p, new Vector2(super.position, 60));
+		GeomUtils.rotate(p,-20);
 		arrow = new PhysicsPolygon("arrow", p ,true);
-		arrow.applyBodyForce(new Vector2(100,30), new Vector2(2,3), true);
+		arrow.setBodyLinearVelocity(2, 10);
 	}
 }

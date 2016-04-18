@@ -6,9 +6,7 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
 
-import hevs.fragil.patapon.Resources;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
@@ -22,8 +20,6 @@ import hevs.fragil.patapon.units.Shield;
 import hevs.fragil.patapon.units.Spearman;
 import hevs.fragil.patapon.units.Unit;
 import hevs.gdx2d.components.audio.SoundSample;
-import hevs.gdx2d.components.graphics.GeomUtils;
-import hevs.gdx2d.components.physics.PhysicsPolygon;
 import hevs.gdx2d.components.physics.utils.PhysicsScreenBoundaries;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
