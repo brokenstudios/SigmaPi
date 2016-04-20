@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import hevs.fragil.patapon.drawables.Arrow;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
+import hevs.fragil.patapon.drawables.PointedObject;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
@@ -32,7 +33,7 @@ public class Map extends PortableApplication{
 	private static Vector<Company> companies = new Vector<Company>();
 	private static SoundSample heNote, sNote, soNote, yesNote;
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
-	private static Vector<DrawableObject> flyingObjects = new Vector<DrawableObject>();
+	private static Vector<PointedObject> toPhysics = new Vector<PointedObject>();
 	private static SoundSample snap;
 	private static BlinkingBorder f;
 	private static Timer tempoTimer = new Timer();
@@ -95,8 +96,8 @@ public class Map extends PortableApplication{
 	public static void add (Company c){
 		getCompanies().add(c);
 	}
-	public static void add (DrawableObject flyingObject){
-		flyingObjects.add(flyingObject);
+	public static void add (PointedObject o){
+		toPhysics.add(o);
 	}
 	@Override
 	public void onDispose() {
@@ -217,8 +218,8 @@ public class Map extends PortableApplication{
 				}
 			}
 		}
-		for (DrawableObject f : flyingObjects) {
-			f.draw(g);
+		for (PointedObject o : toPhysics) {
+			o.draw(g);
 		}
 		//oh yeah
 		g.drawSchoolLogoUpperRight();
