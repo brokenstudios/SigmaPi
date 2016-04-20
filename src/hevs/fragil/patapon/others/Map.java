@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 
+import hevs.fragil.patapon.drawables.Arrow;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
@@ -14,7 +15,6 @@ import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.music.Tempo;
 import hevs.fragil.patapon.units.Archer;
 import hevs.fragil.patapon.units.Company;
-import hevs.fragil.patapon.units.PhysicsRender;
 import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.Shield;
 import hevs.fragil.patapon.units.Spearman;
@@ -23,14 +23,16 @@ import hevs.gdx2d.components.audio.SoundSample;
 import hevs.gdx2d.components.physics.utils.PhysicsScreenBoundaries;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
+import hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.gdx2d.lib.physics.DebugRenderer;
 import hevs.gdx2d.lib.physics.PhysicsWorld;
 
 public class Map extends PortableApplication{
 	private int width;
 	private static Vector<Company> companies = new Vector<Company>();
-	private static Vector<SoundSample> drums = new Vector<SoundSample>();
+	private static SoundSample heNote, sNote, soNote, yesNote;
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
+	private static Vector<DrawableObject> flyingObjects = new Vector<DrawableObject>();
 	private static SoundSample snap;
 	private static BlinkingBorder f;
 	private static Timer tempoTimer = new Timer();
@@ -90,15 +92,19 @@ public class Map extends PortableApplication{
 		if(Tempo.snapEnable)snap.loop();
 		else snap.stop();
 	}
-	public void add (Company c){
+	public static void add (Company c){
 		getCompanies().add(c);
+	}
+	public static void add (DrawableObject flyingObject){
+		flyingObjects.add(flyingObject);
 	}
 	@Override
 	public void onDispose() {
 		super.onDispose();
-		for (SoundSample note : drums) {
-			note.dispose();
-		}
+		heNote.dispose();
+		sNote.dispose();
+		soNote.dispose();
+		yesNote.dispose();
 		for (SoundSample track : tracks) {
 			track.dispose();
 		}
@@ -108,11 +114,10 @@ public class Map extends PortableApplication{
 	public void onInit() {
 		setTitle("Test Map Patapons H-E-S! - by FraGil 2016");
 		//Load the sound files
-		//TODO Pas propre, on devrait plutot créer 4 notes...
-		drums.add(new SoundSample("data/music/HE.wav"));
-		drums.add(new SoundSample("data/music/S.wav"));
-		drums.add(new SoundSample("data/music/SO.wav"));
-		drums.add(new SoundSample("data/music/YES.wav"));
+		heNote = new SoundSample("data/music/HE.wav");
+		sNote = new SoundSample("data/music/S.wav");
+		soNote = new SoundSample("data/music/SO.wav");
+		yesNote = new SoundSample("data/music/YES.wav");
 
 		snap = new SoundSample("data/music/loop2.wav");
 		
@@ -135,56 +140,64 @@ public class Map extends PortableApplication{
 				}
 			}
 		}
+		Arrow.setImgPath("data/images/fleche.png");
 		f = new BlinkingBorder();
         stateTime = 0f;   
         
-		new PhysicsScreenBoundaries(this.getWindowWidth(), this.getWindowHeight());
+		new PhysicsScreenBoundaries(this.getWindowWidth(), this.getWindowHeight()-Param.FLOOR_DEPTH);
 		debugRenderer = new DebugRenderer();
 	}
 	@Override
 	public void onKeyDown(int keycode) {
 		super.onKeyDown(keycode);
 		if (keycode == Keys.NUM_1){
-			//TODO Pas propre, on devrait plutot créer 4 notes...
-			//Du genre HE.play()
-			drums.elementAt(0).play();
+			heNote.play();
 			getCompanies().elementAt(0).add(Sequence.add(new Note(Drum.HE)));
 		}
 		if (keycode == Keys.NUM_2){
-			drums.elementAt(1).play();
+			sNote.play();
 			getCompanies().elementAt(0).add(Sequence.add(new Note(Drum.S)));		
 		}
 		if (keycode == Keys.NUM_3){
-			drums.elementAt(2).play();
+			soNote.play();
 			getCompanies().elementAt(0).add(Sequence.add(new Note(Drum.SO)));		
 		}
 		if (keycode == Keys.NUM_4){
-			drums.elementAt(3).play();
+			yesNote.play();
 			getCompanies().elementAt(0).add(Sequence.add(new Note(Drum.YES)));		
 		}
 		
-		if (keycode == Keys.SPACE)
-			for (SoundSample note : drums)
-				note.setPitch(2);
-		if (keycode == Keys.ENTER)
-			for (SoundSample note : drums) 
-				note.setPitch(1);
+		if (keycode == Keys.SPACE){
+			heNote.setPitch(2);
+			sNote.setPitch(2);
+			soNote.setPitch(2);
+			yesNote.setPitch(2);
+		}
+		if (keycode == Keys.ENTER){
+			heNote.setPitch(1);
+			sNote.setPitch(1);
+			soNote.setPitch(1);
+			yesNote.setPitch(1);	
+		}
 		
 		if (keycode == Keys.A)
 			Tempo.snapFlag = !Tempo.snapFlag;
+		
 		if (keycode == Keys.D)
 			Tempo.soundFlag++ ;
+		
 		if (keycode == Keys.LEFT)
 			getCompanies().firstElement().moveRelative(-10);
+		
 		if (keycode == Keys.RIGHT)
 			getCompanies().firstElement().moveRelative(+10);
 	}
 	public void onGraphicRender(GdxGraphics g) {		
 		PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
-		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
 		
 		//clear the screen
 		g.clear(Param.BACKGROUND);
+		
 		//write help
 		g.setColor(Color.BLACK);
 		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
@@ -204,11 +217,14 @@ public class Map extends PortableApplication{
 				}
 			}
 		}
+		for (DrawableObject f : flyingObjects) {
+			f.draw(g);
+		}
 		//oh yeah
 		g.drawSchoolLogoUpperRight();
 		//draw the frame to show the rythm
 		f.draw(g);
-
+		
         stateTime += Gdx.graphics.getDeltaTime();
 	}
 	public static Vector<Company> getCompanies() {

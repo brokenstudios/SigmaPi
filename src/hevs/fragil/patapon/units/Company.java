@@ -2,6 +2,7 @@ package hevs.fragil.patapon.units;
 import java.util.Iterator;
 import java.util.Vector;
 
+import hevs.fragil.patapon.others.Action;
 import hevs.fragil.patapon.others.Param;
 
 public class Company {

@@ -1,11 +1,10 @@
-package hevs.fragil.patapon.units;
+package hevs.fragil.patapon.others;
 
 import java.util.TimerTask;
 import java.util.Vector;
 
 import hevs.fragil.patapon.music.Note;
-import hevs.fragil.patapon.others.Map;
-import hevs.fragil.patapon.others.Param;
+import hevs.fragil.patapon.units.Company;
 
 public class PhysicsRender extends TimerTask{
 	private static int shiftDestination = 0;

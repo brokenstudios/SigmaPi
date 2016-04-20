@@ -31,7 +31,6 @@ public abstract class Unit implements DrawableObject{
 			new Vector2(200, 200)
 	};
 	
-	//TODO ask mui
 	int walkIndex;
 	
 	Unit(int lvl, int species, int attack, int defense, int life, int distance, int range, int cooldown){
@@ -57,14 +56,14 @@ public abstract class Unit implements DrawableObject{
 	public abstract void attack();
 	public abstract void draw(GdxGraphics g, float time);
 	public void drawLegs(float stateTime){
-		walkIndex = legs.drawKeyFrames(stateTime, position);
+		walkIndex = legs.drawKeyFrames(stateTime, position-32);
 	}
 	public void drawBody(float stateTime){
-		body.drawWalkAnimation(walkIndex, (5*(species-1))+(level-1), position, 20);
+		body.drawWalkAnimation(walkIndex, (5*(species-1))+(level-1), position-32, 20);
 	}
 	public void drawEye() {
 		//TODO Choper l'état ! oui monsieur encore du job
-		eye.drawFrame(1, position, 32);
+		eye.drawFrame(1, position-32, 32);
 	}
 	//only to load files in the onInit method
 	public static void setLegsSprite(String url, int cols, int rows){

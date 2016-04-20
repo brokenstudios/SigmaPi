@@ -1,4 +1,4 @@
-package hevs.fragil.patapon;
+package hevs.fragil.patapon.others;
 
 import java.util.Vector;
 
