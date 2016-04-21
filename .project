@@ -14,4 +14,16 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>data/font/METAOM__.TTF</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/documentation/blue-vinyl_metal-on-metal/METAOM__.TTF</locationURI>
+		</link>
+		<link>
+			<name>data/font/mysteron.ttf</name>
+			<type>1</type>
+			<locationURI>PROJECT_LOC/documentation/mysterons-brk/mysteron.ttf</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
