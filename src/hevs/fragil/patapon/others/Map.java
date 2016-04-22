@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.Color;
 
 import hevs.fragil.patapon.drawables.Arrow;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
-import hevs.fragil.patapon.drawables.PointedObject;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
@@ -33,7 +32,7 @@ public class Map extends PortableApplication{
 	private static Vector<Company> companies = new Vector<Company>();
 	private static SoundSample heNote, sNote, soNote, yesNote;
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
-	private static Vector<PointedObject> toPhysics = new Vector<PointedObject>();
+	private static Vector<DrawableObject> flyingOjects = new Vector<DrawableObject>();
 	private static SoundSample snap;
 	private static BlinkingBorder f;
 	private static Timer tempoTimer = new Timer();
@@ -45,34 +44,6 @@ public class Map extends PortableApplication{
 	public static void main(String[] args) {
 		new Map(1000);
 		getCompanies().add(randomCompany(4,3,3));
-	}
-	/**
-	 * @author Loïc Gillioz (lg)
-	 * @param nb1 : number of archers
-	 * @param nb2 : number of swordmans
-	 * @param nb3 : number of shields
-	 * @return a sample company that contains {@code nb1} archers,
-	 * {@code nb2} swordmans and {@code nb3}shields.
-	 */
-	private static Company randomCompany(int nb1, int nb2, int nb3){
-		Company comp = new Company("Patapons");
-		
-		for(int i = 0 ; i < 3; i++){
-			comp.add(new Section(Integer.toString(i)));
-		}
-		for(int i = 0 ; i < nb1; i++){
-			comp.sections.elementAt(0).add(new Archer((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
-		}
-		for(int i = 0 ; i < nb2; i++){
-			comp.sections.elementAt(1).add(new Spearman((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
-		}
-		for(int i = 0 ; i < nb3; i++){
-			comp.sections.elementAt(2).add(new Shield((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
-		}
-		
-		int initialPos = comp.getWidth()/2 + 50;
-		comp.moveAbsolute(initialPos);
-		return comp;
 	}
 	public Map(int w){
 		this(w, 500);
@@ -96,8 +67,8 @@ public class Map extends PortableApplication{
 	public static void add (Company c){
 		getCompanies().add(c);
 	}
-	public static void add (PointedObject o){
-		toPhysics.add(o);
+	public static void add (DrawableObject o){
+		flyingOjects.add(o);
 	}
 	@Override
 	public void onDispose() {
@@ -194,7 +165,6 @@ public class Map extends PortableApplication{
 			getCompanies().firstElement().moveRelative(+10);
 	}
 	public void onGraphicRender(GdxGraphics g) {		
-		PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
 		
 		//clear the screen
 		g.clear(Param.BACKGROUND);
@@ -218,17 +188,47 @@ public class Map extends PortableApplication{
 				}
 			}
 		}
-		for (PointedObject o : toPhysics) {
+		for (DrawableObject o : flyingOjects) {
 			o.draw(g);
 		}
+		
 		//oh yeah
 		g.drawSchoolLogoUpperRight();
 		//draw the frame to show the rythm
 		f.draw(g);
 		
         stateTime += Gdx.graphics.getDeltaTime();
+        PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
 	}
 	public static Vector<Company> getCompanies() {
 		return companies;
+	}
+	/**
+	 * @author Loïc Gillioz (lg)
+	 * @param nb1 : number of archers
+	 * @param nb2 : number of swordmans
+	 * @param nb3 : number of shields
+	 * @return a sample company that contains {@code nb1} archers,
+	 * {@code nb2} swordmans and {@code nb3}shields.
+	 */
+	private static Company randomCompany(int nb1, int nb2, int nb3){
+		Company comp = new Company("Patapons");
+		
+		for(int i = 0 ; i < 3; i++){
+			comp.add(new Section(Integer.toString(i)));
+		}
+		for(int i = 0 ; i < nb1; i++){
+			comp.sections.elementAt(0).add(new Archer((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
+		}
+		for(int i = 0 ; i < nb2; i++){
+			comp.sections.elementAt(1).add(new Spearman((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
+		}
+		for(int i = 0 ; i < nb3; i++){
+			comp.sections.elementAt(2).add(new Shield((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
+		}
+		
+		int initialPos = comp.getWidth()/2 + 50;
+		comp.moveAbsolute(initialPos);
+		return comp;
 	}
 }

@@ -63,7 +63,7 @@ public abstract class Unit implements DrawableObject{
 	}
 	public void drawEye() {
 		//TODO Choper l'état ! oui monsieur encore du job
-		eye.drawFrame(1, position-32, 32);
+		eye.drawWalkAnimation(walkIndex, 1, position-32, 32);
 	}
 	//only to load files in the onInit method
 	public static void setLegsSprite(String url, int cols, int rows){

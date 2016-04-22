@@ -12,6 +12,7 @@ public class Archer extends Unit {
 	static Skills modAttack;
 	static Skills modDefense;	
 	static SpriteSheet arms;
+	
 	public Archer(){
 		this(1,1);
 	}
