@@ -12,7 +12,7 @@ import hevs.fragil.patapon.drawables.BlinkingBorder;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
-import hevs.fragil.patapon.music.Tempo;
+import hevs.fragil.patapon.music.RythmTimer;
 import hevs.fragil.patapon.units.Archer;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
@@ -46,10 +46,10 @@ public class Map extends PortableApplication{
 		getCompanies().add(randomCompany(4,3,3));
 	}
 	public Map(int w){
-		this(w, 500);
+		this(w, 900);
 	}
 	public Map(int w, int h){
-		super(w, h);
+		super(1500, h);
 		this.width = w;
 	}
 	public static int getNbTracks(){
@@ -58,10 +58,10 @@ public class Map extends PortableApplication{
 	public static void nextTrack(){
 		for (SoundSample track :  tracks)
 			track.stop();
-		tracks.elementAt(Tempo.soundEnable).loop();
+		tracks.elementAt(RythmTimer.soundEnable).loop();
 	}
 	public static void snapToggle(){
-		if(Tempo.snapEnable)snap.loop();
+		if(RythmTimer.snapEnable)snap.loop();
 		else snap.stop();
 	}
 	public static void add (Company c){
@@ -99,8 +99,8 @@ public class Map extends PortableApplication{
 		tracks.add(new SoundSample("data/music/loop5.wav"));
 		tracks.add(new SoundSample("data/music/loop6.wav"));
 		
-		tempoTimer.scheduleAtFixedRate(new Tempo(), 0, Param.MUSIC_BAR);
-		actionTimer.scheduleAtFixedRate(new PhysicsRender(), 0, Param.ACTIONS_BAR);
+		tempoTimer.scheduleAtFixedRate(new RythmTimer(), 0, Param.MUSIC_BAR);
+		actionTimer.scheduleAtFixedRate(new ActionTimer(), 0, Param.ACTIONS_BAR);
 
 		//Load the image files
 		Unit.setLegsSprite("data/images/legs64x42.png", 4, 1);
@@ -153,10 +153,10 @@ public class Map extends PortableApplication{
 		}
 		
 		if (keycode == Keys.A)
-			Tempo.snapFlag = !Tempo.snapFlag;
+			RythmTimer.snapFlag = !RythmTimer.snapFlag;
 		
 		if (keycode == Keys.D)
-			Tempo.soundFlag++ ;
+			RythmTimer.soundFlag++ ;
 		
 		if (keycode == Keys.LEFT)
 			getCompanies().firstElement().moveRelative(-10);
@@ -165,7 +165,6 @@ public class Map extends PortableApplication{
 			getCompanies().firstElement().moveRelative(+10);
 	}
 	public void onGraphicRender(GdxGraphics g) {		
-		
 		//clear the screen
 		g.clear(Param.BACKGROUND);
 		
@@ -196,9 +195,10 @@ public class Map extends PortableApplication{
 		g.drawSchoolLogoUpperRight();
 		//draw the frame to show the rythm
 		f.draw(g);
-		
+		PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
         stateTime += Gdx.graphics.getDeltaTime();
-        PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
+		g.drawSchoolLogoUpperRight();
+		g.drawFPS();
 	}
 	public static Vector<Company> getCompanies() {
 		return companies;

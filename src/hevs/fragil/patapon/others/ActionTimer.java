@@ -6,7 +6,7 @@ import java.util.Vector;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.units.Company;
 
-public class PhysicsRender extends TimerTask{
+public class ActionTimer extends TimerTask{
 	private static int shiftDestination = 0;
 	private static int shiftIncrement = 0;
 	private static int waitIndex = 0;

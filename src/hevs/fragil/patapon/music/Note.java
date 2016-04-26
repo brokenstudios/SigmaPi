@@ -13,7 +13,7 @@ public class Note{
 		
 	public Note(Drum d){
 		this.drum = d;
-		long delayNext = System.currentTimeMillis() - Tempo.lastTime;
+		long delayNext = System.currentTimeMillis() - RythmTimer.lastTime;
 		long delayPrev =  500 - delayNext;
 		long delay = Math.min(delayNext, delayPrev);
 		

@@ -4,7 +4,7 @@ import java.util.TimerTask;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
 import hevs.fragil.patapon.others.Map;
 
-public class Tempo extends TimerTask {
+public class RythmTimer extends TimerTask {
 	BlinkingBorder f = new BlinkingBorder();
 	static long lastTime;
 	public static int soundFlag = 1;
