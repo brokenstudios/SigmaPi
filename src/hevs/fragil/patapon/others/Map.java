@@ -6,13 +6,17 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.JointDef;
+import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
 import hevs.fragil.patapon.drawables.Arrow;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
+import hevs.fragil.patapon.drawables.FlyingObject;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
-import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.music.RythmTimer;
+import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.units.Archer;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
@@ -20,10 +24,9 @@ import hevs.fragil.patapon.units.Shield;
 import hevs.fragil.patapon.units.Spearman;
 import hevs.fragil.patapon.units.Unit;
 import hevs.gdx2d.components.audio.SoundSample;
-import hevs.gdx2d.components.physics.utils.PhysicsScreenBoundaries;
+import hevs.gdx2d.components.physics.PhysicsPolygon;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
-import hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.gdx2d.lib.physics.DebugRenderer;
 import hevs.gdx2d.lib.physics.PhysicsWorld;
 
@@ -32,24 +35,26 @@ public class Map extends PortableApplication{
 	private static Vector<Company> companies = new Vector<Company>();
 	private static SoundSample heNote, sNote, soNote, yesNote;
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
-	private static Vector<DrawableObject> flyingOjects = new Vector<DrawableObject>();
+	private static Vector<FlyingObject> flyingOjects = new Vector<FlyingObject>();
 	private static SoundSample snap;
 	private static BlinkingBorder f;
 	private static Timer tempoTimer = new Timer();
 	private static Timer actionTimer = new Timer();
 	DebugRenderer debugRenderer;
+	private static Floor floor;
+	private static Vector<WeldJointDef> toJoin = new Vector<WeldJointDef>();
 	
 	public float stateTime;
 
 	public static void main(String[] args) {
-		new Map(1000);
+		new Map(1500);
 		getCompanies().add(randomCompany(4,3,3));
 	}
 	public Map(int w){
 		this(w, 900);
 	}
 	public Map(int w, int h){
-		super(1500, h);
+		super(w, h);
 		this.width = w;
 	}
 	public static int getNbTracks(){
@@ -64,10 +69,7 @@ public class Map extends PortableApplication{
 		if(RythmTimer.snapEnable)snap.loop();
 		else snap.stop();
 	}
-	public static void add (Company c){
-		getCompanies().add(c);
-	}
-	public static void add (DrawableObject o){
+	public static void add (FlyingObject o){
 		flyingOjects.add(o);
 	}
 	@Override
@@ -98,7 +100,7 @@ public class Map extends PortableApplication{
 		tracks.add(new SoundSample("data/music/loop4.wav"));
 		tracks.add(new SoundSample("data/music/loop5.wav"));
 		tracks.add(new SoundSample("data/music/loop6.wav"));
-		
+
 		tempoTimer.scheduleAtFixedRate(new RythmTimer(), 0, Param.MUSIC_BAR);
 		actionTimer.scheduleAtFixedRate(new ActionTimer(), 0, Param.ACTIONS_BAR);
 
@@ -116,7 +118,7 @@ public class Map extends PortableApplication{
 		f = new BlinkingBorder();
         stateTime = 0f;   
         
-		new PhysicsScreenBoundaries(this.getWindowWidth(), this.getWindowHeight()-Param.FLOOR_DEPTH);
+		floor = new Floor(width);
 		debugRenderer = new DebugRenderer();
 	}
 	@Override
@@ -164,7 +166,16 @@ public class Map extends PortableApplication{
 		if (keycode == Keys.RIGHT)
 			getCompanies().firstElement().moveRelative(+10);
 	}
-	public void onGraphicRender(GdxGraphics g) {		
+	public void onGraphicRender(GdxGraphics g) {	
+//		g.clear();
+//
+//		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
+//		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
+//
+//		g.drawSchoolLogoUpperRight();
+//		g.drawFPS();
+
+		
 		//clear the screen
 		g.clear(Param.BACKGROUND);
 		
@@ -175,10 +186,7 @@ public class Map extends PortableApplication{
 		g.drawStringCentered(450f, "Touches 1 à 4 pour jouer les sons");
 		g.drawStringCentered(430f, "Touche D pour changer de loop sonore");
 		
-		float fY = Param.FLOOR_DEPTH;
-		
-		//draw floor
-		g.drawFilledRectangle(width/2, 0, width, fY, 0,Color.DARK_GRAY);
+		floor.draw(g);
 		
 		for (Company c : getCompanies()) {
 			for (Section s : c.sections) {
@@ -187,16 +195,23 @@ public class Map extends PortableApplication{
 				}
 			}
 		}
-		for (DrawableObject o : flyingOjects) {
-			o.draw(g);
-		}
-		
 		//oh yeah
 		g.drawSchoolLogoUpperRight();
 		//draw the frame to show the rythm
 		f.draw(g);
+		
 		PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
-        stateTime += Gdx.graphics.getDeltaTime();
+		//stop arrows
+		for(WeldJointDef j : toJoin){
+			//TODO doesn't work for instance
+			PhysicsWorld.getInstance().createJoint(j);
+		}
+		//draw all objects
+		for (FlyingObject o : flyingOjects) {
+			o.draw(g);
+		}
+
+        stateTime = Gdx.graphics.getRawDeltaTime();
 		g.drawSchoolLogoUpperRight();
 		g.drawFPS();
 	}
@@ -230,5 +245,12 @@ public class Map extends PortableApplication{
 		int initialPos = comp.getWidth()/2 + 50;
 		comp.moveAbsolute(initialPos);
 		return comp;
+	}
+	public static void join(PhysicsPolygon p, Vector2 location) {
+		WeldJointDef jointDef = new WeldJointDef ();
+		jointDef.bodyA = p.getBody();
+		jointDef.bodyB = floor.getBody();
+		jointDef.initialize(p.getBody(), floor.getBody(), location);
+		toJoin.add(jointDef);
 	}
 }
