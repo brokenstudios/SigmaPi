@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
 import hevs.fragil.patapon.drawables.Arrow;
@@ -32,6 +33,7 @@ import hevs.gdx2d.lib.physics.PhysicsWorld;
 
 public class Map extends PortableApplication{
 	private int width;
+	private static int cameraX;
 	private static Vector<Company> companies = new Vector<Company>();
 	private static SoundSample heNote, sNote, soNote, yesNote;
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
@@ -44,6 +46,7 @@ public class Map extends PortableApplication{
 	private static Floor floor;
 	private static Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
 	private static Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
+
 	
 	public float stateTime;
 
@@ -167,14 +170,15 @@ public class Map extends PortableApplication{
 			getCompanies().firstElement().moveRelative(+10);
 	}
 	public void onGraphicRender(GdxGraphics g) {	
-		g.clear();
-		g.moveCamera(-100, 0);
+		//clear the screen Param.BACKGROUND
+		g.clear(Param.BACKGROUND);
+		g.moveCamera(cameraX, 0);
 
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
-		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
+//		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
 		
+		//stick flying objects
 		while(toJoin.size() > 0){
-			//one after the other
 			StickyInfo si = toJoin.remove(0);
 		    WeldJointDef wjd = new WeldJointDef();
 		    wjd.bodyA = si.bodyA;
@@ -191,54 +195,28 @@ public class Map extends PortableApplication{
 		}
 		
 		floor.draw(g);
-	
-		while(toDisable.size() > 0){
-			PhysicsPolygon p = toDisable.remove(0);
-			p.setBodyActive(false);
+		//FIXME the frame should be always on the center of the visual area (maybe get camera position cameraX)
+		f.draw(g);
+		for (Company c : getCompanies()) {
+			for (Section s : c.sections) {
+				for (Unit u : s.units) {
+					u.draw(g, stateTime);
+				}
+			}
 		}
 		
+		//write help
+		g.setColor(Color.BLACK);
+		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
+		g.drawStringCentered(470f, "Flèches pour bouger la companie");
+		g.drawStringCentered(450f, "Touches 1 à 4 pour jouer les sons");
+		g.drawStringCentered(430f, "Touche D pour changer de loop sonore");
+		
+	
 		g.drawSchoolLogoUpperRight();
 		g.drawFPS();
 
-//		
-//		//clear the screen
-//		g.clear(Param.BACKGROUND);
-//		
-//		//write help
-//		g.setColor(Color.BLACK);
-//		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
-//		g.drawStringCentered(470f, "Flèches pour bouger la companie");
-//		g.drawStringCentered(450f, "Touches 1 à 4 pour jouer les sons");
-//		g.drawStringCentered(430f, "Touche D pour changer de loop sonore");
-//		
-//		floor.draw(g);
-//		
-//		for (Company c : getCompanies()) {
-//			for (Section s : c.sections) {
-//				for (Unit u : s.units) {
-//					u.draw(g, stateTime);
-//				}
-//			}
-//		}
-//		//oh yeah
-//		g.drawSchoolLogoUpperRight();
-//		//draw the frame to show the rythm
-//		f.draw(g);
-//		
-//		PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
-//		//stop arrows
-//		for(WeldJointDef j : toJoin){
-//			//TODO doesn't work for instance
-//			PhysicsWorld.getInstance().createJoint(j);
-//		}
-//		//draw all objects
-//		for (FlyingObject o : flyingOjects) {
-//			o.draw(g);
-//		}
-//
-//        stateTime = Gdx.graphics.getRawDeltaTime();
-//		g.drawSchoolLogoUpperRight();
-//		g.drawFPS();
+		stateTime += Gdx.graphics.getDeltaTime();
 	}
 	public static Vector<Company> getCompanies() {
 		return companies;

@@ -38,6 +38,6 @@ public class Archer extends Unit {
 		
 	}
 	private void fire(){
-		new Arrow( new Vector2(super.position, Param.FLOOR_DEPTH), new Vector2(4,10) );
+		new Arrow( new Vector2(super.position, Param.FLOOR_DEPTH+30),60, 400);
 	}
 }

@@ -19,8 +19,7 @@ public class Floor extends PhysicsStaticBox implements DrawableObject{
 
 	@Override
 	public void draw(GdxGraphics g) {
-		g.drawFilledRectangle(pos.x, pos.y, width, Param.FLOOR_DEPTH, 0f, Color.DARK_GRAY);
-		g.drawFilledCircle(getBodyWorldCenter().x, getBodyWorldCenter().y, 4, Color.YELLOW);
+		g.drawFilledRectangle(pos.x, pos.y, width, Param.FLOOR_DEPTH, 0f, Color.BLACK);
 	}
 
 }

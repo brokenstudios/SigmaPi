@@ -11,7 +11,7 @@ public class ArrowPolygon extends PhysicsPolygon {
 	static int nArrows;
 
 	public ArrowPolygon(Vector2[] vertices) {
-		super("arrow"+nArrows, vertices,  5f, 0f, 0.5f, true);
+		super("arrow"+nArrows, vertices,  8f, 0f, 1f, true);
 		this.getBody().setBullet(true);
 		nArrows++;
 	}
