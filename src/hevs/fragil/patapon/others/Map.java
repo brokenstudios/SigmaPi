@@ -5,14 +5,13 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.JointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
 import hevs.fragil.patapon.drawables.Arrow;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
 import hevs.fragil.patapon.drawables.FlyingObject;
+import hevs.fragil.patapon.drawables.StickyInfo;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.RythmTimer;
@@ -25,6 +24,7 @@ import hevs.fragil.patapon.units.Spearman;
 import hevs.fragil.patapon.units.Unit;
 import hevs.gdx2d.components.audio.SoundSample;
 import hevs.gdx2d.components.physics.PhysicsPolygon;
+import hevs.gdx2d.components.physics.utils.PhysicsScreenBoundaries;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
 import hevs.gdx2d.lib.physics.DebugRenderer;
@@ -42,7 +42,8 @@ public class Map extends PortableApplication{
 	private static Timer actionTimer = new Timer();
 	DebugRenderer debugRenderer;
 	private static Floor floor;
-	private static Vector<WeldJointDef> toJoin = new Vector<WeldJointDef>();
+	private static Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
+	private static Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
 	
 	public float stateTime;
 
@@ -115,9 +116,8 @@ public class Map extends PortableApplication{
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
-		f = new BlinkingBorder();
-        stateTime = 0f;   
-        
+		f = new BlinkingBorder();  
+        new PhysicsScreenBoundaries(getWindowWidth(), getWindowHeight());
 		floor = new Floor(width);
 		debugRenderer = new DebugRenderer();
 	}
@@ -167,53 +167,84 @@ public class Map extends PortableApplication{
 			getCompanies().firstElement().moveRelative(+10);
 	}
 	public void onGraphicRender(GdxGraphics g) {	
-//		g.clear();
-//
-//		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
-//		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
-//
-//		g.drawSchoolLogoUpperRight();
-//		g.drawFPS();
+		g.clear();
+		g.moveCamera(-100, 0);
 
+		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
+		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
 		
-		//clear the screen
-		g.clear(Param.BACKGROUND);
-		
-		//write help
-		g.setColor(Color.BLACK);
-		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
-		g.drawStringCentered(470f, "Flèches pour bouger la companie");
-		g.drawStringCentered(450f, "Touches 1 à 4 pour jouer les sons");
-		g.drawStringCentered(430f, "Touche D pour changer de loop sonore");
-		
-		floor.draw(g);
-		
-		for (Company c : getCompanies()) {
-			for (Section s : c.sections) {
-				for (Unit u : s.units) {
-					u.draw(g, stateTime);
-				}
-			}
+		while(toJoin.size() > 0){
+			StickyInfo si = toJoin.remove(0);
+			si.bodyA.setAngularVelocity(0f);
+			si.bodyA.setLinearVelocity(0f,0f);
+		    WeldJointDef wjd = new WeldJointDef();
+		    wjd.bodyA = si.bodyA;
+		    wjd.bodyB = si.bodyB;
+		    wjd.referenceAngle = si.bodyB.getAngle() - si.bodyA.getAngle();
+		    wjd.localAnchorA.set(si.anchor);
+		    wjd.localAnchorB.set(si.anchor);
+		    wjd.initialize(si.bodyA, si.bodyB, si.anchor);
+		    PhysicsWorld.getInstance().createJoint( wjd );
+		    System.out.println("body A : " + wjd.localAnchorA);
+		    System.out.println("body B : " + wjd.localAnchorB);
+
 		}
-		//oh yeah
-		g.drawSchoolLogoUpperRight();
-		//draw the frame to show the rythm
-		f.draw(g);
 		
-		PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
-		//stop arrows
-		for(WeldJointDef j : toJoin){
-			//TODO doesn't work for instance
-			PhysicsWorld.getInstance().createJoint(j);
-		}
 		//draw all objects
 		for (FlyingObject o : flyingOjects) {
+			o.updatePhysics(g);
 			o.draw(g);
 		}
-
-        stateTime = Gdx.graphics.getRawDeltaTime();
+		if(flyingOjects.size() > 0)
+		System.out.println(flyingOjects.elementAt(0).getSpike());
+		floor.draw(g);
+	
+		while(toDisable.size() > 0){
+			PhysicsPolygon p = toDisable.remove(0);
+			p.setBodyActive(false);
+		}
 		g.drawSchoolLogoUpperRight();
 		g.drawFPS();
+
+//		
+//		//clear the screen
+//		g.clear(Param.BACKGROUND);
+//		
+//		//write help
+//		g.setColor(Color.BLACK);
+//		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
+//		g.drawStringCentered(470f, "Flèches pour bouger la companie");
+//		g.drawStringCentered(450f, "Touches 1 à 4 pour jouer les sons");
+//		g.drawStringCentered(430f, "Touche D pour changer de loop sonore");
+//		
+//		floor.draw(g);
+//		
+//		for (Company c : getCompanies()) {
+//			for (Section s : c.sections) {
+//				for (Unit u : s.units) {
+//					u.draw(g, stateTime);
+//				}
+//			}
+//		}
+//		//oh yeah
+//		g.drawSchoolLogoUpperRight();
+//		//draw the frame to show the rythm
+//		f.draw(g);
+//		
+//		PhysicsWorld.updatePhysics(Gdx.graphics.getRawDeltaTime());
+//		//stop arrows
+//		for(WeldJointDef j : toJoin){
+//			//TODO doesn't work for instance
+//			PhysicsWorld.getInstance().createJoint(j);
+//		}
+//		//draw all objects
+//		for (FlyingObject o : flyingOjects) {
+//			o.draw(g);
+//		}
+//
+//        stateTime = Gdx.graphics.getRawDeltaTime();
+//		g.drawSchoolLogoUpperRight();
+//		g.drawFPS();
 	}
 	public static Vector<Company> getCompanies() {
 		return companies;
@@ -246,11 +277,10 @@ public class Map extends PortableApplication{
 		comp.moveAbsolute(initialPos);
 		return comp;
 	}
-	public static void join(PhysicsPolygon p, Vector2 location) {
-		WeldJointDef jointDef = new WeldJointDef ();
-		jointDef.bodyA = p.getBody();
-		jointDef.bodyB = floor.getBody();
-		jointDef.initialize(p.getBody(), floor.getBody(), location);
-		toJoin.add(jointDef);
+	public static void createWeldJoint(StickyInfo si) {
+		toJoin.add(si);
+	}
+	public static void disable(PhysicsPolygon p){
+		toDisable.add(p);
 	}
 }

@@ -27,8 +27,8 @@ public class Arrow extends FlyingObject{
 		//60 degrees
 		poly.rotate(-30);
 		
-		Vector2[] v2 = verticesToVector2(poly.getTransformedVertices());
-		box = new ArrowPolygon(v2);
+		box = new ArrowPolygon(verticesToVector2(poly.getTransformedVertices()));
+		//TODO destroy old poly ?
 		
 		//air resistance
 		box.setBodyAngularDamping(10f);
@@ -36,8 +36,9 @@ public class Arrow extends FlyingObject{
 		//same negative index to disable collisions between arrows
 		box.setCollisionGroup(-1);
 		box.enableCollisionListener();
+		
 		//60 degrees
-		box.applyBodyForceToCenter(new Vector2(1000,3000), true);
+		box.applyBodyForceToCenter(new Vector2(50,300), true);
 		Map.add(this);
 	}
 	public static void setImgPath(String url) {
@@ -59,17 +60,12 @@ public class Arrow extends FlyingObject{
 		}
 	}
 	@Override
-	public void draw(GdxGraphics g) {
-		Vector2 v = box.getBodyLinearVelocity();
-		double velocity = Math.sqrt(v.x*v.x + v.y*v.y);
-		float lift = (float)( -Math.cos(box.getBodyAngle()+ Math.PI/3) * velocity);
-		box.applyBodyTorque(lift, true);
-		
-		Vector2 pos = box.getBodyWorldCenter();
-		g.drawFilledPolygon(box.getPolygon(),Color.CYAN);
-		g.drawTransformedPicture(pos.x, pos.y, box.getBodyAngleDeg()+60, .3f, img);
-		g.drawFilledCircle(box.getBodyWorldCenter().x, box.getBodyWorldCenter().y, 5, Color.GREEN);
-		g.drawFilledCircle(box.getBodyWorldCenter().x, box.getBodyWorldCenter().y, 5, Color.GREEN);
+	public void draw(GdxGraphics g) {		
+//		Vector2 pos = box.getBodyWorldCenter();
+//		g.drawFilledPolygon(box.getPolygon(),Color.CYAN);
+//		g.drawTransformedPicture(pos.x, pos.y, box.getBodyAngleDeg()+60, .3f, img);
+		g.drawFilledCircle(box.getBodyWorldCenter().x, box.getBodyWorldCenter().y, 1, Color.GREEN);
+		g.drawFilledCircle(box.getSpike().x, box.getSpike().y, 1, Color.YELLOW);
 	}
 	@Override
 	public Vector2 getSpike() {
@@ -78,6 +74,13 @@ public class Arrow extends FlyingObject{
 	@Override
 	public Body getBody() {
 		return box.getBody();
+	}
+	@Override
+	public void updatePhysics(GdxGraphics g) {
+		Vector2 v = box.getBodyLinearVelocity();
+		double velocity = Math.sqrt(v.x*v.x + v.y*v.y);
+		float lift = (float)( -Math.cos(box.getBodyAngle()+ Math.PI/3) * velocity);
+		box.applyBodyTorque(lift, true);
 	}
 	
 }
