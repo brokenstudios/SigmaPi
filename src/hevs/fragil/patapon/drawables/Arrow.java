@@ -38,7 +38,7 @@ public class Arrow extends FlyingObject{
 		box.enableCollisionListener();
 		
 		//60 degrees
-		box.applyBodyForceToCenter(new Vector2(50,300), true);
+		box.applyBodyForceToCenter(new Vector2((float)Math.random()*10+40, (float)Math.random()*10+300), true);
 		Map.add(this);
 	}
 	public static void setImgPath(String url) {

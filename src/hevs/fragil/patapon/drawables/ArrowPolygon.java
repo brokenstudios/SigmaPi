@@ -18,12 +18,11 @@ public class ArrowPolygon extends PhysicsPolygon {
 	
 	@Override
 	public void collision(AbstractPhysicsObject theOtherObject, float energy) {
-		if(energy > 0)
+		if(energy > 0){
 			System.out.println(theOtherObject.name + " collided with " + this.name + " with " + energy + " energy" );
-		if(energy > 5){
+		if(energy > 5)
 			System.out.println(this.name + " is now stuck in the floor !");
 			Map.createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(),getSpike()));
-//			Map.disable(this);
 		}
 	}
 	public Vector2 getSpike() {

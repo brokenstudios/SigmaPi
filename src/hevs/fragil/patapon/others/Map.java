@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
 import hevs.fragil.patapon.drawables.Arrow;
@@ -24,6 +23,7 @@ import hevs.fragil.patapon.units.Spearman;
 import hevs.fragil.patapon.units.Unit;
 import hevs.gdx2d.components.audio.SoundSample;
 import hevs.gdx2d.components.physics.PhysicsPolygon;
+import hevs.gdx2d.components.physics.utils.PhysicsConstants;
 import hevs.gdx2d.components.physics.utils.PhysicsScreenBoundaries;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.PortableApplication;
@@ -174,20 +174,14 @@ public class Map extends PortableApplication{
 		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
 		
 		while(toJoin.size() > 0){
+			//one after the other
 			StickyInfo si = toJoin.remove(0);
-			si.bodyA.setAngularVelocity(0f);
-			si.bodyA.setLinearVelocity(0f,0f);
 		    WeldJointDef wjd = new WeldJointDef();
 		    wjd.bodyA = si.bodyA;
 		    wjd.bodyB = si.bodyB;
 		    wjd.referenceAngle = si.bodyB.getAngle() - si.bodyA.getAngle();
-		    wjd.localAnchorA.set(si.anchor);
-		    wjd.localAnchorB.set(si.anchor);
-		    wjd.initialize(si.bodyA, si.bodyB, si.anchor);
+		    wjd.initialize(si.bodyA, si.bodyB, PhysicsConstants.coordPixelsToMeters(si.anchor));
 		    PhysicsWorld.getInstance().createJoint( wjd );
-		    System.out.println("body A : " + wjd.localAnchorA);
-		    System.out.println("body B : " + wjd.localAnchorB);
-
 		}
 		
 		//draw all objects
@@ -195,14 +189,14 @@ public class Map extends PortableApplication{
 			o.updatePhysics(g);
 			o.draw(g);
 		}
-		if(flyingOjects.size() > 0)
-		System.out.println(flyingOjects.elementAt(0).getSpike());
+		
 		floor.draw(g);
 	
 		while(toDisable.size() > 0){
 			PhysicsPolygon p = toDisable.remove(0);
 			p.setBodyActive(false);
 		}
+		
 		g.drawSchoolLogoUpperRight();
 		g.drawFPS();
 
