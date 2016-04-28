@@ -20,6 +20,7 @@ public abstract class Unit implements DrawableObject{
 	protected long lastAttack = 0;
 	PhysicsPolygon hitBox;
 	static SpriteSheet legs;
+	static int nUnits;
 	SpriteSheet body, eye;
 	
 	Vector2 obj1[] = {
@@ -43,6 +44,9 @@ public abstract class Unit implements DrawableObject{
 		this.life = life;
 		this.range = range;
 		this.cooldown = cooldown;
+		hitBox = new PhysicsPolygon("hitbox"+nUnits, obj1, true);
+		hitBox.setCollisionGroup(-1);
+		nUnits++;
 	}	
 	public void move(int newPos){
 		this.position = newPos;

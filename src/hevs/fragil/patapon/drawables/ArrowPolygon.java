@@ -10,7 +10,9 @@ public class ArrowPolygon extends PhysicsPolygon {
 	static Vector2 dimensions =  new Vector2(3,80);
 	static int nArrows;
 
-	public ArrowPolygon(Vector2[] vertices) {
+	public ArrowPolygon(Vector2 position, Vector2[] vertices) {
+		//TODO ask to add position in constructor ! (physicsPolygon line 32)
+//		super("arrow"+nArrows, position, vertices,  8f, 0f, 1f, true);
 		super("arrow"+nArrows, vertices,  8f, 0f, 1f, true);
 		this.getBody().setBullet(true);
 		nArrows++;

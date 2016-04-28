@@ -171,11 +171,11 @@ public class Map extends PortableApplication{
 	}
 	public void onGraphicRender(GdxGraphics g) {	
 		//clear the screen Param.BACKGROUND
-		g.clear(Param.BACKGROUND);
+		g.clear();
 		g.moveCamera(cameraX, 0);
 
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
-//		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
+		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
 		
 		//stick flying objects
 		while(toJoin.size() > 0){
@@ -191,16 +191,16 @@ public class Map extends PortableApplication{
 		//draw all objects
 		for (FlyingObject o : flyingOjects) {
 			o.updatePhysics(g);
-			o.draw(g);
+//			o.draw(g);
 		}
 		
-		floor.draw(g);
+//		floor.draw(g);
 		//FIXME the frame should be always on the center of the visual area (maybe get camera position cameraX)
-		f.draw(g);
+//		f.draw(g);
 		for (Company c : getCompanies()) {
 			for (Section s : c.sections) {
 				for (Unit u : s.units) {
-					u.draw(g, stateTime);
+//					u.draw(g, stateTime);
 				}
 			}
 		}

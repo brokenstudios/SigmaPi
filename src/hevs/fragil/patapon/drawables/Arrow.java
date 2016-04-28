@@ -13,27 +13,28 @@ public class Arrow extends FlyingObject{
 	static BitmapImage img;
 	int startAngle;
 	/**
-	 * Yo gamin !
-	 * @param pos
-	 * @param speed
-	 * @param startAngle
-	 * @param startForce
+	 * Creates an new arrow
+	 * @param position		: the position of the departure
+	 * @param startAngle	: the angle 
+	 * @param startForce	:
 	 */
-	public Arrow(Vector2 pos, int startAngle, int startForce) {
+	public Arrow(Vector2 position, int startAngle, int startForce) {
 		//With a polygon
 		this.startAngle = startAngle;
-		float[] v1 = {	pos.x - 5, pos.y + 60,
-						pos.x - 4, pos.y + 70,
-						pos.x, pos.y + 80,
-						pos.x + 4, pos.y + 70,
-						pos.x + 5, pos.y + 60,
-						pos.x, pos.y};
+		float[] v1 = {	position.x - 5, position.y + 60,
+						position.x - 4, position.y + 70,
+						position.x, position.y + 80,
+						position.x + 4, position.y + 70,
+						position.x + 5, position.y + 60,
+						position.x, position.y};
 		
 		Polygon poly = new Polygon(v1);
-		poly.setOrigin(pos.x, pos.y + 40);
+		poly.setOrigin(position.x, position.y + 40);
 		poly.rotate(startAngle - 90);
 		
-		box = new ArrowPolygon(verticesToVector2(poly.getTransformedVertices()));
+		box = new ArrowPolygon(position, verticesToVector2(poly.getTransformedVertices()));
+//		Vector2[] vertices = {new Vector2(- 5, 60),new Vector2(- 4, 70),new Vector2(0, 80),new Vector2(4, 70),new Vector2(5, 60),new Vector2(0, 0)};
+//		box = new ArrowPolygon(position, vertices);
 		//TODO destroy old poly ?
 		
 		//air resistance
@@ -47,10 +48,18 @@ public class Arrow extends FlyingObject{
 		box.applyBodyForceToCenter(new Vector2((float)Math.cos(angleRadians)*startForce, (float)Math.sin(angleRadians)*startForce), true);
 		Map.add(this);
 	}
+	/**
+	 * Must be called during the onInit method
+	 * @param url : image path
+	 */
 	public static void setImgPath(String url) {
-		// TODO Auto-generated method stub
 		img = new BitmapImage(url);
 	}
+	/**
+	 * Convert vertices to Vector2's
+	 * @param vertices array to convert
+	 * @return Vector2[] converted array
+	 */
 	private Vector2[] verticesToVector2(float[] vertices){
 		if(vertices.length % 2 == 0){
 			Vector2[] temp = new Vector2[vertices.length/2];
