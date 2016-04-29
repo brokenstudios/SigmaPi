@@ -14,7 +14,10 @@ public abstract class Param {
 	public static final int SECTION_KEEPOUT = 64;
 	//********************************************************
 	
-	//Style 
+	//Style
+	//Default values of game window (size of menu?)
+	public static final int WIN_HEIGHT = 900;
+	public static final int WIN_WIDTH = 1500;
 	public static final int FLOOR_DEPTH = 30;
 	public static final int FRAME_DEGRADE_STEPS = 10;
 	//Break the color in case of emergency #SoColorful
