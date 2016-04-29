@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
 import hevs.fragil.patapon.drawables.Arrow;
@@ -121,6 +122,8 @@ public class Map extends PortableApplication{
 		Arrow.setImgPath("data/images/fleche.png");
 		f = new BlinkingBorder();  
         new PhysicsScreenBoundaries(getWindowWidth(), getWindowHeight());
+        //LOL !
+        //PhysicsWorld.getInstance().setGravity(new Vector2(0f,0f));
 		floor = new Floor(width);
 		debugRenderer = new DebugRenderer();
 	}
@@ -163,11 +166,34 @@ public class Map extends PortableApplication{
 		if (keycode == Keys.D)
 			RythmTimer.soundFlag++ ;
 		
-		if (keycode == Keys.LEFT)
-			getCompanies().firstElement().moveRelative(-10);
+		if (keycode == Keys.LEFT){
+			for (Company c : getCompanies()) {
+				for (Section s : c.sections) {
+					for (Unit u : s.units) {
+						u.move(-1);
+					}
+				}
+			}
+		}
 		
-		if (keycode == Keys.RIGHT)
-			getCompanies().firstElement().moveRelative(+10);
+		if (keycode == Keys.RIGHT){
+			for (Company c : getCompanies()) {
+				for (Section s : c.sections) {
+					for (Unit u : s.units) {
+						u.move(1);
+					}
+				}
+			}
+		}
+		if (keycode == Keys.UP){
+			for (Company c : getCompanies()) {
+				for (Section s : c.sections) {
+					for (Unit u : s.units) {
+						u.move(0);
+					}
+				}
+			}
+		}
 	}
 	public void onGraphicRender(GdxGraphics g) {	
 		//clear the screen Param.BACKGROUND

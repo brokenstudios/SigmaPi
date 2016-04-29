@@ -1,6 +1,7 @@
 package hevs.fragil.patapon.units;
 import com.badlogic.gdx.math.Vector2;
 
+import hevs.fragil.patapon.drawables.BodyPolygon;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.others.Param;
 import hevs.gdx2d.components.physics.PhysicsPolygon;
@@ -18,20 +19,10 @@ public abstract class Unit implements DrawableObject{
 	protected int range;
 	protected int cooldown;
 	protected long lastAttack = 0;
-	PhysicsPolygon hitBox;
+	BodyPolygon hitBox;
 	static SpriteSheet legs;
 	static int nUnits;
 	SpriteSheet body, eye;
-	
-	Vector2 obj1[] = {
-			new Vector2(100, 100),
-			new Vector2(0, 200),
-			new Vector2(0, 300),
-			new Vector2(100, 400),
-			new Vector2(200, 300),
-			new Vector2(200, 200)
-	};
-	
 	int walkIndex;
 	
 	Unit(int lvl, int species, int attack, int defense, int life, int distance, int range, int cooldown){
@@ -44,12 +35,12 @@ public abstract class Unit implements DrawableObject{
 		this.life = life;
 		this.range = range;
 		this.cooldown = cooldown;
-		hitBox = new PhysicsPolygon("hitbox"+nUnits, obj1, true);
-		hitBox.setCollisionGroup(-1);
+		hitBox = new BodyPolygon(new Vector2(position,Param.FLOOR_DEPTH));
+//		hitBox.setCollisionGroup(-1);
 		nUnits++;
 	}	
 	public void move(int newPos){
-		this.position = newPos;
+		hitBox.move(newPos);
 	}
 	protected void setLife(int d){
 		this.life = d;
