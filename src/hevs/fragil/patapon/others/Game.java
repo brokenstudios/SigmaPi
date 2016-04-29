@@ -6,6 +6,7 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
 import hevs.fragil.patapon.drawables.Arrow;
@@ -31,7 +32,7 @@ import hevs.gdx2d.lib.PortableApplication;
 import hevs.gdx2d.lib.physics.DebugRenderer;
 import hevs.gdx2d.lib.physics.PhysicsWorld;
 
-public class Map extends PortableApplication{
+public class Game extends PortableApplication{
 	private int width;
 	private static int cameraX;
 	private static Vector<Company> companies = new Vector<Company>();
@@ -44,20 +45,22 @@ public class Map extends PortableApplication{
 	private static Timer actionTimer = new Timer();
 	DebugRenderer debugRenderer;
 	private static Floor floor;
+	private static Map map;
 	private static Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
 	private static Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
 
 	
 	public float stateTime;
 
+	//TODO mettre en place le système de paramètres des maps
 	public static void main(String[] args) {
-		new Map(1500);
+		new Game(1500);
 		getCompanies().add(randomCompany(4,3,3));
 	}
-	public Map(int w){
+	public Game(int w){
 		this(w, 900);
 	}
-	public Map(int w, int h){
+	public Game(int w, int h){
 		super(w, h);
 		this.width = w;
 	}

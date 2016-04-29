@@ -2,7 +2,7 @@ package hevs.fragil.patapon.drawables;
 
 import com.badlogic.gdx.math.Vector2;
 
-import hevs.fragil.patapon.others.Map;
+import hevs.fragil.patapon.others.Game;
 import hevs.gdx2d.components.physics.PhysicsPolygon;
 import hevs.gdx2d.lib.physics.AbstractPhysicsObject;
 
@@ -22,7 +22,7 @@ public class ArrowPolygon extends PhysicsPolygon {
 			System.out.println(theOtherObject.name + " collided with " + this.name + " with " + energy + " energy" );
 		if(energy > 5)
 			System.out.println(this.name + " is now stuck in the floor !");
-			Map.createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(),getSpike()));
+			Game.createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(),getSpike()));
 		}
 	}
 	public Vector2 getSpike() {

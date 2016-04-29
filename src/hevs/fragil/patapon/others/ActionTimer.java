@@ -14,7 +14,7 @@ public class ActionTimer extends TimerTask{
 	
 	@Override
 	public void run() {
-		for (Company c : Map.getCompanies()) {
+		for (Company c : Game.getCompanies()) {
 			for (Action a : c.getActions()) {
 				switchAction(a, c);
 			}
