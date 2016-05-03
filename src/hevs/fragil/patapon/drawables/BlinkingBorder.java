@@ -21,6 +21,7 @@ public class BlinkingBorder implements DrawableObject{
 			//1:up, 2:right, 3:down, 4:left
 			float[] x = {width/2, width-thickness/2, width/2, thickness/2};
 			float[] y = {height-thickness/2, height/2, thickness/2, height/2};
+			float[] size = {width,height,width,height};
 			
 			//linearly graduates to backColor
 			float stepsLeft = Param.FRAME_DEGRADE_STEPS - frames;
@@ -28,7 +29,7 @@ public class BlinkingBorder implements DrawableObject{
 			
 			//rotation in degrees = i*90 			
 			for(int i = 0; i < x.length; i++){
-				g.drawFilledRectangle(x[i], y[i], width, thickness, i*90, frameColor);
+				g.drawFilledRectangle(x[i], y[i], size[i], thickness, i*90, frameColor);
 			}
 			frames++;
 			if(frames == Param.FRAME_DEGRADE_STEPS){

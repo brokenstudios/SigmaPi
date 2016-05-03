@@ -15,14 +15,17 @@ public abstract class Param {
 	//********************************************************
 	
 	//Style 
+	public static final int SCREEN_WIDTH = 1500;
+	public static final int SCREEN_HEIGHT = 900;
 	public static final int FLOOR_DEPTH = 30;
 	public static final int FRAME_DEGRADE_STEPS = 10;
-	//Break the color in case of emergency #SoColorful
-	public static final Color Type1 = rgbToFloat(243, 146, 0);
-	public static final Color Type2 = rgbToFloat(227, 6, 19);
-	public static final Color Type3 = rgbToFloat(230, 0, 126);
-	public static final Color Type4 = rgbToFloat(0, 159, 227);
-	public static final Color Type5 = rgbToFloat(58, 170, 53);
+	
+	//Break the color in case of emergency #colorful
+	public static final Color TYPE1 = rgbToFloat(243, 146, 0);
+	public static final Color TYPE2 = rgbToFloat(227, 6, 19);
+	public static final Color TYPE3 = rgbToFloat(230, 0, 126);
+	public static final Color TYPE4 = rgbToFloat(0, 159, 227);
+	public static final Color TYPE5 = rgbToFloat(58, 170, 53);
 	
 	//Timer periods
 	public static final int MUSIC_BAR = 500;
@@ -43,6 +46,7 @@ public abstract class Param {
 	public static final int COOLDOWN_BASE = 500;
 	public static final int ATTACK_BASE = 5;
 	public static final int RANGE_BASE = 0;
+
 	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(243,100,0);

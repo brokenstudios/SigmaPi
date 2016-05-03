@@ -34,7 +34,7 @@ public class Section {
 			globalPosition = newPos;
 			double tempPos = margin;
 			for (Unit unit : units) {
-				unit.move((int)tempPos);
+				unit.setPosition((int)tempPos);
 				tempPos += Param.UNIT_WIDTH;
 			}
 		}		

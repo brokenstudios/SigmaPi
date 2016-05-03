@@ -4,12 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import hevs.fragil.patapon.drawables.BodyPolygon;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.others.Param;
-import hevs.gdx2d.components.physics.PhysicsPolygon;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.interfaces.DrawableObject;
 
 public abstract class Unit implements DrawableObject{
-	public int position;
 	int level = 1;
 	int species = 1;
 	protected int life;
@@ -35,12 +33,18 @@ public abstract class Unit implements DrawableObject{
 		this.life = life;
 		this.range = range;
 		this.cooldown = cooldown;
-		hitBox = new BodyPolygon(new Vector2(position,Param.FLOOR_DEPTH));
-//		hitBox.setCollisionGroup(-1);
 		nUnits++;
 	}	
-	public void move(int newPos){
-		hitBox.move(newPos);
+	public void setPosition(int newPos){
+		if(hitBox != null)
+			hitBox.setPosition(newPos);
+		else{
+			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH));
+			hitBox.setCollisionGroup(-2);
+		}
+	}
+	protected int getPosition(){
+		return (int)hitBox.getBodyWorldCenter().x;
 	}
 	protected void setLife(int d){
 		this.life = d;
@@ -51,14 +55,14 @@ public abstract class Unit implements DrawableObject{
 	public abstract void attack();
 	public abstract void draw(GdxGraphics g, float time);
 	public void drawLegs(float stateTime){
-		walkIndex = legs.drawKeyFrames(stateTime, position-32);
+		walkIndex = legs.drawKeyFrames(stateTime, getPosition()-32);
 	}
 	public void drawBody(float stateTime){
-		body.drawWalkAnimation(walkIndex, (5*(species-1))+(level-1), position-32, 20);
+		body.drawWalkAnimation(walkIndex, (5*(species-1))+(level-1), getPosition()-32, 20);
 	}
 	public void drawEye() {
 		//TODO Choper l'état ! oui monsieur encore du job
-		eye.drawWalkAnimation(walkIndex, 1, position-32, 32);
+		eye.drawWalkAnimation(walkIndex, 1, getPosition()-32, 32);
 	}
 	//only to load files in the onInit method
 	public static void setLegsSprite(String url, int cols, int rows){

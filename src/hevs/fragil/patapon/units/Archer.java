@@ -13,12 +13,14 @@ public class Archer extends Unit {
 	static Skills modDefense;	
 	static SpriteSheet arms;
 	boolean firstshot = true;
+	static int nArchers = 0;
 	
 	public Archer(){
 		this(1,1);
 	}
 	public Archer(int lvl, int species){
 		super(lvl, species, 10, 10, 10, 100, 50, 500);
+		nArchers++;
 	}
 	public String toString(){
 		return this.getClass().getSimpleName() + super.toString();
@@ -38,6 +40,6 @@ public class Archer extends Unit {
 		
 	}
 	private void fire(){
-		new Arrow( new Vector2(super.position, Param.FLOOR_DEPTH+30),60, 400);
+		new Arrow( new Vector2(getPosition(), Param.FLOOR_DEPTH+30),60, 400);
 	}
 }

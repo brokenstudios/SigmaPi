@@ -48,8 +48,7 @@ public class ActionTimer extends TimerTask{
 		}
 	}
 	private static boolean shift(double time, int shift, Company c){
-		//add bonus time (faster move with fever)
-		int leftLimit = c.getWidth()/2 +10 ;
+		int minLeftOffset = c.getWidth()/2 +10 ;
 		double speed = shift / time ;
 		//first time we get in
 		if(shiftDestination == 0){
@@ -62,7 +61,7 @@ public class ActionTimer extends TimerTask{
 		//arrived at last position
 		if((c.globalPosition >= shiftDestination) && shift > 0 			//right limit
 				||(c.globalPosition <= shiftDestination) && shift < 0 	//left limit
-				|| c.globalPosition == leftLimit){						//window limit
+				|| c.globalPosition == minLeftOffset){						//window limit
 			shiftDestination = 0;
 			System.out.println("**->Shift routine finished");
 			return true;
@@ -84,6 +83,7 @@ public class ActionTimer extends TimerTask{
 	}
 	private static boolean walk(Company c){
 		double time = Param.WALK_TIME;
+		//add bonus time (faster move with fever)
 		time -= Param.WALK_TIME_BONUS/100.0 * Note.getFeverCoefficient();
 		return shift(time, Param.WALK_WIDTH, c);
 	}

@@ -52,11 +52,11 @@ public class Map extends PortableApplication{
 	public float stateTime;
 
 	public static void main(String[] args) {
-		new Map(1500);
+		new Map(Param.SCREEN_WIDTH);
 		getCompanies().add(randomCompany(4,3,3));
 	}
 	public Map(int w){
-		this(w, 900);
+		this(w, Param.SCREEN_HEIGHT);
 	}
 	public Map(int w, int h){
 		super(w, h);
@@ -170,7 +170,7 @@ public class Map extends PortableApplication{
 			for (Company c : getCompanies()) {
 				for (Section s : c.sections) {
 					for (Unit u : s.units) {
-						u.move(-1);
+						u.setPosition(-1);
 					}
 				}
 			}
@@ -180,7 +180,7 @@ public class Map extends PortableApplication{
 			for (Company c : getCompanies()) {
 				for (Section s : c.sections) {
 					for (Unit u : s.units) {
-						u.move(1);
+						u.setPosition(1);
 					}
 				}
 			}
@@ -189,7 +189,7 @@ public class Map extends PortableApplication{
 			for (Company c : getCompanies()) {
 				for (Section s : c.sections) {
 					for (Unit u : s.units) {
-						u.move(0);
+						u.setPosition(0);
 					}
 				}
 			}
@@ -223,10 +223,11 @@ public class Map extends PortableApplication{
 //		floor.draw(g);
 		//FIXME the frame should be always on the center of the visual area (maybe get camera position cameraX)
 //		f.draw(g);
+		//TODO This should be c.draw !
 		for (Company c : getCompanies()) {
 			for (Section s : c.sections) {
 				for (Unit u : s.units) {
-//					u.draw(g, stateTime);
+					u.draw(g, stateTime);
 				}
 			}
 		}
@@ -252,8 +253,8 @@ public class Map extends PortableApplication{
 	 * @param nb1 : number of archers
 	 * @param nb2 : number of swordmans
 	 * @param nb3 : number of shields
-	 * @return a sample company that contains {@code nb1} archers,
-	 * {@code nb2} swordmans and {@code nb3}shields.
+	 * @return a random company that contains {@code nb1} archers,
+	 * {@code nb2} swordmans and {@code nb3} shields.
 	 */
 	private static Company randomCompany(int nb1, int nb2, int nb3){
 		Company comp = new Company("Patapons");
