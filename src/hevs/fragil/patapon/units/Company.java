@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import hevs.fragil.patapon.others.Action;
 import hevs.fragil.patapon.others.Param;
+import hevs.gdx2d.lib.GdxGraphics;
 
 public class Company {
 	public String name = "";
@@ -104,5 +105,10 @@ public class Company {
 	}
 	public void remove(Action a){
 		toDo.remove(a);
+	}
+	public void draw(GdxGraphics g, float stateTime) {
+		for (Section section : sections) {
+			section.draw(g,stateTime);
+		}
 	}
 }

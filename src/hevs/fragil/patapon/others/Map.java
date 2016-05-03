@@ -6,7 +6,6 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
 import hevs.fragil.patapon.drawables.Arrow;
@@ -40,7 +39,7 @@ public class Map extends PortableApplication{
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
 	private static Vector<FlyingObject> flyingOjects = new Vector<FlyingObject>();
 	private static SoundSample snap;
-	private static BlinkingBorder f;
+	private static BlinkingBorder border;
 	private static Timer tempoTimer = new Timer();
 	private static Timer actionTimer = new Timer();
 	DebugRenderer debugRenderer;
@@ -120,7 +119,7 @@ public class Map extends PortableApplication{
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
-		f = new BlinkingBorder();  
+		border = new BlinkingBorder();  
         new PhysicsScreenBoundaries(getWindowWidth(), getWindowHeight());
         //LOL !
         //PhysicsWorld.getInstance().setGravity(new Vector2(0f,0f));
@@ -165,41 +164,15 @@ public class Map extends PortableApplication{
 		
 		if (keycode == Keys.D)
 			RythmTimer.soundFlag++ ;
-		
-		if (keycode == Keys.LEFT){
-			for (Company c : getCompanies()) {
-				for (Section s : c.sections) {
-					for (Unit u : s.units) {
-						u.setPosition(-1);
-					}
-				}
-			}
-		}
-		
-		if (keycode == Keys.RIGHT){
-			for (Company c : getCompanies()) {
-				for (Section s : c.sections) {
-					for (Unit u : s.units) {
-						u.setPosition(1);
-					}
-				}
-			}
-		}
-		if (keycode == Keys.UP){
-			for (Company c : getCompanies()) {
-				for (Section s : c.sections) {
-					for (Unit u : s.units) {
-						u.setPosition(0);
-					}
-				}
-			}
-		}
 	}
 	public void onGraphicRender(GdxGraphics g) {	
-		//clear the screen Param.BACKGROUND
-		g.clear();
+		g.clear(Param.BACKGROUND);
 		g.moveCamera(cameraX, 0);
 
+		for (Company c : getCompanies()) {
+			c.draw(g, stateTime);
+		}
+		
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
 		
@@ -217,27 +190,19 @@ public class Map extends PortableApplication{
 		//draw all objects
 		for (FlyingObject o : flyingOjects) {
 			o.updatePhysics(g);
-//			o.draw(g);
+			o.draw(g);
 		}
 		
-//		floor.draw(g);
-		//FIXME the frame should be always on the center of the visual area (maybe get camera position cameraX)
-//		f.draw(g);
-		//TODO This should be c.draw !
-		for (Company c : getCompanies()) {
-			for (Section s : c.sections) {
-				for (Unit u : s.units) {
-					u.draw(g, stateTime);
-				}
-			}
-		}
+		floor.draw(g);
+
+		border.draw(g);
 		
 		//write help
 		g.setColor(Color.BLACK);
-		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
-		g.drawStringCentered(470f, "Flèches pour bouger la companie");
-		g.drawStringCentered(450f, "Touches 1 à 4 pour jouer les sons");
-		g.drawStringCentered(430f, "Touche D pour changer de loop sonore");
+		g.drawStringCentered(790f, "Touche A pour activer/désactiver les claps");
+		g.drawStringCentered(770f, "Flèches pour bouger la companie");
+		g.drawStringCentered(750f, "Touches 1 à 4 pour jouer les sons");
+		g.drawStringCentered(730f, "Touche D pour changer de loop sonore");
 		
 	
 		g.drawSchoolLogoUpperRight();

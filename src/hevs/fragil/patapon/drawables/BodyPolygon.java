@@ -10,11 +10,13 @@ public class BodyPolygon extends PhysicsPolygon {
 	static Vector2 dimensions =  new Vector2(3,80);
 	static int nArrows;
 	static Vector2 body[] = {
-			new Vector2(-20, 0),
-			new Vector2(-20, 40),
-			new Vector2(0, 60),
-			new Vector2(20, 40),
-			new Vector2(20, 0)
+			//+100 is while waiting for the new constructor allowing positioning
+			//it avoids bugs for initial positioning (objects falling outside screen)
+			new Vector2(-30 +100, 0),
+			new Vector2(-30 +100, 60),
+			new Vector2(0 +100, 80),
+			new Vector2(30 +100, 60),
+			new Vector2(30 +100, 0)
 	};
 
 	public BodyPolygon(Vector2 position) {
@@ -22,12 +24,11 @@ public class BodyPolygon extends PhysicsPolygon {
 //		super("arrow"+nArrows, position, vertices,  8f, 0f, 1f, true);
 		super("arrow"+nArrows, body,  0.5f, 0f, 1f, true);
 		this.getBody().setBullet(true);
+		this.setCollisionGroup(-1);
 		nArrows++;
 	}
 	public void setPosition(int position) {
 		float distanceToTravel = position - this.getBodyPosition().x;
-
-		// For most of the movement, the target speed is ok
 		float time = Param.WALK_TIME;
 		//add bonus time (faster move with fever)
 		time -= Param.WALK_TIME_BONUS/100.0 * Note.getFeverCoefficient();
@@ -40,20 +41,10 @@ public class BodyPolygon extends PhysicsPolygon {
 		if ( distancePerTimestep > distanceToTravel )
 		    speedToUse *= ( distanceToTravel / distancePerTimestep );
 
-		// The rest is pretty much what you had already:
 		float desiredVelocity = speedToUse * distanceToTravel;
 		float changeInVelocity = desiredVelocity - this.getBodyLinearVelocity().x;
 
 		float force = this.getBodyMass() * 60.0f * changeInVelocity;
 		this.applyBodyForceToCenter(force, 0, true);
-		
-//		int force = 0;
-//		Vector2 vel = getBodyLinearVelocity();
-//		switch(direction){
-//			case -1:  if( vel.x > -1000 ) force = -500;  break;
-//			case 0:  force = (int)vel.x * -100; break;
-//			case 1: if( vel.x <  1000 ) force =  500; break;
-//		}
-//		applyBodyForceToCenter(new Vector2(force,0), true);
 	}
 }

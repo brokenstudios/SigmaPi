@@ -38,10 +38,8 @@ public abstract class Unit implements DrawableObject{
 	public void setPosition(int newPos){
 		if(hitBox != null)
 			hitBox.setPosition(newPos);
-		else{
+		else
 			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH));
-			hitBox.setCollisionGroup(-2);
-		}
 	}
 	protected int getPosition(){
 		return (int)hitBox.getBodyWorldCenter().x;
@@ -58,11 +56,11 @@ public abstract class Unit implements DrawableObject{
 		walkIndex = legs.drawKeyFrames(stateTime, getPosition()-32);
 	}
 	public void drawBody(float stateTime){
-		body.drawWalkAnimation(walkIndex, (5*(species-1))+(level-1), getPosition()-32, 20);
+		body.drawWalkAnimation(walkIndex, (5*(species-1))+(level-1), getPosition()-32, 40);
 	}
 	public void drawEye() {
 		//TODO Choper l'état ! oui monsieur encore du job
-		eye.drawWalkAnimation(walkIndex, 1, getPosition()-32, 32);
+		eye.drawWalkAnimation(walkIndex, 1, getPosition()-32, 52);
 	}
 	//only to load files in the onInit method
 	public static void setLegsSprite(String url, int cols, int rows){

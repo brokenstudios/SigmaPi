@@ -3,6 +3,7 @@ package hevs.fragil.patapon.units;
 import java.util.Vector;
 
 import hevs.fragil.patapon.others.Param;
+import hevs.gdx2d.lib.GdxGraphics;
 
 public class Section {
 	public String name = "";
@@ -55,5 +56,10 @@ public class Section {
 	public void remove(Unit u){
 		units.remove(u);
 		width -= Param.UNIT_WIDTH;
+	}
+	public void draw(GdxGraphics g, float stateTime) {
+		for (Unit unit : units) {
+			unit.draw(g, stateTime);
+		}
 	}
 }

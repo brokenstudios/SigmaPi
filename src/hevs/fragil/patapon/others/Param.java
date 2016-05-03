@@ -49,7 +49,7 @@ public abstract class Param {
 
 	
 	//Colors
-	public static Color BACKGROUND = rgbToFloat(243,100,0);
+	public static Color BACKGROUND = rgbToFloat(201,151,103);
 	private static Color rgbToFloat(int r, int g, int b){
 		Color temp = new Color();
 		temp.r = (float)(r/255.0);
