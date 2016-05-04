@@ -2,27 +2,24 @@ package hevs.fragil.patapon.drawables;
 
 import com.badlogic.gdx.math.Vector2;
 
+import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.others.Param;
-import hevs.gdx2d.components.physics.PhysicsPolygon;
 
 public class BodyPolygon extends PhysicsPolygon {
 	static Vector2 dimensions =  new Vector2(3,80);
 	static int nArrows;
 	static Vector2 body[] = {
-			//+100 is while waiting for the new constructor allowing positioning
-			//it avoids bugs for initial positioning (objects falling outside screen)
-			new Vector2(-30 +100, 0),
-			new Vector2(-30 +100, 60),
-			new Vector2(0 +100, 80),
-			new Vector2(30 +100, 60),
-			new Vector2(30 +100, 0)
+			new Vector2(-30, 0),
+			new Vector2(-30, 60),
+			new Vector2(0, 80),
+			new Vector2(30, 60),
+			new Vector2(30, 0)
 	};
 
 	public BodyPolygon(Vector2 position) {
 		//Ca c'est vraiment super !
-//		super("arrow"+nArrows, position, vertices,  8f, 0f, 1f, true);
-		super("arrow"+nArrows, body,  0.5f, 0f, 1f, true);
+		super("arrow"+nArrows, position, body,  10f, 1f, 1f, true);
 		this.getBody().setBullet(true);
 		this.setCollisionGroup(-1);
 		nArrows++;

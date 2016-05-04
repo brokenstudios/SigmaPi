@@ -2,7 +2,7 @@ package hevs.fragil.patapon.others;
 
 import java.util.Vector;
 
-import hevs.gdx2d.components.physics.PhysicsPolygon;
+import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 
 /**
  * Singleton pattern implementation in Java

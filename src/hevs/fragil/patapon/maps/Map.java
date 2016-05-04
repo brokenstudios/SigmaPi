@@ -1,9 +1,9 @@
 package hevs.fragil.patapon.maps;
 
+import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.others.Floor;
 import hevs.fragil.patapon.others.Param;
-import hevs.gdx2d.lib.GdxGraphics;
-import hevs.gdx2d.lib.interfaces.DrawableObject;
 
 public class Map implements DrawableObject{
 	private int width;
@@ -61,7 +61,6 @@ public class Map implements DrawableObject{
 
 	@Override
 	public void draw(GdxGraphics g) {
-		// TODO Auto-generated method stub
 		floor.draw(g);
 	}
 	

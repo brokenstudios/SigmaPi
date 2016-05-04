@@ -3,9 +3,9 @@ package hevs.fragil.patapon.others;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
-import hevs.gdx2d.components.physics.PhysicsStaticBox;
-import hevs.gdx2d.lib.GdxGraphics;
-import hevs.gdx2d.lib.interfaces.DrawableObject;
+import ch.hevs.gdx2d.components.physics.primitives.PhysicsStaticBox;
+import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 
 public class Floor extends PhysicsStaticBox implements DrawableObject{
 	float width;

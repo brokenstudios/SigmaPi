@@ -2,9 +2,9 @@ package hevs.fragil.patapon.units;
 import java.util.Iterator;
 import java.util.Vector;
 
+import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.others.Action;
 import hevs.fragil.patapon.others.Param;
-import hevs.gdx2d.lib.GdxGraphics;
 
 public class Company {
 	public String name = "";

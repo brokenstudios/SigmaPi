@@ -2,10 +2,10 @@ package hevs.fragil.patapon.units;
 
 import com.badlogic.gdx.math.Vector2;
 
+import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.Arrow;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.others.Param;
-import hevs.gdx2d.lib.GdxGraphics;
 
 public class Archer extends Unit {
 	static double modLife = -0.2;

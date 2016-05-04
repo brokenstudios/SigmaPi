@@ -1,7 +1,7 @@
 package hevs.fragil.patapon.units;
 
+import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.gdx2d.lib.GdxGraphics;
 
 public class Shield extends Unit {
 	static double modLife = +1.0;

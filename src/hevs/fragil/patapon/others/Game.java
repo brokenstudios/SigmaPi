@@ -7,8 +7,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.maps.Map;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
+import ch.hevs.gdx2d.components.audio.SoundSample;
+import ch.hevs.gdx2d.components.bitmaps.BitmapImage;
+import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
+import ch.hevs.gdx2d.components.physics.utils.PhysicsConstants;
+import ch.hevs.gdx2d.components.physics.utils.PhysicsScreenBoundaries;
+import ch.hevs.gdx2d.desktop.PortableApplication;
+import ch.hevs.gdx2d.desktop.physics.DebugRenderer;
+import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
 import hevs.fragil.patapon.drawables.Arrow;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
 import hevs.fragil.patapon.drawables.FlyingObject;
@@ -23,14 +33,6 @@ import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.Shield;
 import hevs.fragil.patapon.units.Spearman;
 import hevs.fragil.patapon.units.Unit;
-import hevs.gdx2d.components.audio.SoundSample;
-import hevs.gdx2d.components.physics.PhysicsPolygon;
-import hevs.gdx2d.components.physics.utils.PhysicsConstants;
-import hevs.gdx2d.components.physics.utils.PhysicsScreenBoundaries;
-import hevs.gdx2d.lib.GdxGraphics;
-import hevs.gdx2d.lib.PortableApplication;
-import hevs.gdx2d.lib.physics.DebugRenderer;
-import hevs.gdx2d.lib.physics.PhysicsWorld;
 
 public class Game extends PortableApplication{
 	private int width;
@@ -40,19 +42,22 @@ public class Game extends PortableApplication{
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
 	private static Vector<FlyingObject> flyingOjects = new Vector<FlyingObject>();
 	private static SoundSample snap;
-	private static BlinkingBorder f;
+	private static BlinkingBorder frame;
 	private static Timer tempoTimer = new Timer();
 	private static Timer actionTimer = new Timer();
 	DebugRenderer debugRenderer;
 	private static Floor floor;
+	//TODO give it a try ! 
 	private static Map map;
 	private static Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
 	private static Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
-
 	
+	// A world with gravity, pointing down
+	World world = PhysicsWorld.getInstance();
+	BitmapImage img;
+
 	public float stateTime;
 
-	//TODO mettre en place le système de paramètres des maps
 	public static void main(String[] args) {
 		new Game(1500);
 		getCompanies().add(randomCompany(4,3,3));
@@ -94,6 +99,7 @@ public class Game extends PortableApplication{
 	@Override
 	public void onInit() {
 		setTitle("Test Map Patapons H-E-S! - by FraGil 2016");
+		PhysicsWorld.getInstance();
 		//Load the sound files
 		heNote = new SoundSample("data/music/HE.wav");
 		sNote = new SoundSample("data/music/S.wav");
@@ -122,7 +128,7 @@ public class Game extends PortableApplication{
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
-		f = new BlinkingBorder();  
+		frame = new BlinkingBorder();  
         new PhysicsScreenBoundaries(getWindowWidth(), getWindowHeight());
 		floor = new Floor(width);
 		debugRenderer = new DebugRenderer();
@@ -198,8 +204,8 @@ public class Game extends PortableApplication{
 		}
 		
 		floor.draw(g);
-		//FIXME the frame should be always on the center of the visual area (maybe get camera position cameraX)
-		f.draw(g);
+
+		frame.draw(g);
 		
 		for (Company c : getCompanies()) {
 			c.draw(g, stateTime);

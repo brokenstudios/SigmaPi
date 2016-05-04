@@ -1,11 +1,11 @@
 package hevs.fragil.patapon.units;
 import com.badlogic.gdx.math.Vector2;
 
+import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.drawables.BodyPolygon;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.others.Param;
-import hevs.gdx2d.lib.GdxGraphics;
-import hevs.gdx2d.lib.interfaces.DrawableObject;
 
 public abstract class Unit implements DrawableObject{
 	int level = 1;
@@ -59,7 +59,7 @@ public abstract class Unit implements DrawableObject{
 		body.drawWalkAnimation(walkIndex, (5*(species-1))+(level-1), getPosition()-32, 40);
 	}
 	public void drawEye() {
-		//TODO Choper l'état ! oui monsieur encore du job
+		//TODO get unit state to change the eye expression
 		eye.drawWalkAnimation(walkIndex, 1, getPosition()-32, 52);
 	}
 	//only to load files in the onInit method
