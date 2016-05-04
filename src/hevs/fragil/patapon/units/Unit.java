@@ -1,14 +1,13 @@
 package hevs.fragil.patapon.units;
 import com.badlogic.gdx.math.Vector2;
 
+import hevs.fragil.patapon.drawables.BodyPolygon;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.others.Param;
-import hevs.gdx2d.components.physics.PhysicsPolygon;
 import hevs.gdx2d.lib.GdxGraphics;
 import hevs.gdx2d.lib.interfaces.DrawableObject;
 
 public abstract class Unit implements DrawableObject{
-	public int position;
 	int level = 1;
 	int species = 1;
 	protected int life;
@@ -18,19 +17,10 @@ public abstract class Unit implements DrawableObject{
 	protected int range;
 	protected int cooldown;
 	protected long lastAttack = 0;
-	PhysicsPolygon hitBox;
+	BodyPolygon hitBox;
 	static SpriteSheet legs;
+	static int nUnits;
 	SpriteSheet body, eye;
-	
-	Vector2 obj1[] = {
-			new Vector2(100, 100),
-			new Vector2(0, 200),
-			new Vector2(0, 300),
-			new Vector2(100, 400),
-			new Vector2(200, 300),
-			new Vector2(200, 200)
-	};
-	
 	int walkIndex;
 	
 	Unit(int lvl, int species, int attack, int defense, int life, int distance, int range, int cooldown){
@@ -43,9 +33,16 @@ public abstract class Unit implements DrawableObject{
 		this.life = life;
 		this.range = range;
 		this.cooldown = cooldown;
+		nUnits++;
 	}	
-	public void move(int newPos){
-		this.position = newPos;
+	public void setPosition(int newPos){
+		if(hitBox != null)
+			hitBox.setPosition(newPos);
+		else
+			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH));
+	}
+	protected int getPosition(){
+		return (int)hitBox.getBodyWorldCenter().x;
 	}
 	protected void setLife(int d){
 		this.life = d;
@@ -56,14 +53,14 @@ public abstract class Unit implements DrawableObject{
 	public abstract void attack();
 	public abstract void draw(GdxGraphics g, float time);
 	public void drawLegs(float stateTime){
-		walkIndex = legs.drawKeyFrames(stateTime, position-32);
+		walkIndex = legs.drawKeyFrames(stateTime, getPosition()-32);
 	}
 	public void drawBody(float stateTime){
-		body.drawWalkAnimation(walkIndex, (5*(species-1))+(level-1), position-32, 20);
+		body.drawWalkAnimation(walkIndex, (5*(species-1))+(level-1), getPosition()-32, 40);
 	}
 	public void drawEye() {
 		//TODO Choper l'état ! oui monsieur encore du job
-		eye.drawWalkAnimation(walkIndex, 1, position-32, 32);
+		eye.drawWalkAnimation(walkIndex, 1, getPosition()-32, 52);
 	}
 	//only to load files in the onInit method
 	public static void setLegsSprite(String url, int cols, int rows){

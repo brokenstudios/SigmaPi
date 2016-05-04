@@ -10,7 +10,9 @@ public class ArrowPolygon extends PhysicsPolygon {
 	static Vector2 dimensions =  new Vector2(3,80);
 	static int nArrows;
 
-	public ArrowPolygon(Vector2[] vertices) {
+	public ArrowPolygon(Vector2 position, Vector2[] vertices) {
+		//Ca c'est vraiment super !
+//		super("arrow"+nArrows, position, vertices,  8f, 0f, 1f, true);
 		super("arrow"+nArrows, vertices,  8f, 0f, 1f, true);
 		this.getBody().setBullet(true);
 		nArrows++;
@@ -27,7 +29,7 @@ public class ArrowPolygon extends PhysicsPolygon {
 	}
 	public Vector2 getSpike() {
 		Vector2 temp = getBodyWorldCenter();
-		double angle = getBodyAngle()+Math.PI/3;
+		double angle = getBodyAngle() + Math.PI/3;
 		temp.add((float)(Math.cos(angle)*28), (float)(Math.sin(angle)*28));
 		return temp;
 	}

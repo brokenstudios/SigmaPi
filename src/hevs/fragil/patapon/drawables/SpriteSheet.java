@@ -39,7 +39,7 @@ public class SpriteSheet {
 		Sprite tmp = sprites[spriteNumber];
 		float angle = 0f;
 		switch(walkIndex){
-			case 0 : 	angle = -1;
+			case 0 : 	angle = -1;  
 						posY -=3;
 						break;
 			case 1 : 	angle = 0;
@@ -61,7 +61,7 @@ public class SpriteSheet {
 		TextureRegion[] a = animation.getKeyFrames();
 		int index = java.util.Arrays.asList(a).indexOf(currentFrame);
 		spriteBatch.begin();
-		spriteBatch.draw(currentFrame, posX, Param.FLOOR_DEPTH - 17);
+		spriteBatch.draw(currentFrame, posX, Param.FLOOR_DEPTH);
 		spriteBatch.end();
 		return index;
 	}
