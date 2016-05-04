@@ -1,4 +1,3 @@
-package hevs.fragil.patapon.drawables;
 
 import java.awt.Color;
 import java.awt.Point;
