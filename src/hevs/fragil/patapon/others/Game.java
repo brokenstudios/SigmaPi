@@ -178,7 +178,7 @@ public class Game extends PortableApplication{
 		g.moveCamera(cameraX, 0);
 
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
-//		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
+		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
 		
 		//stick flying objects
 		while(toJoin.size() > 0){
@@ -200,12 +200,9 @@ public class Game extends PortableApplication{
 		floor.draw(g);
 		//FIXME the frame should be always on the center of the visual area (maybe get camera position cameraX)
 		f.draw(g);
+		
 		for (Company c : getCompanies()) {
-			for (Section s : c.sections) {
-				for (Unit u : s.units) {
-					u.draw(g, stateTime);
-				}
-			}
+			c.draw(g, stateTime);
 		}
 		
 		//write help
