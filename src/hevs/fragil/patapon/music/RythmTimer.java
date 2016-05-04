@@ -2,7 +2,7 @@ package hevs.fragil.patapon.music;
 import java.util.TimerTask;
 
 import hevs.fragil.patapon.drawables.BlinkingBorder;
-import hevs.fragil.patapon.others.Map;
+import hevs.fragil.patapon.others.Game;
 
 public class RythmTimer extends TimerTask {
 	BlinkingBorder f = new BlinkingBorder();
@@ -17,16 +17,16 @@ public class RythmTimer extends TimerTask {
 		BlinkingBorder.blinkEnable = true;
 		lastTime = System.currentTimeMillis();
 		//Change sound loop only in time
-		int index = soundFlag % Map.getNbTracks();
+		int index = soundFlag % Game.getNbTracks();
 		if(index != soundEnable){
 			soundEnable = index;
-			Map.nextTrack();
+			Game.nextTrack();
 			System.out.println("Music changed at " + System.currentTimeMillis()%500);
 		}
 		//Applies new sound loop only in time
 		if(snapFlag != snapEnable){
 			snapEnable = snapFlag;
-			Map.snapToggle();
+			Game.snapToggle();
 			System.out.println("Snap changed at " + System.currentTimeMillis()%500);
 		}
 	}
