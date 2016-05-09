@@ -9,9 +9,9 @@ public class Spearman extends Unit {
 	static SpriteSheet arms;
 	
 	public Spearman(){
-		this(1,1);
+		this(1,Species.random());
 	}
-	public Spearman(int lvl, int species){
+	public Spearman(int lvl, Species species){
 		super(lvl, species, 10, 10, 10, 100, 50, 500);
 	}
 	public String toString(){

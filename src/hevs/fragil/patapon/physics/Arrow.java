@@ -7,11 +7,15 @@ import ch.hevs.gdx2d.components.bitmaps.BitmapImage;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.mechanics.Game;
 
-public class Arrow implements CollisionGroup, FlyingObject{
+public class Arrow implements CollisionGroup, DrawableProjectile{
+	//TODO these should be placed in a super class
 	ArrowPolygon box;
 	static BitmapImage img;
 	int startAngle;
 	int collisionGroup;
+	//when opacity is zero, arrow is deleted
+	float opacity = 1.0f;
+	
 	/**
 	 * Creates an new arrow
 	 * @param position		: the position of the departure
@@ -51,7 +55,7 @@ public class Arrow implements CollisionGroup, FlyingObject{
 		
 		Vector2 pos = box.getBodyWorldCenter();
 		pos = pos.add(offset);
-		g.drawTransformedPicture(pos.x, pos.y, angleDegrees, .3f, img);
+		g.drawAlphaPicture(pos.x, pos.y, angleDegrees, .35f, opacity, img);
 	}
 	@Override
 	public Vector2 getSpike() {
@@ -62,7 +66,7 @@ public class Arrow implements CollisionGroup, FlyingObject{
 		return box.getBody();
 	}
 	@Override
-	public void updatePhysics(GdxGraphics g) {
+	public void applyTorque(GdxGraphics g) {
 		Vector2 v = box.getBodyLinearVelocity();
 		float angle = box.getBodyAngle();
 		double velocity = Math.sqrt(v.x*v.x + v.y*v.y);
@@ -76,5 +80,11 @@ public class Arrow implements CollisionGroup, FlyingObject{
 	public int getCollisionGroup() {
 		return this.collisionGroup;
 	}
-	
+	@Override
+	public void decreaseOpacity() {
+		this.opacity -= 0.01f;
+		if(opacity <= 0){
+			box.destroy();
+		}
+	}
 }

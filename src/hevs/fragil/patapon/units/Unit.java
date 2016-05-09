@@ -10,10 +10,9 @@ import hevs.fragil.patapon.physics.BodyPolygon;
 public abstract class Unit implements DrawableObject{
 	static int nUnits;
 	
-	//Characteristics(TODO should be enums for better interpretation)
 	protected int level = 1;
-	protected int species = 1;
-	protected int state = 1;
+	protected Species species = Species.TAPI;
+	protected Expression expression = Expression.DEFAULT;
 	
 	//Skills
 	protected Skills skills;
@@ -25,10 +24,9 @@ public abstract class Unit implements DrawableObject{
 	private int frameIndex;
 	private SpriteSheet body, eye;
 	
-	Unit(int lvl, int species, int attack, int defense, int life, int distance, int range, int cooldown){
+	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, int cooldown){
 		this.species = species;
 		this.level = lvl;
-		this.state = 1;
 		this.skills = new Skills(life+level*5, attack, range, cooldown);
 		nUnits++;
 	}	
@@ -53,7 +51,7 @@ public abstract class Unit implements DrawableObject{
 		frameIndex = legs.drawKeyFrames(stateTime, getPosition()-32);
 	}
 	protected void drawBody(float stateTime){
-		body.drawWalkAnimation(frameIndex, (5*(species-1))+(level-1), getPosition()-32, 40);
+		body.drawWalkAnimation(frameIndex, (5*(species.ordinal()))+(level-1), getPosition()-32, 40);
 	}
 	protected void drawEye(){
 		//TODO get unit state to change the eye expression

@@ -1,15 +1,20 @@
 package hevs.fragil.patapon.mechanics;
 
+import java.util.Random;
 import java.util.TimerTask;
 import java.util.Vector;
 
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.units.Company;
+import hevs.fragil.patapon.units.Section;
+import hevs.fragil.patapon.units.Unit;
 
 public class ActionTimer extends TimerTask{
 	private static int shiftDestination = 0;
 	private static int shiftIncrement = 0;
+	private static int attackIncrement = 0;
 	private static int waitIndex = 0;
+	
 	private static Vector<Action> toRemove = new Vector<Action>();
 	//TODO avoid double command at same time
 	//for example 2 times walk command causes large bug of speed
@@ -107,7 +112,43 @@ public class ActionTimer extends TimerTask{
 		return false;
 	}
 	private static boolean attack(Company striker){
-		striker.attack();
-		return true;
+		long seed = (long) (Math.random()*1000);
+		Random r = new Random(seed);
+		//initialize delay
+		for (Company c : Game.getCompanies()) {
+			for (Section s : c.sections) {
+				for (Unit u : s.units) {
+					//TODO create setDelay
+					u.setDelay(r.nextInt(100));
+				}
+			}
+		}
+		//apply delays
+		if (attackIncrement == 0) {
+			if(wait(300 + Math.random() * 100, striker)){
+				for (Company c : Game.getCompanies()) {
+					for (Section s : c.sections) {
+						for (Unit u : s.units) {
+							//TODO create getDelay
+							if(u.getDelay() < attackIncrement)
+								u.attack();
+						}
+					}
+				}
+				
+				attackIncrement++;
+			}
+		}
+		else if(attackIncrement == 1){
+			if(wait(300 + Math.random() * 200, striker)){
+				striker.attack();
+				attackIncrement++;
+			}
+		}
+		else {
+			attackIncrement = 0;
+			return true;
+		}
+		return false;
 	}
 }

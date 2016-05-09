@@ -9,9 +9,9 @@ public class Shield extends Unit {
 	static SpriteSheet arms;
 	
 	public Shield(){
-		this(1,1);
+		this(1,Species.random());
 	}
-	public Shield(int lvl, int species){
+	public Shield(int lvl, Species species){
 		super(lvl, species, 10, 10, 10, 100, 50, 500);
 	}
 	public String toString(){

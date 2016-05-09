@@ -26,7 +26,7 @@ import hevs.fragil.patapon.music.RythmTimer;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.physics.Arrow;
 import hevs.fragil.patapon.physics.Floor;
-import hevs.fragil.patapon.physics.FlyingObject;
+import hevs.fragil.patapon.physics.DrawableProjectile;
 import hevs.fragil.patapon.physics.StickyInfo;
 import hevs.fragil.patapon.units.Archer;
 import hevs.fragil.patapon.units.Company;
@@ -41,7 +41,7 @@ public class Game extends PortableApplication{
 	private static Vector<Company> companies = new Vector<Company>();
 	private static SoundSample heNote, sNote, soNote, yesNote;
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
-	private static Vector<FlyingObject> flyingOjects = new Vector<FlyingObject>();
+	private static Vector<DrawableProjectile> flyingOjects = new Vector<DrawableProjectile>();
 	private static SoundSample snap;
 	private static BlinkingBorder frame;
 	private static Timer tempoTimer = new Timer();
@@ -82,7 +82,7 @@ public class Game extends PortableApplication{
 		if(RythmTimer.snapEnable)snap.loop();
 		else snap.stop();
 	}
-	public static void add (FlyingObject o){
+	public static void add (DrawableProjectile o){
 		flyingOjects.add(o);
 	}
 	@Override
@@ -188,19 +188,22 @@ public class Game extends PortableApplication{
 		
 		//stick flying objects
 		while(toJoin.size() > 0){
+			//get last element and delete it
 			StickyInfo si = toJoin.remove(0);
+			//create a new joint
 		    WeldJointDef wjd = new WeldJointDef();
 		    wjd.bodyA = si.bodyA;
 		    wjd.bodyB = si.bodyB;
 		    wjd.referenceAngle = si.bodyB.getAngle() - si.bodyA.getAngle();
 		    wjd.initialize(si.bodyA, si.bodyB, PhysicsConstants.coordPixelsToMeters(si.anchor));
-		    PhysicsWorld.getInstance().createJoint( wjd );
+		    PhysicsWorld.getInstance().createJoint(wjd);
 		}
 		
 		//draw all objects
-		for (FlyingObject o : flyingOjects) {
-			o.updatePhysics(g);
+		for (DrawableProjectile o : flyingOjects) {
+			o.applyTorque(g);
 			o.draw(g);
+			o.decreaseOpacity();
 		}
 		
 		floor.draw(g);
@@ -242,13 +245,13 @@ public class Game extends PortableApplication{
 			comp.add(new Section(Integer.toString(i)));
 		}
 		for(int i = 0 ; i < nb1; i++){
-			comp.sections.elementAt(0).add(new Archer((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
+			comp.sections.elementAt(0).add(new Archer());
 		}
 		for(int i = 0 ; i < nb2; i++){
-			comp.sections.elementAt(1).add(new Spearman((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
+			comp.sections.elementAt(1).add(new Spearman());
 		}
 		for(int i = 0 ; i < nb3; i++){
-			comp.sections.elementAt(2).add(new Shield((int)(1+Math.random()*5), (int)(1+Math.random()*5)));
+			comp.sections.elementAt(2).add(new Shield());
 		}
 		
 		int initialPos = comp.getWidth()/2 + 50;

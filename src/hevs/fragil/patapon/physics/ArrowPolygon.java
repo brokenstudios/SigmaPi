@@ -27,12 +27,9 @@ public class ArrowPolygon extends PhysicsPolygon {
 	
 	@Override
 	public void collision(AbstractPhysicsObject theOtherObject, float energy) {
-		if(energy > 5){
-			//Create a joint to stick the arrow
-			Game.createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(),getSpike()));
-			//TODO change collisiongroup to match the victim group
-			
-		}
+		//Create a joint to stick the arrow
+		Game.createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(),getSpike()));
+		//TODO change collisiongroup to match the victim group
 	}
 	public Vector2 getSpike() {
 		Vector2 temp = getBodyWorldCenter();

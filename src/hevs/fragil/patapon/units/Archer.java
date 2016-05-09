@@ -16,9 +16,9 @@ public class Archer extends Unit {
 	static int nArchers = 0;
 	
 	public Archer(){
-		this(1,1);
+		this(1,Species.random());
 	}
-	public Archer(int lvl, int species){
+	public Archer(int lvl, Species species){
 		super(lvl, species, 10, 10, 10, 100, 50, 500);
 		nArchers++;
 	}
