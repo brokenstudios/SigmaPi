@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
-import hevs.fragil.patapon.others.Param;
+import hevs.fragil.patapon.mechanics.Param;
 
 public class BlinkingBorder implements DrawableObject{
 	static boolean display = true;

@@ -1,4 +1,4 @@
-package hevs.fragil.patapon.others;
+package hevs.fragil.patapon.mechanics;
 
 import java.util.TimerTask;
 import java.util.Vector;
@@ -11,6 +11,8 @@ public class ActionTimer extends TimerTask{
 	private static int shiftIncrement = 0;
 	private static int waitIndex = 0;
 	private static Vector<Action> toRemove = new Vector<Action>();
+	//TODO avoid double command at same time
+	//for example 2 times walk command causes large bug of speed
 	
 	@Override
 	public void run() {

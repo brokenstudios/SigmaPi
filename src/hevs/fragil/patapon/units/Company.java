@@ -3,8 +3,8 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
-import hevs.fragil.patapon.others.Action;
-import hevs.fragil.patapon.others.Param;
+import hevs.fragil.patapon.mechanics.Action;
+import hevs.fragil.patapon.mechanics.Param;
 
 public class Company {
 	public String name = "";

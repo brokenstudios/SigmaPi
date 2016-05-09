@@ -3,7 +3,7 @@ package hevs.fragil.patapon.units;
 import java.util.Vector;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
-import hevs.fragil.patapon.others.Param;
+import hevs.fragil.patapon.mechanics.Param;
 
 public class Section {
 	public String name = "";

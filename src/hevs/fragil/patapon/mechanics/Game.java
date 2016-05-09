@@ -1,4 +1,4 @@
-package hevs.fragil.patapon.others;
+package hevs.fragil.patapon.mechanics;
 
 import java.util.Timer;
 import java.util.Vector;
@@ -19,14 +19,15 @@ import ch.hevs.gdx2d.desktop.PortableApplication;
 import ch.hevs.gdx2d.desktop.physics.DebugRenderer;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
-import hevs.fragil.patapon.drawables.Arrow;
 import hevs.fragil.patapon.drawables.BlinkingBorder;
-import hevs.fragil.patapon.drawables.FlyingObject;
-import hevs.fragil.patapon.drawables.StickyInfo;
+import hevs.fragil.patapon.drawables.Floor;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.RythmTimer;
 import hevs.fragil.patapon.music.Sequence;
+import hevs.fragil.patapon.physics.Arrow;
+import hevs.fragil.patapon.physics.FlyingObject;
+import hevs.fragil.patapon.physics.StickyInfo;
 import hevs.fragil.patapon.units.Archer;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
@@ -129,7 +130,6 @@ public class Game extends PortableApplication{
 		}
 		Arrow.setImgPath("data/images/fleche.png");
 		frame = new BlinkingBorder();  
-        new PhysicsScreenBoundaries(getWindowWidth(), getWindowHeight());
 		floor = new Floor(width);
 		debugRenderer = new DebugRenderer();
 	}

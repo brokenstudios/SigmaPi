@@ -1,9 +1,8 @@
-package hevs.fragil.patapon.maps;
+package hevs.fragil.patapon.mechanics;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
-import hevs.fragil.patapon.others.Floor;
-import hevs.fragil.patapon.others.Param;
+import hevs.fragil.patapon.drawables.Floor;
 
 public class Map implements DrawableObject{
 	private int width;

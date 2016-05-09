@@ -1,4 +1,4 @@
-package hevs.fragil.patapon.others;
+package hevs.fragil.patapon.mechanics;
 
 import com.badlogic.gdx.graphics.Color;
 

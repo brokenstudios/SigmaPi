@@ -3,14 +3,13 @@ package hevs.fragil.patapon.units;
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
-import hevs.fragil.patapon.drawables.Arrow;
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.fragil.patapon.others.Param;
+import hevs.fragil.patapon.mechanics.Param;
+import hevs.fragil.patapon.physics.Arrow;
 
 public class Archer extends Unit {
 	static double modLife = -0.2;
-	static Skills modAttack;
-	static Skills modDefense;	
+	static Skills modifier;
 	static SpriteSheet arms;
 	boolean firstshot = true;
 	static int nArchers = 0;
@@ -33,6 +32,7 @@ public class Archer extends Unit {
 	public void draw(GdxGraphics g, float time) {
 		super.drawLegs(time);
 		super.drawBody(time);
+		
 		super.drawEye();
 		drawArms(time);
 	}
@@ -40,6 +40,6 @@ public class Archer extends Unit {
 		
 	}
 	private void fire(){
-		new Arrow( new Vector2(getPosition(), Param.FLOOR_DEPTH+30),60, 400);
+		new Arrow( new Vector2(getPosition(), Param.FLOOR_DEPTH+30), 60, 400, -1);
 	}
 }

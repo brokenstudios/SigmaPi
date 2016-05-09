@@ -3,7 +3,7 @@ package hevs.fragil.patapon.music;
 import java.util.Arrays;
 import java.util.Vector;
 
-import hevs.fragil.patapon.others.Action;
+import hevs.fragil.patapon.mechanics.Action;
 
 public abstract class Sequence {
 	//actual sequence

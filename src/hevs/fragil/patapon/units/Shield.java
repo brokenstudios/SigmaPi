@@ -5,8 +5,7 @@ import hevs.fragil.patapon.drawables.SpriteSheet;
 
 public class Shield extends Unit {
 	static double modLife = +1.0;
-	static Skills modAttack;	
-	static Skills modDefense;	
+	static Skills modifier;	
 	static SpriteSheet arms;
 	
 	public Shield(){

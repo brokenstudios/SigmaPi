@@ -1,10 +1,10 @@
-package hevs.fragil.patapon.drawables;
+package hevs.fragil.patapon.physics;
 
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
+import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.music.Note;
-import hevs.fragil.patapon.others.Param;
 
 public class BodyPolygon extends PhysicsPolygon {
 	static Vector2 dimensions =  new Vector2(3,80);

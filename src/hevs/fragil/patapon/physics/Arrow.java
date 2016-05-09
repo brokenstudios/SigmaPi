@@ -1,24 +1,26 @@
-package hevs.fragil.patapon.drawables;
+package hevs.fragil.patapon.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import ch.hevs.gdx2d.components.bitmaps.BitmapImage;
 import ch.hevs.gdx2d.lib.GdxGraphics;
-import hevs.fragil.patapon.others.Game;
+import hevs.fragil.patapon.mechanics.Game;
 
-public class Arrow extends FlyingObject{
+public class Arrow implements CollisionGroup, FlyingObject{
 	ArrowPolygon box;
 	static BitmapImage img;
 	int startAngle;
+	int collisionGroup;
 	/**
 	 * Creates an new arrow
 	 * @param position		: the position of the departure
 	 * @param startAngle	: the angle 
 	 * @param startForce	:
 	 */
-	public Arrow(Vector2 position, int startAngle, int startForce) {
+	public Arrow(Vector2 position, int startAngle, int startForce, int collisionGroup) {
 		this.startAngle = startAngle;
+		this.collisionGroup = collisionGroup;
 		box = new ArrowPolygon(position, startAngle);
 		
 		//air resistance
@@ -43,8 +45,8 @@ public class Arrow extends FlyingObject{
 	public void draw(GdxGraphics g) {	
 		float angleDegrees = box.getBodyAngleDeg() + startAngle;
 		double angleRadians = Math.toRadians(angleDegrees);
-		//arrows with better penetration depending of the collision angle
-		int distance = 8 + (int)(3*Math.cos(angleRadians));
+		//display arrow with better penetration depending of the collision angle
+		int distance = 8 + (int)(5*Math.cos(angleRadians));
 		Vector2 offset = new Vector2((float)Math.cos(angleRadians)*distance, (float)Math.sin(angleRadians)*distance );
 		
 		Vector2 pos = box.getBodyWorldCenter();
@@ -62,11 +64,17 @@ public class Arrow extends FlyingObject{
 	@Override
 	public void updatePhysics(GdxGraphics g) {
 		Vector2 v = box.getBodyLinearVelocity();
+		float angle = box.getBodyAngle();
 		double velocity = Math.sqrt(v.x*v.x + v.y*v.y);
 		//process lift force relative to the angle and the velocity
-		float lift = (float)( -Math.cos(box.getBodyAngle()+ Math.PI/3)*velocity/5);
-		
+		float lift = (float)( -Math.cos(angle+ Math.PI/3)*velocity/5);
+		//apply air damping
+		box.applyBodyForceToCenter(v.x/10f, v.y/10f, true);
 		box.applyBodyTorque(lift, true);
+	}
+	@Override
+	public int getCollisionGroup() {
+		return this.collisionGroup;
 	}
 	
 }

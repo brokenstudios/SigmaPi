@@ -5,8 +5,7 @@ import hevs.fragil.patapon.drawables.SpriteSheet;
 
 public class Spearman extends Unit {
 	static double modLife = +0.2;
-	static Skills modAttack;	
-	static Skills modDefense;	
+	static Skills modifier;	
 	static SpriteSheet arms;
 	
 	public Spearman(){

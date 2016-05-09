@@ -3,9 +3,9 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
-import hevs.fragil.patapon.drawables.BodyPolygon;
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.fragil.patapon.others.Param;
+import hevs.fragil.patapon.mechanics.Param;
+import hevs.fragil.patapon.physics.BodyPolygon;
 
 public abstract class Unit implements DrawableObject{
 	int level = 1;

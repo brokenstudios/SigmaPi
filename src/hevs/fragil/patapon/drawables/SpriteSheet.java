@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import hevs.fragil.patapon.others.Param;
+import hevs.fragil.patapon.mechanics.Param;
 
 public class SpriteSheet {
 	Animation animation;

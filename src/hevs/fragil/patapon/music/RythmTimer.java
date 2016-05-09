@@ -2,7 +2,7 @@ package hevs.fragil.patapon.music;
 import java.util.TimerTask;
 
 import hevs.fragil.patapon.drawables.BlinkingBorder;
-import hevs.fragil.patapon.others.Game;
+import hevs.fragil.patapon.mechanics.Game;
 
 public class RythmTimer extends TimerTask {
 	BlinkingBorder f = new BlinkingBorder();

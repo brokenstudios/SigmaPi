@@ -1,32 +1,37 @@
-package hevs.fragil.patapon.drawables;
+package hevs.fragil.patapon.physics;
 
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 import ch.hevs.gdx2d.lib.physics.AbstractPhysicsObject;
-import hevs.fragil.patapon.others.Game;
+import hevs.fragil.patapon.mechanics.Game;
 
 public class ArrowPolygon extends PhysicsPolygon {
+	int group;
+	
 	static Vector2 dimensions =  new Vector2(3,80);
 	static int nArrows;
-	
 	static int startAngle = 60;
 	static float[] v1 = {-5, 60, -4, 70, 0, 80, 4, 70, 5, 60, 0, 0};
 	
-	public ArrowPolygon(Vector2 position, int startAngle) {
+	public ArrowPolygon(Vector2 position, int startAngle, int collisionGroup) {
 		super("arrow"+nArrows, position, getArrowVertices(startAngle),  8f, 0f, 1f, true);
 		this.getBody().setBullet(true);
+		this.group = collisionGroup;
 		nArrows++;
+	}
+	public ArrowPolygon(Vector2 position, int startAngle) {
+		this(position, startAngle, -1);
 	}
 	
 	@Override
 	public void collision(AbstractPhysicsObject theOtherObject, float energy) {
-		if(energy > 0){
-			System.out.println(theOtherObject.name + " collided with " + this.name + " with " + energy + " energy" );
-		if(energy > 5)
-			System.out.println(this.name + " is now stuck in the floor !");
+		if(energy > 5){
+			//Create a joint to stick the arrow
 			Game.createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(),getSpike()));
+			//TODO change collisiongroup to match the victim group
+			
 		}
 	}
 	public Vector2 getSpike() {
