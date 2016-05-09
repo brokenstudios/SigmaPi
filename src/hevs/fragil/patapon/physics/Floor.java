@@ -1,4 +1,4 @@
-package hevs.fragil.patapon.drawables;
+package hevs.fragil.patapon.physics;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;

@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="hevs.fragil.patapon.physics.Arrow" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/physics/Arrow.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="207" width="192" x="879" y="518"/>    
+    <position height="-1" width="-1" x="985" y="627"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -66,7 +66,7 @@
   </interface>  
   <class id="8" language="java" name="hevs.fragil.patapon.drawables.FlyingPolygon" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/drawables/FlyingPolygon.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="99" width="288" x="2646" y="37"/>    
+    <position height="-1" width="-1" x="1283" y="426"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -75,7 +75,7 @@
   </class>  
   <class id="9" language="java" name="hevs.fragil.patapon.physics.ArrowPolygon" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/physics/ArrowPolygon.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="261" width="230" x="879" y="873"/>    
+    <position height="-1" width="-1" x="1267" y="624"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -274,10 +274,10 @@
   <association id="41">    
     <end type="SOURCE" refId="4" navigable="false">      
       <attribute id="42" name="box">        
-        <position height="0" width="0" x="0" y="0"/>      
+        <position height="0" width="0" x="273" y="-379"/>      
       </attribute>      
       <multiplicity id="43" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
+        <position height="0" width="0" x="273" y="-379"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
