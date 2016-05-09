@@ -8,6 +8,7 @@ import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.Arrow;
 
 public class Archer extends Unit {
+	//Skills modifiers
 	static double modLife = -0.2;
 	static Skills modifier;
 	static SpriteSheet arms;

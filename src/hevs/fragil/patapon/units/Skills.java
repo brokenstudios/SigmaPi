@@ -1,12 +1,14 @@
 package hevs.fragil.patapon.units;
 public class Skills {
+	private int life;
+	private int attack;
 	private int range;
-	private int damage;
 	private int cooldown;
 	
-	Skills(int range, int damage, int cooldown){
+	Skills(int life, int attack, int range, int cooldown){
 		this.setRange(range);
-		this.setDamage(damage);
+		this.setCooldown(cooldown);
+		this.setRange(range);
 		this.setCooldown(cooldown);
 	}
 	public int getRange() {
@@ -15,16 +17,23 @@ public class Skills {
 	public void setRange(int range) {
 		this.range = range;
 	}
-	public int getDamage() {
-		return damage;
-	}
-	public void setDamage(int damage) {
-		this.damage = damage;
-	}
-	public float getCooldown() {
+	public int getCooldown() {
 		return cooldown;
 	}
 	public void setCooldown(int cooldown) {
 		this.cooldown = cooldown;
 	}
+	public int getLife() {
+		return life;
+	}
+	public void setLife(int life) {
+		this.life = life;
+	}
+	public int getAttack() {
+		return attack;
+	}
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
+
 }

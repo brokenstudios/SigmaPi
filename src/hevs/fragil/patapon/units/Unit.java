@@ -8,31 +8,28 @@ import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.BodyPolygon;
 
 public abstract class Unit implements DrawableObject{
-	int level = 1;
-	int species = 1;
-	protected int life;
-	protected int attack;
-	protected int defense;
-	protected int distance;
-	protected int range;
-	protected int cooldown;
-	protected long lastAttack = 0;
-	BodyPolygon hitBox;
-	static SpriteSheet legs;
 	static int nUnits;
-	SpriteSheet body, eye;
-	int walkIndex;
+	
+	//Characteristics(TODO should be enums for better interpretation)
+	protected int level = 1;
+	protected int species = 1;
+	protected int state = 1;
+	
+	//Skills
+	protected Skills skills;
+	
+	private BodyPolygon hitBox;
+	
+	//Drawables
+	private static SpriteSheet legs;
+	private int frameIndex;
+	private SpriteSheet body, eye;
 	
 	Unit(int lvl, int species, int attack, int defense, int life, int distance, int range, int cooldown){
 		this.species = species;
 		this.level = lvl;
-		this.life = Param.LIFE_BASE + level * 5;
-		this.attack = attack;
-		this.defense = defense;
-		this.distance = distance;
-		this.life = life;
-		this.range = range;
-		this.cooldown = cooldown;
+		this.state = 1;
+		this.skills = new Skills(life+level*5, attack, range, cooldown);
 		nUnits++;
 	}	
 	public void setPosition(int newPos){
@@ -44,31 +41,39 @@ public abstract class Unit implements DrawableObject{
 	protected int getPosition(){
 		return (int)hitBox.getBodyWorldCenter().x;
 	}
-	protected void setLife(int d){
-		this.life = d;
+	protected void setLife(int life){
+		this.skills.setLife(life);
 	}
 	public String toString(){
-		return ", Level : "+ level + ", Life : " + life;
+		return ", Level : "+ level + ", Life : " + skills.getLife();
 	}
 	public abstract void attack();
 	public abstract void draw(GdxGraphics g, float time);
-	public void drawLegs(float stateTime){
-		walkIndex = legs.drawKeyFrames(stateTime, getPosition()-32);
+	protected void drawLegs(float stateTime){
+		frameIndex = legs.drawKeyFrames(stateTime, getPosition()-32);
 	}
-	public void drawBody(float stateTime){
-		body.drawWalkAnimation(walkIndex, (5*(species-1))+(level-1), getPosition()-32, 40);
+	protected void drawBody(float stateTime){
+		body.drawWalkAnimation(frameIndex, (5*(species-1))+(level-1), getPosition()-32, 40);
 	}
-	public void drawEye() {
+	protected void drawEye(){
 		//TODO get unit state to change the eye expression
-		eye.drawWalkAnimation(walkIndex, 1, getPosition()-32, 52);
+		eye.drawWalkAnimation(frameIndex, 1, getPosition()-32, 52);
 	}
-	//only to load files in the onInit method
+	/**
+	 * This is only to load files in the PortableApplication onInit method
+	 */
 	public static void setLegsSprite(String url, int cols, int rows){
 		legs = new SpriteSheet(url, cols , rows, 0.2f);
 	}
+	/**
+	 * This is only to load files in the PortableApplication onInit method
+	 */
 	public void setBodySprite(String url, int cols, int rows) {
 		body = new SpriteSheet(url, cols , rows, 0.2f);		
 	}
+	/**
+	 * This is only to load files in the PortableApplication onInit method
+	 */
 	public void setEyeSprite(String url, int cols, int rows) {
 		eye = new SpriteSheet(url, cols , rows, 0.2f);		
 	}
