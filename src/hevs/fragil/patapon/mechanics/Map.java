@@ -1,5 +1,7 @@
 package hevs.fragil.patapon.mechanics;
 
+import java.util.Vector;
+
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.physics.Floor;
@@ -8,6 +10,10 @@ public class Map implements DrawableObject{
 	private int width;
 	private int height;
 	private Floor floor;
+	//Contain the objects to draw (trees, etc..)
+//	private Vector toDraw;
+	//Contain all the maps created, allow to "load" them
+//	private static Vector<Map> maps;
 	
 	public Map(){
 		this(Param.WIN_WIDTH, Param.WIN_HEIGHT);
@@ -21,15 +27,16 @@ public class Map implements DrawableObject{
 	public Map(int w, int h){
 		this.width = w;
 		setFloor(new Floor(width));
+//		maps.add(this);
 	} 
 	
 	//This method center the camera on the given point
-	public int cameraProcess(int x1){
+	public float cameraProcess(int x1){
 		return cameraProcess(x1, 0);
 	}
 	
-	public int cameraProcess(int x1, int x2){
-		int camPos = 0;
+	public float cameraProcess(int x1, int x2){
+		float camPos = x1;
 		
 		//TODO process camera position depending of objects position AND POV
 		//TODO ensure that camera isn't out of screen, in this case default position
@@ -49,18 +56,27 @@ public class Map implements DrawableObject{
 	public void processTree(){
 		
 	}
-
-	public Floor getFloor() {
-		return floor;
-	}
-
-	public void setFloor(Floor floor) {
-		this.floor = floor;
-	}
-
 	@Override
 	public void draw(GdxGraphics g) {
 		floor.draw(g);
+	}
+	public int getWidth() {
+		return width;
+	}
+	public void setWidth(int width) {
+		this.width = width;
+	}
+	public int getHeigth() {
+		return height;
+	}
+	public void setHeigth(int heigth) {
+		this.height = heigth;
+	}
+	public Floor getFloor() {
+		return floor;
+	}
+	public void setFloor(Floor floor) {
+		this.floor = floor;
 	}
 	
 	

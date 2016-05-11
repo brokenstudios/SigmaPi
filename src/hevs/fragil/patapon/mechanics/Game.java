@@ -6,7 +6,7 @@ import java.util.Vector;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.maps.Map;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
@@ -36,8 +36,8 @@ import hevs.fragil.patapon.units.Spearman;
 import hevs.fragil.patapon.units.Unit;
 
 public class Game extends PortableApplication{
-	private int width;
-	private static int cameraX;
+	private static Map map;
+	private static Vector3 cameraPos;
 	private static Vector<Company> companies = new Vector<Company>();
 	private static SoundSample heNote, sNote, soNote, yesNote;
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
@@ -49,7 +49,6 @@ public class Game extends PortableApplication{
 	DebugRenderer debugRenderer;
 	private static Floor floor;
 	//TODO give it a try ! 
-	private static Map map;
 	private static Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
 	private static Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
 	
@@ -60,15 +59,29 @@ public class Game extends PortableApplication{
 	public float stateTime;
 
 	public static void main(String[] args) {
-		new Game(1500);
+		initializeMap();
 		getCompanies().add(randomCompany(4,3,3));
 	}
 	public Game(int w){
-		this(w, 900);
+		this(w, Param.WIN_HEIGHT);
 	}
 	public Game(int w, int h){
 		super(w, h);
 		this.width = w;
+	}
+	public static void initializeMap(){
+		new Game(Param.WIN_WIDTH);
+	}
+	//FIXME call this will overwrite the actual map
+	public static void initializeMap(int w){
+		new Game(Param.WIN_WIDTH);
+		map.setWidth(w);
+	}
+	//FIXME call this will overwrite the actual map
+	public static void initializeMap(int w, int h){
+		new Game(Param.WIN_WIDTH, Param.WIN_HEIGHT);
+		map.setWidth(w);
+		map.setHeigth(h);
 	}
 	public static int getNbTracks(){
 		return tracks.size();
@@ -129,8 +142,10 @@ public class Game extends PortableApplication{
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
-		frame = new BlinkingBorder();  
-		floor = new Floor(width);
+		frame = new BlinkingBorder();
+		//Create a default map and the floor that belong
+		map = new Map(Param.MAP_WIDTH, Param.MAP_HEIGHT);
+		floor = map.getFloor();
 		debugRenderer = new DebugRenderer();
 	}
 	@Override
@@ -181,7 +196,13 @@ public class Game extends PortableApplication{
 	public void onGraphicRender(GdxGraphics g) {	
 		//clear the screen Param.BACKGROUND
 		g.clear(Param.BACKGROUND);
-		g.moveCamera(cameraX, 0);
+		//FIXME WAS PASSIERT?
+//		cameraPos.x = map.cameraProcess(companies.get(0).globalPosition);
+//		cameraPos.x = 5f;
+//		cameraPos.y = 0;
+//		cameraPos.z = map.cameraZoom();
+//		g.getCamera().lookAt(cameraPos);
+//		g.getCamera().lookAt(60, 0, 0);
 
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
