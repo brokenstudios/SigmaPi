@@ -55,8 +55,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="7" language="java" name="hevs.fragil.patapon.physics.ArrowPolygon" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/physics/ArrowPolygon.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="hevs.fragil.patapon.physics.Arrow" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/physics/Arrow.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1267" y="624"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -186,95 +186,83 @@
     <end type="TARGET" refId="9"/>  
   </generalization>  
   <association id="22">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="23" name="sections">        
-        <position height="0" width="0" x="-74" y="-188"/>      
-      </attribute>      
-      <multiplicity id="24" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-74" y="-188"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="15" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="25">    
-    <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="26" name="melody">        
-        <position height="0" width="0" x="-21" y="-971"/>      
-      </attribute>      
-      <multiplicity id="27" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-21" y="-971"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="18" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="28">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="9"/>  
-  </generalization>  
-  <association id="29">    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="30" name="drum">        
-        <position height="0" width="0" x="-21" y="-971"/>      
-      </attribute>      
-      <multiplicity id="31" minimum="0" maximum="1">        
-        <position height="16" width="23" x="562" y="605"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="32">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="33" name="hitBox">        
-        <position height="0" width="0" x="-222" y="-762"/>      
-      </attribute>      
-      <multiplicity id="34" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-222" y="-762"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="35">    
     <end type="SOURCE" refId="19" navigable="false">      
-      <attribute id="36" name="f">        
+      <attribute id="23" name="f">        
         <position height="0" width="0" x="0" y="0"/>      
       </attribute>      
-      <multiplicity id="37" minimum="0" maximum="1">        
+      <multiplicity id="24" minimum="0" maximum="1">        
         <position height="0" width="0" x="0" y="0"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="5" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="38">    
+  <generalization id="25">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="9"/>  
+  </generalization>  
+  <generalization id="26">    
     <end type="SOURCE" refId="16"/>    
     <end type="TARGET" refId="9"/>  
   </generalization>  
-  <association id="39">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="40" name="box">        
-        <position height="0" width="0" x="273" y="-379"/>      
+  <association id="27">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="28" name="hitBox">        
+        <position height="0" width="0" x="-222" y="-762"/>      
       </attribute>      
-      <multiplicity id="41" minimum="0" maximum="1">        
-        <position height="0" width="0" x="273" y="-379"/>      
+      <multiplicity id="29" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-222" y="-762"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="42">    
+  <association id="30">    
+    <end type="SOURCE" refId="18" navigable="false">      
+      <attribute id="31" name="drum">        
+        <position height="0" width="0" x="-21" y="-971"/>      
+      </attribute>      
+      <multiplicity id="32" minimum="0" maximum="1">        
+        <position height="16" width="23" x="562" y="605"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="17" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="33">    
+    <end type="SOURCE" refId="20" navigable="false">      
+      <attribute id="34" name="melody">        
+        <position height="0" width="0" x="-21" y="-971"/>      
+      </attribute>      
+      <multiplicity id="35" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-21" y="-971"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="36">    
     <end type="SOURCE" refId="15" navigable="false">      
-      <attribute id="43" name="units">        
+      <attribute id="37" name="units">        
         <position height="0" width="0" x="-80" y="-398"/>      
       </attribute>      
-      <multiplicity id="44" minimum="0" maximum="2147483647">        
+      <multiplicity id="38" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="-80" y="-398"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="39">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="40" name="sections">        
+        <position height="0" width="0" x="-74" y="-188"/>      
+      </attribute>      
+      <multiplicity id="41" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-74" y="-188"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

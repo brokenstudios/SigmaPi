@@ -49,6 +49,10 @@ public abstract class Param {
 	public static final int COOLDOWN_BASE = 500;
 	public static final int ATTACK_BASE = 5;
 	public static final int RANGE_BASE = 0;
+
+	public static final int HEROES_GROUP = -1;
+	public static final int ENNEMIES_GROUP = -2;
+	public static final int ARROWS_GROUP = -3;
 	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(243,100,0);

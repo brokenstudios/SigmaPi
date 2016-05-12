@@ -8,8 +8,9 @@ import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.physics.AbstractPhysicsObject;
 import hevs.fragil.patapon.mechanics.Game;
+import hevs.fragil.patapon.mechanics.Param;
 
-public class ArrowPolygon extends PhysicsPolygon implements CollisionGroup, DrawableProjectile {
+public class Arrow extends PhysicsPolygon implements Projectile {
 	int group;
 	int startAngle;
 	int collisionGroup;
@@ -22,7 +23,7 @@ public class ArrowPolygon extends PhysicsPolygon implements CollisionGroup, Draw
 	static int nArrows;
 	static float[] v1 = {-5, 60, -4, 70, 0, 80, 4, 70, 5, 60, 0, 0};
 	
-	public ArrowPolygon(Vector2 position, int startAngle, int startForce, int collisionGroup) {
+	public Arrow(Vector2 position, int startAngle, int startForce, int collisionGroup) {
 		super("arrow"+nArrows, position, getArrowVertices(startAngle),  8f, 0f, 1f, true);
 		this.startAngle = startAngle;
 		this.getBody().setBullet(true);
@@ -43,7 +44,7 @@ public class ArrowPolygon extends PhysicsPolygon implements CollisionGroup, Draw
 		applyBodyForceToCenter(new Vector2((float)Math.cos(angleRadians)*startForce, (float)Math.sin(angleRadians)*startForce), true);
 		Game.add(this);
 	}
-	public ArrowPolygon(Vector2 position, int startAngle, int startForce) {
+	public Arrow(Vector2 position, int startAngle, int startForce) {
 		this(position, startAngle, startForce, -1);
 	}
 	
@@ -51,7 +52,25 @@ public class ArrowPolygon extends PhysicsPolygon implements CollisionGroup, Draw
 	public void collision(AbstractPhysicsObject theOtherObject, float energy) {
 		//Create a joint to stick the arrow
 		Game.createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(),getSpike()));
+		
 		//TODO change collisiongroup to match the victim group
+		if( theOtherObject.name.contains("floor") ){
+			System.out.println("much sad, you missed !");
+			setBodyActive(false);
+		}
+		else if( theOtherObject.name.contains("hero") ){
+			System.out.println("Oh no ! you've got blessed !");
+			//will not collide accidentally with heroes anymore
+			setCollisionGroup(Param.HEROES_GROUP);
+		}
+		else if( theOtherObject.name.contains("ennemy") ){
+			System.out.println("yahou ! you hit an ennemy !");
+			//will not collide accidentally with ennemies anymore
+			setCollisionGroup(Param.ENNEMIES_GROUP);
+		}
+		else{
+			System.out.println("WTF is this object ?");
+		}
 	}
 	public Vector2 getSpike() {
 		Vector2 temp = getBodyWorldCenter();
@@ -114,10 +133,6 @@ public class ArrowPolygon extends PhysicsPolygon implements CollisionGroup, Draw
 		if(opacity <= 0)
 			return true;
 		return false;
-	}
-	@Override
-	public int getCollisionGroup() {
-		return collisionGroup;
 	}
 	public static void setImgPath(String url) {
 		img = new BitmapImage(url);

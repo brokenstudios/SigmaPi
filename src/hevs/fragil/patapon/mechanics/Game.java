@@ -24,8 +24,8 @@ import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.RythmTimer;
 import hevs.fragil.patapon.music.Sequence;
-import hevs.fragil.patapon.physics.ArrowPolygon;
-import hevs.fragil.patapon.physics.DrawableProjectile;
+import hevs.fragil.patapon.physics.Arrow;
+import hevs.fragil.patapon.physics.Projectile;
 import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.StickyInfo;
 import hevs.fragil.patapon.units.Archer;
@@ -49,7 +49,7 @@ public class Game extends PortableApplication{
 	private static Timer actionTimer = new Timer();
 	DebugRenderer debugRenderer;
 	private static Floor floor;
-	private static Vector<DrawableProjectile> flyingOjects = new Vector<DrawableProjectile>();
+	private static Vector<Projectile> flyingOjects = new Vector<Projectile>();
 	private static Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
 	private static Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
 	
@@ -95,7 +95,7 @@ public class Game extends PortableApplication{
 		if(RythmTimer.snapEnable)snap.loop();
 		else snap.stop();
 	}
-	public static void add (ArrowPolygon arrowPolygon){
+	public static void add (Arrow arrowPolygon){
 		flyingOjects.add(arrowPolygon);
 	}
 	@Override
@@ -141,7 +141,7 @@ public class Game extends PortableApplication{
 				}
 			}
 		}
-		ArrowPolygon.setImgPath("data/images/fleche.png");
+		Arrow.setImgPath("data/images/fleche.png");
 		frame = new BlinkingBorder();
 		//Create a default map and the floor that belong
 		map = new Map(Param.MAP_WIDTH, Param.MAP_HEIGHT);
@@ -223,8 +223,8 @@ public class Game extends PortableApplication{
 		
 		// Draws the balls
 		//Should be used like that
-		for (Iterator<DrawableProjectile> iter = flyingOjects.iterator(); iter.hasNext(); ) {
-			DrawableProjectile projectile = iter.next();
+		for (Iterator<Projectile> iter = flyingOjects.iterator(); iter.hasNext(); ) {
+			Projectile projectile = iter.next();
 			
 			projectile.step(g);
 			projectile.draw(g);
