@@ -3,26 +3,48 @@ package hevs.fragil.patapon.physics;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
+import ch.hevs.gdx2d.components.bitmaps.BitmapImage;
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
+import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.physics.AbstractPhysicsObject;
 import hevs.fragil.patapon.mechanics.Game;
 
-public class ArrowPolygon extends PhysicsPolygon {
+public class ArrowPolygon extends PhysicsPolygon implements CollisionGroup, DrawableProjectile {
 	int group;
+	int startAngle;
+	int collisionGroup;
+	//when opacity is zero, arrow is deleted
+	float opacity = 1.0f;
 	
+	//for every arrow
+	static BitmapImage img;
 	static Vector2 dimensions =  new Vector2(3,80);
 	static int nArrows;
-	static int startAngle = 60;
 	static float[] v1 = {-5, 60, -4, 70, 0, 80, 4, 70, 5, 60, 0, 0};
 	
-	public ArrowPolygon(Vector2 position, int startAngle, int collisionGroup) {
+	public ArrowPolygon(Vector2 position, int startAngle, int startForce, int collisionGroup) {
 		super("arrow"+nArrows, position, getArrowVertices(startAngle),  8f, 0f, 1f, true);
+		this.startAngle = startAngle;
 		this.getBody().setBullet(true);
 		this.group = collisionGroup;
 		nArrows++;
+		
+		this.startAngle = startAngle;
+		this.collisionGroup = collisionGroup;
+		
+		//air resistance
+		setBodyAngularDamping(15f);
+		
+		//same negative index to disable collisions between arrows
+		setCollisionGroup(collisionGroup);
+		enableCollisionListener();
+		
+		double angleRadians = Math.toRadians(startAngle);
+		applyBodyForceToCenter(new Vector2((float)Math.cos(angleRadians)*startForce, (float)Math.sin(angleRadians)*startForce), true);
+		Game.add(this);
 	}
-	public ArrowPolygon(Vector2 position, int startAngle) {
-		this(position, startAngle, -1);
+	public ArrowPolygon(Vector2 position, int startAngle, int startForce) {
+		this(position, startAngle, startForce, -1);
 	}
 	
 	@Override
@@ -40,7 +62,7 @@ public class ArrowPolygon extends PhysicsPolygon {
 	private static Vector2[] getArrowVertices(int angle){
 		Polygon poly = new Polygon(v1);
 		poly.setOrigin(0, 40);
-		poly.rotate(startAngle - 90);
+		poly.rotate(angle - 90);
 		return verticesToVector2(poly.getTransformedVertices());
 	}
 	/**
@@ -61,5 +83,43 @@ public class ArrowPolygon extends PhysicsPolygon {
 		else{
 			return null;
 		}
+	}
+	@Override
+	public void draw(GdxGraphics g) {
+		float angleDegrees = getBodyAngleDeg() + startAngle;
+		double angleRadians = Math.toRadians(angleDegrees);
+		//display arrow with better penetration depending of the collision angle
+		int distance = 8 + (int)(5*Math.cos(angleRadians));
+		Vector2 offset = new Vector2((float)Math.cos(angleRadians)*distance, (float)Math.sin(angleRadians)*distance );
+		
+		Vector2 pos = getBodyWorldCenter();
+		pos = pos.add(offset);
+		g.drawAlphaPicture(pos.x, pos.y, angleDegrees, .35f, opacity, img);
+	}
+	@Override
+	public void step(GdxGraphics g) {
+		Vector2 v = getBodyLinearVelocity();
+		float angle = getBodyAngle();
+		double velocity = Math.sqrt(v.x*v.x + v.y*v.y);
+		//process lift force relative to the angle and the velocity
+		float lift = (float)( -Math.cos(angle+ Math.PI/3)*velocity/5);
+		//apply air damping
+		applyBodyForceToCenter(v.x/10f, v.y/10f, true);
+		applyBodyTorque(lift, true);
+		
+		this.opacity = Math.max(0, opacity - 0.01f);
+	}
+	@Override
+	public boolean shouldBeDestroyed() {
+		if(opacity <= 0)
+			return true;
+		return false;
+	}
+	@Override
+	public int getCollisionGroup() {
+		return collisionGroup;
+	}
+	public static void setImgPath(String url) {
+		img = new BitmapImage(url);
 	}
 }

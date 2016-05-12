@@ -24,7 +24,7 @@ import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.RythmTimer;
 import hevs.fragil.patapon.music.Sequence;
-import hevs.fragil.patapon.physics.Arrow;
+import hevs.fragil.patapon.physics.ArrowPolygon;
 import hevs.fragil.patapon.physics.DrawableProjectile;
 import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.StickyInfo;
@@ -95,8 +95,8 @@ public class Game extends PortableApplication{
 		if(RythmTimer.snapEnable)snap.loop();
 		else snap.stop();
 	}
-	public static void add (DrawableProjectile o){
-		flyingOjects.add(o);
+	public static void add (ArrowPolygon arrowPolygon){
+		flyingOjects.add(arrowPolygon);
 	}
 	@Override
 	public void onDispose() {
@@ -141,7 +141,7 @@ public class Game extends PortableApplication{
 				}
 			}
 		}
-		Arrow.setImgPath("data/images/fleche.png");
+		ArrowPolygon.setImgPath("data/images/fleche.png");
 		frame = new BlinkingBorder();
 		//Create a default map and the floor that belong
 		map = new Map(Param.MAP_WIDTH, Param.MAP_HEIGHT);
@@ -225,6 +225,7 @@ public class Game extends PortableApplication{
 		//Should be used like that
 		for (Iterator<DrawableProjectile> iter = flyingOjects.iterator(); iter.hasNext(); ) {
 			DrawableProjectile projectile = iter.next();
+			
 			projectile.step(g);
 			projectile.draw(g);
 			
