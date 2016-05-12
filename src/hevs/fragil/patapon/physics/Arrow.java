@@ -8,7 +8,6 @@ import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.physics.AbstractPhysicsObject;
 import hevs.fragil.patapon.mechanics.Game;
-import hevs.fragil.patapon.mechanics.Param;
 
 public class Arrow extends PhysicsPolygon implements Projectile {
 	int group;
@@ -56,17 +55,22 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 		//TODO change collisiongroup to match the victim group
 		if( theOtherObject.name.contains("floor") ){
 			System.out.println("much sad, you missed !");
-			setBodyActive(false);
+//			setBodyActive(false);
+			//no damage to apply here 
 		}
 		else if( theOtherObject.name.contains("hero") ){
 			System.out.println("Oh no ! you've got blessed !");
 			//will not collide accidentally with heroes anymore
-			setCollisionGroup(Param.HEROES_GROUP);
+//			setCollisionGroup(Param.HEROES_GROUP);
+			//get damage from arrow damage value
+			//apply damage to this unit
 		}
 		else if( theOtherObject.name.contains("ennemy") ){
 			System.out.println("yahou ! you hit an ennemy !");
 			//will not collide accidentally with ennemies anymore
-			setCollisionGroup(Param.ENNEMIES_GROUP);
+//			setCollisionGroup(Param.ENNEMIES_GROUP);
+			//get damage from arrow damage value
+			//apply damage to this unit
 		}
 		else{
 			System.out.println("WTF is this object ?");

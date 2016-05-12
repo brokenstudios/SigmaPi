@@ -12,4 +12,4 @@ public class StickyInfo{
         this.bodyB = bodyB;
         this.anchor = anchor;
     }
-};
+}
