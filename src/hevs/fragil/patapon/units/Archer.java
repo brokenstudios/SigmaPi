@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.mechanics.Param;
-import hevs.fragil.patapon.physics.Arrow;
+import hevs.fragil.patapon.physics.ArrowPolygon;
 
 public class Archer extends Unit {
 	//Skills modifiers
@@ -41,6 +41,6 @@ public class Archer extends Unit {
 		
 	}
 	private void fire(){
-		new Arrow( new Vector2(getPosition(), Param.FLOOR_DEPTH+30), 60, 400, -1);
+		new ArrowPolygon( new Vector2(getPosition(), Param.FLOOR_DEPTH+30), 60, 400, -1);
 	}
 }
