@@ -48,12 +48,7 @@ public class Game extends PortableApplication{
 	private static Timer actionTimer = new Timer();
 	DebugRenderer debugRenderer;
 	private static Floor floor;
-	//TODO give it a try ! 
-<<<<<<< HEAD
-	private static Map map;
 	private static Vector<DrawableProjectile> flyingOjects = new Vector<DrawableProjectile>();
-=======
->>>>>>> origin/master
 	private static Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
 	private static Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
 	
@@ -72,7 +67,6 @@ public class Game extends PortableApplication{
 	}
 	public Game(int w, int h){
 		super(w, h);
-		this.width = w;
 	}
 	public static void initializeMap(){
 		new Game(Param.WIN_WIDTH);
