@@ -90,6 +90,5 @@ public class Arrow implements CollisionGroup, DrawableProjectile{
 	@Override
 	public void destroy() {
 		box.destroy();
-		Game.remove(this);
 	}
 }

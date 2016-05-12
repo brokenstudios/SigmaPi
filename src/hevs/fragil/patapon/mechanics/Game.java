@@ -1,5 +1,6 @@
 package hevs.fragil.patapon.mechanics;
 
+import java.util.Iterator;
 import java.util.Timer;
 import java.util.Vector;
 
@@ -14,7 +15,6 @@ import ch.hevs.gdx2d.components.audio.SoundSample;
 import ch.hevs.gdx2d.components.bitmaps.BitmapImage;
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 import ch.hevs.gdx2d.components.physics.utils.PhysicsConstants;
-import ch.hevs.gdx2d.components.physics.utils.PhysicsScreenBoundaries;
 import ch.hevs.gdx2d.desktop.PortableApplication;
 import ch.hevs.gdx2d.desktop.physics.DebugRenderer;
 import ch.hevs.gdx2d.lib.GdxGraphics;
@@ -25,9 +25,8 @@ import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.RythmTimer;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.physics.Arrow;
-import hevs.fragil.patapon.physics.ArrowPolygon;
-import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.DrawableProjectile;
+import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.StickyInfo;
 import hevs.fragil.patapon.units.Archer;
 import hevs.fragil.patapon.units.Company;
@@ -40,9 +39,11 @@ public class Game extends PortableApplication{
 	private static Map map;
 	private static Vector3 cameraPos;
 	private static Vector<Company> companies = new Vector<Company>();
+	
 	private static SoundSample heNote, sNote, soNote, yesNote;
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
 	private static SoundSample snap;
+	
 	private static BlinkingBorder frame;
 	private static Timer tempoTimer = new Timer();
 	private static Timer actionTimer = new Timer();
@@ -193,6 +194,7 @@ public class Game extends PortableApplication{
 			getCompanies().firstElement().moveRelative(+10);
 	}
 	public void onGraphicRender(GdxGraphics g) {	
+		
 		//clear the screen Param.BACKGROUND
 		g.clear(Param.BACKGROUND);
 		//FIXME WAS PASSIERT?
@@ -219,14 +221,21 @@ public class Game extends PortableApplication{
 		    PhysicsWorld.getInstance().createJoint(wjd);
 		}
 		
-		//draw all objects
-		for (DrawableProjectile d : flyingOjects) {
-			d.step(g);
-			d.draw(g);
-			if(d.shouldBeDestroyed())
-				d.destroy();
+		// Draws the balls
+		//Should be used like that
+		for (Iterator<DrawableProjectile> iter = flyingOjects.iterator(); iter.hasNext(); ) {
+			DrawableProjectile projectile = iter.next();
+			projectile.step(g);
+			projectile.draw(g);
+			
+			// If a ball is not visible anymore, it should be destroyed
+			if(projectile.shouldBeDestroyed()){
+				// Mark the ball for deletion when possible
+				projectile.destroy();
+				// Remove the ball from the collection as well
+				iter.remove();
+			}
 		}
-	
 		
 		floor.draw(g);
 
@@ -285,8 +294,5 @@ public class Game extends PortableApplication{
 	}
 	public static void disable(PhysicsPolygon p){
 		toDisable.add(p);
-	}
-	public static void remove(Arrow arrow) {
-		flyingOjects.remove(arrow);
 	}
 }

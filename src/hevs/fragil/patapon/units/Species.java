@@ -3,7 +3,7 @@ package hevs.fragil.patapon.units;
 import java.util.Random;
 
 public enum Species {
-	TAPI, ASPI, PIPI, TANPI, REPI;
+	TAPI, FLAPI, KEPI, TAMPI, RAYPI;
 	
 	private static final Species[] VALUES = values();
 	private static final int SIZE = VALUES.length;
