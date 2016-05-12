@@ -25,6 +25,7 @@ import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.RythmTimer;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.physics.Arrow;
+import hevs.fragil.patapon.physics.ArrowPolygon;
 import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.DrawableProjectile;
 import hevs.fragil.patapon.physics.StickyInfo;
@@ -41,7 +42,6 @@ public class Game extends PortableApplication{
 	private static Vector<Company> companies = new Vector<Company>();
 	private static SoundSample heNote, sNote, soNote, yesNote;
 	private static Vector<SoundSample> tracks = new Vector<SoundSample>();
-	private static Vector<DrawableProjectile> flyingOjects = new Vector<DrawableProjectile>();
 	private static SoundSample snap;
 	private static BlinkingBorder frame;
 	private static Timer tempoTimer = new Timer();
@@ -50,6 +50,7 @@ public class Game extends PortableApplication{
 	private static Floor floor;
 	//TODO give it a try ! 
 	private static Map map;
+	private static Vector<DrawableProjectile> flyingOjects = new Vector<DrawableProjectile>();
 	private static Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
 	private static Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
 	
@@ -200,11 +201,13 @@ public class Game extends PortableApplication{
 		}
 		
 		//draw all objects
-		for (DrawableProjectile o : flyingOjects) {
-			o.applyTorque(g);
-			o.draw(g);
-			o.decreaseOpacity();
+		for (DrawableProjectile d : flyingOjects) {
+			d.step(g);
+			d.draw(g);
+			if(d.shouldBeDestroyed())
+				d.destroy();
 		}
+	
 		
 		floor.draw(g);
 
@@ -263,5 +266,8 @@ public class Game extends PortableApplication{
 	}
 	public static void disable(PhysicsPolygon p){
 		toDisable.add(p);
+	}
+	public static void remove(Arrow arrow) {
+		flyingOjects.remove(arrow);
 	}
 }

@@ -12,7 +12,8 @@ import hevs.fragil.patapon.units.Unit;
 public class ActionTimer extends TimerTask{
 	private static int shiftDestination = 0;
 	private static int shiftIncrement = 0;
-	private static int attackIncrement = 0;
+	private static int attackStep = 0;
+	private static int attackDelay = 0;
 	private static int waitIndex = 0;
 	
 	private static Vector<Action> toRemove = new Vector<Action>();
@@ -114,39 +115,40 @@ public class ActionTimer extends TimerTask{
 	private static boolean attack(Company striker){
 		long seed = (long) (Math.random()*1000);
 		Random r = new Random(seed);
-		//initialize delay
+		attackDelay ++;
+		
+		//initialize delays
 		for (Company c : Game.getCompanies()) {
 			for (Section s : c.sections) {
 				for (Unit u : s.units) {
-					//TODO create setDelay
-					u.setDelay(r.nextInt(100));
+					u.setDelay(r.nextInt(200));
 				}
 			}
 		}
+		
 		//apply delays
-		if (attackIncrement == 0) {
+		if (attackStep == 0) {
 			if(wait(300 + Math.random() * 100, striker)){
 				for (Company c : Game.getCompanies()) {
 					for (Section s : c.sections) {
 						for (Unit u : s.units) {
-							//TODO create getDelay
-							if(u.getDelay() < attackIncrement)
+							if(u.getDelay() < attackDelay)
 								u.attack();
 						}
 					}
 				}
 				
-				attackIncrement++;
+				attackStep++;
 			}
 		}
-		else if(attackIncrement == 1){
+		else if(attackStep == 1){
 			if(wait(300 + Math.random() * 200, striker)){
 				striker.attack();
-				attackIncrement++;
+				attackStep++;
 			}
 		}
 		else {
-			attackIncrement = 0;
+			attackStep = 0;
 			return true;
 		}
 		return false;

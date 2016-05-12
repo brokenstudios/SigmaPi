@@ -66,7 +66,7 @@ public class Arrow implements CollisionGroup, DrawableProjectile{
 		return box.getBody();
 	}
 	@Override
-	public void applyTorque(GdxGraphics g) {
+	public void step(GdxGraphics g) {
 		Vector2 v = box.getBodyLinearVelocity();
 		float angle = box.getBodyAngle();
 		double velocity = Math.sqrt(v.x*v.x + v.y*v.y);
@@ -75,16 +75,21 @@ public class Arrow implements CollisionGroup, DrawableProjectile{
 		//apply air damping
 		box.applyBodyForceToCenter(v.x/10f, v.y/10f, true);
 		box.applyBodyTorque(lift, true);
+		
+		this.opacity = Math.max(0, opacity - 0.01f);
 	}
 	@Override
 	public int getCollisionGroup() {
 		return this.collisionGroup;
 	}
+	public boolean shouldBeDestroyed(){
+		if(opacity <= 0)
+			return true;
+		return false;
+	}
 	@Override
-	public void decreaseOpacity() {
-		this.opacity -= 0.01f;
-		if(opacity <= 0){
-			box.destroy();
-		}
+	public void destroy() {
+		box.destroy();
+		Game.remove(this);
 	}
 }

@@ -9,6 +9,7 @@ import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 public interface DrawableProjectile extends DrawableObject {
 	public abstract Vector2 getSpike();
 	public abstract Body getBody();
-	public abstract void applyTorque(GdxGraphics g);
-	public abstract void decreaseOpacity();
+	public abstract void step(GdxGraphics g);
+	public abstract void destroy();
+	public abstract boolean shouldBeDestroyed();
 }

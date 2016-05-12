@@ -75,5 +75,11 @@ public abstract class Unit implements DrawableObject{
 	public void setEyeSprite(String url, int cols, int rows) {
 		eye = new SpriteSheet(url, cols , rows, 0.2f);		
 	}
+	public void setDelay(int delay) {
+		skills.setCooldown(delay);
+	}
+	public int getDelay() {
+		return skills.getCooldown();
+	}
 	
 }
