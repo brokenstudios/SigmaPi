@@ -21,6 +21,7 @@ public abstract class Param {
 	//Default values of maps dimensions (!= game window)
 	public static final int MAP_HEIGHT = 1800;
 	public static final int MAP_WIDTH = 3000;
+	public static final int CAMERAOFFSET = 30;
 	public static final int FLOOR_DEPTH = 30;
 	public static final int FRAME_DEGRADE_STEPS = 10;
 	//Break the color in case of emergency #SoColorful
@@ -56,6 +57,7 @@ public abstract class Param {
 	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(243,100,0);
+
 	private static Color rgbToFloat(int r, int g, int b){
 		Color temp = new Color();
 		temp.r = (float)(r/255.0);
