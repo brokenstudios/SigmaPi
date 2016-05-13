@@ -11,11 +11,12 @@ public class Note{
 	final static int EXCELLENT = 45;
 	final static int PERFECT = 30;		
 		
-	public Note(Drum d){
+	public Note(Drum d, float lastTime, float stateTime){
 		this.drum = d;
-		long delayNext = System.currentTimeMillis() - RythmTimer.lastTime;
-		long delayPrev =  500 - delayNext;
-		long delay = Math.min(delayNext, delayPrev);
+		//TODO getter for lasttime
+		float delayNext = stateTime - lastTime;
+		float delayPrev =  500 - delayNext;
+		float delay = Math.min(delayNext, delayPrev);
 		
 		boolean late;
 		if(delay == delayNext)
@@ -36,7 +37,7 @@ public class Note{
 		feverScore = 0;
 	}
 	// return a value depending of the user rythm precision
-	public void juge(long delay, boolean late){
+	public void juge(float delay, boolean late){
 			//bonus score if well done
 			System.out.print(drum.toString() + " ");
 			if(delay < PERFECT){

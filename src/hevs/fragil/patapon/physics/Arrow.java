@@ -1,5 +1,6 @@
 package hevs.fragil.patapon.physics;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 
@@ -7,7 +8,7 @@ import ch.hevs.gdx2d.components.bitmaps.BitmapImage;
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.physics.AbstractPhysicsObject;
-import hevs.fragil.patapon.mechanics.Game;
+import hevs.fragil.patapon.mechanics.Level;
 
 public class Arrow extends PhysicsPolygon implements Projectile {
 	int group;
@@ -41,7 +42,6 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 		
 		double angleRadians = Math.toRadians(startAngle);
 		applyBodyForceToCenter(new Vector2((float)Math.cos(angleRadians)*startForce, (float)Math.sin(angleRadians)*startForce), true);
-		Game.add(this);
 	}
 	public Arrow(Vector2 position, int startAngle, int startForce) {
 		this(position, startAngle, startForce, -1);
@@ -50,7 +50,7 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 	@Override
 	public void collision(AbstractPhysicsObject theOtherObject, float energy) {
 		//Create a joint to stick the arrow
-		Game.createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(),getSpike()));
+//		Level.createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(),getSpike()));
 		
 		//TODO change collisiongroup to match the victim group
 		if( theOtherObject.name.contains("floor") ){

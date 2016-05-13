@@ -1,7 +1,6 @@
 package hevs.fragil.patapon.mechanics;
 
 import java.util.Random;
-import java.util.TimerTask;
 import java.util.Vector;
 
 import hevs.fragil.patapon.music.Note;
@@ -9,7 +8,7 @@ import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.Unit;
 
-public class ActionTimer extends TimerTask{
+public class ActionTimer{
 	private static int shiftDestination = 0;
 	private static int shiftIncrement = 0;
 	private static int attackStep = 0;
@@ -20,17 +19,14 @@ public class ActionTimer extends TimerTask{
 	//TODO avoid double command at same time
 	//for example 2 times walk command causes large bug of speed
 	
-	@Override
-	public void run() {
-		for (Company c : Game.getCompanies()) {
-			for (Action a : c.getActions()) {
-				switchAction(a, c);
-			}
-			for (Action a : toRemove) {
-				c.remove(a);
-			}
-			toRemove.removeAllElements();
+	public static void run(float time, Company c) {
+		for (Action a : c.getActions()) {
+			switchAction(a, c);
 		}
+		for (Action a : toRemove) {
+			c.remove(a);
+		}
+		toRemove.removeAllElements();
 	}
 	private static void switchAction(Action a, Company c){
 		boolean finished = false;
@@ -112,38 +108,27 @@ public class ActionTimer extends TimerTask{
 		}
 		return false;
 	}
-	private static boolean attack(Company striker){
+	private static boolean attack(Company c){
 		long seed = (long) (Math.random()*1000);
+		//TODO use this random
 		Random r = new Random(seed);
 		attackDelay ++;
-		
-		//initialize delays
-		for (Company c : Game.getCompanies()) {
-			for (Section s : c.sections) {
-				for (Unit u : s.units) {
-					u.setDelay(r.nextInt(200));
-				}
-			}
-		}
-		
+
 		//apply delays
 		if (attackStep == 0) {
-			if(wait(300 + Math.random() * 100, striker)){
-				for (Company c : Game.getCompanies()) {
-					for (Section s : c.sections) {
-						for (Unit u : s.units) {
-							if(u.getDelay() < attackDelay)
-								u.attack();
-						}
+			if(wait(300 + Math.random() * 100, c)){
+				for (Section s : c.sections) {
+					for (Unit u : s.units) {
+						if(u.getDelay() < attackDelay)
+							u.attack();
 					}
 				}
-				
 				attackStep++;
 			}
 		}
 		else if(attackStep == 1){
-			if(wait(300 + Math.random() * 200, striker)){
-				striker.attack();
+			if(wait(300 + Math.random() * 200, c)){
+				c.attack();
 				attackStep++;
 			}
 		}

@@ -6,7 +6,7 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.Param;
 
-public class BlinkingBorder implements DrawableObject{
+public class Frame implements DrawableObject{
 	static boolean display = true;
 	private int frames = 0;
 	public static boolean blinkEnable = false;
@@ -39,5 +39,9 @@ public class BlinkingBorder implements DrawableObject{
 				frames = 0;
 			}
 		}
+	}
+
+	public void toggle() {
+		blinkEnable = !blinkEnable;
 	}
 }
