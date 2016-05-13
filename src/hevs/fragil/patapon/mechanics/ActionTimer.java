@@ -14,12 +14,14 @@ public class ActionTimer{
 	private static int attackStep = 0;
 	private static int attackDelay = 0;
 	private static int waitIndex = 0;
+	private static float deltaTime;
 	
 	private static Vector<Action> toRemove = new Vector<Action>();
 	//TODO avoid double command at same time
 	//for example 2 times walk command causes large bug of speed
 	
-	public static void run(float time, Company c) {
+	public static void run(float dt, Company c) {
+		deltaTime = dt;
 		for (Action a : c.getActions()) {
 			switchAction(a, c);
 		}
@@ -54,18 +56,23 @@ public class ActionTimer{
 	private static boolean shift(double time, int shift, Company c){
 		int minLeftOffset = c.getWidth()/2 +10 ;
 		double speed = shift / time ;
+		
 		//first time we get in
 		if(shiftDestination == 0){
+			//process where to go
 			shiftDestination = c.globalPosition + shift;
 			System.out.println("**Shift routine : " + shift + " pixels to " + shiftDestination);
 		}
+		
 		//time to distance : d = t*v 
-		int increment = (int)(Param.ACTIONS_BAR * speed);
+		int increment = (int)(deltaTime * speed);
 		c.moveRelative(increment);
+	
 		//arrived at last position
-		if((c.globalPosition >= shiftDestination) && shift > 0 			//right limit
-				||(c.globalPosition <= shiftDestination) && shift < 0 	//left limit
+		if((c.globalPosition >= shiftDestination) && shift > 0 				//right limit
+				||(c.globalPosition <= shiftDestination) && shift < 0 		//left limit
 				|| c.globalPosition == minLeftOffset){						//window limit
+			
 			shiftDestination = 0;
 			System.out.println("**->Shift routine finished");
 			return true;
@@ -76,36 +83,46 @@ public class ActionTimer{
 		if(waitIndex == 0){
 			System.out.println("**Wait routine : wait " + time + " ms");
 		}
-		waitIndex += Param.ACTIONS_BAR;
+		
+		waitIndex += deltaTime;
+		
 		if(waitIndex >= time ){
 			System.out.println("**->Wait routine finished");
 			waitIndex = 0;
 			return true ;
 		}
+		
 		else return false ;
 		
 	}
 	private static boolean walk(Company c){
 		double time = Param.WALK_TIME;
+		
 		//add bonus time (faster move with fever)
 		time -= Param.WALK_TIME_BONUS/100.0 * Note.getFeverCoefficient();
+		
 		return shift(time, Param.WALK_WIDTH, c);
 	}
 	private static boolean retreat(Company c){
+		//FIXME WTF IS HAPPENING ?
 		double time = Param.RETREAT_TIME;
 		double bonus = Param.RETREAT_TIME_BONUS/100.0 * Note.getFeverCoefficient();
+		
 		if (shiftIncrement == 0) {
 			if(shift(time/4-bonus, -Param.RETREAT_WIDTH, c))
 				shiftIncrement++;
 		}
+		
 		else if(shiftIncrement == 1){
 			if(wait(time/2.0, c))
 				shiftIncrement++;
 		}
+		
 		else if (shift(1*time/4, Param.RETREAT_WIDTH, c)){
 			shiftIncrement = 0;
 			return true;
 		}
+		
 		return false;
 	}
 	private static boolean attack(Company c){

@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
@@ -20,13 +19,9 @@ import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
-import hevs.fragil.patapon.physics.Arrow;
 import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.Projectile;
 import hevs.fragil.patapon.physics.StickyInfo;
-import hevs.fragil.patapon.units.Company;
-import hevs.fragil.patapon.units.Section;
-import hevs.fragil.patapon.units.Unit;
 
 public class Level extends RenderingScreen{
 	private Decor decor;
@@ -34,6 +29,7 @@ public class Level extends RenderingScreen{
 	private Frame frame;
 	private SoundSample heNote, sNote, soNote, yesNote;
 	private SoundSample snap, track;
+	private boolean debugActive = false;
 	DebugRenderer debugRenderer;
 	
 	private Vector<Projectile> flyingOjects = new Vector<Projectile>();
@@ -43,14 +39,10 @@ public class Level extends RenderingScreen{
 	private float stateTime;
 	public float lastTime;
 	
-	private Company ennemies = new Company();
-	private PlayerData playerData = new PlayerData();
-	
 	// A world with gravity pointing down. Must be called!
 	World world = PhysicsWorld.getInstance();
 
 	public Level(){
-		
 	}
 	public void add (Projectile o){
 		flyingOjects.add(o);
@@ -67,8 +59,10 @@ public class Level extends RenderingScreen{
 	}
 	@Override
 	public void onInit() {
-		
 		PhysicsWorld.getInstance();
+		CurrentLevel.setLevel(this);
+
+		PlayerCompany.getInstance().initRandomCompany(3, 3, 4);
 		
 		//Load the sound files
 		heNote = new SoundSample("data/music/HE.wav");
@@ -77,16 +71,6 @@ public class Level extends RenderingScreen{
 		yesNote = new SoundSample("data/music/YES.wav");
 		snap = new SoundSample("data/music/loop2.wav");
 		track = new SoundSample("data/music/loop1.wav");
-	
-		//Load the image files
-		Unit.setLegsSprite("data/images/legs64x42.png", 4, 1);
-		for (Section s : ennemies.sections) {
-			for (Unit u : s.units) {
-				u.setBodySprite("data/images/bodies64x102.png", 5, 5);
-				u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
-			}
-		}
-		Arrow.setImgPath("data/images/fleche.png");
 		
 		//Create a default map and the floor that belong
 		frame = new Frame();
@@ -94,26 +78,24 @@ public class Level extends RenderingScreen{
 		floor = new Floor (decor.getWidth());
 		
 		debugRenderer = new DebugRenderer();
-
 	}
-	@Override
 	public void onKeyDown(int keycode) {
-		super.onKeyDown(keycode);
 		if (keycode == Keys.NUM_1){
 			heNote.play();
-			playerData.addAction(Sequence.add(new Note(Drum.HE, lastTime, stateTime)));
+			System.out.println("Coucou");
+			PlayerCompany.getInstance().addAction(Sequence.add(new Note(Drum.HE, lastTime, stateTime)));
 		}
 		if (keycode == Keys.NUM_2){
 			sNote.play();
-			playerData.addAction(Sequence.add(new Note(Drum.S, lastTime, stateTime)));		
+			PlayerCompany.getInstance().addAction(Sequence.add(new Note(Drum.S, lastTime, stateTime)));		
 		}
 		if (keycode == Keys.NUM_3){
 			soNote.play();
-			playerData.addAction(Sequence.add(new Note(Drum.SO, lastTime, stateTime)));		
+			PlayerCompany.getInstance().addAction(Sequence.add(new Note(Drum.SO, lastTime, stateTime)));		
 		}
 		if (keycode == Keys.NUM_4){
 			yesNote.play();
-			playerData.addAction(Sequence.add(new Note(Drum.YES, lastTime, stateTime)));		
+			PlayerCompany.getInstance().addAction(Sequence.add(new Note(Drum.YES, lastTime, stateTime)));		
 		}
 		
 		if (keycode == Keys.SPACE){
@@ -128,16 +110,48 @@ public class Level extends RenderingScreen{
 			soNote.setPitch(1);
 			yesNote.setPitch(1);	
 		}
+		if (keycode == Keys.D){
+			debugActive = !debugActive;
+		}
 	}
 	public void onGraphicRender(GdxGraphics g) {	
 		//clear the screen Param.BACKGROUND
 		g.clear(decor.getBackground());
-		rythm();
-		action();
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
-		debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
+		if(debugActive)
+			debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
 		
 		//stick flying objects
+		createJoints();
+		
+		//move objects
+		stepProjectiles(g);
+		rythm();
+		action();
+		
+		floor.draw(g);
+		frame.draw(g);
+		PlayerCompany.getInstance().draw(g, stateTime);
+		
+		stateTime += Gdx.graphics.getDeltaTime();
+	}
+	public void createWeldJoint(StickyInfo si) {
+		toJoin.add(si);
+	}
+	public void disable(PhysicsPolygon p){
+		toDisable.add(p);
+	}
+	private void rythm(){
+		lastTime += Gdx.graphics.getRawDeltaTime()*1000;
+		if(lastTime >= 500){
+			lastTime = 0;
+			frame.toggle();
+		}
+	}
+	private void action(){
+		ActionTimer.run(Gdx.graphics.getDeltaTime()*1000, PlayerCompany.getInstance().getHeroes() );
+	}
+	private void createJoints(){
 		while(toJoin.size() > 0){
 			//get last element and delete it
 			StickyInfo si = toJoin.remove(0);
@@ -149,7 +163,8 @@ public class Level extends RenderingScreen{
 		  wjd.initialize(si.bodyA, si.bodyB, PhysicsConstants.coordPixelsToMeters(si.anchor));
 		  PhysicsWorld.getInstance().createJoint(wjd);
 		}
-		
+	}
+	private void stepProjectiles(GdxGraphics g){
 		//Should be used like that
 		for (Iterator<Projectile> iter = flyingOjects.iterator(); iter.hasNext(); ) {
 			Projectile projectile = iter.next();
@@ -165,43 +180,5 @@ public class Level extends RenderingScreen{
 				iter.remove();
 			}
 		}
-		
-		floor.draw(g);
-
-		frame.draw(g);
-		
-		ennemies.draw(g, stateTime);
-		playerData.getHeroes().draw(g,stateTime);
-		
-		//write help
-		g.setColor(Color.BLACK);
-		g.drawStringCentered(490f, "Touche A pour activer/désactiver les claps");
-		g.drawStringCentered(470f, "Flèches pour bouger la companie");
-		g.drawStringCentered(450f, "Touches 1 à 4 pour jouer les sons");
-		g.drawStringCentered(430f, "Touche D pour changer de loop sonore");
-		
-	
-		g.drawSchoolLogoUpperRight();
-		g.drawFPS();
-
-		stateTime += Gdx.graphics.getDeltaTime();
-	}
-	
-	public void createWeldJoint(StickyInfo si) {
-		toJoin.add(si);
-	}
-	public void disable(PhysicsPolygon p){
-		toDisable.add(p);
-	}
-	private void rythm(){
-		lastTime += Gdx.graphics.getRawDeltaTime()*1000;
-		if(lastTime >= 500){
-			lastTime = 0;
-			frame.toggle();
-		}
-	}
-	private void action(){
-		ActionTimer.run(Gdx.graphics.getRawDeltaTime()*1000, ennemies);
-		ActionTimer.run(Gdx.graphics.getRawDeltaTime()*1000, playerData.getHeroes() );
 	}
 }

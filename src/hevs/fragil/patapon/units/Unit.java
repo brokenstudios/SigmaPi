@@ -10,12 +10,11 @@ import hevs.fragil.patapon.physics.BodyPolygon;
 public abstract class Unit implements DrawableObject{
 	static int nUnits;
 	
+	//Skills
+	protected Skills skills;
 	protected int level = 1;
 	protected Species species = Species.TAPI;
 	protected Expression expression = Expression.DEFAULT;
-	
-	//Skills
-	protected Skills skills;
 	
 	private BodyPolygon hitBox;
 	

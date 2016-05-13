@@ -3,7 +3,10 @@
 	<classpathentry excluding="hevs/fragil/patapon/drawables/SigmaTrees.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="data"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="gdx2d-core-1.2.2-20160504.115915-3.jar" sourcepath="gdx2d-core-1.2.2-20160504.115915-3-sources.jar"/>
-	<classpathentry kind="lib" path="gdx2d-desktop-1.2.2-20160504.115914-3.jar" sourcepath="gdx2d-desktop-1.2.2-20160504.115914-3-sources.jar"/>
+	<classpathentry kind="lib" path="gdx2d-desktop-1.2.2-20160512.182623-6.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/SigmaPi/gdx2d-desktop-1.2.2-20160512.182623-6-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

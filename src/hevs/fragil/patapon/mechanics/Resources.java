@@ -11,8 +11,8 @@ import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
  */
 public class Resources {
 	static Vector<PhysicsPolygon> items = new Vector<PhysicsPolygon>();
-	
 	private static Resources inst = null;
+	
 	public static  Resources getInstance() {
 		if (inst == null) {
 			inst = new Resources();
