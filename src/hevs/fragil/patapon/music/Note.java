@@ -1,5 +1,7 @@
 package hevs.fragil.patapon.music;
 
+import hevs.fragil.patapon.mechanics.Param;
+
 public class Note{
 	//delay between tempo and note
 	Drum drum;
@@ -11,23 +13,24 @@ public class Note{
 	final static int EXCELLENT = 45;
 	final static int PERFECT = 30;		
 		
-	public Note(Drum d, float lastTime, float stateTime){
+	public Note(Drum d, float dt){
 		this.drum = d;
-		//TODO getter for lasttime
-		float delayNext = stateTime - lastTime;
-		float delayPrev =  500 - delayNext;
-		float delay = Math.min(delayNext, delayPrev);
 		
-		boolean late;
-		if(delay == delayNext)
-			late = true;
-		else 
-			late = false;
-		
-		juge(delay, late);
+		if(dt < 1){
+			juge(0);
+			System.out.println(" ms ! WOW ! LIKE A BOSS !");
+		}
+		else if(dt < Param.MUSIC_BAR/2){
+			juge(dt);
+			System.out.println(" ms too late");
+		}
+		else if(dt > Param.MUSIC_BAR/2){
+			juge(Param.MUSIC_BAR - dt);
+			System.out.println(" ms too early");
+		}
 	}
 	/**
-	 * @author loicg
+	 * 	 * @author loicg
 	 * @return value between 0 and 100
 	 */
 	public static int getFeverCoefficient(){
@@ -37,30 +40,28 @@ public class Note{
 		feverScore = 0;
 	}
 	// return a value depending of the user rythm precision
-	public void juge(float delay, boolean late){
+	public void juge(float delay){
 			//bonus score if well done
 			System.out.print(drum.toString() + " ");
 			if(delay < PERFECT){
-				System.out.print("PERFECT : " + delay);
+				System.out.print("PERFECT : " + Math.round(delay));
 				feverScore += 15;
 			}
 			else if(delay < EXCELLENT){
-				System.out.print("EXCELLENT : " + delay);
+				System.out.print("EXCELLENT : " + Math.round(delay));
 				feverScore += 10;
 			}
 			else if(delay < GOOD){
-				System.out.print("GOOD : " + delay);
+				System.out.print("GOOD : " + Math.round(delay));
 				feverScore += 5;
 			}
 			else if (delay < PASS){
-				System.out.print("PASS : " + delay);
+				System.out.print("PASS : " + Math.round(delay));
 				feverScore += 1;
 			}
 			else {
 				System.out.print("BAD : " + delay);
 				feverScore = 0;
 			}
-			if(late)System.out.println(" ms too late");
-			else System.out.println(" ms too early");
 	}
 }
