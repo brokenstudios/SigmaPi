@@ -1,6 +1,8 @@
 package hevs.fragil.patapon.mechanics;
 
-import java.awt.Color;
+import com.badlogic.gdx.graphics.Color;
+
+
 
 public abstract class Param {
 	//Game parameters only

@@ -1,8 +1,8 @@
 package hevs.fragil.patapon.mechanics;
 
 import hevs.fragil.patapon.units.Company;
-
-import java.awt.Color;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector3;
 
 public class Decor {
 	private int width;
