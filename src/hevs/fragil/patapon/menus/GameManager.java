@@ -14,11 +14,11 @@ public class GameManager extends PortableApplication {
 	@Override
 	public void onInit() {
 		setTitle("Ce jeu sera vôtre jeu !");
-		screenManager.registerScreen(Menu.class);
-		// screenManager.registerScreen(LevelSelection.class);
+//		screenManager.registerScreen(Menu.class);
+//		screenManager.registerScreen(LevelSelection.class);
 		screenManager.registerScreen(hevs.fragil.patapon.mechanics.Level.class);
-		// screenManager.registerScreen(EndScreenVictory.class);
-		// screenManager.registerScreen(EndScreenLoose.class);
+//		screenManager.registerScreen(EndScreenVictory.class);
+//		screenManager.registerScreen(EndScreenLoose.class);
 
 	}
 
