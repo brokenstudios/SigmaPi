@@ -1,6 +1,6 @@
 package hevs.fragil.patapon.mechanics;
 
-import com.badlogic.gdx.graphics.Color;
+import java.awt.Color;
 
 public abstract class Param {
 	//Game parameters only
@@ -21,6 +21,7 @@ public abstract class Param {
 	//Default values of maps dimensions (!= game window)
 	public static final int MAP_HEIGHT = 1800;
 	public static final int MAP_WIDTH = 3000;
+	public static final int CAMERAOFFSET = 30;
 	public static final int FLOOR_DEPTH = 30;
 	public static final int FRAME_DEGRADE_STEPS = 10;
 	//Break the color in case of emergency #SoColorful
