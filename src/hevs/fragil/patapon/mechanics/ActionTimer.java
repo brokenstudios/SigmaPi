@@ -53,15 +53,15 @@ public class ActionTimer{
 				toRemove.addElement(a);
 		}
 	}
-	private static boolean shift(double time, int shift, Company c){
+	private static boolean shift(double time, int distance, Company c){
 		int minLeftOffset = c.getWidth()/2 +10 ;
-		double speed = shift / time ;
+		double speed = distance / time ;
 		
 		//first time we get in
 		if(shiftDestination == 0){
 			//process where to go
-			shiftDestination = c.globalPosition + shift;
-			System.out.println("**Shift routine : " + shift + " pixels to " + shiftDestination);
+			shiftDestination = c.globalPosition + distance;
+			System.out.println("**Shift routine : " + distance + " pixels to " + shiftDestination);
 		}
 		
 		//time to distance : d = t*v 
@@ -69,8 +69,8 @@ public class ActionTimer{
 		c.moveRelative(increment);
 	
 		//arrived at last position
-		if((c.globalPosition >= shiftDestination) && shift > 0 				//right limit
-				||(c.globalPosition <= shiftDestination) && shift < 0 		//left limit
+		if((c.globalPosition >= shiftDestination) && distance > 0 				//right limit
+				||(c.globalPosition <= shiftDestination) && distance < 0 		//left limit
 				|| c.globalPosition == minLeftOffset){						//window limit
 			
 			shiftDestination = 0;
@@ -109,7 +109,7 @@ public class ActionTimer{
 		double bonus = Param.RETREAT_TIME_BONUS/100.0 * Note.getFeverCoefficient();
 		
 		if (shiftIncrement == 0) {
-			if(shift(time/4-bonus, -Param.RETREAT_WIDTH, c))
+			if(shift(time/4.0, -Param.RETREAT_WIDTH, c))
 				shiftIncrement++;
 		}
 		

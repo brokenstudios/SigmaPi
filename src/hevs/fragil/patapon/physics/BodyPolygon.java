@@ -25,11 +25,12 @@ public class BodyPolygon extends PhysicsPolygon {
 		nArrows++;
 	}
 	public void setPosition(int position) {
+		//FIXME Bug for negative shift
 		float distanceToTravel = position - this.getBodyPosition().x;
 		float time = Param.WALK_TIME;
 		//add bonus time (faster move with fever)
 		time -= Param.WALK_TIME_BONUS/100.0 * Note.getFeverCoefficient();
-		float speedToUse = distanceToTravel / time;
+		float speedToUse = Math.abs(distanceToTravel) / time;
 
 		// Check if this speed will cause overshoot in the next time step.
 		// If so, we need to scale the speed down to just enough to reach
@@ -38,10 +39,13 @@ public class BodyPolygon extends PhysicsPolygon {
 		if ( distancePerTimestep > distanceToTravel )
 		    speedToUse *= ( distanceToTravel / distancePerTimestep );
 
-		float desiredVelocity = speedToUse * distanceToTravel;
+		float desiredVelocity = Math.abs(speedToUse * distanceToTravel);
 		float changeInVelocity = desiredVelocity - this.getBodyLinearVelocity().x;
 
 		float force = this.getBodyMass() * 60.0f * changeInVelocity;
-		this.applyBodyForceToCenter(force, 0, true);
+		if(distanceToTravel < 0)
+			this.applyBodyForceToCenter(-force, 0, true);
+		else if(distanceToTravel > 0)
+			this.applyBodyForceToCenter(force, 0, true);
 	}
 }
