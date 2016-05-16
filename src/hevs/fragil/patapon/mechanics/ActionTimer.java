@@ -3,18 +3,22 @@ package hevs.fragil.patapon.mechanics;
 import java.util.Random;
 import java.util.Vector;
 
+import com.badlogic.gdx.math.Interpolation;
+
 import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.Unit;
 
-public class ActionTimer{
+public abstract class ActionTimer{
 	private static int shiftDestination = 0;
 	private static int shiftIncrement = 0;
 	private static int attackStep = 0;
 	private static int attackDelay = 0;
 	private static int waitIndex = 0;
 	private static float deltaTime;
+	
+	private static float start, progression, end;
 	
 	private static Vector<Action> toRemove = new Vector<Action>();
 	//TODO avoid double command at same time
@@ -23,26 +27,26 @@ public class ActionTimer{
 	public static void run(float dt, Company c) {
 		deltaTime = dt;
 		for (Action a : c.getActions()) {
-			switchAction(a, c);
+			switchAction(a, dt, c);
 		}
 		for (Action a : toRemove) {
 			c.remove(a);
 		}
 		toRemove.removeAllElements();
 	}
-	private static void switchAction(Action a, Company c){
+	private static void switchAction(Action a, float dt, Company c){
 		boolean finished = false;
 		if(a != null){
 			switch(a){
-				case WALK : 	finished = walk(c);
+				case WALK : 	finished = walk(dt, c);
 								break;
-				case ATTACK : 	finished = attack(c);
+				case ATTACK : 	finished = attack(dt, c);
 								break;
 				case DEFEND : 	
 								break;
 				case MIRACLE : 	
 								break;
-				case RETREAT : 	finished = retreat(c);
+				case RETREAT : 	finished = retreat(dt, c);
 								break;
 				case CHARGE : 	
 								break;
@@ -53,7 +57,8 @@ public class ActionTimer{
 				toRemove.addElement(a);
 		}
 	}
-	private static boolean shift(double time, int distance, Company c){
+	private static boolean shift(float dt, float totalTime, int distance, Company c){
+		/*
 		int minLeftOffset = c.getWidth()/2 +10 ;
 		double speed = distance / time ;
 		
@@ -78,6 +83,19 @@ public class ActionTimer{
 			return true;
 		}
 		return false;
+		*/
+		if(progression == 0){
+			start = c.globalPosition;
+			end = start + distance;
+			System.out.println("company will shift from/to : " + start + " / "+ end);
+		}
+		progression += dt/totalTime;
+		c.moveAbsolute( (int) Interpolation.linear.apply(start, end, progression), totalTime);
+		if(progression >= 1){
+			progression = 0;
+			return true;
+		}
+		else return false;
 	}
 	private static boolean wait(double time, Company c){
 		if(waitIndex == 0){
@@ -95,37 +113,37 @@ public class ActionTimer{
 		else return false ;
 		
 	}
-	private static boolean walk(Company c){
-		double time = Param.WALK_TIME;
+	private static boolean walk(float dt, Company c){
+		float time = Param.WALK_TIME;
 		
 		//add bonus time (faster move with fever)
 		time -= Param.WALK_TIME_BONUS/100.0 * Note.getFeverCoefficient();
 		
-		return shift(time, Param.WALK_WIDTH, c);
+		return shift(dt, time, Param.WALK_WIDTH, c);
 	}
-	private static boolean retreat(Company c){
+	private static boolean retreat(float dt, Company c){
 		//FIXME WTF IS HAPPENING ?
-		double time = Param.RETREAT_TIME;
-		double bonus = Param.RETREAT_TIME_BONUS/100.0 * Note.getFeverCoefficient();
+		float time = Param.RETREAT_TIME;
+		float bonus = (float) (Param.RETREAT_TIME_BONUS/100.0 * Note.getFeverCoefficient());
 		
 		if (shiftIncrement == 0) {
-			if(shift(time/4.0, -Param.RETREAT_WIDTH, c))
+			if(shift(dt, time/4, -Param.RETREAT_WIDTH, c))
 				shiftIncrement++;
 		}
 		
 		else if(shiftIncrement == 1){
-			if(wait(time/2.0, c))
+			if(wait(time/2, c))
 				shiftIncrement++;
 		}
 		
-		else if (shift(1*time/4, Param.RETREAT_WIDTH, c)){
+		else if (shift(dt, time/4, Param.RETREAT_WIDTH, c)){
 			shiftIncrement = 0;
 			return true;
 		}
 		
 		return false;
 	}
-	private static boolean attack(Company c){
+	private static boolean attack(float dt, Company c){
 		long seed = (long) (Math.random()*1000);
 		//TODO use this random
 		Random r = new Random(seed);

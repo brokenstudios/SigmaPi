@@ -20,32 +20,27 @@ public class BodyPolygon extends PhysicsPolygon {
 	public BodyPolygon(Vector2 position) {
 		//Ca c'est vraiment super !
 		super("arrow"+nArrows, position, body,  10f, 1f, 1f, true);
-		this.getBody().setBullet(true);
-		this.setCollisionGroup(-1);
+		getBody().setBullet(true);
+		setCollisionGroup(-1);
 		nArrows++;
 	}
-	public void setPosition(int position) {
-		//FIXME Bug for negative shift
-		float distanceToTravel = position - this.getBodyPosition().x;
-		float time = Param.WALK_TIME;
-		//add bonus time (faster move with fever)
-		time -= Param.WALK_TIME_BONUS/100.0 * Note.getFeverCoefficient();
-		float speedToUse = Math.abs(distanceToTravel) / time;
+	public void moveToLinear(int position, double totalTime) {
+		double distanceToTravel = position - getBodyPosition().x;
+		totalTime = totalTime / 60.0;
+		double globalSpeed = distanceToTravel / totalTime;
 
 		// Check if this speed will cause overshoot in the next time step.
 		// If so, we need to scale the speed down to just enough to reach
 		// the target point. (Assuming here a step length based on 60 fps)
-		float distancePerTimestep = speedToUse / 60.0f;
-		if ( distancePerTimestep > distanceToTravel )
-		    speedToUse *= ( distanceToTravel / distancePerTimestep );
+		double stepDistance = globalSpeed * (1.0f/60.0f);
+		if ( Math.abs(stepDistance) > Math.abs(distanceToTravel) )
+		    globalSpeed *= ( distanceToTravel / stepDistance );
 
-		float desiredVelocity = Math.abs(speedToUse * distanceToTravel);
-		float changeInVelocity = desiredVelocity - this.getBodyLinearVelocity().x;
-
-		float force = this.getBodyMass() * 60.0f * changeInVelocity;
-		if(distanceToTravel < 0)
-			this.applyBodyForceToCenter(-force, 0, true);
-		else if(distanceToTravel > 0)
-			this.applyBodyForceToCenter(force, 0, true);
+		double desiredAcceleration = Math.abs(globalSpeed) * distanceToTravel;
+		double changeInAcceleration = desiredAcceleration - this.getBodyLinearVelocity().x;
+		
+		double force = this.getBodyMass() * 60.0f * changeInAcceleration;
+		System.out.println(getBodyPosition());
+		this.applyBodyForceToCenter((float)force, 0, true);
 	}
 }

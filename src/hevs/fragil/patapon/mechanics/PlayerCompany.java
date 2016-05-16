@@ -44,7 +44,7 @@ public class PlayerCompany {
 		}
 		
 		int initialPos = heroes.getWidth()/2 + 50;
-		heroes.moveAbsolute(initialPos);
+		heroes.moveAbsolute(initialPos, 100);
 		
 		//Load the image files
 		Unit.setLegsSprite("data/images/legs64x42.png", 4, 1);

@@ -28,14 +28,14 @@ public class Section {
 	public int getWidth(){
 		return units.size()*Param.UNIT_WIDTH;
 	}
-	public void move(int newPos){
+	public void move(int newPos, double totalTime){
 		int width = getWidth();
 		double margin = newPos - width/2.0 + Param.UNIT_WIDTH/2.0;
 		if(margin > 0){
 			globalPosition = newPos;
 			double tempPos = margin;
 			for (Unit unit : units) {
-				unit.setPosition((int)tempPos);
+				unit.setPosition((int)tempPos, totalTime);
 				tempPos += Param.UNIT_WIDTH;
 			}
 		}		

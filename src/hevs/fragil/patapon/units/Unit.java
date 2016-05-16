@@ -29,9 +29,9 @@ public abstract class Unit implements DrawableObject{
 		this.skills = new Skills(life+level*5, attack, range, cooldown);
 		nUnits++;
 	}	
-	public void setPosition(int newPos){
+	public void setPosition(int newPos, double totalTime){
 		if(hitBox != null)
-			hitBox.setPosition(newPos);
+			hitBox.moveToLinear(newPos, totalTime);
 		else
 			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH));
 	}

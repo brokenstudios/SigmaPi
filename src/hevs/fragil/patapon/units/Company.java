@@ -56,7 +56,7 @@ public class Company {
 		int nSections = sections.size();
 		return (int)(width + (nSections-1)*Param.SECTION_KEEPOUT);
 	}
-	public void moveAbsolute(int newPos){
+	public void moveAbsolute(int newPos, double totalTime){
 		int width = getWidth();
 		float screenMargin = newPos - width/2f;
 		if(screenMargin > 0){
@@ -64,24 +64,11 @@ public class Company {
 			float tempPos = screenMargin;
 			for (Section section : sections) {
 				tempPos += section.getWidth()/2f;
-				section.move((int)tempPos);
+				section.move((int)tempPos,totalTime);
 				tempPos += section.getWidth()/2f + Param.SECTION_KEEPOUT;
 			}
 		}		
 		System.out.println("Company "+name+" moved to : " + globalPosition);
-	}
-	public void moveRelative(int increment){
-		int width = getWidth();
-		double screenMargin = globalPosition + increment - width/2.0;
-		if(screenMargin > 0){
-			globalPosition += increment;
-			double tempPos = screenMargin;
-			for (Section section : sections) {
-				tempPos += section.getWidth()/2.0;
-				section.move((int)tempPos);
-				tempPos += section.getWidth()/2.0 + Param.SECTION_KEEPOUT;
-			}
-		}	
 	}
 	public void attack(){
 		System.out.println("A l'attaque !");
