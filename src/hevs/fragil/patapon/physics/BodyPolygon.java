@@ -26,21 +26,19 @@ public class BodyPolygon extends PhysicsPolygon {
 	}
 	public void moveToLinear(int position, double totalTime) {
 		double distanceToTravel = position - getBodyPosition().x;
-		totalTime = totalTime / 60.0;
 		double globalSpeed = distanceToTravel / totalTime;
 
 		// Check if this speed will cause overshoot in the next time step.
 		// If so, we need to scale the speed down to just enough to reach
 		// the target point. (Assuming here a step length based on 60 fps)
-		double stepDistance = globalSpeed * (1.0f/60.0f);
+		double stepDistance = globalSpeed * (1.0/60.0);
 		if ( Math.abs(stepDistance) > Math.abs(distanceToTravel) )
 		    globalSpeed *= ( distanceToTravel / stepDistance );
 
 		double desiredAcceleration = Math.abs(globalSpeed) * distanceToTravel;
 		double changeInAcceleration = desiredAcceleration - this.getBodyLinearVelocity().x;
 		
-		double force = this.getBodyMass() * 60.0f * changeInAcceleration;
-		System.out.println(getBodyPosition());
+		double force = this.getBodyMass() * 60.0 * changeInAcceleration;
 		this.applyBodyForceToCenter((float)force, 0, true);
 	}
 }

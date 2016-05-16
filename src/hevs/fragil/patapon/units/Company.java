@@ -68,7 +68,6 @@ public class Company {
 				tempPos += section.getWidth()/2f + Param.SECTION_KEEPOUT;
 			}
 		}		
-		System.out.println("Company "+name+" moved to : " + globalPosition);
 	}
 	public void attack(){
 		System.out.println("A l'attaque !");
