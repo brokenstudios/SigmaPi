@@ -8,28 +8,32 @@ public class Decor {
 	private int width;
 	private int height;
 	private Color background;
-	//FIXME
 	private Vector3 cameraPos;
 	//Contain the objects to draw (trees, etc..)
 //	private Vector toDraw;
 	
 	public Decor(){
 		this(Param.WIN_WIDTH, Param.WIN_HEIGHT, Param.BACKGROUND);
-	}	
+	}
+	
 	public Decor(Color b) {
 		this(Param.WIN_WIDTH, Param.WIN_HEIGHT, b);
-	}	
+	}
+	
 	public Decor(int w){
 		this(w, Param.WIN_HEIGHT, Param.BACKGROUND);
-	}	
+	}
+	
 	public Decor(int w, int h){
 		this(Param.WIN_WIDTH, Param.WIN_HEIGHT, Param.BACKGROUND);
-	}	
+	}
+
 	// Dynamic floor width
 	public Decor(int w, int h, Color b){
 		this.width = w;
 		this.setBackground(b);
 	}
+	
 	public Vector3 cameraProcess(Company c1, Company c2){
 		//Camera always stick on the floor
 		cameraPos.y = 0;
@@ -66,26 +70,30 @@ public class Decor {
 	public void processTree(){
 		
 	}
+	
 	public int getWidth() {
 		return width;
-	}	
-	public void setWidth(int width) {
-		this.width = width;
-	}	
-	public int getHeigth() {
-		return height;
-	}	
-	public void setHeigth(int heigth) {
-		this.height = heigth;
-	}	
-	public Color getBackground() {
-		return background;
-	}	
-	public void setBackground(Color background) {
-		this.background = background;
 	}
 	
+	public void setWidth(int width) {
+		this.width = width;
+	}
 	
+	public int getHeigth() {
+		return height;
+	}
+	
+	public void setHeigth(int heigth) {
+		this.height = heigth;
+	}
+	
+	public Color getBackground() {
+		return background;
+	}
+
+	public void setBackground(Color background) {
+		this.background = background;
+	}	
 
 	//TODO calculer les décors
 	//Créer un vecteur avec tous les objets à donner au draw

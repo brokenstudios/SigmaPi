@@ -15,7 +15,7 @@ public class Menu extends RenderingScreen{
 
 	@Override
 	protected void onGraphicRender(GdxGraphics g) {
-		g.clear(Param.Type1);
+		g.clear(decor.getBackground());
 		g.drawStringCentered(g.getScreenHeight() / 2, "Wow! What a menu!");
 		
 	}

@@ -145,7 +145,7 @@ public class Level extends RenderingScreen {
 	}
 
 	public void onGraphicRender(GdxGraphics g) {
-		// clear the screen Param.BACKGROUND
+		// clear the screen with the decor background
 		g.clear(decor.getBackground());
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 

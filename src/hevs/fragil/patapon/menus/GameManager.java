@@ -25,8 +25,8 @@ public class GameManager extends PortableApplication {
 	@Override
 	public void onKeyDown(int keycode) {
 		super.onKeyDown(keycode);
-		// Display the next screen without transition
-		if (keycode == Input.Keys.ENTER)
+		// Display the next screen with transition
+		if (keycode == Input.Keys.TAB)
 			screenManager.sliceTransitionToNext();
 		//call keydown on the current screen
 		//TODO wait until animation finished
