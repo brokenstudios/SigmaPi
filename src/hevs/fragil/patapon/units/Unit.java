@@ -27,7 +27,7 @@ public abstract class Unit implements DrawableObject{
 	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, int cooldown){
 		this.species = species;
 		this.level = lvl;
-		this.skills = new Skills(life+level*5, attack, range, cooldown/lvl);
+		this.skills = new Skills(life+level*5, attack, range, cooldown/(lvl+1));
 		nUnits++;
 	}	
 	public void setPosition(int newPos, double totalTime){
