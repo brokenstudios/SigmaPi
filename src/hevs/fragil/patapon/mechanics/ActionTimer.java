@@ -11,8 +11,7 @@ import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.Unit;
 
 public abstract class ActionTimer{
-	private static int shiftDestination = 0;
-	private static int shiftIncrement = 0;
+	private static int step = 0;
 	private static int attackStep = 0;
 	private static int attackDelay = 0;
 	private static int waitIndex = 0;
@@ -27,26 +26,26 @@ public abstract class ActionTimer{
 	public static void run(float dt, Company c) {
 		deltaTime = dt;
 		for (Action a : c.getActions()) {
-			switchAction(a, dt, c);
+			switchAction(a, c);
 		}
 		for (Action a : toRemove) {
 			c.remove(a);
 		}
 		toRemove.removeAllElements();
 	}
-	private static void switchAction(Action a, float dt, Company c){
+	private static void switchAction(Action a, Company c){
 		boolean finished = false;
 		if(a != null){
 			switch(a){
-				case WALK : 	finished = walk(dt, c);
+				case WALK : 	finished = walk(c);
 								break;
-				case ATTACK : 	finished = attack(dt, c);
+				case ATTACK : 	finished = attack(c);
 								break;
 				case DEFEND : 	
 								break;
 				case MIRACLE : 	
 								break;
-				case RETREAT : 	finished = retreat(dt, c);
+				case RETREAT : 	finished = retreat(c);
 								break;
 				case CHARGE : 	
 								break;
@@ -57,40 +56,15 @@ public abstract class ActionTimer{
 				toRemove.addElement(a);
 		}
 	}
-	private static boolean shift(float dt, float totalTime, int distance, Company c){
-		/*
-		int minLeftOffset = c.getWidth()/2 +10 ;
-		double speed = distance / time ;
-		
-		//first time we get in
-		if(shiftDestination == 0){
-			//process where to go
-			shiftDestination = c.globalPosition + distance;
-			System.out.println("**Shift routine : " + distance + " pixels to " + shiftDestination);
-		}
-		
-		//time to distance : d = t*v 
-		int increment = (int)(deltaTime * speed);
-		c.moveRelative(increment);
-	
-		//arrived at last position
-		if((c.globalPosition >= shiftDestination) && distance > 0 				//right limit
-				||(c.globalPosition <= shiftDestination) && distance < 0 		//left limit
-				|| c.globalPosition == minLeftOffset){						//window limit
-			
-			shiftDestination = 0;
-			System.out.println("**->Shift routine finished");
-			return true;
-		}
-		return false;
-		*/
+	private static boolean shift(float totalTime, int distance, Company c){
 		if(progression == 0){
 			start = c.globalPosition;
 			end = start + distance;
 			System.out.println("company will shift from/to : " + start + " / "+ end);
 		}
-		progression += dt/totalTime;
-		c.moveAbsolute( (int) Interpolation.linear.apply(start, end, progression), totalTime);
+		
+		progression += deltaTime/totalTime;
+		c.moveAbsolute( (int) Interpolation.fade.apply(start, end, progression), deltaTime);
 		if(progression >= 1){
 			progression = 0;
 			return true;
@@ -113,37 +87,35 @@ public abstract class ActionTimer{
 		else return false ;
 		
 	}
-	private static boolean walk(float dt, Company c){
+	private static boolean walk(Company c){
 		float time = Param.WALK_TIME;
 		
 		//add bonus time (faster move with fever)
 		time -= Param.WALK_TIME_BONUS/100.0 * Note.getFeverCoefficient();
 		
-		return shift(dt, time, Param.WALK_WIDTH, c);
+		return shift(time, Param.WALK_WIDTH, c);
 	}
-	private static boolean retreat(float dt, Company c){
-		//FIXME WTF IS HAPPENING ?
+	private static boolean retreat(Company c){
 		float time = Param.RETREAT_TIME;
 		float bonus = (float) (Param.RETREAT_TIME_BONUS/100.0 * Note.getFeverCoefficient());
-		
-		if (shiftIncrement == 0) {
-			if(shift(dt, time/4, -Param.RETREAT_WIDTH, c))
-				shiftIncrement++;
+		if (step == 0) {
+			if(shift(time/4-bonus, -Param.RETREAT_WIDTH, c))
+				step++;
 		}
 		
-		else if(shiftIncrement == 1){
+		else if(step == 1){
 			if(wait(time/2, c))
-				shiftIncrement++;
+				step++;
 		}
 		
-		else if (shift(dt, time/4, Param.RETREAT_WIDTH, c)){
-			shiftIncrement = 0;
+		else if (shift(time/4, Param.RETREAT_WIDTH, c)){
+			step = 0;
 			return true;
 		}
 		
 		return false;
 	}
-	private static boolean attack(float dt, Company c){
+	private static boolean attack(Company c){
 		long seed = (long) (Math.random()*1000);
 		//TODO use this random
 		Random r = new Random(seed);

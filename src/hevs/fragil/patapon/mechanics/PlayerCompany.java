@@ -11,6 +11,7 @@ import hevs.fragil.patapon.units.Unit;
 
 /**
  * Singleton pattern for player data, only one company
+ * that is stored in a single file
  */
 public class PlayerCompany {
 	//TODO set all game variables
