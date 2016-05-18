@@ -1,6 +1,13 @@
 package hevs.fragil.patapon.mechanics;
 
+import java.util.Vector;
+
+import hevs.fragil.patapon.drawables.SigmaTrees;
 import hevs.fragil.patapon.units.Company;
+import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
+
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
@@ -10,28 +17,13 @@ public class Decor {
 	private Color background;
 	private Vector3 cameraPos;
 	//Contain the objects to draw (trees, etc..)
-//	private Vector toDraw;
+	private Vector<DrawableObject> toDraw = new Vector<DrawableObject>();
 	
-	public Decor(){
-		this(Param.WIN_WIDTH, Param.WIN_HEIGHT, Param.BACKGROUND);
-	}
-	
-	public Decor(Color b) {
-		this(Param.WIN_WIDTH, Param.WIN_HEIGHT, b);
-	}
-	
-	public Decor(int w){
-		this(w, Param.WIN_HEIGHT, Param.BACKGROUND);
-	}
-	
-	public Decor(int w, int h){
-		this(Param.WIN_WIDTH, Param.WIN_HEIGHT, Param.BACKGROUND);
-	}
-
 	// Dynamic floor width
 	public Decor(int w, int h, Color b){
 		this.width = w;
 		this.setBackground(b);
+		processTree();
 	}
 	
 	public Vector3 cameraProcess(Company c1, Company c2){
@@ -68,7 +60,8 @@ public class Decor {
 		return cameraPos;
 	}
 	public void processTree(){
-		
+		//FIXME héhé seems to do something
+//		toDraw.addElement(new SigmaTrees(6,50));
 	}
 	
 	public int getWidth() {
@@ -94,6 +87,12 @@ public class Decor {
 	public void setBackground(Color background) {
 		this.background = background;
 	}	
+	
+	public void draw(GdxGraphics g){
+		for (DrawableObject d : toDraw) {
+			d.draw(g);
+		}
+	}
 
 	//TODO calculer les décors
 	//Créer un vecteur avec tous les objets à donner au draw

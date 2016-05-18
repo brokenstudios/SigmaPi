@@ -1,11 +1,12 @@
 package hevs.fragil.patapon.menus;
 
-import com.badlogic.gdx.Input;
-
+import hevs.fragil.patapon.mechanics.Level;
+import hevs.fragil.patapon.mechanics.Param;
 import ch.hevs.gdx2d.desktop.PortableApplication;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.ScreenManager;
-import hevs.fragil.patapon.mechanics.Param;
+
+import com.badlogic.gdx.Input;
 
 public class GameManager extends PortableApplication {
 
@@ -16,7 +17,7 @@ public class GameManager extends PortableApplication {
 		setTitle("Ce jeu sera vôtre jeu !");
 //		screenManager.registerScreen(Menu.class);
 //		screenManager.registerScreen(LevelSelection.class);
-		screenManager.registerScreen(hevs.fragil.patapon.mechanics.Level.class);
+		screenManager.registerScreen(Level.class);
 //		screenManager.registerScreen(EndScreenVictory.class);
 //		screenManager.registerScreen(EndScreenLoose.class);
 
@@ -25,9 +26,11 @@ public class GameManager extends PortableApplication {
 	@Override
 	public void onKeyDown(int keycode) {
 		super.onKeyDown(keycode);
+		
 		// Display the next screen with transition
 		if (keycode == Input.Keys.TAB)
 			screenManager.sliceTransitionToNext();
+		
 		//call keydown on the current screen
 		//TODO wait until animation finished
 		else

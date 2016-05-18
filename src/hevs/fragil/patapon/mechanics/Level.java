@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
 import ch.hevs.gdx2d.components.audio.SoundSample;
+import ch.hevs.gdx2d.components.graphics.Turtle;
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 import ch.hevs.gdx2d.components.physics.utils.PhysicsConstants;
 import ch.hevs.gdx2d.components.screen_management.RenderingScreen;
@@ -69,6 +70,8 @@ public class Level extends RenderingScreen {
 	public void onInit() {
 		PhysicsWorld.getInstance();
 		CurrentLevel.setLevel(this);
+		
+		decor = new Decor(Param.WIN_WIDTH, Param.WIN_HEIGHT, Param.Type3);
 
 		PlayerCompany.getInstance().initRandomCompany(3, 3, 4);
 
@@ -82,7 +85,6 @@ public class Level extends RenderingScreen {
 
 		// Create a default map and the floor that belong
 		frame = new Frame();
-		decor = new Decor(Param.MAP_WIDTH, Param.MAP_HEIGHT, Param.Type3);
 		floor = new Floor(decor.getWidth());
 
 		debugRenderer = new DebugRenderer();
@@ -147,6 +149,7 @@ public class Level extends RenderingScreen {
 	public void onGraphicRender(GdxGraphics g) {
 		// clear the screen with the decor background
 		g.clear(decor.getBackground());
+		decor.draw(g);
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 
 		// press d for debug
