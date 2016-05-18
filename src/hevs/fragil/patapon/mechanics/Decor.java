@@ -1,16 +1,15 @@
 package hevs.fragil.patapon.mechanics;
 
-import hevs.fragil.patapon.drawables.SigmaTrees;
-import hevs.fragil.patapon.units.Company;
-
 import java.util.Vector;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector3;
+
+import ch.hevs.gdx2d.components.geometry.Point;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
+import hevs.fragil.patapon.drawables.Tree;
+import hevs.fragil.patapon.units.Company;
 
 public class Decor {
 	private int width;
@@ -61,8 +60,8 @@ public class Decor {
 		return cameraPos;
 	}
 	public void processTree(){
-		//FIXME héhé seems to do something
-		toDraw.addElement(new SigmaTrees(new Vector2(100,Param.FLOOR_DEPTH),6));
+		Point<Float> pos = new Point<Float>(500f,(float)Param.FLOOR_DEPTH);
+		toDraw.addElement(new Tree(pos,3,200f,5));
 	}
 	
 	public int getWidth() {
