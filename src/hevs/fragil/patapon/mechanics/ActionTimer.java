@@ -1,6 +1,5 @@
 package hevs.fragil.patapon.mechanics;
 
-import java.util.Random;
 import java.util.Vector;
 
 import com.badlogic.gdx.math.Interpolation;
@@ -12,8 +11,7 @@ import hevs.fragil.patapon.units.Unit;
 
 public abstract class ActionTimer{
 	private static int step = 0;
-	private static int attackStep = 0;
-	private static int attackDelay = 0;
+	private static int totalDelay = 0;
 	private static int waitIndex = 0;
 	private static float deltaTime;
 	
@@ -116,31 +114,17 @@ public abstract class ActionTimer{
 		return false;
 	}
 	private static boolean attack(Company c){
-		long seed = (long) (Math.random()*1000);
-		//TODO use this random
-		Random r = new Random(seed);
-		attackDelay ++;
+		totalDelay += deltaTime;
 
-		//apply delays
-		if (attackStep == 0) {
-			if(wait(300 + Math.random() * 100, c)){
-				for (Section s : c.sections) {
-					for (Unit u : s.units) {
-						if(u.getDelay() < attackDelay)
-							u.attack();
-					}
-				}
-				attackStep++;
+		for (Section s : c.sections) {
+			for (Unit u : s.units) {
+					u.attack(deltaTime);
 			}
 		}
-		else if(attackStep == 1){
-			if(wait(300 + Math.random() * 200, c)){
-				c.attack();
-				attackStep++;
-			}
-		}
-		else {
-			attackStep = 0;
+		
+		//action ended
+		if(totalDelay >= Param.ATTACK_TIME) {
+			totalDelay = 0;
 			return true;
 		}
 		return false;

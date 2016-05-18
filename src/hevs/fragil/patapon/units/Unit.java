@@ -12,6 +12,7 @@ public abstract class Unit implements DrawableObject{
 	
 	//Skills
 	protected Skills skills;
+	protected float timeCounter;
 	protected int level = 1;
 	protected Species species = Species.TAPI;
 	protected Expression expression = Expression.DEFAULT;
@@ -26,7 +27,7 @@ public abstract class Unit implements DrawableObject{
 	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, int cooldown){
 		this.species = species;
 		this.level = lvl;
-		this.skills = new Skills(life+level*5, attack, range, cooldown);
+		this.skills = new Skills(life+level*5, attack, range, cooldown/lvl);
 		nUnits++;
 	}	
 	public void setPosition(int newPos, double totalTime){
@@ -43,6 +44,13 @@ public abstract class Unit implements DrawableObject{
 	}
 	public String toString(){
 		return ", Level : "+ level + ", Life : " + skills.getLife();
+	}
+	public void attack(float dt){
+		timeCounter += dt;
+		if(timeCounter > skills.getCooldown()){
+			attack();
+			timeCounter = 0f;
+		}
 	}
 	public abstract void attack();
 	public abstract void draw(GdxGraphics g, float time);

@@ -12,11 +12,10 @@ public class Archer extends Unit {
 	static double modLife = -0.2;
 	static Skills modifier;
 	static SpriteSheet arms;
-	boolean firstshot = true;
 	static int nArchers = 0;
 	
 	public Archer(){
-		this(1,Species.random());
+		this((int)(4*Math.random()),Species.random());
 	}
 	public Archer(int lvl, Species species){
 		super(lvl, species, 10, 10, 10, 100, 50, 500);
@@ -28,7 +27,8 @@ public class Archer extends Unit {
 	@Override
 	public void draw(GdxGraphics g){}
 	public void attack(){
-		fire();
+		Vector2 position = new Vector2(getPosition(), Param.FLOOR_DEPTH+30);
+		new Arrow(position, 60, 400, -1);
 	}
 	public void draw(GdxGraphics g, float time) {
 		super.drawLegs(time);
@@ -39,8 +39,5 @@ public class Archer extends Unit {
 	}
 	private void drawArms(float time){
 		
-	}
-	private void fire(){
-		new Arrow( new Vector2(getPosition(), Param.FLOOR_DEPTH+30), 60, 400, -1);
 	}
 }

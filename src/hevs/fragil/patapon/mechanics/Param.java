@@ -56,6 +56,8 @@ public abstract class Param {
 	public static final int HEROES_GROUP = -1;
 	public static final int ENNEMIES_GROUP = -2;
 	public static final int ARROWS_GROUP = -3;
+
+	public static final int ATTACK_TIME = 2000;
 	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(243,100,0);
