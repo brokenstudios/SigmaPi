@@ -33,10 +33,10 @@ public class Note{
 	 * 	 * @author loicg
 	 * @return value between 0 and 100
 	 */
-	public static int getFeverCoefficient(){
+	public static int getFever(){
 		return Math.min(feverScore, 100);
 	}
-	public static void badFever(){
+	public static void clearFever(){
 		feverScore = 0;
 	}
 	// return a value depending of the user rythm precision

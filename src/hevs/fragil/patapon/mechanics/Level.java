@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
@@ -162,9 +163,13 @@ public class Level extends RenderingScreen {
 		stepProjectiles(g);
 		rythm();
 		action();
+		
+		//display objects
+		g.drawStringCentered(800, "Fever : " + Note.getFever());
 		floor.draw(g);
 		decor.draw(g);
 		frame.draw(g);
+		
 		PlayerCompany.getInstance().draw(g, stateTime);
 
 		stateTime += Gdx.graphics.getDeltaTime();

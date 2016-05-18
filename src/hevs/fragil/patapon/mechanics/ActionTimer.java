@@ -89,13 +89,13 @@ public abstract class ActionTimer{
 		float time = Param.WALK_TIME;
 		
 		//add bonus time (faster move with fever)
-		time -= Param.WALK_TIME_BONUS/100.0 * Note.getFeverCoefficient();
+		time -= Param.WALK_TIME_BONUS/100.0 * Note.getFever();
 		
 		return shift(time, Param.WALK_WIDTH, c);
 	}
 	private static boolean retreat(Company c){
 		float time = Param.RETREAT_TIME;
-		float bonus = (float) (Param.RETREAT_TIME_BONUS/100.0 * Note.getFeverCoefficient());
+		float bonus = (float) (Param.RETREAT_TIME_BONUS/100.0 * Note.getFever());
 		if (step == 0) {
 			if(shift(time/4-bonus, -Param.RETREAT_WIDTH, c))
 				step++;
