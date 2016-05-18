@@ -1,21 +1,5 @@
 package hevs.fragil.patapon.mechanics;
 
-import java.util.Iterator;
-import java.util.Vector;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
-
-import ch.hevs.gdx2d.components.audio.SoundSample;
-import ch.hevs.gdx2d.components.graphics.Turtle;
-import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
-import ch.hevs.gdx2d.components.physics.utils.PhysicsConstants;
-import ch.hevs.gdx2d.components.screen_management.RenderingScreen;
-import ch.hevs.gdx2d.desktop.physics.DebugRenderer;
-import ch.hevs.gdx2d.lib.GdxGraphics;
-import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
 import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Note;
@@ -23,6 +7,22 @@ import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.Projectile;
 import hevs.fragil.patapon.physics.StickyInfo;
+
+import java.util.Iterator;
+import java.util.Vector;
+
+import ch.hevs.gdx2d.components.audio.SoundSample;
+import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
+import ch.hevs.gdx2d.components.physics.utils.PhysicsConstants;
+import ch.hevs.gdx2d.components.screen_management.RenderingScreen;
+import ch.hevs.gdx2d.desktop.physics.DebugRenderer;
+import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
 public class Level extends RenderingScreen {
 	private Decor decor;
@@ -149,7 +149,7 @@ public class Level extends RenderingScreen {
 	public void onGraphicRender(GdxGraphics g) {
 		// clear the screen with the decor background
 		g.clear(decor.getBackground());
-		decor.draw(g);
+		
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 
 		// press d for debug
@@ -163,8 +163,8 @@ public class Level extends RenderingScreen {
 		stepProjectiles(g);
 		rythm();
 		action();
-
 		floor.draw(g);
+		decor.draw(g);
 		frame.draw(g);
 		PlayerCompany.getInstance().draw(g, stateTime);
 

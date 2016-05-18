@@ -1,14 +1,15 @@
 package hevs.fragil.patapon.mechanics;
 
-import java.util.Vector;
-
 import hevs.fragil.patapon.drawables.SigmaTrees;
 import hevs.fragil.patapon.units.Company;
+
+import java.util.Vector;
+
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 public class Decor {
@@ -61,7 +62,7 @@ public class Decor {
 	}
 	public void processTree(){
 		//FIXME héhé seems to do something
-//		toDraw.addElement(new SigmaTrees(6,50));
+		toDraw.addElement(new SigmaTrees(new Vector2(100,Param.FLOOR_DEPTH),6));
 	}
 	
 	public int getWidth() {

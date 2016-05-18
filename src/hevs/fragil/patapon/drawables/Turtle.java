@@ -1,9 +1,9 @@
 package hevs.fragil.patapon.drawables;
 
-import ch.hevs.gdx2d.components.geometry.Point;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 
 /**
  * Graphics class that emulates the tortoise in the Logo programming language
@@ -14,26 +14,25 @@ import com.badlogic.gdx.graphics.Color;
  * @author <a href='mailto:pandre.mudry&#64;hevs.ch'> Pierre-Andre Mudry</a>
  */
 public class Turtle {
-	private float x;
-	private float y;
+	protected GdxGraphics g;
+	private Vector2 pos;
 	private boolean penDown = false;
 	private double angle = -Math.PI / 2.0; // Current rotation
 	private Color color = Color.BLACK;
 
-	public Turtle(float fWidth, float fHeight) {
-		x = fWidth / 2;
-		y = fHeight / 2;
+	public Turtle(Vector2 departure) {
+		this.pos = departure;
 	}
 
 	/**
 	 * Start the writing
 	 */
-	public void penDown(GdxGraphics g) {
+	public void penDown() {
 		penDown = true;
 		// Write the pixel corresponding to the position
 		Color oldColor = g.sbGetColor();
 		g.setColor(color);
-		g.setPixel((float) x, (float) y);
+		g.setPixel(pos.x, pos.y);
 		g.setColor(oldColor);
 	}
 
@@ -58,38 +57,37 @@ public class Turtle {
 	 * 
 	 * @param distance The distance to move
 	 */
-	public void forward(GdxGraphics g, double distance) {
+	public void forward(double distance) {
 		// Compute new position
-		float newX = (float)(x + Math.cos(angle) * distance);
-		float newY = (float)(y + Math.sin(angle) * distance);
+		float newX = (float)(pos.x + Math.cos(angle) * distance);
+		float newY = (float)(pos.y + Math.sin(angle) * distance);
 
 		// Write if the pen is down
 		if (penDown) {
 			Color oldColor = g.sbGetColor();
 			g.setColor(color);
-			g.drawLine(x, y, newX, newY);
+			g.drawLine(pos.x, pos.y, newX, newY);
 			g.setColor(oldColor);
 		}
 		
-		x = newX;
-		y = newY;
+		pos.x = newX;
+		pos.y = newY;
 	}
 
 	/**
 	 * Jump to a specific location (without drawing)
 	 * 
-	 * @param x X coordinate of the destination
+	 * @param pos2 X coordinate of the destination
 	 * @param y Y coordinate of the destination
 	 */
-	public void jump(GdxGraphics g, float x, float y) {
-		this.x = x;
-		this.y = y;
+	public void jump(Vector2 pos) {
+		this.pos = pos;
 
 		// If the pen is down, draw a point at destination
 		if (penDown) {
 			Color oldColor = g.sbGetColor();
 			g.setColor(color);
-			g.setPixel(x, y);
+			g.setPixel(pos.x, pos.y);
 			g.setColor(oldColor);
 		}
 	}
@@ -97,8 +95,8 @@ public class Turtle {
 	/**
 	 * @return The location of the turtle
 	 */
-	public Point<Float> getPosition() {
-		return new Point<Float>(x, y);
+	public Vector2 getPosition() {
+		return pos;
 	}
 
 	/**
@@ -106,7 +104,7 @@ public class Turtle {
 	 * 
 	 * @param w
 	 */
-	public void setWidth(GdxGraphics g, float w) {
+	public void setWidth(float w) {
 		g.setPenWidth(w);
 	}
 
