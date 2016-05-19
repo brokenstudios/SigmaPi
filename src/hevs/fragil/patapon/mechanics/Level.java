@@ -5,7 +5,6 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 
@@ -108,19 +107,6 @@ public class Level extends RenderingScreen {
 			yesNote.play();
 			PlayerCompany.getInstance().addAction(Sequence.add(new Note(Drum.YES, sinceLastRythm)));
 		}
-
-		if (keycode == Keys.SPACE) {
-			heNote.setPitch(2);
-			sNote.setPitch(2);
-			soNote.setPitch(2);
-			yesNote.setPitch(2);
-		}
-		if (keycode == Keys.ENTER) {
-			heNote.setPitch(1);
-			sNote.setPitch(1);
-			soNote.setPitch(1);
-			yesNote.setPitch(1);
-		}
 		if (keycode == Keys.D) {
 			debugActive = !debugActive;
 		}
@@ -164,8 +150,13 @@ public class Level extends RenderingScreen {
 		rythm();
 		action();
 		
-		//display objects
+		//display help
 		g.drawStringCentered(800, "Fever : " + Note.getFever());
+		g.drawStringCentered(780, "T to disable/enable track");
+		g.drawStringCentered(760, "S to disable/enable snap");
+		g.drawStringCentered(740, "D to disable/enable debug mode");
+		
+		//display objects
 		floor.draw(g);
 		decor.draw(g);
 		frame.draw(g);

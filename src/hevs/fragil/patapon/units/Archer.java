@@ -15,10 +15,10 @@ public class Archer extends Unit {
 	static int nArchers = 0;
 	
 	public Archer(){
-		this((int)(4*Math.random()),Species.random());
+		this((int)(4*Math.random()),Species.random(), Param.HEROES_GROUP);
 	}
-	public Archer(int lvl, Species species){
-		super(lvl, species, 10, 10, 10, 100, 50, 500);
+	public Archer(int lvl, Species species, int collisionGroup){
+		super(lvl, species, 10, 10, 10, 100, 50, 500, collisionGroup);
 		nArchers++;
 	}
 	public String toString(){
@@ -28,7 +28,7 @@ public class Archer extends Unit {
 	public void draw(GdxGraphics g){}
 	public void attack(){
 		Vector2 position = new Vector2(getPosition(), Param.FLOOR_DEPTH+30);
-		new Arrow(position, 60, 400, -1);
+		new Arrow(position, 60, 400, collisionGroup);
 	}
 	public void draw(GdxGraphics g, float time) {
 		super.drawLegs(time);

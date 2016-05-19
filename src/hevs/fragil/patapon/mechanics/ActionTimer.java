@@ -102,7 +102,7 @@ public abstract class ActionTimer{
 		}
 		
 		else if(step == 1){
-			if(wait(time/2, c))
+			if(wait(time/2+bonus, c))
 				step++;
 		}
 		

@@ -2,8 +2,6 @@ package hevs.fragil.patapon.drawables;
 
 import java.util.Random;
 
-import com.badlogic.gdx.graphics.Color;
-
 import ch.hevs.gdx2d.components.geometry.Point;
 import ch.hevs.gdx2d.components.graphics.Turtle;
 import ch.hevs.gdx2d.lib.GdxGraphics;

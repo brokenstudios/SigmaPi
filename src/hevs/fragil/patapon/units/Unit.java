@@ -16,6 +16,7 @@ public abstract class Unit implements DrawableObject{
 	protected int level = 1;
 	protected Species species = Species.TAPI;
 	protected Expression expression = Expression.DEFAULT;
+	protected int collisionGroup;
 	
 	private BodyPolygon hitBox;
 	
@@ -24,17 +25,18 @@ public abstract class Unit implements DrawableObject{
 	private int frameIndex;
 	private SpriteSheet body, eye;
 	
-	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, int cooldown){
+	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, int cooldown, int collisionGroup){
 		this.species = species;
 		this.level = lvl;
 		this.skills = new Skills(life+level*5, attack, range, cooldown/(lvl+1));
+		this.collisionGroup = collisionGroup;
 		nUnits++;
 	}	
 	public void setPosition(int newPos, double totalTime){
 		if(hitBox != null)
 			hitBox.moveToLinear(newPos, totalTime);
 		else
-			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH));
+			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH), collisionGroup);
 	}
 	protected int getPosition(){
 		return (int)hitBox.getBodyWorldCenter().x;
@@ -58,7 +60,7 @@ public abstract class Unit implements DrawableObject{
 		frameIndex = legs.drawKeyFrames(stateTime, getPosition()-32);
 	}
 	protected void drawBody(float stateTime){
-		body.drawWalkAnimation(frameIndex, (5*(species.ordinal()))+(level-1), getPosition()-32, 40);
+		body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level-1), getPosition()-32, 40);
 	}
 	protected void drawEye(){
 		//TODO get unit state to change the eye expression

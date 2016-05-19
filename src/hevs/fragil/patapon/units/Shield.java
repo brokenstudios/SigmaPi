@@ -2,6 +2,7 @@ package hevs.fragil.patapon.units;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
+import hevs.fragil.patapon.mechanics.Param;
 
 public class Shield extends Unit {
 	static double modLife = +1.0;
@@ -9,10 +10,10 @@ public class Shield extends Unit {
 	static SpriteSheet arms;
 	
 	public Shield(){
-		this(1,Species.random());
+		this(1,Species.random(), Param.HEROES_GROUP);
 	}
-	public Shield(int lvl, Species species){
-		super(lvl, species, 10, 10, 10, 100, 50, 500);
+	public Shield(int lvl, Species species, int collisionGroup){
+		super(lvl, species, 10, 10, 10, 100, 50, 500, collisionGroup);
 	}
 	public String toString(){
 		return this.getClass().getSimpleName() + super.toString();

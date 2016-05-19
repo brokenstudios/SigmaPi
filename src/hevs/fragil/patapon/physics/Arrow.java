@@ -8,13 +8,17 @@ import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.physics.AbstractPhysicsObject;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
+import hevs.fragil.patapon.mechanics.Param;
 
 public class Arrow extends PhysicsPolygon implements Projectile {
-	int group;
 	int startAngle;
+	//TODO maybe implement a new method getCollisionGroup() 
+	//currently done with an interface
 	int collisionGroup;
-	//when opacity is zero, arrow is deleted
-	float opacity = 1.0f;
+	int newCollisionGroup;
+	boolean stuck = false;
+	//when life is zero, arrow is deleted
+	float life = 1.0f;
 	
 	//for every arrow
 	static BitmapImage img;
@@ -26,11 +30,11 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 		super("arrow"+nArrows, position, getArrowVertices(startAngle),  8f, 0f, 1f, true);
 		this.startAngle = startAngle;
 		this.getBody().setBullet(true);
-		this.group = collisionGroup;
 		nArrows++;
 		
 		this.startAngle = startAngle;
 		this.collisionGroup = collisionGroup;
+		this.newCollisionGroup = collisionGroup;
 		
 		//air resistance
 		setBodyAngularDamping(15f);
@@ -49,26 +53,25 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 	
 	@Override
 	public void collision(AbstractPhysicsObject theOtherObject, float energy) {
-		//Create a joint to stick the arrow
+		//Create a joint to stick the arrow into the floor, or the hit character 
 		CurrentLevel.getLevel().createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(),getSpike()));
+		stuck = true;
 		
 		//TODO change collisiongroup to match the victim group
 		if( theOtherObject.name.contains("floor") ){
-			System.out.println("much sad, you missed !");
 //			setBodyActive(false);
-			//no damage to apply here 
 		}
 		else if( theOtherObject.name.contains("hero") ){
 			System.out.println("Oh no ! you've got blessed !");
 			//will not collide accidentally with heroes anymore
-//			setCollisionGroup(Param.HEROES_GROUP);
+			newCollisionGroup = Param.HEROES_GROUP;
 			//get damage from arrow damage value
 			//apply damage to this unit
 		}
 		else if( theOtherObject.name.contains("ennemy") ){
 			System.out.println("yahou ! you hit an ennemy !");
 			//will not collide accidentally with ennemies anymore
-//			setCollisionGroup(Param.ENNEMIES_GROUP);
+			newCollisionGroup = Param.ENNEMIES_GROUP;
 			//get damage from arrow damage value
 			//apply damage to this unit
 		}
@@ -117,24 +120,33 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 		
 		Vector2 pos = getBodyWorldCenter();
 		pos = pos.add(offset);
-		g.drawAlphaPicture(pos.x, pos.y, angleDegrees, .35f, opacity, img);
+		g.drawAlphaPicture(pos.x, pos.y, angleDegrees, .35f, life, img);
 	}
 	@Override
 	public void step(GdxGraphics g) {
 		Vector2 v = getBodyLinearVelocity();
 		float angle = getBodyAngle();
-		double velocity = Math.sqrt(v.x*v.x + v.y*v.y);
+		double vNorm = Math.sqrt(v.x*v.x + v.y*v.y);
+		
 		//process lift force relative to the angle and the velocity
-		float lift = (float)( -Math.cos(angle+ Math.PI/3)*velocity/5);
+		float lift = (float)( -Math.cos(angle+ Math.PI/3)*vNorm/5);
+		
 		//apply air damping
 		applyBodyForceToCenter(v.x/10f, v.y/10f, true);
 		applyBodyTorque(lift, true);
-		//TODO flag when collision established
-		this.opacity = Math.max(0, opacity - 0.005f);
+		
+		//if this arrow is stuck, it start degrading itself
+		if(stuck)
+			this.life = Math.max(0, life - 0.01f);
+		
+		if(newCollisionGroup != collisionGroup){
+			collisionGroup = newCollisionGroup;
+			setCollisionGroup(collisionGroup);
+		}
 	}
 	@Override
 	public boolean shouldBeDestroyed() {
-		if(opacity <= 0)
+		if(life <= 0)
 			return true;
 		return false;
 	}

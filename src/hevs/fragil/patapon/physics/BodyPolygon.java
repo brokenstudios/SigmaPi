@@ -5,8 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 
-public class BodyPolygon extends PhysicsPolygon {
+public class BodyPolygon extends PhysicsPolygon implements CollisionGroup {
 	static Vector2 dimensions =  new Vector2(3,80);
+	int collisionGroup;
 	static int nArrows;
 	static Vector2 body[] = {
 			new Vector2(-30, 0),
@@ -16,11 +17,12 @@ public class BodyPolygon extends PhysicsPolygon {
 			new Vector2(30, 0)
 	};
 
-	public BodyPolygon(Vector2 position) {
+	public BodyPolygon(Vector2 position, int collisionGroup) {
 		//Ca c'est vraiment super !
 		super("arrow"+nArrows, position, body,  10f, 1f, 1f, true);
 		getBody().setBullet(true);
-		setCollisionGroup(-1);
+		this.collisionGroup = collisionGroup;
+		setCollisionGroup(collisionGroup);
 		nArrows++;
 	}
 	public void moveToLinear(int position, double travelTime) {
@@ -40,5 +42,10 @@ public class BodyPolygon extends PhysicsPolygon {
 		
 		double force = this.getBodyMass() * fps * changeInAcceleration;
 		this.applyBodyForceToCenter((float)force, 0, true);
+	}
+	@Override
+	public int getCollisionGroup() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
