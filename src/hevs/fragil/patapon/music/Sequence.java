@@ -61,7 +61,7 @@ public abstract class Sequence {
 				}
 			}
 			//indicates bad sequence
-			Note.badFever();
+			Note.clearFever();
 			return -2;
 		}
 		//indicate sequence not terminated
