@@ -162,6 +162,7 @@ public class Level extends RenderingScreen {
 		frame.draw(g);
 		
 		PlayerCompany.getInstance().draw(g, stateTime);
+		g.drawFPS();
 
 		stateTime += Gdx.graphics.getDeltaTime();
 	}

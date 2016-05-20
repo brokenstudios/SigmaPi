@@ -23,7 +23,7 @@ public class Decor {
 	public Decor(int w, int h, Color b){
 		this.width = w;
 		this.setBackground(b);
-		processTree();
+//		drawForest(3, 4, 120f);
 	}
 	
 	public Vector3 cameraProcess(Company c1, Company c2){
@@ -59,9 +59,27 @@ public class Decor {
 		
 		return cameraPos;
 	}
-	public void processTree(){
+	
+	public void drawATree(){
 		Point<Float> pos = new Point<Float>(500f,(float)Param.FLOOR_DEPTH);
-		toDraw.addElement(new Tree(pos,3,200f,5));
+		toDraw.addElement(new Tree(pos,5,200f,5));
+	}
+	
+	public void drawForest(int density, int medianComplexity, float medianHeight){
+		Point<Float> pos;
+		int medComplex = medianComplexity;
+		float medHeight = medianHeight;
+		
+		for(int i = 0; i < Param.MAP_WIDTH; i += Param.MAP_WIDTH/density){
+			pos = new Point<Float>(200f+i, (float)Param.FLOOR_DEPTH);
+			medComplex += (int)medianComplexity*Math.random()/2;
+			medHeight += medianHeight*Math.random();
+			
+			toDraw.addElement(new Tree(pos, medComplex, medHeight, 4));
+			
+			medComplex = medianComplexity;
+			medHeight = medianHeight;
+		}
 	}
 	
 	public int getWidth() {
@@ -89,16 +107,15 @@ public class Decor {
 	}	
 	
 	public void draw(GdxGraphics g){
+		//TODO draw only trees that are in camera
+		float camPosX = g.getCamera().position.x;
+		float objPosX = 0;
+		
 		for (DrawableObject d : toDraw) {
-			d.draw(g);
+//			if(objPosX > (camPosX - Param.WIN_WIDTH) && objPosX < (camPosX + Param.WIN_WIDTH)){"draw"}
+			if(true){
+				d.draw(g);				
+			}
 		}
 	}
-
-	//TODO calculer les décors
-	//Créer un vecteur avec tous les objets à donner au draw
-	//TODO gestion de la caméra
-	/*On peut connaitre la position de deux éléments qui se suivent, du coup
-	on peut calculer la distance qu'il y a entre les deux et ainsi déterminer la 
-	position et le champs de vision de la caméra.
-	Récupérer les positions dans une liste?*/
 }
