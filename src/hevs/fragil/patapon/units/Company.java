@@ -11,8 +11,8 @@ public class Company {
 	public int globalPosition = 50;
 	double feverFactor = 0.1;
 	public Vector<Section> sections = new Vector<Section>();
-	private static Vector<Action> toDo = new Vector<Action>();
-	
+	private Action action;
+	private boolean ready;
 	public Company(){
 		this(0,"noname");
 	}
@@ -25,6 +25,7 @@ public class Company {
 	public Company(int pos, String name){
 		this.globalPosition = pos;
 		this.name = name;   
+		this.ready = true;
 	}
 	public String toString(){
 		String t = "Start of company \n";
@@ -69,20 +70,25 @@ public class Company {
 			}
 		}		
 	}
-	public Vector<Action> getActions(){
-		return toDo;
+	public Action getAction(){
+		return action;
 	}
 	public void add(Section s){
 		sections.addElement(s);
 	}
-	public void add(Action a){
-		toDo.add(a);
+	public void setAction(Action a){
+		if((ready && a != null) || a == Action.STOP){
+			System.out.println("action set : " + a);
+			action = a;
+			ready = false;
+		}
+	}
+	public void actionFinished(){
+		action = null;
+		ready = true;
 	}
 	public void remove(Section s){
 		sections.remove(s);
-	}
-	public void remove(Action a){
-		toDo.remove(a);
 	}
 	public void draw(GdxGraphics g, float stateTime) {
 		for (Section section : sections) {

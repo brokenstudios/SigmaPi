@@ -144,13 +144,13 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 		g.drawAlphaPicture(pos.x, pos.y, angleDegrees, .35f, life, img);
 	}
 	@Override
-	public void step(GdxGraphics g) {
+	public void step(float dt) {
 		Vector2 v = getBodyLinearVelocity();
 		float angle = getBodyAngle();
 		double vNorm = Math.sqrt(v.x*v.x + v.y*v.y) * getBodyMass();
 		
 		//process lift force relative to the angle and the velocity
-		float lift = (float)( -Math.cos(angle + Math.toRadians(startAngle-5))*vNorm/2);
+		float lift = (float)( -Math.cos(angle + Math.toRadians(startAngle-5))*vNorm/2 *60*dt);
 		
 		//apply air damping
 //		applyBodyForceToCenter(v.x/10f, v.y/10f, true);

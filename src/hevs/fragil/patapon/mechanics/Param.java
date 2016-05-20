@@ -58,6 +58,8 @@ public abstract class Param {
 	public static final int ARROWS_GROUP = -3;
 
 	public static final int ATTACK_TIME = 2000;
+	public static final int CHARGE_TIME = 2000;
+	public static final int DEFEND_TIME = 2000;
 	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(243,100,0);

@@ -93,19 +93,19 @@ public class Level extends RenderingScreen {
 		if (keycode == Keys.NUM_1) {
 			heNote.play();
 			Action toDo = Sequence.add(new Note(Drum.HE, sinceLastRythm));
-			PlayerCompany.getInstance().addAction(toDo);
+			PlayerCompany.getInstance().setAction(toDo);
 		}
 		if (keycode == Keys.NUM_2) {
 			sNote.play();
-			PlayerCompany.getInstance().addAction(Sequence.add(new Note(Drum.S, sinceLastRythm)));
+			PlayerCompany.getInstance().setAction(Sequence.add(new Note(Drum.S, sinceLastRythm)));
 		}
 		if (keycode == Keys.NUM_3) {
 			soNote.play();
-			PlayerCompany.getInstance().addAction(Sequence.add(new Note(Drum.SO, sinceLastRythm)));
+			PlayerCompany.getInstance().setAction(Sequence.add(new Note(Drum.SO, sinceLastRythm)));
 		}
 		if (keycode == Keys.NUM_4) {
 			yesNote.play();
-			PlayerCompany.getInstance().addAction(Sequence.add(new Note(Drum.YES, sinceLastRythm)));
+			PlayerCompany.getInstance().setAction(Sequence.add(new Note(Drum.YES, sinceLastRythm)));
 		}
 		if (keycode == Keys.D) {
 			debugActive = !debugActive;
@@ -144,7 +144,7 @@ public class Level extends RenderingScreen {
 
 		// stick flying objects
 		createJoints();
-
+		
 		// move objects
 		stepProjectiles(g);
 		rythm();
@@ -175,8 +175,9 @@ public class Level extends RenderingScreen {
 	}
 
 	private void rythm() {
-		sinceLastRythm += Gdx.graphics.getDeltaTime() * 1000;
-		if (sinceLastRythm >= 500) {
+		sinceLastRythm += Gdx.graphics.getDeltaTime();
+		Note.updateForbiddenTime(Gdx.graphics.getDeltaTime());
+		if (sinceLastRythm >= 0.5) {
 			// every 500ms
 			switch (trackState) {
 			case -2:
@@ -198,8 +199,7 @@ public class Level extends RenderingScreen {
 				snapState = 1;
 				break;
 			}
-
-			sinceLastRythm = 0;
+			sinceLastRythm -= 0.5f;
 			frame.toggle();
 		}
 	}
@@ -227,7 +227,7 @@ public class Level extends RenderingScreen {
 		for (Iterator<Projectile> iter = flyingOjects.iterator(); iter.hasNext();) {
 			Projectile projectile = iter.next();
 
-			projectile.step(g);
+			projectile.step(Gdx.graphics.getDeltaTime());
 			projectile.draw(g);
 
 			// If a ball is not visible anymore, it should be destroyed

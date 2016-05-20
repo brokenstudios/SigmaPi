@@ -19,7 +19,10 @@ public abstract class Sequence {
 	private static final Drum[][]	COMBOS = {WALK,ATTACK,DEFEND,MIRACLE,RETREAT,CHARGE};
 
 	public static Action add(Note n){
-		melody.add(n);
+		if(n.outOfRythm)
+			return Action.STOP;
+		else 
+			melody.add(n);
 		Action a = getAction();
 		return a;
 	}
@@ -59,6 +62,8 @@ public abstract class Sequence {
 					//now these elements are useless
 					melody.removeAllElements();
 					System.out.println("Sequence " + Action.values()[i] + " recognized !");
+					//the next 4 bars are input forbidden..
+					Note.startForbiddenTime();
 					return Action.values()[i];				
 				}
 			}

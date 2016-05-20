@@ -58,8 +58,8 @@ public class PlayerCompany {
 		Arrow.setImgPath("data/images/fleche.png");
 	}
 
-	public void addAction(Action action) {
-		heroes.add(action);
+	public void setAction(Action action) {
+		heroes.setAction(action);
 	}
 
 	public Company getHeroes() {
@@ -76,5 +76,10 @@ public class PlayerCompany {
 			instance = new PlayerCompany();
 		}
 		return instance;
+	}
+
+	public void actionFinished() {
+		// TODO Auto-generated method stub
+		
 	}
 }
