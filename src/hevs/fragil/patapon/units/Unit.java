@@ -60,7 +60,7 @@ public abstract class Unit implements DrawableObject{
 		frameIndex = legs.drawKeyFrames(stateTime, getPosition()-32);
 	}
 	protected void drawBody(float stateTime){
-		body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level-1), getPosition()-32, 40);
+		body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level), getPosition()-32, 40);
 	}
 	protected void drawEye(){
 		//TODO get unit state to change the eye expression

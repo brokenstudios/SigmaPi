@@ -13,6 +13,7 @@ public class Archer extends Unit {
 	static Skills modifier;
 	static SpriteSheet arms;
 	static int nArchers = 0;
+	int force = level * 400;
 	
 	public Archer(){
 		this((int)(4*Math.random()),Species.random(), Param.HEROES_GROUP);
@@ -26,9 +27,9 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void draw(GdxGraphics g){}
-	public void attack(){
+	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition(), Param.FLOOR_DEPTH+30);
-		new Arrow(position, 60, 400, collisionGroup);
+		new Arrow(position, 45, distance, collisionGroup);
 	}
 	public void draw(GdxGraphics g, float time) {
 		super.drawLegs(time);
@@ -39,5 +40,9 @@ public class Archer extends Unit {
 	}
 	private void drawArms(float time){
 		
+	}
+	@Override
+	public void attack() {
+		attack(500);
 	}
 }

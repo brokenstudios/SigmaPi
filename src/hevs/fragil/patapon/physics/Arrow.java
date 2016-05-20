@@ -5,8 +5,10 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.components.bitmaps.BitmapImage;
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
+import ch.hevs.gdx2d.components.physics.utils.PhysicsConstants;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.physics.AbstractPhysicsObject;
+import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 
@@ -19,6 +21,7 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 	boolean stuck = false;
 	//when life is zero, arrow is deleted
 	float life = 1.0f;
+	float damage;
 	
 	//for every arrow
 	static BitmapImage img;
@@ -26,12 +29,8 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 	static int nArrows;
 	static float[] v1 = {-5, 60, -4, 70, 0, 80, 4, 70, 5, 60, 0, 0};
 	
-	public Arrow(Vector2 position, int startAngle, int startForce, int collisionGroup) {
-		super("arrow"+nArrows, position, getArrowVertices(startAngle),  8f, 0f, 1f, true);
-		this.startAngle = startAngle;
-		this.getBody().setBullet(true);
-		nArrows++;
-		
+	public Arrow(Vector2 startPos, int startAngle, int distance, int collisionGroup) {
+		super("arrow"+nArrows, startPos, getArrowVertices(startAngle),  8f, 0f, 1f, true);
 		this.startAngle = startAngle;
 		this.collisionGroup = collisionGroup;
 		this.newCollisionGroup = collisionGroup;
@@ -40,12 +39,35 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 		setBodyAngularDamping(15f);
 		
 		//same negative index to disable collisions between arrows
+		getBody().setBullet(true);
 		setCollisionGroup(collisionGroup);
 		enableCollisionListener();
-		
-		double angleRadians = Math.toRadians(startAngle);
-		applyBodyForceToCenter(new Vector2((float)Math.cos(angleRadians)*startForce, (float)Math.sin(angleRadians)*startForce), true);
+	
+		applyBodyForceToCenter(processForce(startPos, distance), true);
 		CurrentLevel.getLevel().add(this);
+		nArrows++;
+	}
+	private Vector2 processForce(Vector2 startPos, double distance) {
+		double startAngleRad = Math.toRadians(startAngle);
+		Vector2 g = PhysicsWorld.getInstance().getGravity();
+		
+		double a = - g.y / 2 / Math.tan(startAngleRad);
+		double b = 0;
+		double c = - PhysicsConstants.PIXEL_TO_METERS * (startPos.y / Math.tan(startAngleRad) + distance) ;
+		
+		double t1 = (-b - Math.sqrt(Math.pow(b, 2)-4*a*c))/(2*a);
+		double t2 = (-b + Math.sqrt(Math.pow(b, 2)-4*a*c))/(2*a);
+		double t = Math.max(t1, t2);
+		
+		double vx = (PhysicsConstants.PIXEL_TO_METERS *distance / t);
+		System.out.println(vx);
+		double v = vx / Math.cos(startAngleRad);
+		double a0 = v * 60;
+		double f0 = a0 * getBodyMass();
+		Vector2 force = new Vector2();
+		force.x = (float) (f0*Math.cos(startAngleRad));
+		force.y = (float) (f0*Math.sin(startAngleRad));
+		return force;
 	}
 	public Arrow(Vector2 position, int startAngle, int startForce) {
 		this(position, startAngle, startForce, -1);
@@ -129,10 +151,10 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 		double vNorm = Math.sqrt(v.x*v.x + v.y*v.y);
 		
 		//process lift force relative to the angle and the velocity
-		float lift = (float)( -Math.cos(angle+ Math.PI/3)*vNorm/5);
+		float lift = (float)( -Math.cos(angle + Math.toRadians(startAngle-5))*vNorm/2);
 		
 		//apply air damping
-		applyBodyForceToCenter(v.x/10f, v.y/10f, true);
+//		applyBodyForceToCenter(v.x/10f, v.y/10f, true);
 		applyBodyTorque(lift, true);
 		
 		//if this arrow is stuck, it start degrading itself
