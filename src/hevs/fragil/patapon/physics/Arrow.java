@@ -30,7 +30,7 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 	static float[] v1 = {-5, 60, -4, 70, 0, 80, 4, 70, 5, 60, 0, 0};
 	
 	public Arrow(Vector2 startPos, int startAngle, int distance, int collisionGroup) {
-		super("arrow"+nArrows, startPos, getArrowVertices(startAngle),  8f, 0f, 1f, true);
+		super("arrow"+nArrows, startPos, getArrowVertices(startAngle),  1f, 0f, 1f, true);
 		this.startAngle = startAngle;
 		this.collisionGroup = collisionGroup;
 		this.newCollisionGroup = collisionGroup;
@@ -60,7 +60,6 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 		double t = Math.max(t1, t2);
 		
 		double vx = (PhysicsConstants.PIXEL_TO_METERS *distance / t);
-		System.out.println(vx);
 		double v = vx / Math.cos(startAngleRad);
 		double a0 = v * 60;
 		double f0 = a0 * getBodyMass();
@@ -148,7 +147,7 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 	public void step(GdxGraphics g) {
 		Vector2 v = getBodyLinearVelocity();
 		float angle = getBodyAngle();
-		double vNorm = Math.sqrt(v.x*v.x + v.y*v.y);
+		double vNorm = Math.sqrt(v.x*v.x + v.y*v.y) * getBodyMass();
 		
 		//process lift force relative to the angle and the velocity
 		float lift = (float)( -Math.cos(angle + Math.toRadians(startAngle-5))*vNorm/2);
