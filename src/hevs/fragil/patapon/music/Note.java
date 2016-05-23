@@ -50,28 +50,28 @@ public class Note{
 	}
 	// return a value depending of the user rythm precision
 	public void juge(float delay){
-			//bonus score if well done
-			System.out.print(drum.toString() + " ");
-			if(delay < PERFECT){
-				System.out.print("PERFECT : " + Math.round(delay));
-				feverScore += 15;
-			}
-			else if(delay < EXCELLENT){
-				System.out.print("EXCELLENT : " + Math.round(delay));
-				feverScore += 10;
-			}
-			else if(delay < GOOD){
-				System.out.print("GOOD : " + Math.round(delay));
-				feverScore += 5;
-			}
-			else if (delay < PASS){
-				System.out.print("PASS : " + Math.round(delay));
-				feverScore += 1;
-			}
-			else {
-				System.out.print("BAD : " + Math.round(delay));
-				clearFever();
-			}			
+		//bonus score if well done
+		System.out.print(drum.toString() + " ");
+		if(delay < PERFECT){
+			System.out.print("PERFECT : " + Math.round(delay));
+			feverScore += 15;
+		}
+		else if(delay < EXCELLENT){
+			System.out.print("EXCELLENT : " + Math.round(delay));
+			feverScore += 10;
+		}
+		else if(delay < GOOD){
+			System.out.print("GOOD : " + Math.round(delay));
+			feverScore += 5;
+		}
+		else if (delay < PASS){
+			System.out.print("PASS : " + Math.round(delay));
+			feverScore += 1;
+		}
+		else {
+			System.out.print("BAD : " + Math.round(delay));
+			clearFever();
+		}			
 	}
 	public static void startForbiddenTime() {
 		forbiddenTimeCounter = 2;

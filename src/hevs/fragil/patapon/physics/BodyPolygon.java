@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 
-public class BodyPolygon extends PhysicsPolygon implements CollisionGroup {
+public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 	static Vector2 dimensions =  new Vector2(3,80);
 	int collisionGroup;
 	static int nArrows;
@@ -45,7 +45,10 @@ public class BodyPolygon extends PhysicsPolygon implements CollisionGroup {
 	}
 	@Override
 	public int getCollisionGroup() {
-		// TODO Auto-generated method stub
 		return 0;
+	}
+	@Override
+	public void applyDamage(float damage) {
+		
 	}
 }

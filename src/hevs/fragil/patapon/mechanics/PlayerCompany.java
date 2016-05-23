@@ -77,9 +77,4 @@ public class PlayerCompany {
 		}
 		return instance;
 	}
-
-	public void actionFinished() {
-		// TODO Auto-generated method stub
-		
-	}
 }
