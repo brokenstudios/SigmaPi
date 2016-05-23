@@ -1,8 +1,11 @@
 package hevs.fragil.patapon.music;
 
+import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
+import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.mechanics.Param;
 
-public class Note{
+public class Note implements DrawableObject{
 	//delay between tempo and note
 	Drum drum;
 	private static int feverScore = 0;
@@ -13,6 +16,7 @@ public class Note{
 	final static int EXCELLENT = 45;
 	final static int PERFECT = 30;		
 	public boolean outOfRythm = false;
+	private static SpriteSheet drums;
 		
 	public Note(Drum d, float dt){
 		this.drum = d;
@@ -31,9 +35,10 @@ public class Note{
 				juge(Param.MUSIC_BAR - dt);
 				System.out.println(" ms too early");
 			}
+			forbiddenTimeCounter += (Param.MUSIC_BAR - 2*PASS) / 1000;
 		}
 		else {
-			System.out.println("Don't play until Sigmapis are ready !");
+			System.out.println("You must follow the rythm, you fool !");
 			clearFever();
 			outOfRythm = true;
 		}
@@ -81,5 +86,18 @@ public class Note{
 			forbiddenTimeCounter -= dt;
 		else 
 			forbiddenTimeCounter = 0;
+	}
+	@Override
+	public void draw(GdxGraphics g) {
+		draw(g, 500, 500);
+	}
+	public void draw(GdxGraphics g, int posX, int posY){
+		drums.drawFrame(drum.ordinal(), posX, posY);
+	}
+	/**
+	 * This is only to load files in the PortableApplication onInit method
+	 */
+	public static void loadSprites(String url) {
+		drums = new SpriteSheet(url, 4, 4, 0.2f);
 	}
 }

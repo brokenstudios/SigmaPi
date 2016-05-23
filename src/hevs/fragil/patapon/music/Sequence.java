@@ -3,11 +3,13 @@ package hevs.fragil.patapon.music;
 import java.util.Arrays;
 import java.util.Vector;
 
+import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.Action;
 
-public abstract class Sequence {
+public class Sequence implements DrawableObject {
 	//actual sequence
-	private static Vector<Note> melody = new Vector<Note>();
+	private Vector<Note> melody = new Vector<Note>();
 	
 	//combo references
 	private static final Drum[] 	WALK = {Drum.HE, Drum.HE, Drum.HE, Drum.S};
@@ -18,7 +20,7 @@ public abstract class Sequence {
 	private static final Drum[] 	CHARGE = {Drum.S, Drum.S, Drum.SO, Drum.SO};
 	private static final Drum[][]	COMBOS = {WALK,ATTACK,DEFEND,MIRACLE,RETREAT,CHARGE};
 
-	public static Action add(Note n){
+	public Action add(Note n){
 		if(n.outOfRythm)
 			return Action.STOP;
 		else 
@@ -26,17 +28,17 @@ public abstract class Sequence {
 		Action a = getAction();
 		return a;
 	}
-	public static void remove(Note n){
+	public void remove(Note n){
 		melody.remove(n);
 	}
-	public static void removeAllElements(){
+	public void removeAllElements(){
 		melody.removeAllElements();
 	}
 	/**
 	 * @author loicg
 	 * @return the corresponding action
 	 * */
-	private static Action getAction(){
+	private Action getAction(){
 		if(melody.size() >= 4){
 			//compare the last 5 ones
 			int startIndex = Math.max(melody.size()-5, 0);
@@ -76,5 +78,11 @@ public abstract class Sequence {
 		
 		//indicate sequence not terminated
 		else return null;
+	}
+	@Override
+	public void draw(GdxGraphics g) {
+		for (Note n : melody) {
+			n.draw(g);
+		}
 	}
 }

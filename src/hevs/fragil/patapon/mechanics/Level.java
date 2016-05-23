@@ -27,6 +27,7 @@ public class Level extends RenderingScreen {
 	private Decor decor;
 	private Floor floor;
 	private Frame frame;
+	private Sequence sequence;
 	private SoundSample heNote, sNote, soNote, yesNote;
 	private SoundSample snap, track;
 
@@ -70,8 +71,7 @@ public class Level extends RenderingScreen {
 		PhysicsWorld.getInstance();
 		CurrentLevel.setLevel(this);
 		
-		decor = new Decor(Param.WIN_WIDTH, Param.WIN_HEIGHT, Param.Type3);
-
+		decor = new Decor(Param.MAP_WIDTH, Param.WIN_HEIGHT, Param.Type3);
 		PlayerCompany.getInstance().initRandomCompany(3, 3, 4);
 
 		// Load the sound files
@@ -85,27 +85,29 @@ public class Level extends RenderingScreen {
 		// Create a default map and the floor that belong
 		frame = new Frame();
 		floor = new Floor(decor.getWidth());
-
+		sequence = new Sequence();
+		Note.loadSprites("data/images/bodies64x102.png");
+		
 		debugRenderer = new DebugRenderer();
 	}
 
 	public void onKeyDown(int keycode) {
 		if (keycode == Keys.NUM_1) {
 			heNote.play();
-			Action toDo = Sequence.add(new Note(Drum.HE, sinceLastRythm));
+			Action toDo = sequence.add(new Note(Drum.HE, sinceLastRythm));
 			PlayerCompany.getInstance().setAction(toDo);
 		}
 		if (keycode == Keys.NUM_2) {
 			sNote.play();
-			PlayerCompany.getInstance().setAction(Sequence.add(new Note(Drum.S, sinceLastRythm)));
+			PlayerCompany.getInstance().setAction(sequence.add(new Note(Drum.S, sinceLastRythm)));
 		}
 		if (keycode == Keys.NUM_3) {
 			soNote.play();
-			PlayerCompany.getInstance().setAction(Sequence.add(new Note(Drum.SO, sinceLastRythm)));
+			PlayerCompany.getInstance().setAction(sequence.add(new Note(Drum.SO, sinceLastRythm)));
 		}
 		if (keycode == Keys.NUM_4) {
 			yesNote.play();
-			PlayerCompany.getInstance().setAction(Sequence.add(new Note(Drum.YES, sinceLastRythm)));
+			PlayerCompany.getInstance().setAction(sequence.add(new Note(Drum.YES, sinceLastRythm)));
 		}
 		if (keycode == Keys.D) {
 			debugActive = !debugActive;
@@ -129,6 +131,10 @@ public class Level extends RenderingScreen {
 				trackState = -2;
 				break;
 			}
+		}
+		if(keycode == Keys.ESCAPE){
+			dispose();
+			System.exit(0);
 		}
 	}
 
@@ -160,6 +166,7 @@ public class Level extends RenderingScreen {
 		floor.draw(g);
 		decor.draw(g);
 		frame.draw(g);
+		sequence.draw(g);
 		
 		PlayerCompany.getInstance().draw(g, stateTime);
 
