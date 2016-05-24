@@ -61,6 +61,14 @@ public abstract class Param {
 	public static final int CHARGE_TIME = 2000;
 	public static final int DEFEND_TIME = 2000;
 	
+	//Music tolerances 
+	public static final int PASS = 100;
+	public static final int GOOD = 60;
+	public static final int EXCELLENT = 45;
+	public static final int PERFECT = 30;
+
+	public static final int NOTE_REMANENCE = 2000;	
+	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(243,100,0);
 	private static Color rgbToFloat(int r, int g, int b){

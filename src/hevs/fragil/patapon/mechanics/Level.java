@@ -86,7 +86,7 @@ public class Level extends RenderingScreen {
 		frame = new Frame();
 		floor = new Floor(decor.getWidth());
 		sequence = new Sequence();
-		Note.loadSprites("data/images/bodies64x102.png");
+		Note.loadSprites("data/images/drums102x102.png");
 		
 		debugRenderer = new DebugRenderer();
 	}
