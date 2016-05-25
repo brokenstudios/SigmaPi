@@ -31,8 +31,8 @@ public class Decor {
 		cameraPos.y = 0;
 		
 		//Get the companies positions
-		int x1 = c1.globalPosition;
-		int x2 = c2.globalPosition;
+		float x1 = c1.getPosition();
+		float x2 = c2.getPosition();
 		
 		//TODO verify if both companies are close enough to be shown
 		if(Math.abs(x2-x1) < Param.WIN_WIDTH){
