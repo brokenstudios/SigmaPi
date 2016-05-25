@@ -8,7 +8,6 @@ import hevs.fragil.patapon.mechanics.Param;
 
 public class Company {
 	public String name = "";
-	public int globalPosition = 50;
 	double feverFactor = 0.1;
 	public Vector<Section> sections = new Vector<Section>();
 	private Action action;
@@ -23,13 +22,13 @@ public class Company {
 		this(pos, "noname");
 	}
 	public Company(int pos, String name){
-		this.globalPosition = pos;
+		moveAbsolute(pos, 0.1);
 		this.name = name;   
 		this.ready = true;
 	}
 	public String toString(){
 		String t = "Start of company \n";
-		t += " This company is at position : "+ globalPosition +"\n";
+		t += " This company is at position : "+ getPosition() +"\n";
 		t += " This company's fever factor : "+ feverFactor +"\n";
 		t += " This company contains : \n";
 		for (Section section : sections) {
@@ -37,6 +36,16 @@ public class Company {
 		}
 		t += "End of Company";
 		return t;
+	}
+	public float getPosition(){
+		float xSum = 0;
+		for (Section s : sections) {
+			for (Unit u : s.units) {
+				xSum += u.getPosition();
+			}
+		}
+	
+		return xSum / getNbUnits();
 	}
 	public int getNbUnits(){
 		int s = 0;
@@ -61,7 +70,6 @@ public class Company {
 		int width = getWidth();
 		float screenMargin = newPos - width/2f;
 		if(screenMargin > 0){
-			globalPosition = newPos;
 			float tempPos = screenMargin;
 			for (Section section : sections) {
 				tempPos += section.getWidth()/2f;

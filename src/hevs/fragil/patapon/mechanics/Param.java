@@ -2,6 +2,8 @@ package hevs.fragil.patapon.mechanics;
 
 import com.badlogic.gdx.graphics.Color;
 
+import hevs.fragil.patapon.music.Drum;
+
 
 
 public abstract class Param {
@@ -34,22 +36,22 @@ public abstract class Param {
 	public static final Color Type5 = rgbToFloat(58, 170, 53);
 	
 	//Timer periods
-	public static final int MUSIC_BAR = 500;
-	public static final int ACTIONS_BAR = 10;
+	public static final float MUSIC_BAR = .5f;
+	public static final float ACTIONS_BAR = .01f;
 	
 	//Shifting width
 	public static final int WALK_WIDTH = 200;
 	public static final int RETREAT_WIDTH = 100;
 	
 	//Shifting time
-	public static final int WALK_TIME = 2000;
-	public static final int RETREAT_TIME = 2000;
+	public static final float WALK_TIME = 2f;
+	public static final float RETREAT_TIME = 2f;
 	
 	//Shifting time bonus (value at max fever score)
-	public static final int WALK_TIME_BONUS = 500;
-	public static final int RETREAT_TIME_BONUS = 100;
+	public static final float WALK_TIME_BONUS = .5f;
+	public static final float RETREAT_TIME_BONUS = .1f;
 
-	public static final int COOLDOWN_BASE = 500;
+	public static final float COOLDOWN_BASE = .5f;
 	public static final int ATTACK_BASE = 5;
 	public static final int RANGE_BASE = 0;
 
@@ -57,17 +59,26 @@ public abstract class Param {
 	public static final int ENNEMIES_GROUP = -2;
 	public static final int ARROWS_GROUP = -3;
 
-	public static final int ATTACK_TIME = 2000;
-	public static final int CHARGE_TIME = 2000;
-	public static final int DEFEND_TIME = 2000;
+	public static final float ATTACK_TIME = 2f;
+	public static final float CHARGE_TIME = 2f;
+	public static final float DEFEND_TIME = 2f;
 	
 	//Music tolerances 
-	public static final int PASS = 100;
-	public static final int GOOD = 60;
-	public static final int EXCELLENT = 45;
-	public static final int PERFECT = 30;
+	public static final float PASS = .1f;
+	public static final float GOOD = .06f;
+	public static final float EXCELLENT = .045f;
+	public static final float PERFECT = 0.03f;
 
-	public static final int NOTE_REMANENCE = 2000;	
+	public static final float NOTE_REMANENCE = 2;	
+	
+	//combo references
+	public static final Drum[] 		WALK = {Drum.HE, Drum.HE, Drum.HE, Drum.S};
+	public static final Drum[] 		ATTACK = {Drum.S, Drum.S, Drum.HE, Drum.S};
+	public static final Drum[] 		DEFEND = {Drum.SO, Drum.SO, Drum.HE, Drum.S};
+	public static final Drum[] 		MIRACLE = {Drum.YES, Drum.YES, Drum.YES, Drum.YES, Drum.YES};
+	public static final Drum[] 		RETREAT = {Drum.S, Drum.HE, Drum.S, Drum.HE};
+	public static final Drum[] 		CHARGE = {Drum.S, Drum.S, Drum.SO, Drum.SO};
+	public static final Drum[][]	COMBOS = {WALK,ATTACK,DEFEND,MIRACLE,RETREAT,CHARGE};
 	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(243,100,0);

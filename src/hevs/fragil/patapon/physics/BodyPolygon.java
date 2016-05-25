@@ -26,6 +26,7 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 		nArrows++;
 	}
 	public void moveToLinear(int position, double travelTime) {
+		travelTime *= 1000;
 		double distanceToTravel = position - getBodyPosition().x;
 		double globalSpeed = distanceToTravel / travelTime;
 		int fps = Gdx.graphics.getFramesPerSecond();

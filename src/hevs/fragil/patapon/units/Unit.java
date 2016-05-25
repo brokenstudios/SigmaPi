@@ -25,10 +25,10 @@ public abstract class Unit implements DrawableObject{
 	private int frameIndex;
 	private SpriteSheet body, eye;
 	
-	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, int cooldown, int collisionGroup){
+	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, float cooldown, int collisionGroup){
 		this.species = species;
 		this.level = lvl;
-		this.skills = new Skills(life+level*5, attack, range, cooldown/(lvl+1));
+		this.skills = new Skills(life+level*5, attack, range, (float)(0.5f+Math.random()/2.0));
 		this.collisionGroup = collisionGroup;
 		nUnits++;
 	}	
@@ -87,7 +87,7 @@ public abstract class Unit implements DrawableObject{
 	public void setDelay(int delay) {
 		skills.setCooldown(delay);
 	}
-	public int getDelay() {
+	public float getDelay() {
 		return skills.getCooldown();
 	}
 	

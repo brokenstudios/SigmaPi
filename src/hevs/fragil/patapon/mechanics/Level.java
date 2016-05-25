@@ -17,7 +17,6 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
 import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.music.Drum;
-import hevs.fragil.patapon.music.Note;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.Projectile;
@@ -86,7 +85,7 @@ public class Level extends RenderingScreen {
 		frame = new Frame();
 		floor = new Floor(decor.getWidth());
 		sequence = new Sequence();
-		Note.loadSprites("data/images/drums102x102.png");
+		sequence.loadSprites("data/images/drums102x102.png");
 		
 		debugRenderer = new DebugRenderer();
 	}
@@ -94,20 +93,20 @@ public class Level extends RenderingScreen {
 	public void onKeyDown(int keycode) {
 		if (keycode == Keys.NUM_1) {
 			heNote.play();
-			Action toDo = sequence.add(new Note(Drum.HE, sinceLastRythm));
+			Action toDo = sequence.add(Drum.HE, sinceLastRythm);
 			PlayerCompany.getInstance().setAction(toDo);
 		}
 		if (keycode == Keys.NUM_2) {
 			sNote.play();
-			PlayerCompany.getInstance().setAction(sequence.add(new Note(Drum.S, sinceLastRythm)));
+			PlayerCompany.getInstance().setAction(sequence.add(Drum.S, sinceLastRythm));
 		}
 		if (keycode == Keys.NUM_3) {
 			soNote.play();
-			PlayerCompany.getInstance().setAction(sequence.add(new Note(Drum.SO, sinceLastRythm)));
+			PlayerCompany.getInstance().setAction(sequence.add(Drum.SO, sinceLastRythm));
 		}
 		if (keycode == Keys.NUM_4) {
 			yesNote.play();
-			PlayerCompany.getInstance().setAction(sequence.add(new Note(Drum.YES, sinceLastRythm)));
+			PlayerCompany.getInstance().setAction(sequence.add(Drum.YES, sinceLastRythm));
 		}
 		if (keycode == Keys.D) {
 			debugActive = !debugActive;
@@ -155,9 +154,10 @@ public class Level extends RenderingScreen {
 		stepProjectiles(g);
 		rythm();
 		action();
+		sequence.step();
 		
 		//display help
-		g.drawStringCentered(800, "Fever : " + Note.getFever());
+		g.drawStringCentered(800, "Fever : " + sequence.getFever());
 		g.drawStringCentered(780, "T to disable/enable track");
 		g.drawStringCentered(760, "S to disable/enable snap");
 		g.drawStringCentered(740, "D to disable/enable debug mode");
@@ -183,36 +183,38 @@ public class Level extends RenderingScreen {
 
 	private void rythm() {
 		sinceLastRythm += Gdx.graphics.getDeltaTime();
-		Note.updateForbiddenTime(Gdx.graphics.getDeltaTime());
+		
 		if (sinceLastRythm >= 0.5) {
-			// every 500ms
-			switch (trackState) {
-			case -2:
-				track.stop();
-				trackState = -1;
-				break;
-			case 2:
-				track.loop();
-				trackState = 1;
-				break;
-			}
-			switch (snapState) {
-			case -2:
-				snap.stop();
-				snapState = -1;
-				break;
-			case 2:
-				snap.loop();
-				snapState = 1;
-				break;
-			}
+			// every 500ms			
+			changeTrack();
 			sinceLastRythm -= 0.5f;
 			frame.toggle();
 		}
 	}
-
+	private void changeTrack(){
+		switch (trackState) {
+		case -2:
+			track.stop();
+			trackState = -1;
+			break;
+		case 2:
+			track.loop();
+			trackState = 1;
+			break;
+		}
+		switch (snapState) {
+		case -2:
+			snap.stop();
+			snapState = -1;
+			break;
+		case 2:
+			snap.loop();
+			snapState = 1;
+			break;
+		}
+	}
 	private void action() {
-		ActionTimer.run(Gdx.graphics.getDeltaTime() * 1000, PlayerCompany.getInstance().getHeroes());
+		ActionTimer.run(PlayerCompany.getInstance().getHeroes(), sequence.getFever());
 	}
 
 	private void createJoints() {
