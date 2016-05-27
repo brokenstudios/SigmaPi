@@ -145,16 +145,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="17" language="java" name="hevs.fragil.patapon.music.Note" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/music/Note.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="554" y="544"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="18" language="java" name="hevs.fragil.patapon.music.Sequence" project="SigmaPi" 
+  <class id="17" language="java" name="hevs.fragil.patapon.music.Sequence" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/music/Sequence.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="551" y="432"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -163,78 +154,54 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <generalization id="19">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="20">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="21" name="units">        
-        <position height="0" width="0" x="-80" y="-398"/>      
-      </attribute>      
-      <multiplicity id="22" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-80" y="-398"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="23">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="24" name="sections">        
-        <position height="0" width="0" x="-74" y="-188"/>      
-      </attribute>      
-      <multiplicity id="25" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-74" y="-188"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="26">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="27" name="drum">        
-        <position height="0" width="0" x="-21" y="-971"/>      
-      </attribute>      
-      <multiplicity id="28" minimum="0" maximum="1">        
-        <position height="16" width="23" x="562" y="605"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="29">    
+  <association id="18">    
     <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="30" name="hitBox">        
+      <attribute id="19" name="hitBox">        
         <position height="0" width="0" x="-222" y="-762"/>      
       </attribute>      
-      <multiplicity id="31" minimum="0" maximum="1">        
+      <multiplicity id="20" minimum="0" maximum="1">        
         <position height="0" width="0" x="-222" y="-762"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="32">    
+  <association id="21">    
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="22" name="units">        
+        <position height="0" width="0" x="-80" y="-398"/>      
+      </attribute>      
+      <multiplicity id="23" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-80" y="-398"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="24">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="25">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="26" name="sections">        
+        <position height="0" width="0" x="-74" y="-188"/>      
+      </attribute>      
+      <multiplicity id="27" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-74" y="-188"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="28">    
     <end type="SOURCE" refId="15"/>    
     <end type="TARGET" refId="8"/>  
   </generalization>  
-  <generalization id="33">    
+  <generalization id="29">    
     <end type="SOURCE" refId="11"/>    
     <end type="TARGET" refId="8"/>  
   </generalization>  
-  <association id="34">    
-    <end type="SOURCE" refId="18" navigable="false">      
-      <attribute id="35" name="melody">        
-        <position height="0" width="0" x="-21" y="-971"/>      
-      </attribute>      
-      <multiplicity id="36" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-21" y="-971"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="false" package="false" protected="false" private="false" static="true"/>    

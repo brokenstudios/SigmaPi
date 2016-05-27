@@ -29,7 +29,7 @@ public class Archer extends Unit {
 	public void draw(GdxGraphics g){}
 	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition(), Param.FLOOR_DEPTH+30);
-		new Arrow(position, 45, distance, collisionGroup);
+		new Arrow(position, 45, distance, collisionGroup, level);
 	}
 	public void draw(GdxGraphics g, float time) {
 		super.drawLegs(time);
@@ -43,6 +43,6 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void attack() {
-		attack(500);
+		attack(800);
 	}
 }

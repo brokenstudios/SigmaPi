@@ -90,5 +90,9 @@ public abstract class Unit implements DrawableObject{
 	public float getDelay() {
 		return skills.getCooldown();
 	}
+	public void setCollisionGroup(int group) {
+		collisionGroup = group;
+		hitBox.setCollisionGroup(group);
+	}
 	
 }
