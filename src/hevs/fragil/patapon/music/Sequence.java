@@ -18,6 +18,7 @@ public class Sequence implements DrawableObject {
 	private boolean sequenceInProgress = false;
 	private boolean pause = true;
 	private float sigmapisTimeCounter;
+	private float drawCountDown;
 	private float sinceLastDrum;
 	private float sinceLastRythm;
 	private int feverScore = 0;
@@ -26,6 +27,7 @@ public class Sequence implements DrawableObject {
 
 	public Action add(Drum d, float lastRythm){
 		toDraw.add(d);
+		drawCountDown = Param.NOTE_REMANENCE;
 		
 		if(!sequenceInProgress){
 			sinceLastDrum = 0;
@@ -34,8 +36,10 @@ public class Sequence implements DrawableObject {
 		if(pause)
 			pause = false;
 		else if (sigmapisTimeCounter > 0){
-			System.out.println("you have played while sigmapis were singing ! : " + sigmapisTimeCounter);
-			fault();
+			System.out.println("you have played while sigmapis are singing ! : " + sigmapisTimeCounter);
+			pause = true;
+			clearFever();
+			endSequence();
 			return Action.STOP;
 		}
 	
@@ -94,9 +98,9 @@ public class Sequence implements DrawableObject {
 			}
 			
 			//indicates bad sequence
-			System.out.println("No possible sequence found...");
-			fault();
-			pause = false;
+			System.out.println("No possible sequence found... Fever goes down !");
+			clearFever();
+			endSequence();
 			return Action.STOP;
 		}
 		
@@ -109,12 +113,18 @@ public class Sequence implements DrawableObject {
 		sinceLastDrum += dt;
 		verify();
 		
-		if(sinceLastDrum >= Param.NOTE_REMANENCE - Param.NOTE_FADE){
-//			opacity -= (Param.NOTE_FADE/100)*dt;
+		Vector<Drum> toRemove = new Vector<Drum>();
+		for (Drum d : toDraw) {
+			if(!sequenceInProgress){
+				drawCountDown -= dt;
+				if(drawCountDown <= 0){
+					toRemove.add(d);
+				}
+			}
 		}
-		//Remove elements after delay
-		if(sinceLastDrum >= Param.NOTE_REMANENCE)
-			toDraw.removeAllElements();
+		//Remove elements
+		for (Drum n : toRemove) toDraw.remove(n);
+		toRemove.removeAllElements();
 	}
 	private void endSequence(){
 		melody.removeAllElements();
@@ -124,17 +134,14 @@ public class Sequence implements DrawableObject {
 		if(!pause){
 			
 			if((sequenceInProgress && sinceLastDrum > Param.MUSIC_BAR + Param.PASS)
-					|| (!sequenceInProgress && sinceLastDrum > 5*Param.MUSIC_BAR + Param.PASS)){
+					|| (!sequenceInProgress && sinceLastDrum > 4*Param.MUSIC_BAR + Param.PASS)){
 				
 				System.out.println("too long ! : " + sinceLastDrum);
-				fault();
+				pause = true;
+				clearFever();
+				endSequence();
 			}
 		}
-	}
-	private void fault(){
-		pause = true;
-		clearFever();
-		endSequence();
 	}
 	/** 
 	 * returns a value depending of the user rythm phase
@@ -152,7 +159,9 @@ public class Sequence implements DrawableObject {
 			return 1;
 		} else {
 			System.out.println("Bad rythm ! : " + sinceLastDrum);
-			fault();
+			pause = true;
+			clearFever();
+			endSequence();
 			return 0;
 		}
 	}

@@ -79,8 +79,6 @@ public abstract class Param {
 	public static final Drum[] 		RETREAT = {Drum.S, Drum.HE, Drum.S, Drum.HE};
 	public static final Drum[] 		CHARGE = {Drum.S, Drum.S, Drum.SO, Drum.SO};
 	public static final Drum[][]	COMBOS = {WALK,ATTACK,DEFEND,MIRACLE,RETREAT,CHARGE};
-
-	public static final float NOTE_FADE = 0.5f;
 	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(243,100,0);
