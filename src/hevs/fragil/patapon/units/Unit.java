@@ -61,7 +61,7 @@ public abstract class Unit implements DrawableObject{
 			angle = hitBox.getBodyAngle();
 			x = hitBox.getBodyWorldCenter().x;
 			y = hitBox.getBodyWorldCenter().y;
-			legs.drawRotatedFrame(1, (float)angle, (float)x, (float)y, 0, -35);
+			legs.drawRotatedFrame(1, (float)angle, (float)x, (float)y, -32, -35);
 		}
 		else
 			frameIndex = legs.drawKeyFrames(stateTime, getPosition(), Param.FLOOR_DEPTH);

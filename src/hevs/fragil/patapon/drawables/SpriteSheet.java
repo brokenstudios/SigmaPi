@@ -62,7 +62,7 @@ public class SpriteSheet {
 		tmp.setOrigin(32, 38);
 		tmp.setRotation((float)Math.toDegrees(angle));
 		float x = posX + (float) (offsetX * Math.cos(angle) + offsetY * Math.abs(Math.sin(angle)));
-		float y = posY + (float) (offsetY * Math.cos(angle) + offsetX * Math.abs(Math.sin(angle)));
+		float y = posY + (float) (offsetY * Math.cos(angle) + (offsetX-10) * Math.abs(Math.sin(angle)));
 		tmp.setPosition(x, y);
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
