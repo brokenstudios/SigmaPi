@@ -35,9 +35,7 @@ public class Sequence implements DrawableObject {
 			pause = false;
 		else if (sigmapisTimeCounter > 0){
 			System.out.println("you have played while sigmapis were singing ! : " + sigmapisTimeCounter);
-			pause = true;
-			clearFever();
-			endSequence();
+			fault();
 			return Action.STOP;
 		}
 	
@@ -97,8 +95,8 @@ public class Sequence implements DrawableObject {
 			
 			//indicates bad sequence
 			System.out.println("No possible sequence found...");
-			clearFever();
-			endSequence();
+			fault();
+			pause = false;
 			return Action.STOP;
 		}
 		
@@ -126,14 +124,17 @@ public class Sequence implements DrawableObject {
 		if(!pause){
 			
 			if((sequenceInProgress && sinceLastDrum > Param.MUSIC_BAR + Param.PASS)
-					|| (!sequenceInProgress && sinceLastDrum > 4*Param.MUSIC_BAR + Param.PASS)){
+					|| (!sequenceInProgress && sinceLastDrum > 5*Param.MUSIC_BAR + Param.PASS)){
 				
 				System.out.println("too long ! : " + sinceLastDrum);
-				pause = true;
-				clearFever();
-				endSequence();
+				fault();
 			}
 		}
+	}
+	private void fault(){
+		pause = true;
+		clearFever();
+		endSequence();
 	}
 	/** 
 	 * returns a value depending of the user rythm phase
@@ -151,9 +152,7 @@ public class Sequence implements DrawableObject {
 			return 1;
 		} else {
 			System.out.println("Bad rythm ! : " + sinceLastDrum);
-			pause = true;
-			clearFever();
-			endSequence();
+			fault();
 			return 0;
 		}
 	}
