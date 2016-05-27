@@ -84,7 +84,6 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 			((BodyPolygon) theOtherObject).applyDamage(energy);
 		}
 			
-		
 		//Create a joint to stick to the other object
 		CurrentLevel.getLevel().createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(), getSpike()));
 		stuck = true;
