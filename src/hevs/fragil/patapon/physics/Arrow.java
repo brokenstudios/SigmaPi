@@ -31,7 +31,7 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 	static int nArrows;
 	static float[] v1 = { -5, 60, -4, 70, 0, 80, 4, 70, 5, 60, 0, 0 };
 
-	public Arrow(Vector2 startPos, int startAngle, int distance, int collisionGroup) {
+	public Arrow(Vector2 startPos, int startAngle, int distance, int collisionGroup, int damage) {
 		super("arrow" + nArrows, startPos, getArrowVertices(startAngle), 1f, 0f, 1f, true);
 		this.startAngle = startAngle;
 		this.collisionGroup = collisionGroup;
@@ -73,16 +73,18 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 	}
 
 	public Arrow(Vector2 position, int startAngle, int startForce) {
-		this(position, startAngle, startForce, -1);
+		this(position, startAngle, startForce, -1, 1);
 	}
 
 	@Override
 	public void collision(AbstractPhysicsObject theOtherObject, float energy) {
+		
 		if(theOtherObject instanceof BodyPolygon){
 			System.out.println("Vous avez touché qqun !");
 			((BodyPolygon) theOtherObject).applyDamage(energy);
 		}
-
+			
+		
 		//Create a joint to stick to the other object
 		CurrentLevel.getLevel().createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(), getSpike()));
 		stuck = true;
@@ -161,19 +163,21 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 		double vNorm = Math.sqrt(v.x * v.x + v.y * v.y) * getBodyMass();
 
 		// process lift force relative to the angle and the velocity
-		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 5)) * vNorm / 2 * 60 * dt);
+		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 15)) * vNorm / 2 * 60 * dt);
 
 		// apply air damping
-		// applyBodyForceToCenter(v.x/10f, v.y/10f, true);
 		applyBodyTorque(lift, true);
 
 		// if this arrow is stuck, it start degrading itself
 		if (stuck)
 			this.life = Math.max(0, life - 0.01f);
 
-		if (newCollisionGroup != collisionGroup) {
-			collisionGroup = newCollisionGroup;
-			setCollisionGroup(collisionGroup);
+//		if (newCollisionGroup != collisionGroup) {
+//			collisionGroup = newCollisionGroup;
+//			setCollisionGroup(collisionGroup);
+//		}
+		if(damageToApply != 0){
+//			findObject()
 		}
 	}
 

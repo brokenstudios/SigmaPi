@@ -172,7 +172,7 @@ public class Level extends RenderingScreen {
 		frame.draw(g);
 		sequence.draw(g);
 		
-		PlayerCompany.getInstance().getHeroes().draw(g, stateTime);
+		PlayerCompany.getInstance().draw(g, stateTime);
 		ennemies.draw(g, stateTime);
 
 		stateTime += Gdx.graphics.getDeltaTime();
