@@ -3,6 +3,7 @@ package hevs.fragil.patapon.mechanics;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Interpolation;
 
+import ch.hevs.gdx2d.components.audio.SoundSample;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.Unit;
@@ -12,6 +13,8 @@ public abstract class ActionTimer{
 	private static float deltaTime;
 	private static float feverScore;
 	private static float start, progression, end;
+	private static SoundSample lalala;
+	private static boolean playing = false;
 	
 	public static void run(Company c, int fever) {
 		float dt = Gdx.graphics.getRawDeltaTime();
@@ -22,6 +25,10 @@ public abstract class ActionTimer{
 	private static void switchAction(Action a, Company c){
 		boolean finished = false;
 		if(a != null){
+			if(playing == false){
+				lalala.play();
+				playing = true;
+			}
 			switch(a){
 				case WALK : 	finished = walk(c);
 								break;
@@ -36,12 +43,16 @@ public abstract class ActionTimer{
 				case CHARGE : 	finished = charge(c);
 								break;
 				case STOP :		finished = stop(c);
+								playing = false;
+								lalala.stop();
 								break;
 				default : 		
 								break;
 			}	
-			if(finished)
+			if(finished){
+				playing = false;
 				c.actionFinished();
+			}
 		}
 	}
 	private static boolean charge(Company c) {
@@ -137,5 +148,8 @@ public abstract class ActionTimer{
 		step = 0;
 		deltaTime = 0f;
 		return true;
+	}
+	public static void loadFiles(){
+		lalala = new SoundSample("data/music/LALALA.mp3");
 	}
 }
