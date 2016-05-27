@@ -28,12 +28,24 @@ public class Decor {
 		processForest(8, origin, 5, 200f, 5);
 	}
 
+	/**
+	 * The camera follow the units
+	 * @param c1
+	 * @return camera x position
+	 */
 	public float cameraProcess(Company c1){
 		float pos = c1.getPosition();		
 		
 		return pos;
 	}
 	
+	/**
+	 * The camera is placed depending of both companies positions with 
+	 * priority to the player company.
+	 * @param c1
+	 * @param c2
+	 * @return camera complete position (x, y, z)
+	 */
 	public Vector3 cameraProcess(Company c1, Company c2) {
 		// Camera always stick on the floor
 		cameraPos.y = 0;
@@ -61,8 +73,7 @@ public class Decor {
 
 		// TODO process camera position depending of objects position AND POV
 		// TODO ensure that zoom is in limits (dynamic, process with height to
-		// not
-		// display more than the map (or with the width if width<height)
+		// not display more than the map (or with the width if width<height)
 
 		return cameraPos;
 	}
