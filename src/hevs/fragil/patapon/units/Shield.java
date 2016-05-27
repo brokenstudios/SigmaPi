@@ -25,9 +25,7 @@ public class Shield extends Unit {
 	@Override
 	public void draw(GdxGraphics g) {
 		float time = CurrentLevel.getLevel().getStateTime();
-		super.drawLegs(time);
-		super.drawBody(time);
-		super.drawEye();
+		super.draw(time);
 		drawArms(time);
 	}
 	private void drawArms(float time){

@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="hevs.fragil.patapon.physics.Arrow" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/physics/Arrow.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="hevs.fragil.patapon.physics.Projectile" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/physics/Projectile.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="985" y="627"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -55,8 +55,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="7" language="java" name="hevs.fragil.patapon.physics.Arrow" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/physics/Arrow.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="hevs.fragil.patapon.physics.Projectile" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/physics/Projectile.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1267" y="624"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -166,40 +166,40 @@
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="21">    
+  <generalization id="21">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="22">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="23">    
     <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="22" name="units">        
+      <attribute id="24" name="units">        
         <position height="0" width="0" x="-80" y="-398"/>      
       </attribute>      
-      <multiplicity id="23" minimum="0" maximum="2147483647">        
+      <multiplicity id="25" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="-80" y="-398"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="24">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="25">    
+  <association id="26">    
     <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="26" name="sections">        
+      <attribute id="27" name="sections">        
         <position height="0" width="0" x="-74" y="-188"/>      
       </attribute>      
-      <multiplicity id="27" minimum="0" maximum="2147483647">        
+      <multiplicity id="28" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="-74" y="-188"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="14" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="28">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
   <generalization id="29">    
-    <end type="SOURCE" refId="11"/>    
+    <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="8"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

@@ -57,7 +57,7 @@ public abstract class Param {
 
 	public static final int HEROES_GROUP = -1;
 	public static final int ENNEMIES_GROUP = -2;
-//	public static final int ARROWS_GROUP = -3;
+	public static final int PROJECTILE_GROUP = -3;
 
 	public static final float ATTACK_TIME = 2f;
 	public static final float CHARGE_TIME = 2f;

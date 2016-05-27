@@ -85,4 +85,15 @@ public class SpriteSheet {
 		tmp.draw(spriteBatch, alpha);
 		spriteBatch.end();
 	}
+	public void drawRotatedFrameAlpha(int spriteNumber, float angle, float posX, float posY, float offsetX, float offsetY, float opacity) {
+		spriteBatch.begin();
+		Sprite tmp = sprites[spriteNumber];
+		tmp.setOrigin(32, 38);
+		tmp.setRotation((float)Math.toDegrees(angle));
+		float x = posX + (float) (offsetX * Math.cos(angle) + offsetY * Math.abs(Math.sin(angle)));
+		float y = posY + (float) (offsetY * Math.cos(angle) + (offsetX-10) * Math.abs(Math.sin(angle)));
+		tmp.setPosition(x, y);
+		tmp.draw(spriteBatch,opacity);
+		spriteBatch.end();
+	}
 }

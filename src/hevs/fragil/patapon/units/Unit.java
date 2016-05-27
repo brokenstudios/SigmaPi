@@ -17,7 +17,7 @@ public abstract class Unit implements DrawableObject{
 	protected Expression expression = Expression.DEFAULT;
 	protected int collisionGroup;
 	private boolean dead = false;
-	private boolean deadAnimationFinished = false;
+	private float opacity = 1f;
 	private BodyPolygon hitBox;
 	
 	//Drawables
@@ -55,38 +55,21 @@ public abstract class Unit implements DrawableObject{
 		}
 	}
 	public abstract void attack();
-	protected void drawLegs(float stateTime){
+	protected void draw(float stateTime){
 		if(dead){
 			double x,y,angle;
 			angle = hitBox.getBodyAngle();
 			x = hitBox.getBodyWorldCenter().x;
 			y = hitBox.getBodyWorldCenter().y;
-			legs.drawRotatedFrame(1, (float)angle, (float)x, (float)y, -32, -35);
+			legs.drawRotatedFrameAlpha(1, (float)angle, (float)x, (float)y, -32, -35, opacity);
+			body.drawRotatedFrameAlpha(1, (float)angle, (float)x, (float)y, -32, -25, opacity);
+			eye.drawRotatedFrameAlpha(expression.ordinal(), (float)angle, (float)x, (float)y, -32, -13, opacity);
 		}
-		else
+		else {
 			frameIndex = legs.drawKeyFrames(stateTime, getPosition(), Param.FLOOR_DEPTH);
-	}
-	protected void drawBody(float stateTime){
-		if(dead){
-			double x,y,angle;
-			angle = hitBox.getBodyAngle();
-			x = hitBox.getBodyWorldCenter().x;
-			y = hitBox.getBodyWorldCenter().y;
-			body.drawRotatedFrame(1, (float)angle, (float)x, (float)y, -32, -25);
-		}
-		else
 			body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level), getPosition(), 40, 32, 38);
-	}
-	protected void drawEye(){
-		if(dead){
-			double x,y,angle;
-			angle = hitBox.getBodyAngle();
-			x = hitBox.getBodyWorldCenter().x;
-			y = hitBox.getBodyWorldCenter().y;
-			eye.drawRotatedFrame(expression.ordinal(), (float)angle, (float)x, (float)y, -32, -13);
+			eye.drawWalkAnimation(frameIndex, expression.ordinal(), getPosition(), 52, 32, 38);
 		}
-		else
-		eye.drawWalkAnimation(frameIndex, expression.ordinal(), getPosition(), 52, 32, 38);
 	}
 	/**
 	 * This is only to load files in the PortableApplication onInit method
@@ -126,7 +109,8 @@ public abstract class Unit implements DrawableObject{
 		if(getLife() <= 0){
 			dead = true;
 			expression = Expression.DEAD;
-			if(deadAnimationFinished){
+			opacity -= 0.005f;
+			if(opacity <= 0){
 				return true;
 			}
 		}
