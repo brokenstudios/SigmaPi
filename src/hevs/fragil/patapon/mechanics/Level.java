@@ -145,6 +145,9 @@ public class Level extends RenderingScreen {
 		// clear the screen with the decor background
 		g.clear(decor.getBackground());
 		
+		float temp = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());
+		g.moveCamera(temp , Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
+		
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 
 		// press d for debug

@@ -28,8 +28,8 @@ public class Decor {
 		processForest(8, origin, 5, 200f, 5);
 	}
 
-	public float cameraProcess(PlayerCompany pc1){
-		float pos = pc1.getInstance().getHeroes().getPosition();		
+	public float cameraProcess(Company c1){
+		float pos = c1.getPosition();		
 		
 		return pos;
 	}
