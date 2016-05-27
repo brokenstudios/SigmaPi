@@ -5,7 +5,6 @@ import java.util.Vector;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.mechanics.Action;
 import hevs.fragil.patapon.mechanics.Param;
-import hevs.fragil.patapon.physics.Arrow;
 
 public class Company {
 	public String name = "";
@@ -26,13 +25,6 @@ public class Company {
 		moveAbsolute(pos, 0.1);
 		this.name = name;   
 		this.ready = true;
-	}
-	public void setCollisionGroup(int collisionGroup){
-		for (Section s : sections) {
-			for (Unit u : s.units) {
-				u.setCollisionGroup(collisionGroup);
-			}
-		}
 	}
 	public String toString(){
 		String t = "Start of company \n";
@@ -110,34 +102,5 @@ public class Company {
 		for (Section section : sections) {
 			section.draw(g,stateTime);
 		}
-	}
-	public void initRandom(int nb1, int nb2, int nb3) {
-		for(int i = 0 ; i < 3; i++){
-			add(new Section(Integer.toString(i)));
-		}
-		for(int i = 0 ; i < nb1; i++){
-			sections.elementAt(0).add(new Archer());
-		}
-		for(int i = 0 ; i < nb2; i++){
-			sections.elementAt(1).add(new Spearman());
-		}
-		for(int i = 0 ; i < nb3; i++){
-			sections.elementAt(2).add(new Shield());
-		}
-		
-		int initialPos = getWidth()/2 + 800;
-		moveAbsolute(initialPos, 100);
-		
-		//Load the image files
-		Unit.setLegsSprite("data/images/legs64x42.png", 4, 1);
-		for (Section s : sections) {
-			for (Unit u : s.units) {
-				u.setBodySprite("data/images/bodies64x102.png", 5, 5);
-				u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
-			}
-		}
-		Arrow.setImgPath("data/images/fleche.png");
-		
-		setCollisionGroup(Param.ENNEMIES_GROUP);
 	}
 }

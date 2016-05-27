@@ -27,7 +27,7 @@ public class PlayerCompany {
 	 * @return a sample company that contains {@code nb1} archers,
 	 * {@code nb2} swordmans and {@code nb3}shields.
 	 */
-	public void initRandomHeroes(int nb1, int nb2, int nb3){
+	public void initRandomCompany(int nb1, int nb2, int nb3){
 		heroes = new Company("Sigmapis");
 		
 		for(int i = 0 ; i < 3; i++){
