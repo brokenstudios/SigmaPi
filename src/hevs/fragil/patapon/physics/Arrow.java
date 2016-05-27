@@ -79,8 +79,11 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 	@Override
 	public void collision(AbstractPhysicsObject theOtherObject, float energy) {
 		
-		if(theOtherObject instanceof BodyPolygon)
+		if(theOtherObject instanceof BodyPolygon){
 			System.out.println("Vous avez touché qqun !");
+			((BodyPolygon) theOtherObject).applyDamage(energy);
+		}
+			
 		
 		//Create a joint to stick to the other object
 		CurrentLevel.getLevel().createWeldJoint(new StickyInfo(this.getBody(), theOtherObject.getBody(), getSpike()));

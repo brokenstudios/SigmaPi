@@ -1,6 +1,5 @@
 package hevs.fragil.patapon.mechanics;
 
-import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.physics.Arrow;
 import hevs.fragil.patapon.units.Archer;
 import hevs.fragil.patapon.units.Company;
@@ -65,11 +64,6 @@ public class PlayerCompany {
 	public Company getHeroes() {
 		return heroes;
 	}
-
-	public void draw(GdxGraphics g, float stateTime) {
-		heroes.draw(g, stateTime);
-	}
-
 	public static PlayerCompany getInstance() {
 		//TODO create new player company on new game 
 		if (instance == null) {

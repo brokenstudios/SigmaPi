@@ -17,7 +17,7 @@ public abstract class Unit implements DrawableObject{
 	protected Species species = Species.TAPI;
 	protected Expression expression = Expression.DEFAULT;
 	protected int collisionGroup;
-	
+	private boolean dead = false;
 	private BodyPolygon hitBox;
 	
 	//Drawables
@@ -94,5 +94,12 @@ public abstract class Unit implements DrawableObject{
 		collisionGroup = group;
 		hitBox.setCollisionGroup(group);
 	}
-	
+	public void step(){
+		if(hitBox.getDamage() > skills.getLife()){
+			dead = true;
+		}
+	}
+	public boolean isDead(){
+		return dead;
+	}
 }

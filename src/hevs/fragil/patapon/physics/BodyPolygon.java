@@ -8,6 +8,7 @@ import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 	static Vector2 dimensions =  new Vector2(3,80);
 	int collisionGroup;
+	private float endamage;
 	static int nArrows;
 	static Vector2 body[] = {
 			new Vector2(-30, 0),
@@ -50,6 +51,9 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 	}
 	@Override
 	public void applyDamage(float damage) {
-		
+		endamage += damage;
+	}
+	public float getDamage(){
+		return endamage;
 	}
 }
