@@ -28,6 +28,12 @@ public class Decor {
 		processForest(8, origin, 5, 200f, 5);
 	}
 
+	public float cameraProcess(PlayerCompany pc1){
+		float pos = pc1.getInstance().getHeroes().getPosition();		
+		
+		return pos;
+	}
+	
 	public Vector3 cameraProcess(Company c1, Company c2) {
 		// Camera always stick on the floor
 		cameraPos.y = 0;
