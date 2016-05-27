@@ -70,7 +70,7 @@ public class Level extends RenderingScreen {
 		PhysicsWorld.getInstance();
 		CurrentLevel.setLevel(this);
 		
-		decor = new Decor(Param.MAP_WIDTH, Param.WIN_HEIGHT, Param.Type3);
+		decor = new Decor(Param.MAP_WIDTH, Param.WIN_HEIGHT, Param.BACKGROUND);
 		PlayerCompany.getInstance().initRandomCompany(3, 3, 4);
 
 		// Load the sound files

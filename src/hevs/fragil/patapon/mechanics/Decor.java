@@ -25,9 +25,15 @@ public class Decor {
 		this.setBackground(b);
 		// processTree();
 		Point<Float> origin = new Point<Float>(0f, (float) Param.FLOOR_DEPTH);
-		processForest(8, origin, 5, 200f, 5);
+		processForest(5, origin, 5, 200f, 5);
 	}
 
+	public float cameraProcess(PlayerCompany playerCompany){
+		cameraPos.x = playerCompany.getHeroes().getPosition();
+		
+		return cameraPos.x;
+	}
+	
 	public Vector3 cameraProcess(Company c1, Company c2) {
 		// Camera always stick on the floor
 		cameraPos.y = 0;
@@ -71,12 +77,6 @@ public class Decor {
 
 		for (int i = 0; i < density; i++) {
 			x += width/density;
-			if(Math.random() < 0.5f){
-				complexity--;
-			}
-			else{
-				complexity++;
-			}
 			
 			//TODO modifiy space, size, pen randomly
 			

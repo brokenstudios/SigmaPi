@@ -81,7 +81,7 @@ public abstract class Param {
 	public static final Drum[][]	COMBOS = {WALK,ATTACK,DEFEND,MIRACLE,RETREAT,CHARGE};
 	
 	//Colors
-	public static Color BACKGROUND = rgbToFloat(243,100,0);
+	public static Color BACKGROUND = rgbToFloat(201,158,103);
 	private static Color rgbToFloat(int r, int g, int b){
 		Color temp = new Color();
 		temp.r = (float)(r/255.0);
