@@ -162,14 +162,14 @@ public class Arrow extends PhysicsPolygon implements Projectile {
 		double vNorm = Math.sqrt(v.x * v.x + v.y * v.y) * getBodyMass();
 
 		// process lift force relative to the angle and the velocity
-		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 15)) * vNorm / 2 * 60 * dt);
+		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 15)) * vNorm / 3 * 60 * dt);
 
 		// apply air damping
 		applyBodyTorque(lift, true);
 
 		// if this arrow is stuck, it start degrading itself
 		if (stuck)
-			this.life = Math.max(0, life - 0.01f);
+			this.life = Math.max(0, life - 0.005f);
 
 //		if (newCollisionGroup != collisionGroup) {
 //			collisionGroup = newCollisionGroup;

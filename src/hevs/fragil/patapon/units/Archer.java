@@ -29,7 +29,7 @@ public class Archer extends Unit {
 	public void draw(GdxGraphics g){}
 	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition(), Param.FLOOR_DEPTH+30);
-		new Arrow(position, 45, distance, collisionGroup, level);
+		new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, level);
 	}
 	public void draw(GdxGraphics g, float time) {
 		super.drawLegs(time);
