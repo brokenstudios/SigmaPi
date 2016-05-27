@@ -77,12 +77,6 @@ public class Decor {
 
 		for (int i = 0; i < density; i++) {
 			x += width/density;
-			if(Math.random() < 0.5f){
-				complexity--;
-			}
-			else{
-				complexity++;
-			}
 			
 			//TODO modifiy space, size, pen randomly
 			
