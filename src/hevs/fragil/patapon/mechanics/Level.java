@@ -21,6 +21,7 @@ import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.Projectile;
 import hevs.fragil.patapon.physics.StickyInfo;
+import hevs.fragil.patapon.units.Company;
 
 public class Level extends RenderingScreen {
 	private Decor decor;
@@ -29,6 +30,7 @@ public class Level extends RenderingScreen {
 	private Sequence sequence;
 	private SoundSample heNote, sNote, soNote, yesNote;
 	private SoundSample snap, track;
+	private Company ennemies = new Company();
 
 	private boolean debugActive = false;
 	// -2:stop, -1:stopped, 1:playing, 2:activate
@@ -69,7 +71,7 @@ public class Level extends RenderingScreen {
 	public void onInit() {
 		PhysicsWorld.getInstance();
 		CurrentLevel.setLevel(this);
-		
+
 		decor = new Decor(Param.MAP_WIDTH, Param.WIN_HEIGHT, Param.BACKGROUND);
 		PlayerCompany.getInstance().initRandomCompany(3, 3, 4);
 
@@ -169,6 +171,7 @@ public class Level extends RenderingScreen {
 		sequence.draw(g);
 		
 		PlayerCompany.getInstance().draw(g, stateTime);
+		ennemies.draw(g, stateTime);
 
 		stateTime += Gdx.graphics.getDeltaTime();
 	}
