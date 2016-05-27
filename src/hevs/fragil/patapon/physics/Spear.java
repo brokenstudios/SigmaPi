@@ -6,12 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 import ch.hevs.gdx2d.components.bitmaps.BitmapImage;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 
-public class Arrow extends Projectile{
+public class Spear extends Projectile{
 	// for every arrow
 	private static BitmapImage img;
-	private static float[] arrowVertices = { -1, 0, -1, 40, 0, 50, 1, 40, 1, 0 };
+	private static float[] spearVertices = { -1, 0, -1, 90, 0, 100, 1, 90, 1, 0 };
 
-	public Arrow(Vector2 startPos, int startAngle, int distance, int collisionGroup, int damage) {
+	public Spear(Vector2 startPos, int startAngle, int distance, int collisionGroup, int damage) {
 		super(startPos,startAngle,collisionGroup,distance,damage,getArrowVertices(startAngle),"arrow");
 	}
 
@@ -23,7 +23,7 @@ public class Arrow extends Projectile{
 	}
 
 	private static Vector2[] getArrowVertices(int angle) {
-		Polygon poly = new Polygon(arrowVertices);
+		Polygon poly = new Polygon(spearVertices);
 		poly.setOrigin(0, 40);
 		poly.rotate(angle - 90);
 		return verticesToVector2(poly.getTransformedVertices());
@@ -34,13 +34,15 @@ public class Arrow extends Projectile{
 		float angleDegrees = getBodyAngleDeg() + startAngle;
 		double angleRadians = Math.toRadians(angleDegrees);
 		// better penetration depending of the impact angle
-		int distance = 3 + (int) (5 * Math.cos(angleRadians));
-		Vector2 offset = new Vector2((float) Math.cos(angleRadians) * distance,
-				(float) Math.sin(angleRadians) * distance);
+		int distance = (int) (5 * Math.cos(angleRadians));
+		Vector2 offset = new Vector2 (
+				(float) Math.cos(angleRadians) * distance,
+				(float) Math.sin(angleRadians) * distance
+		);
 
 		Vector2 pos = getBodyWorldCenter();
 		pos = pos.add(offset);
-		g.drawAlphaPicture(pos.x, pos.y, angleDegrees, .2f, life, img);
+		g.drawAlphaPicture(pos.x, pos.y, angleDegrees, .4f, life, img);
 	}
 
 	public static void setImgPath(String url) {
@@ -54,7 +56,7 @@ public class Arrow extends Projectile{
 		double vNorm = Math.sqrt(v.x * v.x + v.y * v.y) * getBodyMass();
 
 		// process lift force relative to the angle and the velocity
-		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 15)) * vNorm * 8 * dt);
+		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 15)) * vNorm  * 60 * dt);
 
 		// apply air damping
 		applyBodyTorque(lift, true);

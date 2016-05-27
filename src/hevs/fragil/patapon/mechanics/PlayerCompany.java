@@ -1,6 +1,7 @@
 package hevs.fragil.patapon.mechanics;
 
 import hevs.fragil.patapon.physics.Arrow;
+import hevs.fragil.patapon.physics.Spear;
 import hevs.fragil.patapon.units.Archer;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
@@ -55,6 +56,7 @@ public class PlayerCompany {
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
+		Spear.setImgPath("data/images/fleche.png");
 	}
 
 	public void setAction(Action action) {

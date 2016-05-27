@@ -9,7 +9,7 @@ import ch.hevs.gdx2d.lib.physics.AbstractPhysicsObject;
 import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
 
-public class Projectile extends PhysicsPolygon{
+public abstract class Projectile extends PhysicsPolygon{
 	protected int startAngle;
 	protected boolean stuck = false;
 	protected float life = 1.0f;
@@ -90,21 +90,7 @@ public class Projectile extends PhysicsPolygon{
 
 	public void draw(GdxGraphics g){};
 
-	public void step(float dt) {
-		Vector2 v = getBodyLinearVelocity();
-		float angle = getBodyAngle();
-		double vNorm = Math.sqrt(v.x * v.x + v.y * v.y) * getBodyMass();
-
-		// process lift force relative to the angle and the velocity
-		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 15)) * vNorm / 3 * 60 * dt);
-
-		// apply air damping
-		applyBodyTorque(lift, true);
-
-		// if this arrow is stuck, it start degrading itself
-		if (stuck)
-			this.life = Math.max(0, life - 0.005f);
-	}
+	public abstract void step(float dt);
 
 	public boolean shouldBeDestroyed() {
 		if (life <= 0)

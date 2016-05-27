@@ -92,7 +92,7 @@ public class Level extends RenderingScreen {
 		frame = new Frame();
 		floor = new Floor(decor.getWidth());
 		sequence = new Sequence();
-		sequence.loadSprites("data/images/drums102x102.png");
+		Sequence.loadSprites("data/images/drums102x102.png");
 		ActionTimer.loadFiles();
 		
 		debugRenderer = new DebugRenderer();

@@ -38,7 +38,7 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void attack() {
-		attack(800);
+		attack(1000);
 	}
 	@Override
 	public void draw(GdxGraphics g) {

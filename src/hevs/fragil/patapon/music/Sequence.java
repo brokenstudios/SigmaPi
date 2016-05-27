@@ -22,7 +22,7 @@ public class Sequence implements DrawableObject {
 	private float sinceLastDrum;
 	private float sinceLastRythm;
 	private int feverScore = 0;
-	private SpriteSheet drums;
+	private static SpriteSheet drums;
 	
 
 	public Action add(Drum d, float lastRythm){
@@ -179,7 +179,7 @@ public class Sequence implements DrawableObject {
 	/**
 	 * This is only to load files in the PortableApplication onInit method
 	 */
-	public void loadSprites(String url) {
+	public static void loadSprites(String url) {
 		drums = new SpriteSheet(url, 1, 4, 0.2f);
 	}
 }
