@@ -3,9 +3,10 @@ package hevs.fragil.patapon.units;
 import java.util.Vector;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.Param;
 
-public class Section {
+public class Section implements DrawableObject {
 	public String name = "";
 	int globalLife;
 	int width;
@@ -57,9 +58,10 @@ public class Section {
 		units.remove(u);
 		width -= Param.UNIT_WIDTH;
 	}
-	public void draw(GdxGraphics g, float stateTime) {
+	@Override
+	public void draw(GdxGraphics g) {
 		for (Unit unit : units) {
-			unit.draw(g, stateTime);
+			unit.draw(g);
 		}
 	}
 }

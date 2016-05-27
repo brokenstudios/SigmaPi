@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
+import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.Arrow;
 
@@ -25,18 +26,12 @@ public class Archer extends Unit {
 	public String toString(){
 		return this.getClass().getSimpleName() + super.toString();
 	}
-	@Override
-	public void draw(GdxGraphics g){}
 	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition(), Param.FLOOR_DEPTH+30);
-		new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, level);
+		new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, level+5);
 	}
 	public void draw(GdxGraphics g, float time) {
-		super.drawLegs(time);
-		super.drawBody(time);
 		
-		super.drawEye();
-		drawArms(time);
 	}
 	private void drawArms(float time){
 		
@@ -44,5 +39,13 @@ public class Archer extends Unit {
 	@Override
 	public void attack() {
 		attack(800);
+	}
+	@Override
+	public void draw(GdxGraphics g) {
+		float time = CurrentLevel.getLevel().getStateTime();
+		super.drawLegs(time);
+		super.drawBody(time);
+		super.drawEye();
+		drawArms(time);
 	}
 }

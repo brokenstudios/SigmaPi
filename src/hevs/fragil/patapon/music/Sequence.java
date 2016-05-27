@@ -158,7 +158,7 @@ public class Sequence implements DrawableObject {
 		} else if (delay < Param.PASS) {
 			return 1;
 		} else {
-			System.out.println("Bad rythm ! : " + sinceLastDrum);
+			System.out.println("Bad rythm ! : " + sinceLastRythm);
 			pause = true;
 			clearFever();
 			endSequence();
@@ -171,7 +171,8 @@ public class Sequence implements DrawableObject {
 		int index = 0;
 		for (Drum d : toDraw) {
 			int x = (Param.WIN_WIDTH / 2 - 200) + (index % 4 * 100);
-			drums.drawFrame(d.ordinal(), x, 600);
+			float alpha = drawCountDown / Param.NOTE_REMANENCE;
+			drums.drawFrameAlpha(d.ordinal(), x, 600, alpha);
 			index++;
 		}
 	}

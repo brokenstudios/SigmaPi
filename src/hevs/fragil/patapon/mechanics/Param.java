@@ -56,7 +56,7 @@ public abstract class Param {
 	public static final int RANGE_BASE = 0;
 
 	public static final int HEROES_GROUP = -1;
-	public static final int ENNEMIES_GROUP = 1;
+	public static final int ENNEMIES_GROUP = -2;
 //	public static final int ARROWS_GROUP = -3;
 
 	public static final float ATTACK_TIME = 2f;
@@ -81,7 +81,8 @@ public abstract class Param {
 	public static final Drum[][]	COMBOS = {WALK,ATTACK,DEFEND,MIRACLE,RETREAT,CHARGE};
 	
 	//Colors
-	public static Color BACKGROUND = rgbToFloat(243,100,0);
+	public static Color BACKGROUND = rgbToFloat(222,184,135);
+	
 	private static Color rgbToFloat(int r, int g, int b){
 		Color temp = new Color();
 		temp.r = (float)(r/255.0);

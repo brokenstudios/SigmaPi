@@ -7,8 +7,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-import hevs.fragil.patapon.mechanics.Param;
-
 public class SpriteSheet {
 	Animation animation;
 	Texture sheet;
@@ -31,10 +29,12 @@ public class SpriteSheet {
 	}
 	public void drawFrame(int frameIndex, int posX, int posY){
 		spriteBatch.begin();
-		spriteBatch.draw(sprites[frameIndex], posX, posY);
+		Sprite tmp = sprites[frameIndex];
+		tmp.setPosition(posX - tmp.getWidth()/2, posY);
+		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}
-	public void drawWalkAnimation(int walkIndex, int spriteNumber, int posX, int posY){
+	public void drawWalkAnimation(int walkIndex, int spriteNumber, int posX, int posY, int originX, int originY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
 		float angle = 0f;
@@ -50,19 +50,39 @@ public class SpriteSheet {
 			case 3 : 	angle = 0;
 						break;
 		}
-		tmp.setOrigin(32, 38);
+		tmp.setOrigin(originX, originY);
 		tmp.setRotation(angle);
-		tmp.setPosition(posX, posY);
+		tmp.setPosition(posX - tmp.getWidth()/2, posY);
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}
-	public int drawKeyFrames(float time, int posX){
+	public void drawRotatedFrame(int spriteNumber, float angle, float posX, float posY, float offsetX, float offsetY){
+		spriteBatch.begin();
+		Sprite tmp = sprites[spriteNumber];
+		tmp.setOrigin(32, 38);
+		tmp.setRotation((float)Math.toDegrees(angle));
+		float x = posX + (float) (offsetX * Math.cos(angle) + offsetY * Math.abs(Math.sin(angle)));
+		float y = posY + (float) (offsetY * Math.cos(angle) + offsetX * Math.abs(Math.sin(angle)));
+		tmp.setPosition(x, y);
+		tmp.draw(spriteBatch);
+		spriteBatch.end();
+	}
+	public int drawKeyFrames(float time, int posX, int posY){
 		currentFrame = animation.getKeyFrame(time, true);
 		TextureRegion[] a = animation.getKeyFrames();
 		int index = java.util.Arrays.asList(a).indexOf(currentFrame);
 		spriteBatch.begin();
-		spriteBatch.draw(currentFrame, posX, Param.FLOOR_DEPTH);
+		Sprite tmp = sprites[index];
+		tmp.setPosition(posX - tmp.getWidth()/2, posY);
+		tmp.draw(spriteBatch);
 		spriteBatch.end();
 		return index;
+	}
+	public void drawFrameAlpha(int frameIndex, int posX, int posY, float alpha) {
+		spriteBatch.begin();
+		Sprite tmp = sprites[frameIndex];
+		tmp.setPosition(posX - tmp.getWidth()/2, posY);
+		tmp.draw(spriteBatch, alpha);
+		spriteBatch.end();
 	}
 }

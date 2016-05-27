@@ -2,6 +2,7 @@ package hevs.fragil.patapon.units;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
+import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 
 public class Shield extends Unit {
@@ -18,14 +19,12 @@ public class Shield extends Unit {
 	public String toString(){
 		return this.getClass().getSimpleName() + super.toString();
 	}
-	@Override
-	public void draw(GdxGraphics g) {
-		
-	}
 	public void attack(){
 		
 	}
-	public void draw(GdxGraphics g, float time) {
+	@Override
+	public void draw(GdxGraphics g) {
+		float time = CurrentLevel.getLevel().getStateTime();
 		super.drawLegs(time);
 		super.drawBody(time);
 		super.drawEye();

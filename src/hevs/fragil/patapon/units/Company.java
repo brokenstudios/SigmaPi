@@ -3,11 +3,12 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.Action;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.Arrow;
 
-public class Company {
+public class Company implements DrawableObject {
 	public String name = "";
 	double feverFactor = 0.1;
 	public Vector<Section> sections = new Vector<Section>();
@@ -106,11 +107,6 @@ public class Company {
 	public void remove(Section s){
 		sections.remove(s);
 	}
-	public void draw(GdxGraphics g, float stateTime) {
-		for (Section section : sections) {
-			section.draw(g,stateTime);
-		}
-	}
 	public void initRandom(int nb1, int nb2, int nb3) {
 		for(int i = 0 ; i < 3; i++){
 			add(new Section(Integer.toString(i)));
@@ -129,15 +125,21 @@ public class Company {
 		moveAbsolute(initialPos, 100);
 		
 		//Load the image files
-		Unit.setLegsSprite("data/images/legs64x42.png", 4, 1);
 		for (Section s : sections) {
 			for (Unit u : s.units) {
 				u.setBodySprite("data/images/bodies64x102.png", 5, 5);
 				u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
+				u.setLegsSprite("data/images/legs64x42.png", 4, 1);
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
 		
 		setCollisionGroup(Param.ENNEMIES_GROUP);
+	}
+	@Override
+	public void draw(GdxGraphics g) {
+		for (Section section : sections) {
+			section.draw(g);
+		}
 	}
 }

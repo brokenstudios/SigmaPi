@@ -1,7 +1,6 @@
 package hevs.fragil.patapon.units;
 import com.badlogic.gdx.math.Vector2;
 
-import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.mechanics.Param;
@@ -18,17 +17,18 @@ public abstract class Unit implements DrawableObject{
 	protected Expression expression = Expression.DEFAULT;
 	protected int collisionGroup;
 	private boolean dead = false;
+	private boolean deadAnimationFinished = false;
 	private BodyPolygon hitBox;
 	
 	//Drawables
-	private static SpriteSheet legs;
+	private SpriteSheet legs;
 	private int frameIndex;
 	private SpriteSheet body, eye;
 	
 	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, float cooldown, int collisionGroup){
 		this.species = species;
 		this.level = lvl;
-		this.skills = new Skills(life+level*5, attack, range, (float)(0.5f+Math.random()/2.0));
+		this.skills = new Skills(life+lvl*5, attack, range, (float)(1f+Math.random()/2.0));
 		this.collisionGroup = collisionGroup;
 		nUnits++;
 	}	
@@ -36,7 +36,7 @@ public abstract class Unit implements DrawableObject{
 		if(hitBox != null)
 			hitBox.moveToLinear(newPos, totalTime);
 		else
-			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH), collisionGroup);
+			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH), collisionGroup, skills.getLife());
 	}
 	protected int getPosition(){
 		return (int)hitBox.getBodyWorldCenter().x;
@@ -55,21 +55,43 @@ public abstract class Unit implements DrawableObject{
 		}
 	}
 	public abstract void attack();
-	public abstract void draw(GdxGraphics g, float time);
 	protected void drawLegs(float stateTime){
-		frameIndex = legs.drawKeyFrames(stateTime, getPosition()-32);
+		if(dead){
+			double x,y,angle;
+			angle = hitBox.getBodyAngle();
+			x = hitBox.getBodyWorldCenter().x;
+			y = hitBox.getBodyWorldCenter().y;
+			legs.drawRotatedFrame(1, (float)angle, (float)x, (float)y, 0, -35);
+		}
+		else
+			frameIndex = legs.drawKeyFrames(stateTime, getPosition(), Param.FLOOR_DEPTH);
 	}
 	protected void drawBody(float stateTime){
-		body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level), getPosition()-32, 40);
+		if(dead){
+			double x,y,angle;
+			angle = hitBox.getBodyAngle();
+			x = hitBox.getBodyWorldCenter().x;
+			y = hitBox.getBodyWorldCenter().y;
+			body.drawRotatedFrame(1, (float)angle, (float)x, (float)y, -32, -25);
+		}
+		else
+			body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level), getPosition(), 40, 32, 38);
 	}
 	protected void drawEye(){
-		//TODO get unit state to change the eye expression
-		eye.drawWalkAnimation(frameIndex, 1, getPosition()-32, 52);
+		if(dead){
+			double x,y,angle;
+			angle = hitBox.getBodyAngle();
+			x = hitBox.getBodyWorldCenter().x;
+			y = hitBox.getBodyWorldCenter().y;
+			eye.drawRotatedFrame(expression.ordinal(), (float)angle, (float)x, (float)y, -32, -13);
+		}
+		else
+		eye.drawWalkAnimation(frameIndex, expression.ordinal(), getPosition(), 52, 32, 38);
 	}
 	/**
 	 * This is only to load files in the PortableApplication onInit method
 	 */
-	public static void setLegsSprite(String url, int cols, int rows){
+	public void setLegsSprite(String url, int cols, int rows){
 		legs = new SpriteSheet(url, cols , rows, 0.2f);
 	}
 	/**
@@ -94,12 +116,23 @@ public abstract class Unit implements DrawableObject{
 		collisionGroup = group;
 		hitBox.setCollisionGroup(group);
 	}
-	public void step(){
-		if(hitBox.getDamage() > skills.getLife()){
-			dead = true;
-		}
+	public float getLife(){
+		return hitBox.getLife();
+	}
+	public Skills getSkills(){
+		return skills;
 	}
 	public boolean isDead(){
-		return dead;
+		if(getLife() <= 0){
+			dead = true;
+			expression = Expression.DEAD;
+			if(deadAnimationFinished){
+				return true;
+			}
+		}
+		return false;
+	}
+	public void destroyBox() {
+		hitBox.destroy();
 	}
 }

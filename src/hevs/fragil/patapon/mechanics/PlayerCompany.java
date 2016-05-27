@@ -47,11 +47,11 @@ public class PlayerCompany {
 		heroes.moveAbsolute(initialPos, 100);
 		
 		//Load the image files
-		Unit.setLegsSprite("data/images/legs64x42.png", 4, 1);
 		for (Section s : heroes.sections) {
 			for (Unit u : s.units) {
 				u.setBodySprite("data/images/bodies64x102.png", 5, 5);
 				u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
+				u.setLegsSprite("data/images/legs64x42.png", 4, 1);
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");

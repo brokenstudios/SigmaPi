@@ -9,6 +9,7 @@ public class Skills {
 		this.setRange(range);
 		this.setCooldown(cooldown);
 		this.setRange(range);
+		this.setLife(life);
 	}
 	public int getRange() {
 		return range;

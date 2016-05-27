@@ -8,7 +8,7 @@ import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
 public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 	static Vector2 dimensions =  new Vector2(3,80);
 	int collisionGroup;
-	private float endamage;
+	private float life;
 	static int nArrows;
 	static Vector2 body[] = {
 			new Vector2(-30, 0),
@@ -18,9 +18,10 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 			new Vector2(30, 0)
 	};
 
-	public BodyPolygon(Vector2 position, int collisionGroup) {
+	public BodyPolygon(Vector2 position, int collisionGroup, int life) {
 		//Ca c'est vraiment super !
-		super("arrow"+nArrows, position, body,  10f, 1f, 1f, true);
+		super("arrow"+nArrows, position, body,  1000f, 0f, 1f, true);
+		this.life = life;
 		getBody().setBullet(true);
 		this.collisionGroup = collisionGroup;
 		setCollisionGroup(collisionGroup);
@@ -50,10 +51,22 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 		return 0;
 	}
 	@Override
-	public void applyDamage(float damage) {
-		endamage += damage;
+	/**
+	 * Return true if fatal shock
+	 */
+	public boolean applyDamage(float damage) {
+		if(life > 0){
+			life -= damage;
+			System.out.println(damage + " applied, life : " + life);
+			if(life <= 0){
+				return true;
+			}
+			else return false;
+		}
+		else return false;
+		
 	}
-	public float getDamage(){
-		return endamage;
+	public float getLife(){
+		return life;
 	}
 }

@@ -22,6 +22,8 @@ import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.Projectile;
 import hevs.fragil.patapon.physics.StickyInfo;
 import hevs.fragil.patapon.units.Company;
+import hevs.fragil.patapon.units.Section;
+import hevs.fragil.patapon.units.Unit;
 
 public class Level extends RenderingScreen {
 	private Decor decor;
@@ -42,6 +44,7 @@ public class Level extends RenderingScreen {
 	private Vector<Projectile> flyingOjects = new Vector<Projectile>();
 	private Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
 	private Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
+	private Vector<Unit> toKill = new Vector<Unit>();
 
 	private float stateTime;
 	public float sinceLastRythm;
@@ -72,7 +75,7 @@ public class Level extends RenderingScreen {
 		PhysicsWorld.getInstance();
 		CurrentLevel.setLevel(this);
 		
-		decor = new Decor(Param.MAP_WIDTH, Param.WIN_HEIGHT, Param.Type3);
+		decor = new Decor(Param.MAP_WIDTH, Param.WIN_HEIGHT, Param.BACKGROUND);
 		PlayerCompany.getInstance().initRandomHeroes(3, 3, 4);
 	
 		ennemies.initRandom(2,1,1);
@@ -144,25 +147,37 @@ public class Level extends RenderingScreen {
 
 	public void onGraphicRender(GdxGraphics g) {
 		// clear the screen with the decor background
+		if (debugActive){
+			g.clear();
+			debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
+			PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
+			// stick flying objects
+			createJoints();
+			
+			// update objects
+			stepProjectiles(g);
+			rythm();
+			action();
+			sequence.step();
+			killUnits();
+		}
+		else{
 		g.clear(decor.getBackground());
 		
 		float temp = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());
 		g.moveCamera(temp , Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
 		
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
-
-		// press d for debug
-		if (debugActive)
-			debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
-
+		
 		// stick flying objects
 		createJoints();
 		
-		// move objects
+		// update objects
 		stepProjectiles(g);
 		rythm();
 		action();
 		sequence.step();
+		killUnits();
 		
 		//display help
 		g.drawStringCentered(800, "Fever : " + sequence.getFever());
@@ -175,11 +190,52 @@ public class Level extends RenderingScreen {
 		decor.draw(g);
 		frame.draw(g);
 		sequence.draw(g);
-		
-		PlayerCompany.getInstance().getHeroes().draw(g, stateTime);
-		ennemies.draw(g, stateTime);
-
+		PlayerCompany.getInstance().getHeroes().draw(g);
+		ennemies.draw(g);
+		}
 		stateTime += Gdx.graphics.getDeltaTime();
+		
+	}
+
+	private void killUnits() {
+		//remove heroes
+		Company c = PlayerCompany.getInstance().getHeroes();
+		for (Section s : c.sections) {
+			for (Unit u : s.units) {
+				if(u.isDead()){
+					toKill.add(u);
+				}
+			}
+		}
+		for (Unit u : toKill) {
+			u.destroyBox();
+			for (Section s : c.sections) {
+				if(s.units.contains(u)){
+					s.units.remove(u);
+				}
+			}
+		}
+		toKill.removeAllElements();
+		
+		//remove ennemies
+		c = ennemies;
+		for (Section s : c.sections) {
+			for (Unit u : s.units) {
+				if(u.isDead()){
+					toKill.add(u);
+				}
+			}
+		}
+		for (Unit u : toKill) {
+			u.destroyBox();
+			for (Section s : c.sections) {
+				if(s.units.contains(u)){
+					s.units.remove(u);
+				}
+			}
+		}
+		toKill.removeAllElements();
+		
 	}
 
 	public void createWeldJoint(StickyInfo si) {
@@ -256,5 +312,9 @@ public class Level extends RenderingScreen {
 				iter.remove();
 			}
 		}
+	}
+
+	public float getStateTime() {
+		return stateTime;
 	}
 }

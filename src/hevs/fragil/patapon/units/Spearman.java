@@ -2,6 +2,7 @@ package hevs.fragil.patapon.units;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
+import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 
 public class Spearman extends Unit {
@@ -20,16 +21,14 @@ public class Spearman extends Unit {
 	}
 	@Override
 	public void draw(GdxGraphics g) {
-		
-	}
-	public void attack(){
-		
-	}
-	public void draw(GdxGraphics g, float time) {
+		float time = CurrentLevel.getLevel().getStateTime();
 		super.drawLegs(time);
 		super.drawBody(time);
 		super.drawEye();
 		drawArms(time);
+	}
+	public void attack(){
+		
 	}
 	private void drawArms(float time){
 //		arms.drawKeyFrames(time, super.position);

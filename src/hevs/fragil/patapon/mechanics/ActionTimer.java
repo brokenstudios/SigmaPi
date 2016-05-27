@@ -26,7 +26,7 @@ public abstract class ActionTimer{
 		boolean finished = false;
 		if(a != null){
 			if(playing == false){
-				lalala.play();
+//				lalala.play();
 				playing = true;
 			}
 			switch(a){
