@@ -15,7 +15,7 @@ public class Decor {
 	private int width;
 	private int height;
 	private Color background;
-	private Vector3 cameraPos;
+	private Vector3 camera;
 	// Contain the objects to draw (trees, etc..)
 	private Vector<DrawableObject> toDraw = new Vector<DrawableObject>();
 
@@ -23,20 +23,21 @@ public class Decor {
 	public Decor(int w, int h, Color b) {
 		this.width = w;
 		this.setBackground(b);
-		// processTree();
 		Point<Float> origin = new Point<Float>(0f, (float) Param.FLOOR_DEPTH);
 		processForest(8, origin, 5, 200f, 5);
 	}
 
 	/**
-	 * The camera follow the units
+	 * The camera follow the given company
 	 * @param c1
 	 * @return camera x position
 	 */
-	public float cameraProcess(Company c1){
-		float pos = c1.getPosition();		
+	public Vector3 cameraProcess(Company c1){
+		camera.x = c1.getPosition();
+		camera.y = 0;
+		camera.z = 0;
 		
-		return pos;
+		return camera;
 	}
 	
 	/**
@@ -48,39 +49,35 @@ public class Decor {
 	 */
 	public Vector3 cameraProcess(Company c1, Company c2) {
 		// Camera always stick on the floor
-		cameraPos.y = 0;
+		camera.y = 0;
 
-		// Get the companies positions
 		float x1 = c1.getPosition();
 		float x2 = c2.getPosition();
 
-		// TODO verify if both companies are close enough to be shown
-		if (Math.abs(x2 - x1) < Param.WIN_WIDTH) {
-			// TODO caracteriser le zoom mathematiquement, c'est a dire f(w,h)
-		}
-
-		if (x1 >= 0 && x1 < Param.WIN_WIDTH && x1 >= 0 && x1 < Param.WIN_WIDTH) {
-			if (x1 < x2) {
-				cameraPos.x = x2 - x1 + Param.CAMERAOFFSET;
-			} else {
-				cameraPos.x = x1 - x2 + Param.CAMERAOFFSET;
+		// Here both companies are in window
+		if (Math.abs(x2 - x1) < Param.CAM_WIDTH) {
+			camera.x = x1 + Param.CAMERAOFFSET;
+			camera.z = 0;
+		
+		// Will reduce zoom until both companies are visible
+		} else if(Math.abs(x2 - x1) < Param.MAP_HEIGHT/Param.CAM_RATIO){
+			for(int i = 0; i > -15; i--){
+				camera.z = i;
+				// TODO ask mui how camera zoom is linked with width/height, yet not found on the InternetS
 			}
+			
 		} else {
 			// Input invalid!
-			cameraPos.x = Param.CAMERAOFFSET;
-			cameraPos.z = 0;
+			camera.x = Param.CAMERAOFFSET;
+			camera.z = 0;
+			System.out.println("Camera cannot reach this position!");
 		}
-
-		// TODO process camera position depending of objects position AND POV
-		// TODO ensure that zoom is in limits (dynamic, process with height to
-		// not display more than the map (or with the width if width<height)
-
-		return cameraPos;
+		
+		return camera;
 	}
 
-	public void processTree() {
-		Point<Float> pos = new Point<Float>(500f, (float) Param.FLOOR_DEPTH);
-		toDraw.addElement(new Tree(pos, 3, 200f, 5));
+	public void processTree(Point<Float> position) {
+		toDraw.addElement(new Tree(position, 3, 200f, 5));
 	}
 
 	public void processForest(int density, Point<Float> origin, int complexity, float size, int penWidth) {

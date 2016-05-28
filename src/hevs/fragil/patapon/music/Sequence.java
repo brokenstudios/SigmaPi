@@ -170,7 +170,7 @@ public class Sequence implements DrawableObject {
 		//draw elements
 		int index = 0;
 		for (Drum d : toDraw) {
-			int x = (Param.WIN_WIDTH / 2 - 200) + (index % 4 * 100);
+			int x = (Param.CAM_WIDTH / 2 - 200) + (index % 4 * 100);
 			float alpha = drawCountDown / Param.NOTE_REMANENCE;
 			drums.drawFrameAlpha(d.ordinal(), x, 600, alpha);
 			index++;

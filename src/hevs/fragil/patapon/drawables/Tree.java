@@ -199,7 +199,7 @@ public class Tree implements DrawableObject {
 		float camPosX = g.getCamera().position.x;
 		
 		//Check if the trees are on screen
-		if(location.x < camPosX + Param.WIN_WIDTH/2 && location.x > camPosX - Param.WIN_WIDTH/2){
+		if(location.x < camPosX + Param.CAM_WIDTH/2 && location.x > camPosX - Param.CAM_WIDTH/2){
 			if (t != null) {
 				// for oscillation
 				time += 4;
@@ -209,7 +209,7 @@ public class Tree implements DrawableObject {
 				r.setSeed(seed);
 				drawHexaTree(complexity, size, width);
 			} else
-				t = new Turtle(g, Param.WIN_WIDTH, Param.WIN_HEIGHT);
+				t = new Turtle(g, Param.CAM_WIDTH, Param.CAM_HEIGHT);
 	
 		}
 	}

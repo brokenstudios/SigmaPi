@@ -20,8 +20,9 @@ public abstract class Param {
 	
 	//Style
 	//Default values of game window (size of menu?)
-	public static final int WIN_HEIGHT = 900;
-	public static final int WIN_WIDTH = 1500;
+	public static final int CAM_HEIGHT = 900;
+	public static final int CAM_WIDTH = 1500;
+	public static final float CAM_RATIO = CAM_HEIGHT/CAM_WIDTH;
 	//Default values of maps dimensions (!= game window)
 	public static final int MAP_HEIGHT = 1800;
 	public static final int MAP_WIDTH = 3000;

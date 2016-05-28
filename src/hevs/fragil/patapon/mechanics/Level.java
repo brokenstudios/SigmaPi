@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
+import com.badlogic.gdx.math.Vector3;
 
 import ch.hevs.gdx2d.components.audio.SoundSample;
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
@@ -48,6 +49,8 @@ public class Level extends RenderingScreen {
 
 	private float stateTime;
 	public float sinceLastRythm;
+	
+	private Vector3 camera;
 
 	// A world with gravity pointing down. Must be called!
 	World world = PhysicsWorld.getInstance();
@@ -75,7 +78,7 @@ public class Level extends RenderingScreen {
 		PhysicsWorld.getInstance();
 		CurrentLevel.setLevel(this);
 		
-		decor = new Decor(Param.MAP_WIDTH, Param.WIN_HEIGHT, Param.BACKGROUND);
+		decor = new Decor(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
 		PlayerCompany.getInstance().initRandomHeroes(3, 3, 4);
 	
 		ennemies.initRandom(2,1,1);
@@ -164,8 +167,9 @@ public class Level extends RenderingScreen {
 		else{
 		g.clear(decor.getBackground());
 		
-		float temp = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());
-		g.moveCamera(temp , Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
+		// Move camera inside map limits
+		camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());
+		g.moveCamera(camera.x , Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
 		
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 		

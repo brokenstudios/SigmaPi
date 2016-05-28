@@ -48,7 +48,7 @@ public class GameManager extends PortableApplication {
 	}
 
 	public GameManager() {
-		super(Param.WIN_WIDTH, Param.WIN_HEIGHT);
+		super(Param.CAM_WIDTH, Param.CAM_HEIGHT);
 	}
 
 }
