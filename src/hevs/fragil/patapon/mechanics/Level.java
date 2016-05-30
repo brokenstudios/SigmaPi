@@ -285,7 +285,9 @@ public class Level extends RenderingScreen {
 	private void action() {
 		ActionTimer.run(PlayerCompany.getInstance().getHeroes(), sequence.getFever());
 	}
-
+	public Company getEnnemies(){
+		return ennemies;
+	}
 	private void createJoints() {
 		while (toJoin.size() > 0) {
 			// get last element and delete it

@@ -36,8 +36,10 @@ public abstract class Unit implements DrawableObject{
 	public void setPosition(int newPos, double totalTime){
 		if(hitBox != null)
 			hitBox.moveToLinear(newPos, totalTime);
-		else
+		else{
 			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH), collisionGroup, skills.getLife());
+			hitBox.getBody().setFixedRotation(true);
+		}
 	}
 	protected int getPosition(){
 		return (int)hitBox.getBodyWorldCenter().x;
@@ -137,4 +139,9 @@ public abstract class Unit implements DrawableObject{
 	}
 	
 	public abstract void attack();
+	public void applyImpulse(int intensity) {
+		Vector2 pos = hitBox.getBodyPosition();
+		Vector2 force = new Vector2(intensity, 0);
+		hitBox.applyBodyLinearImpulse(force , pos, true);
+	}
 }

@@ -12,6 +12,7 @@ public class Skills {
 		this.setRange(range);
 		this.setLife(life);
 		this.setDefense(defense);
+		this.setAttack(attack);
 	}
 	public int getRange() {
 		return range;
