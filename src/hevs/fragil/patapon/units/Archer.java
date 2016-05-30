@@ -20,7 +20,7 @@ public class Archer extends Unit {
 		this((int)(4*Math.random()),Species.random(), Param.HEROES_GROUP);
 	}
 	public Archer(int lvl, Species species, int collisionGroup){
-		super(lvl, species, 10, 10, 10, 100, 50, .5f, collisionGroup);
+		super(lvl, species, 10, 10, 10, 100, 1000, .5f, collisionGroup);
 		nArchers++;
 	}
 	public String toString(){
@@ -38,7 +38,7 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void attack() {
-		attack(1000);
+		attack(skills.getRange());
 	}
 	@Override
 	public void draw(GdxGraphics g) {

@@ -43,7 +43,6 @@ public class Shield extends Unit {
 			u.receive(skills.getAttack());
 			u.applyImpulse(4000);
 		}
-		System.out.println("attack "+ skills.getAttack()+ " applied to : " + getUnitsInRange().size() + " units");
 	}
 	private Vector<Unit> getUnitsInRange(){
 		Vector<Unit> unitsInRange = new Vector<Unit>();
