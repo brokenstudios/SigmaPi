@@ -70,7 +70,7 @@ public abstract class Projectile extends PhysicsPolygon{
 				boolean fatal = ((BodyPolygon)theOtherObject).applyDamage(damage);
 				if(fatal){
 					setCollisionGroup(((BodyPolygon) theOtherObject).getCollisionGroup());
-					theOtherObject.applyBodyAngularImpulse(-1300, true);
+					((BodyPolygon) theOtherObject).kill();
 				}
 			}
 		}
