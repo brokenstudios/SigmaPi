@@ -134,7 +134,7 @@ public class Sequence implements DrawableObject {
 		if(!pause){
 			
 			if((sequenceInProgress && sinceLastDrum > Param.MUSIC_BAR + Param.PASS)
-					|| (!sequenceInProgress && sinceLastDrum > 4*Param.MUSIC_BAR + Param.PASS)){
+					|| (!sequenceInProgress && sinceLastDrum > 5*Param.MUSIC_BAR + Param.PASS)){
 				
 				System.out.println("too long ! : " + sinceLastDrum);
 				pause = true;
