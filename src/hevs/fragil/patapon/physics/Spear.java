@@ -56,7 +56,7 @@ public class Spear extends Projectile{
 		double vNorm = Math.sqrt(v.x * v.x + v.y * v.y) * getBodyMass();
 
 		// process lift force relative to the angle and the velocity
-		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 15)) * vNorm  * 60 * dt);
+		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 20)) * vNorm  * 60 * dt);
 
 		// apply air damping
 		applyBodyTorque(lift, true);
