@@ -1,9 +1,12 @@
 package hevs.fragil.patapon.units;
 
+import java.util.Vector;
+
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
+import hevs.fragil.patapon.mechanics.PlayerCompany;
 
 public class Shield extends Unit {
 	static double modLife = +1.0;
@@ -19,8 +22,8 @@ public class Shield extends Unit {
 	public String toString(){
 		return this.getClass().getSimpleName() + super.toString();
 	}
-	public void attack(){
-		
+	private void drawArms(float time){
+//		arms.drawKeyFrames(time, super.position);
 	}
 	@Override
 	public void draw(GdxGraphics g) {
@@ -28,7 +31,9 @@ public class Shield extends Unit {
 		super.draw(time);
 		drawArms(time);
 	}
-	private void drawArms(float time){
-//		arms.drawKeyFrames(time, super.position);
+	@Override
+	public void attack(){
+		//TODO appliquer les dégats dans la zone correspondante à skills
+		//créer un objet "impact"
 	}
 }

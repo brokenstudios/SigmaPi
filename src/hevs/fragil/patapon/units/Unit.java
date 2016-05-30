@@ -17,6 +17,7 @@ public abstract class Unit implements DrawableObject{
 	protected Expression expression = Expression.DEFAULT;
 	protected int collisionGroup;
 	private boolean dead = false;
+	private boolean defend = false;
 	private float opacity = 1f;
 	private BodyPolygon hitBox;
 	
@@ -28,7 +29,7 @@ public abstract class Unit implements DrawableObject{
 	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, float cooldown, int collisionGroup){
 		this.species = species;
 		this.level = lvl;
-		this.skills = new Skills(life+lvl*5, attack, range, (float)(1f+Math.random()/2.0));
+		this.skills = new Skills(life+lvl*5, attack, range, defense, (float)(1f+Math.random()/2.0));
 		this.collisionGroup = collisionGroup;
 		nUnits++;
 	}	
@@ -54,7 +55,20 @@ public abstract class Unit implements DrawableObject{
 			timeCounter = 0f;
 		}
 	}
-	public abstract void attack();
+	public boolean isDefending(){
+		return defend;
+	}
+	public void setDefending(boolean defend){
+		//TODO disable it after the defend routine
+		this.defend = defend;
+	}
+	public void receive(float damage){
+		if(defend){
+			damage -= skills.getDefense();
+		}
+		if(damage > 0)
+			this.hitBox.applyDamage(damage);
+	}
 	protected void draw(float stateTime){
 		if(dead){
 			double x,y,angle;
@@ -71,6 +85,7 @@ public abstract class Unit implements DrawableObject{
 			eye.drawWalkAnimation(frameIndex, expression.ordinal(), getPosition(), 52, 32, 38);
 		}
 	}
+	
 	/**
 	 * This is only to load files in the PortableApplication onInit method
 	 */
@@ -89,6 +104,7 @@ public abstract class Unit implements DrawableObject{
 	public void setEyeSprite(String url, int cols, int rows) {
 		eye = new SpriteSheet(url, cols , rows, 0.2f);		
 	}
+	
 	public void setDelay(int delay) {
 		skills.setCooldown(delay);
 	}
@@ -119,4 +135,6 @@ public abstract class Unit implements DrawableObject{
 	public void destroyBox() {
 		hitBox.destroy();
 	}
+	
+	public abstract void attack();
 }

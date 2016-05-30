@@ -15,7 +15,7 @@ public class Decor {
 	private int width;
 	private int height;
 	private Color background;
-	private Vector3 camera;
+	private Vector3 camera = new Vector3();
 	// Contain the objects to draw (trees, etc..)
 	private Vector<DrawableObject> toDraw = new Vector<DrawableObject>();
 

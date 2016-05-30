@@ -3,13 +3,15 @@ public class Skills {
 	private int life;
 	private int attack;
 	private int range;
+	private int defense;
 	private float cooldown;
 	
-	Skills(int life, int attack, int range, float cooldown){
+	Skills(int life, int attack, int range, int defense, float cooldown){
 		this.setRange(range);
 		this.setCooldown(cooldown);
 		this.setRange(range);
 		this.setLife(life);
+		this.setDefense(defense);
 	}
 	public int getRange() {
 		return range;
@@ -35,5 +37,10 @@ public class Skills {
 	public void setAttack(int attack) {
 		this.attack = attack;
 	}
-
+	public void setDefense(int defense){
+		this.defense = defense;
+	}
+	public int getDefense() {
+		return defense;
+	}
 }
