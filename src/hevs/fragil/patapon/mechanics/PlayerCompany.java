@@ -14,7 +14,7 @@ import hevs.fragil.patapon.units.Unit;
  * that is stored in a single file
  */
 public class PlayerCompany {
-	//TODO set all game variables
+	//TODO get saved company if exist
 	private Company heroes ;
 	private static PlayerCompany instance = null;
 	

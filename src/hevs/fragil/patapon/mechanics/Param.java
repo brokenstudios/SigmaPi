@@ -5,30 +5,31 @@ import com.badlogic.gdx.graphics.Color;
 import hevs.fragil.patapon.music.Drum;
 
 
-
-public abstract class Param {
-	//Game parameters only
-	//TODO all of customizable elements should be here !
-	
+/**
+ * Game parameters class for easy modifying and access
+ * This class should contain all customizable parameters
+ */
+public abstract class Param {	
 	//Units related variables
 	public static final int LIFE_BASE = 10;
 	
-	//TODO These should be gotten from sprite width **********
+	//TODO These should be gotten from sprite width
 	public static final int UNIT_WIDTH = 48;
 	public static final int SECTION_KEEPOUT = 64;
 	//********************************************************
 	
-	//Style
 	//Default values of game window (size of menu?)
 	public static final int CAM_HEIGHT = 900;
 	public static final int CAM_WIDTH = 1500;
 	public static final float CAM_RATIO = CAM_HEIGHT/CAM_WIDTH;
+	
 	//Default values of maps dimensions (!= game window)
 	public static final int MAP_HEIGHT = 1800;
 	public static final int MAP_WIDTH = 3000;
 	public static final int CAMERAOFFSET = 30;
 	public static final int FLOOR_DEPTH = 30;
 	public static final int FRAME_DEGRADE_STEPS = 10;
+	
 	//Break the color in case of emergency #SoColorful
 	public static final Color Type1 = rgbToFloat(243, 146, 0);
 	public static final Color Type2 = rgbToFloat(227, 6, 19);

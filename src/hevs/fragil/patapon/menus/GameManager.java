@@ -32,7 +32,7 @@ public class GameManager extends PortableApplication {
 			screenManager.sliceTransitionToNext();
 		
 		//call keydown on the current screen
-		//TODO wait until animation finished
+		//TODO wait until screen transition finished
 		else
 			screenManager.getActiveScreen().onKeyDown(keycode);
 	}
