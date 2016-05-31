@@ -199,7 +199,7 @@ public class Tree implements DrawableObject {
 		float camPosX = g.getCamera().position.x;
 		
 		//Check if the trees are on screen
-		if(location.x < camPosX + Param.CAM_WIDTH/2 && location.x > camPosX - Param.CAM_WIDTH/2){
+		if(location.x < camPosX + Param.CAM_WIDTH && location.x > camPosX - Param.CAM_WIDTH){
 			if (t != null) {
 				// for oscillation
 				time += 4;
