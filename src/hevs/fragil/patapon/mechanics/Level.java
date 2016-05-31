@@ -142,6 +142,11 @@ public class Level extends RenderingScreen {
 				break;
 			}
 		}
+		// Display camera and company informations (only for debug)
+		if(keycode == Keys.C){
+			System.out.println("Camera pos = " + camera.x);
+			System.out.println("Company pos = " + PlayerCompany.getInstance().getHeroes().getPosition());
+		}
 		if(keycode == Keys.ESCAPE){
 			dispose();
 			System.exit(0);
