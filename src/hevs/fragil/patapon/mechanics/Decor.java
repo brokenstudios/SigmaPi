@@ -16,13 +16,18 @@ public class Decor {
 	private int height;
 	private Color background;
 	private Vector3 camera = new Vector3();
-	// Contain the objects to draw (trees, etc..)
 	private Vector<DrawableObject> toDraw = new Vector<DrawableObject>();
 
-	// Dynamic floor width
+	/**
+	 * Decor constructor
+	 * @param w	define the map width
+	 * @param h define the map height
+	 * @param b define the map background color
+	 */
 	public Decor(int w, int h, Color b) {
 		this.width = w;
 		this.setBackground(b);
+		// Calculate a forest
 		Point<Float> origin = new Point<Float>(0f, (float) Param.FLOOR_DEPTH);
 		processForest(8, origin, 5, 200f, 5);
 	}
@@ -61,9 +66,8 @@ public class Decor {
 		
 		// Will reduce zoom until both companies are visible
 		} else if(Math.abs(x2 - x1) < Param.MAP_HEIGHT/Param.CAM_RATIO){
-			for(int i = 0; i > -15; i--){
-				camera.z = i;
-				// TODO ask mui how camera zoom is linked with width/height, yet not found on the InternetS
+			while(Math.abs(x2 - x1) > Param.CAM_WIDTH){
+				camera.z -= 0.1;
 			}
 			
 		} else {
@@ -76,10 +80,22 @@ public class Decor {
 		return camera;
 	}
 
+	/**
+	 * Process a simple tree at given position
+	 * @param position
+	 */
 	public void processTree(Point<Float> position) {
 		toDraw.addElement(new Tree(position, 3, 200f, 5));
 	}
 
+	/**
+	 * Process a forest with following median parameters
+	 * @param density		give the forest density
+	 * @param origin		give the first tree position
+	 * @param complexity	give the trees complexity
+	 * @param size			give the trees size
+	 * @param penWidth		give the pen width, so the tree basic width
+	 */
 	public void processForest(int density, Point<Float> origin, int complexity, float size, int penWidth) {
 		float x = origin.x, y = origin.y;
 
@@ -92,6 +108,7 @@ public class Decor {
 		}
 	}
 
+	/* Here are all the getters and setters */
 	public int getWidth() {
 		return width;
 	}
