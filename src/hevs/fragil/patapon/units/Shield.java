@@ -5,7 +5,6 @@ import java.util.Vector;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
-import hevs.fragil.patapon.mechanics.Param;
 
 public class Shield extends Unit {
 	static double modLife = +1.0;
@@ -13,10 +12,10 @@ public class Shield extends Unit {
 	static SpriteSheet arms;
 	
 	public Shield(){
-		this(1,Species.random(), Param.HEROES_GROUP);
+		this(1,Species.random(), false);
 	}
-	public Shield(int lvl, Species species, int collisionGroup){
-		super(lvl, species, 10, 10, 10, 100, 50, 500, collisionGroup);
+	public Shield(int lvl, Species species, boolean isEnnemi){
+		super(lvl, species, 10, 10, 10, 100, 50, 500, isEnnemi);
 	}
 	public String toString(){
 		return this.getClass().getSimpleName() + super.toString();
@@ -35,11 +34,9 @@ public class Shield extends Unit {
 		for (Unit u : getUnitsInRange()) {
 			if(u.isFatal(skills.getAttack())){
 				//this will be fatal !
-				System.out.println("on le pousse pas");
 				u.receive(skills.getAttack());
 			}
 			else{
-				System.out.println("on le pousse !");
 				u.receive(skills.getAttack());
 				u.applyImpulse(4000);
 			}

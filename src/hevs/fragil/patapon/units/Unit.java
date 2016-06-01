@@ -18,6 +18,7 @@ public abstract class Unit implements DrawableObject{
 	protected int collisionGroup;
 	private boolean enableDeadAnimation = false;
 	private boolean defend = false;
+	private boolean isEnnemi;
 	private float opacity = 1f;
 	private BodyPolygon hitBox;
 	
@@ -26,11 +27,15 @@ public abstract class Unit implements DrawableObject{
 	private int frameIndex;
 	private SpriteSheet body, eye;
 	
-	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, float cooldown, int collisionGroup){
+	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, float cooldown, boolean isEnnemi){
 		this.species = species;
 		this.level = lvl;
 		this.skills = new Skills(life+lvl*5, attack, range, defense, (float)(1f+Math.random()/2.0));
-		this.collisionGroup = collisionGroup;
+		this.isEnnemi = isEnnemi;
+		if(isEnnemi)
+			this.collisionGroup = Param.ENNEMIES_GROUP;
+		else
+			this.collisionGroup = Param.HEROES_GROUP;
 		nUnits++;
 	}	
 	public void setPosition(int newPos, double totalTime){
@@ -95,19 +100,19 @@ public abstract class Unit implements DrawableObject{
 	 * This is only to load files in the PortableApplication onInit method
 	 */
 	public void setLegsSprite(String url, int cols, int rows){
-		legs = new SpriteSheet(url, cols , rows, 0.2f);
+		legs = new SpriteSheet(url, cols , rows, 0.2f, isEnnemi);
 	}
 	/**
 	 * This is only to load files in the PortableApplication onInit method
 	 */
 	public void setBodySprite(String url, int cols, int rows) {
-		body = new SpriteSheet(url, cols , rows, 0.2f);		
+		body = new SpriteSheet(url, cols , rows, 0.2f, isEnnemi);		
 	}
 	/**
 	 * This is only to load files in the PortableApplication onInit method
 	 */
 	public void setEyeSprite(String url, int cols, int rows) {
-		eye = new SpriteSheet(url, cols , rows, 0.2f);		
+		eye = new SpriteSheet(url, cols , rows, 0.2f, isEnnemi);		
 	}
 	
 	public void setDelay(int delay) {

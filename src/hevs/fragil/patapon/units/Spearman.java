@@ -14,10 +14,10 @@ public class Spearman extends Unit {
 	static SpriteSheet arms;
 	
 	public Spearman(){
-		this(1,Species.random(), Param.HEROES_GROUP);
+		this(1,Species.random(), false);
 	}
-	public Spearman(int lvl, Species species, int collisionGroup){
-		super(lvl, species, 10, 10, 10, 100, 50, 500, collisionGroup);
+	public Spearman(int lvl, Species species, boolean isEnnemi){
+		super(lvl, species, 10, 10, 10, 100, 50, 500, isEnnemi);
 	}
 	public String toString(){
 		return this.getClass().getSimpleName() + super.toString();

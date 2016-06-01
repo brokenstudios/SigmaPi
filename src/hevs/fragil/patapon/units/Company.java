@@ -147,13 +147,13 @@ public class Company implements DrawableObject {
 			add(new Section(Integer.toString(i)));
 		}
 		for(int i = 0 ; i < nb1; i++){
-			sections.elementAt(0).add(new Archer(0,Species.TAPI,Param.ENNEMIES_GROUP));
+			sections.elementAt(0).add(new Archer(0,Species.TAPI,true));
 		}
 		for(int i = 0 ; i < nb2; i++){
-			sections.elementAt(1).add(new Spearman(0,Species.TAPI,Param.ENNEMIES_GROUP));
+			sections.elementAt(1).add(new Spearman(0,Species.TAPI,true));
 		}
 		for(int i = 0 ; i < nb3; i++){
-			sections.elementAt(2).add(new Shield(0,Species.TAPI,Param.ENNEMIES_GROUP));
+			sections.elementAt(2).add(new Shield(0,Species.TAPI,true));
 		}
 		
 		int initialPos = getWidth()/2 + 800;

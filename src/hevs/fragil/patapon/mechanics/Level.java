@@ -5,9 +5,9 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
-import com.badlogic.gdx.math.Vector3;
 
 import ch.hevs.gdx2d.components.audio.SoundSample;
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
@@ -36,9 +36,8 @@ public class Level extends RenderingScreen {
 	private Company ennemies = new Company();
 
 	private boolean debugActive = false;
-	// -2:stop, -1:stopped, 1:playing, 2:activate
-	private int snapState = -1;
-	private int trackState = 2;
+	private MusicFlag snapState = MusicFlag.STOPPED;
+	private MusicFlag trackState = MusicFlag.TOPLAY;
 
 	DebugRenderer debugRenderer;
 
@@ -49,7 +48,7 @@ public class Level extends RenderingScreen {
 
 	private float stateTime;
 	public float sinceLastRythm;
-	
+
 	private Vector3 camera;
 
 	// A world with gravity pointing down. Must be called!
@@ -77,12 +76,12 @@ public class Level extends RenderingScreen {
 	public void onInit() {
 		PhysicsWorld.getInstance();
 		CurrentLevel.setLevel(this);
-		
+
 		decor = new Decor(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
 		PlayerCompany.getInstance().initRandomHeroes(3, 3, 4);
-	
-		ennemies.initEnnemies(2,1,1);
-		
+
+		ennemies.initEnnemies(2, 1, 1);
+
 		// Load the sound files
 		heNote = new SoundSample("data/music/HE.wav");
 		sNote = new SoundSample("data/music/S.wav");
@@ -97,7 +96,7 @@ public class Level extends RenderingScreen {
 		sequence = new Sequence();
 		Sequence.loadSprites("data/images/drums102x102.png");
 		ActionTimer.loadFiles();
-		
+
 		debugRenderer = new DebugRenderer();
 	}
 
@@ -133,30 +132,34 @@ public class Level extends RenderingScreen {
 		}
 		if (keycode == Keys.S) {
 			switch (snapState) {
-			case -1:
-				snapState = 2;
+			case STOPPED:
+				snapState = MusicFlag.TOPLAY;
 				break;
-			case 1:
-				snapState = -2;
+			case PLAYING:
+				snapState = MusicFlag.TOSTOP;
+				break;
+			default:
 				break;
 			}
 		}
 		if (keycode == Keys.T) {
 			switch (trackState) {
-			case -1:
-				trackState = 2;
+			case STOPPED:
+				trackState = MusicFlag.TOPLAY;
 				break;
-			case 1:
-				trackState = -2;
+			case PLAYING:
+				trackState = MusicFlag.TOSTOP;
+				break;
+			default:
 				break;
 			}
 		}
 		// Display camera and company informations (only for debug)
-		if(keycode == Keys.C){
+		if (keycode == Keys.C) {
 			System.out.println("Camera pos = " + camera.x);
 			System.out.println("Company pos = " + PlayerCompany.getInstance().getHeroes().getPosition());
 		}
-		if(keycode == Keys.ESCAPE){
+		if (keycode == Keys.ESCAPE) {
 			dispose();
 			System.exit(0);
 		}
@@ -164,63 +167,62 @@ public class Level extends RenderingScreen {
 
 	public void onGraphicRender(GdxGraphics g) {
 		// clear the screen with the decor background
-		if (debugActive){
+		if (debugActive) {
 			g.clear();
 			debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
 			PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 			// stick flying objects
 			createJoints();
-			
+
 			// update objects
 			stepProjectiles(g);
 			rythm();
 			action();
 			sequence.step();
 			killUnits();
-		}
-		else{
-		g.clear(decor.getBackground());
-		
-		// Move camera inside map limits
-		camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());
-		g.moveCamera(camera.x , Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
-		
-		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
-		
-		// stick flying objects
-		createJoints();
-		
-		// update objects
-		stepProjectiles(g);
-		rythm();
-		action();
-		sequence.step();
-		killUnits();
-		
-		//display help
-		g.drawStringCentered(800, "Fever : " + sequence.getFever());
-		g.drawStringCentered(780, "T to disable/enable track");
-		g.drawStringCentered(760, "S to disable/enable snap");
-		g.drawStringCentered(740, "D to disable/enable debug mode");
-		
-		//display objects
-		floor.draw(g);
-		decor.draw(g);
-		frame.draw(g);
-		sequence.draw(g);
-		PlayerCompany.getInstance().getHeroes().draw(g);
-		ennemies.draw(g);
+		} else {
+			g.clear(decor.getBackground());
+
+			// Move camera inside map limits
+			camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());
+			g.moveCamera(camera.x, Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
+
+			PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
+
+			// stick flying objects
+			createJoints();
+
+			// update objects
+			stepProjectiles(g);
+			rythm();
+			action();
+			sequence.step();
+			killUnits();
+
+			// display help
+			g.drawStringCentered(800, "Fever : " + sequence.getFever());
+			g.drawStringCentered(780, "T to disable/enable track");
+			g.drawStringCentered(760, "S to disable/enable snap");
+			g.drawStringCentered(740, "D to disable/enable debug mode");
+
+			// display objects
+			floor.draw(g);
+			decor.draw(g);
+			frame.draw(g);
+			sequence.draw(g);
+			PlayerCompany.getInstance().getHeroes().draw(g);
+			ennemies.draw(g);
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
-		
+
 	}
 
 	private void killUnits() {
-		//remove heroes
+		// remove heroes
 		Company c = PlayerCompany.getInstance().getHeroes();
 		for (Section s : c.sections) {
 			for (Unit u : s.units) {
-				if(u.isDead()){
+				if (u.isDead()) {
 					toKill.add(u);
 				}
 			}
@@ -228,18 +230,18 @@ public class Level extends RenderingScreen {
 		for (Unit u : toKill) {
 			u.destroyBox();
 			for (Section s : c.sections) {
-				if(s.units.contains(u)){
+				if (s.units.contains(u)) {
 					s.units.remove(u);
 				}
 			}
 		}
 		toKill.removeAllElements();
-		
-		//remove ennemies
+
+		// remove ennemies
 		c = ennemies;
 		for (Section s : c.sections) {
 			for (Unit u : s.units) {
-				if(u.isDead()){
+				if (u.isDead()) {
 					toKill.add(u);
 				}
 			}
@@ -247,13 +249,13 @@ public class Level extends RenderingScreen {
 		for (Unit u : toKill) {
 			u.destroyBox();
 			for (Section s : c.sections) {
-				if(s.units.contains(u)){
+				if (s.units.contains(u)) {
 					s.units.remove(u);
 				}
 			}
 		}
 		toKill.removeAllElements();
-		
+
 	}
 
 	public void createWeldJoint(StickyInfo si) {
@@ -266,42 +268,50 @@ public class Level extends RenderingScreen {
 
 	private void rythm() {
 		sinceLastRythm += Gdx.graphics.getDeltaTime();
-		
+
 		if (sinceLastRythm >= 0.5) {
-			// every 500ms			
+			// every 500ms
 			changeTrack();
 			sinceLastRythm -= 0.5f;
 			frame.toggle();
 		}
 	}
-	private void changeTrack(){
+
+	private void changeTrack() {
 		switch (trackState) {
-		case -2:
+		case TOSTOP:
 			track.stop();
-			trackState = -1;
+			trackState = MusicFlag.STOPPED;
 			break;
-		case 2:
+		case TOPLAY:
 			track.loop();
-			trackState = 1;
+			trackState = MusicFlag.PLAYING;
+			break;
+		default:
 			break;
 		}
 		switch (snapState) {
-		case -2:
+		case TOSTOP:
 			snap.stop();
-			snapState = -1;
+			snapState = MusicFlag.STOPPED;
 			break;
-		case 2:
+		case TOPLAY:
 			snap.loop();
-			snapState = 1;
+			snapState = MusicFlag.PLAYING;
+			break;
+		default:
 			break;
 		}
 	}
+
 	private void action() {
 		ActionTimer.run(PlayerCompany.getInstance().getHeroes(), sequence.getFever());
 	}
-	public Company getEnnemies(){
+
+	public Company getEnnemies() {
 		return ennemies;
 	}
+
 	private void createJoints() {
 		while (toJoin.size() > 0) {
 			// get last element and delete it

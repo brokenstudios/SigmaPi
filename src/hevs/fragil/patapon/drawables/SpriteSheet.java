@@ -13,8 +13,10 @@ public class SpriteSheet {
 	Sprite[] sprites;
 	SpriteBatch spriteBatch;
 	TextureRegion currentFrame;
+	private boolean flipped = false;
 	
-	public SpriteSheet(String url, int cols, int rows, float frameDuration){
+	public SpriteSheet(String url, int cols, int rows, float frameDuration, boolean flipped){
+		this.flipped = flipped;
 		sheet = new Texture(Gdx.files.internal(url));
         TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth()/cols, sheet.getHeight()/rows);
         sprites = new Sprite[cols * rows];
@@ -31,6 +33,8 @@ public class SpriteSheet {
 		spriteBatch.begin();
 		Sprite tmp = sprites[frameIndex];
 		tmp.setPosition(posX - tmp.getWidth()/2, posY);
+		if(flipped && tmp.isFlipX() == false)
+			tmp.flip(true, false);
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}
@@ -51,6 +55,8 @@ public class SpriteSheet {
 						break;
 		}
 		tmp.setOrigin(originX, originY);
+		if(flipped && tmp.isFlipX() == false)
+			tmp.flip(true, false);
 		tmp.setRotation(angle);
 		tmp.setPosition(posX - tmp.getWidth()/2, posY);
 		tmp.draw(spriteBatch);
@@ -60,6 +66,8 @@ public class SpriteSheet {
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
 		tmp.setOrigin(32, 38);
+		if(flipped && tmp.isFlipX() == false)
+			tmp.flip(true, false);
 		tmp.setRotation((float)Math.toDegrees(angle));
 		float x = posX + (float) (offsetX * Math.cos(angle) + offsetY * Math.abs(Math.sin(angle)));
 		float y = posY + (float) (offsetY * Math.cos(angle) + (offsetX-10) * Math.abs(Math.sin(angle)));
@@ -74,6 +82,8 @@ public class SpriteSheet {
 		spriteBatch.begin();
 		Sprite tmp = sprites[index];
 		tmp.setPosition(posX - tmp.getWidth()/2, posY);
+		if(flipped && tmp.isFlipX() == false)
+			tmp.flip(true, false);
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 		return index;
@@ -82,6 +92,8 @@ public class SpriteSheet {
 		spriteBatch.begin();
 		Sprite tmp = sprites[frameIndex];
 		tmp.setPosition(posX - tmp.getWidth()/2, posY);
+		if(flipped && tmp.isFlipX() == false)
+			tmp.flip(true, false);
 		tmp.draw(spriteBatch, alpha);
 		spriteBatch.end();
 	}
@@ -93,6 +105,8 @@ public class SpriteSheet {
 		float x = posX + (float) (offsetX * Math.cos(angle) + offsetY * Math.abs(Math.sin(angle)));
 		float y = posY + (float) (offsetY * Math.cos(angle) + (offsetX-10) * Math.abs(Math.sin(angle)));
 		tmp.setPosition(x, y);
+		if(flipped && tmp.isFlipX() == false)
+			tmp.flip(true, false);
 		tmp.draw(spriteBatch,opacity);
 		spriteBatch.end();
 	}

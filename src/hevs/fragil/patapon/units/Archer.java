@@ -17,10 +17,10 @@ public class Archer extends Unit {
 	int force = level * 400;
 	
 	public Archer(){
-		this((int)(4*Math.random()),Species.random(), Param.HEROES_GROUP);
+		this((int)(4*Math.random()),Species.random(), false);
 	}
-	public Archer(int lvl, Species species, int collisionGroup){
-		super(lvl, species, 10, 10, 10, 100, 1000, .5f, collisionGroup);
+	public Archer(int lvl, Species species, boolean isEnnemi){
+		super(lvl, species, 10, 10, 10, 100, 1000, .5f, isEnnemi);
 		nArchers++;
 	}
 	public String toString(){

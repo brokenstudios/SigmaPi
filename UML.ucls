@@ -155,15 +155,15 @@
     </display>  
   </class>  
   <association id="18">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="19" name="hitBox">        
-        <position height="0" width="0" x="-222" y="-762"/>      
+    <end type="SOURCE" refId="14" navigable="false">      
+      <attribute id="19" name="units">        
+        <position height="0" width="0" x="-80" y="-398"/>      
       </attribute>      
-      <multiplicity id="20" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-222" y="-762"/>      
+      <multiplicity id="20" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-80" y="-398"/>      
       </multiplicity>    
     </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
+    <end type="TARGET" refId="8" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <generalization id="21">    
@@ -175,27 +175,27 @@
     <end type="TARGET" refId="8"/>  
   </generalization>  
   <association id="23">    
-    <end type="SOURCE" refId="14" navigable="false">      
-      <attribute id="24" name="units">        
-        <position height="0" width="0" x="-80" y="-398"/>      
-      </attribute>      
-      <multiplicity id="25" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-80" y="-398"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="26">    
     <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="27" name="sections">        
+      <attribute id="24" name="sections">        
         <position height="0" width="0" x="-74" y="-188"/>      
       </attribute>      
-      <multiplicity id="28" minimum="0" maximum="2147483647">        
+      <multiplicity id="25" minimum="0" maximum="2147483647">        
         <position height="0" width="0" x="-74" y="-188"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="14" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="26">    
+    <end type="SOURCE" refId="8" navigable="false">      
+      <attribute id="27" name="hitBox">        
+        <position height="0" width="0" x="-222" y="-762"/>      
+      </attribute>      
+      <multiplicity id="28" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-222" y="-762"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <generalization id="29">    
