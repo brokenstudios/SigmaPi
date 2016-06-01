@@ -1,8 +1,11 @@
 package hevs.fragil.patapon.units;
+import java.util.Vector;
+
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.drawables.SpriteSheet;
+import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.BodyPolygon;
 
@@ -166,5 +169,23 @@ public abstract class Unit implements DrawableObject{
 		if(damage >= getEndurance())
 			fatal = true;
 		return fatal;
+	}
+	protected Vector<Unit> getUnitsInRange(){
+		Vector<Unit> unitsInRange = new Vector<Unit>();
+		Company ennemies = CurrentLevel.getLevel().getEnnemies();
+		for (Section s : ennemies.sections) {
+			for (Unit u : s.units) {
+				int distance = u.getPosition() - this.getPosition();
+				distance = Math.abs(distance) - 64;
+				if(distance < this.skills.getRange()){
+					unitsInRange.add(u);
+				}
+			}
+		}
+		return unitsInRange;
+	}
+	protected abstract int findBestPosition();
+	public void move(){
+		setPosition(findBestPosition(), Math.abs(getPosition()-findBestPosition()) / Param.UNIT_SPEED);
 	}
 }

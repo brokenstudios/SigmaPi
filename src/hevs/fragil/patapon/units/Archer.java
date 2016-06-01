@@ -46,4 +46,9 @@ public class Archer extends Unit {
 		super.draw(time);
 		drawArms(time);
 	}
+	@Override
+	protected int findBestPosition() {
+		// TODO find the best position to shoot ennemies
+		return getPosition();
+	}
 }

@@ -38,4 +38,9 @@ public class Spearman extends Unit {
 	private void drawArms(float time){
 //		arms.drawKeyFrames(time, super.position);
 	}
+	@Override
+	protected int findBestPosition() {
+		// TODO find the best position to shoot ennemies
+		return getPosition();
+	}
 }

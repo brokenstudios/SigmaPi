@@ -198,6 +198,8 @@ public class Level extends RenderingScreen {
 			action();
 			sequence.step();
 			killUnits();
+			PlayerCompany.getInstance().getHeroes().intelligentMove();
+			ennemies.intelligentMove();
 
 			// display help
 			g.drawStringCentered(800, "Fever : " + sequence.getFever());
@@ -211,6 +213,7 @@ public class Level extends RenderingScreen {
 			frame.draw(g);
 			sequence.draw(g);
 			PlayerCompany.getInstance().getHeroes().draw(g);
+			
 			ennemies.draw(g);
 		}
 		stateTime += Gdx.graphics.getDeltaTime();

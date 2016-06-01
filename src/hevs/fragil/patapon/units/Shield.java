@@ -1,7 +1,5 @@
 package hevs.fragil.patapon.units;
 
-import java.util.Vector;
-
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
@@ -42,18 +40,10 @@ public class Shield extends Unit {
 			}
 		}
 	}
-	private Vector<Unit> getUnitsInRange(){
-		Vector<Unit> unitsInRange = new Vector<Unit>();
-		Company ennemies = CurrentLevel.getLevel().getEnnemies();
-		for (Section s : ennemies.sections) {
-			for (Unit u : s.units) {
-				int distance = u.getPosition() - this.getPosition();
-				distance = Math.abs(distance) - 64;
-				if(distance < this.skills.getRange()){
-					unitsInRange.add(u);
-				}
-			}
-		}
-		return unitsInRange;
+	@Override
+	protected int findBestPosition() {
+		// TODO find the best position to shoot ennemies
+		return getPosition();
 	}
+	
 }
