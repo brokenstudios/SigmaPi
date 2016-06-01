@@ -16,7 +16,7 @@ public abstract class Unit implements DrawableObject{
 	protected Species species = Species.TAPI;
 	protected Expression expression = Expression.DEFAULT;
 	protected int collisionGroup;
-	private boolean dead = false;
+	private boolean enableDeadAnimation = false;
 	private boolean defend = false;
 	private float opacity = 1f;
 	private BodyPolygon hitBox;
@@ -65,20 +65,23 @@ public abstract class Unit implements DrawableObject{
 		this.defend = defend;
 	}
 	public void receive(float damage){
-		if(defend){
-			damage -= skills.getDefense();
-		}
-		if(damage > 0)
-			this.hitBox.applyDamage(damage);
+		if(damage > getDefense())
+			enableDeadAnimation = this.hitBox.applyDamage(damage);
+	}
+	private float getDefense() {
+		if(defend)
+			return skills.getDefense();
+		else
+			return 0;
 	}
 	protected void draw(float stateTime){
-		if(dead){
+		if(enableDeadAnimation){
 			double x,y,angle;
 			angle = hitBox.getBodyAngle();
 			x = hitBox.getBodyWorldCenter().x;
 			y = hitBox.getBodyWorldCenter().y;
-			legs.drawRotatedFrameAlpha(1, (float)angle, (float)x, (float)y, -32, -35, opacity);
-			body.drawRotatedFrameAlpha(1, (float)angle, (float)x, (float)y, -32, -25, opacity);
+			legs.drawRotatedFrameAlpha(0, (float)angle, (float)x, (float)y, -32, -35, opacity);
+			body.drawRotatedFrameAlpha(0, (float)angle, (float)x, (float)y, -32, -25, opacity);
 			eye.drawRotatedFrameAlpha(expression.ordinal(), (float)angle, (float)x, (float)y, -32, -13, opacity);
 		}
 		else {
@@ -125,7 +128,7 @@ public abstract class Unit implements DrawableObject{
 	}
 	public boolean isDead(){
 		if(getLife() <= 0){
-			dead = true;
+			enableDeadAnimation = true;
 			expression = Expression.DEAD;
 			opacity -= 0.005f;
 			if(opacity <= 0){
@@ -143,5 +146,20 @@ public abstract class Unit implements DrawableObject{
 		Vector2 pos = hitBox.getBodyPosition();
 		Vector2 force = new Vector2(intensity, 0);
 		hitBox.applyBodyLinearImpulse(force , pos, true);
+	}
+	public void setExpression(Expression exp) {
+		expression = exp;
+	}
+	public int getEndurance() {
+		int defense = 0;
+		if(defend)
+			defense = skills.getDefense();
+		return skills.getLife() + defense;
+	}
+	public boolean isFatal(int damage) {
+		boolean fatal = false;
+		if(damage >= getEndurance())
+			fatal = true;
+		return fatal;
 	}
 }

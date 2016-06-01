@@ -81,7 +81,7 @@ public class Level extends RenderingScreen {
 		decor = new Decor(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
 		PlayerCompany.getInstance().initRandomHeroes(3, 3, 4);
 	
-		ennemies.initRandom(2,1,1);
+		ennemies.initEnnemies(2,1,1);
 		
 		// Load the sound files
 		heNote = new SoundSample("data/music/HE.wav");
@@ -118,6 +118,15 @@ public class Level extends RenderingScreen {
 		if (keycode == Keys.NUM_4) {
 			yesNote.play();
 			PlayerCompany.getInstance().setAction(sequence.add(Drum.YES, sinceLastRythm));
+		}
+		if (keycode == Keys.A) {
+			PlayerCompany.getInstance().setAction(Action.ATTACK);
+		}
+		if (keycode == Keys.M) {
+			PlayerCompany.getInstance().setAction(Action.WALK);
+		}
+		if (keycode == Keys.R) {
+			PlayerCompany.getInstance().setAction(Action.RETREAT);
 		}
 		if (keycode == Keys.D) {
 			debugActive = !debugActive;

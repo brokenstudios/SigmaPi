@@ -121,25 +121,53 @@ public class Company implements DrawableObject {
 			sections.elementAt(2).add(new Shield());
 		}
 		
-		int initialPos = getWidth()/2 + 800;
+		int initialPos = getWidth()/2 + Param.SECTION_KEEPOUT;
 		moveAbsolute(initialPos, 100);
 		
 		//Load the image files
 		for (Section s : sections) {
 			for (Unit u : s.units) {
-				u.setBodySprite("data/images/bodies64x102.png", 5, 5);
+				u.setBodySprite("data/images/bodies64x102.png", 1,1);
 				u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
 				u.setLegsSprite("data/images/legs64x42.png", 4, 1);
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
 		
-		setCollisionGroup(Param.ENNEMIES_GROUP);
+		setCollisionGroup(Param.HEROES_GROUP);
 	}
 	@Override
 	public void draw(GdxGraphics g) {
 		for (Section section : sections) {
 			section.draw(g);
 		}
+	}
+	public void initEnnemies(int nb1, int nb2, int nb3) {
+		for(int i = 0 ; i < 3; i++){
+			add(new Section(Integer.toString(i)));
+		}
+		for(int i = 0 ; i < nb1; i++){
+			sections.elementAt(0).add(new Archer(0,Species.TAPI,Param.ENNEMIES_GROUP));
+		}
+		for(int i = 0 ; i < nb2; i++){
+			sections.elementAt(1).add(new Spearman(0,Species.TAPI,Param.ENNEMIES_GROUP));
+		}
+		for(int i = 0 ; i < nb3; i++){
+			sections.elementAt(2).add(new Shield(0,Species.TAPI,Param.ENNEMIES_GROUP));
+		}
+		
+		int initialPos = getWidth()/2 + 800;
+		moveAbsolute(initialPos, 100);
+		
+		//Load the image files
+		for (Section s : sections) {
+			for (Unit u : s.units) {
+				u.setBodySprite("data/images/badbody64x102.png", 1,1);
+				u.setEyeSprite("data/images/badeyes64x54.png", 3, 1);
+				u.setLegsSprite("data/images/legs64x42.png", 4, 1);
+				u.setExpression(Expression.ANGRY);
+			}
+		}
+		Arrow.setImgPath("data/images/fleche.png");
 	}
 }

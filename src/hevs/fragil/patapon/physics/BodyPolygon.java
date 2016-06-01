@@ -59,6 +59,7 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 			life -= damage;
 			System.out.println(damage + " applied, life : " + life);
 			if(life <= 0){
+				kill();
 				return true;
 			}
 			else return false;

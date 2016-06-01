@@ -30,7 +30,7 @@ public class Frame implements DrawableObject{
 			
 			//rotation in degrees = i*90 			
 			for(int i = 0; i < x.length; i++){
-				g.drawFilledRectangle(x[i], y[i], size[i], thickness, i*90, frameColor);
+				g.drawFilledRectangle(x[i] + g.getCamera().position.x - Param.CAM_WIDTH/2, y[i], size[i], thickness, i*90, frameColor);
 			}
 			frames++;
 			if(frames == Param.FRAME_DEGRADE_STEPS){
