@@ -70,6 +70,10 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 	public float getLife(){
 		return life;
 	}
+	public boolean isDead(){
+		if(life <= 0) return true;
+		else return false;
+	}
 	public void kill() {
 		getBody().setFixedRotation(false);
 		applyBodyAngularImpulse(-1300, true);

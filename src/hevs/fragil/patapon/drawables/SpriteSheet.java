@@ -38,7 +38,7 @@ public class SpriteSheet {
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}
-	public void drawWalkAnimation(int walkIndex, int spriteNumber, int posX, int posY, int originX, int originY){
+	public void drawWalkAnimation(int walkIndex, int spriteNumber, float posX, float posY, float originX, float originY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
 		float angle = 0f;
@@ -75,7 +75,7 @@ public class SpriteSheet {
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}
-	public int drawKeyFrames(float time, int posX, int posY){
+	public int drawKeyFrames(float time, float posX, float posY){
 		currentFrame = animation.getKeyFrame(time, true);
 		TextureRegion[] a = animation.getKeyFrames();
 		int index = java.util.Arrays.asList(a).indexOf(currentFrame);
@@ -97,7 +97,7 @@ public class SpriteSheet {
 		tmp.draw(spriteBatch, alpha);
 		spriteBatch.end();
 	}
-	public void drawRotatedFrameAlpha(int spriteNumber, float angle, float posX, float posY, float offsetX, float offsetY, float opacity) {
+	public void drawRotatedFrameAlpha(int spriteNumber, float angle, float posX, float posY, float offsetX, float offsetY, float alpha) {
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
 		tmp.setOrigin(32, 38);
@@ -107,7 +107,7 @@ public class SpriteSheet {
 		tmp.setPosition(x, y);
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
-		tmp.draw(spriteBatch,opacity);
+		tmp.draw(spriteBatch, alpha);
 		spriteBatch.end();
 	}
 }

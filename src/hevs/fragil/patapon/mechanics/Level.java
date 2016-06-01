@@ -167,10 +167,13 @@ public class Level extends RenderingScreen {
 
 	public void onGraphicRender(GdxGraphics g) {
 		// clear the screen with the decor background
+		// Move camera inside map limits
+		camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());
+		g.moveCamera(camera.x, Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
+		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 		if (debugActive) {
 			g.clear();
 			debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
-			PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 			// stick flying objects
 			createJoints();
 
@@ -182,12 +185,6 @@ public class Level extends RenderingScreen {
 			killUnits();
 		} else {
 			g.clear(decor.getBackground());
-
-			// Move camera inside map limits
-			camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());
-			g.moveCamera(camera.x, Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
-
-			PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 
 			// stick flying objects
 			createJoints();

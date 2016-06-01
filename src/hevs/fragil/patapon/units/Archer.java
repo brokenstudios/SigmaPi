@@ -1,10 +1,10 @@
 package hevs.fragil.patapon.units;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.Arrow;
 
@@ -33,22 +33,24 @@ public class Archer extends Unit {
 	public void draw(GdxGraphics g, float time) {
 		
 	}
-	private void drawArms(float time){
-		
-	}
 	@Override
 	public void attack() {
 		attack(skills.getRange());
 	}
 	@Override
 	public void draw(GdxGraphics g) {
-		float time = CurrentLevel.getLevel().getStateTime();
-		super.draw(time);
-		drawArms(time);
+		super.draw(g);
+		g.drawFilledCircle(getPosition(), 40, 10, Color.BLUE);
+		drawArms(g);
 	}
 	@Override
 	protected int findBestPosition() {
 		// TODO find the best position to shoot ennemies
 		return getPosition();
+	}
+	@Override
+	public void drawArms(GdxGraphics g) {
+		// TODO Auto-generated method stub
+		
 	}
 }

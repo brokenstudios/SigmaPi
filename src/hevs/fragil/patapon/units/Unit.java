@@ -1,8 +1,10 @@
 package hevs.fragil.patapon.units;
 import java.util.Vector;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
+import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
@@ -82,23 +84,25 @@ public abstract class Unit implements DrawableObject{
 		else
 			return 0;
 	}
-	protected void draw(float stateTime){
+	@Override
+	public void draw(GdxGraphics g){
+		float stateTime = CurrentLevel.getLevel().getStateTime();
+		float xDrawCoordinate = getPosition() - g.getCamera().position.x + Param.CAM_WIDTH / 2;
 		if(enableDeadAnimation){
-			double x,y,angle;
+			float y,angle;
 			angle = hitBox.getBodyAngle();
-			x = hitBox.getBodyWorldCenter().x;
 			y = hitBox.getBodyWorldCenter().y;
-			legs.drawRotatedFrameAlpha(0, (float)angle, (float)x, (float)y, -32, -35, opacity);
-			body.drawRotatedFrameAlpha(0, (float)angle, (float)x, (float)y, -32, -25, opacity);
-			eye.drawRotatedFrameAlpha(expression.ordinal(), (float)angle, (float)x, (float)y, -32, -13, opacity);
+			legs.drawRotatedFrameAlpha(0, angle, xDrawCoordinate, y, -32, -35, opacity);
+			body.drawRotatedFrameAlpha(0, angle, xDrawCoordinate, y, -32, -25, opacity);
+			eye.drawRotatedFrameAlpha(expression.ordinal(), angle, xDrawCoordinate, y, -32, -13, opacity);
 		}
 		else {
-			frameIndex = legs.drawKeyFrames(stateTime, getPosition(), Param.FLOOR_DEPTH);
-			body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level), getPosition(), 40, 32, 38);
-			eye.drawWalkAnimation(frameIndex, expression.ordinal(), getPosition(), 52, 32, 38);
+			frameIndex = legs.drawKeyFrames(stateTime, xDrawCoordinate, Param.FLOOR_DEPTH);
+			body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level), xDrawCoordinate , 40, 32, 38);
+			eye.drawWalkAnimation(frameIndex, expression.ordinal(), xDrawCoordinate, 52, 32, 38);
 		}
 	}
-	
+	public abstract void drawArms(GdxGraphics g);
 	/**
 	 * This is only to load files in the PortableApplication onInit method
 	 */
@@ -109,13 +113,13 @@ public abstract class Unit implements DrawableObject{
 	 * This is only to load files in the PortableApplication onInit method
 	 */
 	public void setBodySprite(String url, int cols, int rows) {
-		body = new SpriteSheet(url, cols , rows, 0.2f, isEnnemi);		
+		body = new SpriteSheet(url, cols , rows, 0.2f, false);		
 	}
 	/**
 	 * This is only to load files in the PortableApplication onInit method
 	 */
 	public void setEyeSprite(String url, int cols, int rows) {
-		eye = new SpriteSheet(url, cols , rows, 0.2f, isEnnemi);		
+		eye = new SpriteSheet(url, cols , rows, 0.2f, false);		
 	}
 	
 	public void setDelay(int delay) {
@@ -186,6 +190,7 @@ public abstract class Unit implements DrawableObject{
 	}
 	protected abstract int findBestPosition();
 	public void move(){
-		setPosition(findBestPosition(), Math.abs(getPosition()-findBestPosition()) / Param.UNIT_SPEED);
+		if(findBestPosition() != getPosition())
+			setPosition(findBestPosition(), Math.abs(getPosition()-findBestPosition()) / Param.UNIT_SPEED);
 	}
 }
