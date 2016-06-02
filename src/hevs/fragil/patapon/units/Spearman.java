@@ -35,7 +35,7 @@ public class Spearman extends Unit {
 	}
 	@Override
 	protected float findBestPosition() {
-		// TODO find the best position to shoot ennemies
+		// TODO find the best position to shoot enemies
 		return getPosition().x;
 	}
 	@Override
