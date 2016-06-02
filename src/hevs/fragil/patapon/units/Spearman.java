@@ -34,13 +34,13 @@ public class Spearman extends Unit {
 	@Override
 	public void draw(GdxGraphics g) {
 		super.draw(g);
-		drawArms(g);
 	}
 	@Override
 	protected float findBestPosition() {
-		Vector<Unit> unitsInMap = new Vector<Unit>();
+		/*Vector<Unit> unitsInMap = new Vector<Unit>();
 		Company enemies = CurrentLevel.getLevel().getEnnemies();
 		
+		//TODO get companies instead of units
 		// Get enemies to place unit correctly
 		for (Section s : enemies.sections) {
 			for (Unit u : s.units) {
@@ -48,17 +48,12 @@ public class Spearman extends Unit {
 			}
 		}
 		
-		/* if an enemy is in range, don't move, just shoot
-		 * else return destination */
+//		if an enemy is in range, don't move, just shoot
+//		else return destination
 		float distance = Math.abs(getPosition().x - unitsInMap.get(1).getPosition().x);
 		
-		if(true);
+		if(true);*/
 		
 		return getPosition().x;
-	}
-	@Override
-	public void drawArms(GdxGraphics g) {
-		// TODO Auto-generated method stub
-		
 	}
 }

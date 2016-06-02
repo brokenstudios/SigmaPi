@@ -20,7 +20,6 @@ public class Shield extends Unit {
 	@Override
 	public void draw(GdxGraphics g) {
 		super.draw(g);
-		drawArms(g);
 	}
 	@Override
 	public void attack(){
@@ -39,11 +38,5 @@ public class Shield extends Unit {
 	protected float findBestPosition() {
 		// TODO find the best position to shoot ennemies
 		return getPosition().x;
-	}
-	@Override
-	public void drawArms(GdxGraphics g) {
-		// TODO Auto-generated method stub
-		
-	}
-	
+	}	
 }
