@@ -20,11 +20,14 @@ public abstract class Unit implements DrawableObject{
 	protected Species species = Species.TAPI;
 	protected Expression expression = Expression.DEFAULT;
 	protected int collisionGroup;
+	protected ArmsLine armsLine = ArmsLine.WALK;
 	private boolean enableDeadAnimation = false;
 	private boolean defend = false;
 	private boolean isEnnemi;
 	private float opacity = 1f;
 	private BodyPolygon hitBox;
+	//Hysteresis pattern to avoid vibrations due to physics
+	private Vector2 antiVibration = new Vector2(0,0);
 	
 	//Drawables
 	private SpriteSheet legs;
@@ -84,9 +87,14 @@ public abstract class Unit implements DrawableObject{
 			return 0;
 	}
 	protected Vector2 getDrawPosition(GdxGraphics g){
-		float x = getPosition().x - g.getCamera().position.x + Param.CAM_WIDTH / 2;
-		float y = getPosition().y - g.getCamera().position.y + Param.CAM_HEIGHT / 2;
-		return new Vector2(x,y);
+		//Hysteresis pattern to avoid vibrations due to physics
+		float x = Math.round(getPosition().x - g.getCamera().position.x + Param.CAM_WIDTH / 2);
+		float y = Math.round(getPosition().y - g.getCamera().position.y + Param.CAM_HEIGHT / 2 - 37);
+		if(antiVibration.x < x)
+			antiVibration.x = x;
+		if(antiVibration.y < y)
+			antiVibration.y = y;
+		return new Vector2(antiVibration.x, antiVibration.y);
 	}
 	@Override
 	public void draw(GdxGraphics g){
@@ -101,10 +109,9 @@ public abstract class Unit implements DrawableObject{
 			frameIndex = legs.drawAllFrames(stateTime, getDrawPosition(g).x, getDrawPosition(g).y);
 			body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level), getDrawPosition(g).x , getDrawPosition(g).y+10, 32, 38);
 			eye.drawWalkAnimation(frameIndex, expression.ordinal(), getDrawPosition(g).x, getDrawPosition(g).y+22, 32, 38);
+			arms.drawFrames(stateTime, armsLine.ordinal() * 4, 4, getDrawPosition(g).x, getDrawPosition(g).y);
 		}
-		drawArms(g);
 	}
-	public abstract void drawArms(GdxGraphics g);
 	/**
 	 * This is only to load files in the PortableApplication onInit method
 	 */

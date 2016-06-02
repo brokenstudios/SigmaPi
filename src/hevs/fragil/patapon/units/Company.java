@@ -130,6 +130,7 @@ public class Company implements DrawableObject {
 				u.setBodySprite("data/images/bodies64x102.png", 1,1);
 				u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
 				u.setLegsSprite("data/images/legs64x42.png", 4, 1);
+				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
@@ -165,6 +166,7 @@ public class Company implements DrawableObject {
 				u.setBodySprite("data/images/badbody64x102.png", 1,1);
 				u.setEyeSprite("data/images/badeyes64x54.png", 3, 1);
 				u.setLegsSprite("data/images/legs64x42.png", 4, 1);
+				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
 				u.setExpression(Expression.ANGRY);
 			}
 		}

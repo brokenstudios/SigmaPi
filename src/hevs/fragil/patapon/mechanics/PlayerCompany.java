@@ -53,6 +53,7 @@ public class PlayerCompany {
 				u.setBodySprite("data/images/bodies64x102.png", 5, 5);
 				u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
 				u.setLegsSprite("data/images/legs2_64x42.png", 4, 1);
+				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");

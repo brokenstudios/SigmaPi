@@ -26,6 +26,7 @@ public class Archer extends Unit {
 	}
 	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition().x, Param.FLOOR_DEPTH+30);
+		armsLine = ArmsLine.ARCHER;
 		new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, level+5);
 	}
 	@Override
@@ -36,11 +37,5 @@ public class Archer extends Unit {
 	protected float findBestPosition() {
 		// TODO find the best position to shoot ennemies
 		return getPosition().x;
-	}
-	@Override
-	public void drawArms(GdxGraphics g) {
-		float stateTime = CurrentLevel.getLevel().getStateTime();
-		int startIndex =  ArmsLine.ARCHER.ordinal() * 4;
-		arms.drawFrames(stateTime, startIndex, 4, getDrawPosition(g).x, getDrawPosition(g).y);
 	}
 }
