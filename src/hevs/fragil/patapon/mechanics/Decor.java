@@ -29,7 +29,7 @@ public class Decor {
 		this.setBackground(b);
 		// Calculate a forest
 		Point<Float> origin = new Point<Float>(0f, (float) Param.FLOOR_DEPTH);
-		processForest(8, origin, 5, 200f, 5);
+		processForest(5, origin, 5, 200f, 5);
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class Decor {
 	 * @return camera x position
 	 */
 	public Vector3 cameraProcess(Company c1){
-		camera.x = c1.getPosition();
+		camera.x = c1.getPosition() + Param.CAM_OFFSET;
 		camera.y = 0;
 		camera.z = 0;
 		
@@ -53,28 +53,30 @@ public class Decor {
 	 * @return camera complete position (x, y, z)
 	 */
 	public Vector3 cameraProcess(Company c1, Company c2) {
-		// Camera always stick on the floor
-		camera.y = 0;
 
 		float x1 = c1.getPosition();
 		float x2 = c2.getPosition();
+		
+		// Camera always stick on the floor
+		camera.x = x1 + Param.CAM_OFFSET;
+		camera.y = 0;
+
+		// Process absolute distance
+		float absDistance = Math.abs(x2 - x1);
 
 		// Here both companies are in window
-		if (Math.abs(x2 - x1) < Param.CAM_WIDTH) {
-			camera.x = x1 + Param.CAMERAOFFSET;
+		if (absDistance < Param.CAM_WIDTH) {
 			camera.z = 0;
 		
-		// Will reduce zoom until both companies are visible
-		} else if(Math.abs(x2 - x1) < Param.MAP_HEIGHT/Param.CAM_RATIO){
-			while(Math.abs(x2 - x1) > Param.CAM_WIDTH){
-				camera.z -= 0.1;
-			}
+		// Will adapt zoom until both companies are visible
+		} else if(absDistance < Param.CAM_RANGE){
+			System.out.println(("point"));
+			camera.z = 0.1f;
 			
 		} else {
 			// Input invalid!
-			camera.x = Param.CAMERAOFFSET;
+			camera.x = Param.CAM_OFFSET;
 			camera.z = 0;
-			System.out.println("Camera cannot reach this position!");
 		}
 		
 		return camera;

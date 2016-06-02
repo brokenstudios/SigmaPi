@@ -18,15 +18,15 @@ public abstract class Param {
 	public static final int SECTION_KEEPOUT = 64;
 	//********************************************************
 	
-	//Default values of game window (size of menu?)
+	//Default values of game window
 	public static final int CAM_HEIGHT = 900;
 	public static final int CAM_WIDTH = 1500;
-	public static final float CAM_RATIO = CAM_HEIGHT/CAM_WIDTH;
+	public static final int CAM_RANGE = 3000;
+	public static final int CAM_OFFSET = 300;
 	
 	//Default values of maps dimensions (!= game window)
-	public static final int MAP_HEIGHT = 1800;
-	public static final int MAP_WIDTH = 3000;
-	public static final int CAMERAOFFSET = 30;
+	public static final int MAP_HEIGHT = 3000;
+	public static final int MAP_WIDTH = 8000;
 	public static final int FLOOR_DEPTH = 30;
 	public static final int FRAME_DEGRADE_STEPS = 10;
 	

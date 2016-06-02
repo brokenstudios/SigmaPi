@@ -15,6 +15,7 @@ import ch.hevs.gdx2d.components.physics.utils.PhysicsConstants;
 import ch.hevs.gdx2d.components.screen_management.RenderingScreen;
 import ch.hevs.gdx2d.desktop.physics.DebugRenderer;
 import ch.hevs.gdx2d.lib.GdxGraphics;
+import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
 import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.music.Drum;
@@ -44,7 +45,7 @@ public class Level extends RenderingScreen {
 	private Vector<Projectile> flyingOjects = new Vector<Projectile>();
 	private Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
 	private Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
-	private Vector<Unit> toKill = new Vector<Unit>();
+	private Vector<DrawableObject> toKill = new Vector<DrawableObject>();
 
 	private float stateTime;
 	public float sinceLastRythm;
@@ -158,6 +159,8 @@ public class Level extends RenderingScreen {
 		if (keycode == Keys.C) {
 			System.out.println("Camera pos = " + camera.x);
 			System.out.println("Company pos = " + PlayerCompany.getInstance().getHeroes().getPosition());
+			System.out.println(ennemies);
+			System.out.println(ennemies.isEmpty());
 		}
 		if (keycode == Keys.ESCAPE) {
 			dispose();
@@ -166,14 +169,21 @@ public class Level extends RenderingScreen {
 	}
 
 	public void onGraphicRender(GdxGraphics g) {
-		// clear the screen with the decor background
-		// Move camera inside map limits
-		camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());
+		// process camera position inside map limits
+		if(ennemies.isEmpty())
+			camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());			
+		else
+			camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes(), ennemies);
+
+		// apply camera position
 		g.moveCamera(camera.x, Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
+		
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
+		
 		if (debugActive) {
 			g.clear();
 			debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
+			
 			// stick flying objects
 			createJoints();
 
@@ -184,6 +194,7 @@ public class Level extends RenderingScreen {
 			sequence.step();
 			killUnits();
 		} else {
+			// clear the screen with the decor background
 			g.clear(decor.getBackground());
 
 			// stick flying objects
@@ -210,7 +221,6 @@ public class Level extends RenderingScreen {
 			frame.draw(g);
 			sequence.draw(g);
 			PlayerCompany.getInstance().getHeroes().draw(g);
-			
 			ennemies.draw(g);
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
@@ -224,15 +234,23 @@ public class Level extends RenderingScreen {
 			for (Unit u : s.units) {
 				if (u.isDead()) {
 					toKill.add(u);
+					if(s.units.retainAll(toKill)){
+						toKill.add(s);
+					}
 				}
 			}
 		}
-		for (Unit u : toKill) {
-			u.destroyBox();
-			for (Section s : c.sections) {
-				if (s.units.contains(u)) {
-					s.units.remove(u);
+		for (Object o : toKill) {
+			if(o instanceof Unit){
+				((Unit) o).destroyBox();
+				for (Section s : c.sections) {
+					if (s.units.contains(o)) {
+						s.units.remove(o);
+					}
 				}
+			}
+			else if(o instanceof Section){
+				c.remove((Section) o);
 			}
 		}
 		toKill.removeAllElements();
@@ -243,19 +261,26 @@ public class Level extends RenderingScreen {
 			for (Unit u : s.units) {
 				if (u.isDead()) {
 					toKill.add(u);
+					if(s.units.containsAll(toKill)){
+						toKill.add(s);
+					}
 				}
 			}
 		}
-		for (Unit u : toKill) {
-			u.destroyBox();
-			for (Section s : c.sections) {
-				if (s.units.contains(u)) {
-					s.units.remove(u);
+		for (Object o : toKill) {
+			if(o instanceof Unit){
+				((Unit) o).destroyBox();
+				for (Section s : c.sections) {
+					if (s.units.contains(o)) {
+						s.units.remove(o);
+					}
 				}
+			}
+			else if(o instanceof Section){
+				c.remove((Section) o);
 			}
 		}
 		toKill.removeAllElements();
-
 	}
 
 	public void createWeldJoint(StickyInfo si) {
