@@ -157,7 +157,6 @@ public class Company implements DrawableObject {
 		}
 		
 		int initialPos = getWidth()/2 + 1600;
-//		int initialPos = getWidth()/2 + 800;
 		moveAbsolute(initialPos, 100);
 		
 		//Load the image files
