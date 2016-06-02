@@ -50,7 +50,7 @@ public class Company implements DrawableObject {
 		float xSum = 0;
 		for (Section s : sections) {
 			for (Unit u : s.units) {
-				xSum += u.getPosition();
+				xSum += u.getPosition().x;
 			}
 		}
 	

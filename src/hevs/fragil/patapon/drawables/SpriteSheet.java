@@ -75,10 +75,25 @@ public class SpriteSheet {
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}
-	public int drawKeyFrames(float time, float posX, float posY){
+	public int drawAllFrames(float time, float posX, float posY){
 		currentFrame = animation.getKeyFrame(time, true);
 		TextureRegion[] a = animation.getKeyFrames();
 		int index = java.util.Arrays.asList(a).indexOf(currentFrame);
+		spriteBatch.begin();
+		Sprite tmp = sprites[index];
+		tmp.setPosition(posX - tmp.getWidth()/2, posY);
+		if(flipped && tmp.isFlipX() == false)
+			tmp.flip(true, false);
+		tmp.draw(spriteBatch);
+		spriteBatch.end();
+		return index;
+	}
+	public int drawFrames(float time, int startIndex, int nbFrames, float posX, float posY){
+		currentFrame = animation.getKeyFrame(time, true);
+		TextureRegion[] a = animation.getKeyFrames();
+		int index = java.util.Arrays.asList(a).indexOf(currentFrame);
+		index = index % nbFrames;
+		index += startIndex;
 		spriteBatch.begin();
 		Sprite tmp = sprites[index];
 		tmp.setPosition(posX - tmp.getWidth()/2, posY);

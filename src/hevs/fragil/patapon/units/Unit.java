@@ -1,7 +1,6 @@
 package hevs.fragil.patapon.units;
 import java.util.Vector;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
@@ -30,7 +29,7 @@ public abstract class Unit implements DrawableObject{
 	//Drawables
 	private SpriteSheet legs;
 	private int frameIndex;
-	private SpriteSheet body, eye;
+	protected SpriteSheet body, eye, arms;
 	
 	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int rangeMin, int rangeMax, float cooldown, boolean isEnnemi){
 		this.species = species;
@@ -51,8 +50,8 @@ public abstract class Unit implements DrawableObject{
 			hitBox.getBody().setFixedRotation(true);
 		}
 	}
-	protected int getPosition(){
-		return (int)hitBox.getBodyWorldCenter().x;
+	protected Vector2 getPosition(){
+		return hitBox.getBodyWorldCenter();
 	}
 	protected void setLife(int life){
 		this.skills.setLife(life);
@@ -84,23 +83,26 @@ public abstract class Unit implements DrawableObject{
 		else
 			return 0;
 	}
+	protected Vector2 getDrawPosition(GdxGraphics g){
+		float x = getPosition().x - g.getCamera().position.x + Param.CAM_WIDTH / 2;
+		float y = getPosition().y - g.getCamera().position.y + Param.CAM_HEIGHT / 2;
+		return new Vector2(x,y);
+	}
 	@Override
 	public void draw(GdxGraphics g){
 		float stateTime = CurrentLevel.getLevel().getStateTime();
-		float xDrawCoordinate = getPosition() - g.getCamera().position.x + Param.CAM_WIDTH / 2;
 		if(enableDeadAnimation){
-			float y,angle;
-			angle = hitBox.getBodyAngle();
-			y = hitBox.getBodyWorldCenter().y;
-			legs.drawRotatedFrameAlpha(0, angle, xDrawCoordinate, y, -32, -35, opacity);
-			body.drawRotatedFrameAlpha(0, angle, xDrawCoordinate, y, -32, -25, opacity);
-			eye.drawRotatedFrameAlpha(expression.ordinal(), angle, xDrawCoordinate, y, -32, -13, opacity);
+			float angle = hitBox.getBodyAngle();
+			legs.drawRotatedFrameAlpha(0, angle, getDrawPosition(g).x, getDrawPosition(g).y, -32, -35, opacity);
+			body.drawRotatedFrameAlpha(0, angle, getDrawPosition(g).x, getDrawPosition(g).y, -32, -25, opacity);
+			eye.drawRotatedFrameAlpha(expression.ordinal(), angle, getDrawPosition(g).x, getDrawPosition(g).y, -32, -13, opacity);
 		}
 		else {
-			frameIndex = legs.drawKeyFrames(stateTime, xDrawCoordinate, Param.FLOOR_DEPTH);
-			body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level), xDrawCoordinate , 40, 32, 38);
-			eye.drawWalkAnimation(frameIndex, expression.ordinal(), xDrawCoordinate, 52, 32, 38);
+			frameIndex = legs.drawAllFrames(stateTime, getDrawPosition(g).x, getDrawPosition(g).y);
+			body.drawWalkAnimation(frameIndex, (4*(species.ordinal()))+(level), getDrawPosition(g).x , getDrawPosition(g).y+10, 32, 38);
+			eye.drawWalkAnimation(frameIndex, expression.ordinal(), getDrawPosition(g).x, getDrawPosition(g).y+22, 32, 38);
 		}
+		drawArms(g);
 	}
 	public abstract void drawArms(GdxGraphics g);
 	/**
@@ -120,6 +122,12 @@ public abstract class Unit implements DrawableObject{
 	 */
 	public void setEyeSprite(String url, int cols, int rows) {
 		eye = new SpriteSheet(url, cols , rows, 0.2f, false);		
+	}
+	/**
+	 * This is only to load files in the PortableApplication onInit method
+	 */
+	public void setArmsSprite(String url, int cols, int rows) {
+		arms = new SpriteSheet(url, cols , rows, 0.2f, false);		
 	}
 	
 	public void setDelay(int delay) {
@@ -179,7 +187,7 @@ public abstract class Unit implements DrawableObject{
 		Company ennemies = CurrentLevel.getLevel().getEnnemies();
 		for (Section s : ennemies.sections) {
 			for (Unit u : s.units) {
-				int distance = u.getPosition() - this.getPosition();
+				float distance = u.getPosition().x - this.getPosition().x;
 				distance = Math.abs(distance) - 64;
 				if(distance < this.skills.getRangeMax()){
 					unitsInRange.add(u);
@@ -188,9 +196,9 @@ public abstract class Unit implements DrawableObject{
 		}
 		return unitsInRange;
 	}
-	protected abstract int findBestPosition();
+	protected abstract float findBestPosition();
 	public void move(){
-		if(findBestPosition() != getPosition())
-			setPosition(findBestPosition(), Math.abs(getPosition()-findBestPosition()) / Param.UNIT_SPEED);
+		if(findBestPosition() != getPosition().x)
+			setPosition((int)findBestPosition(), Math.abs(getPosition().x - findBestPosition()) / Param.UNIT_SPEED);
 	}
 }
