@@ -32,10 +32,10 @@ public abstract class Unit implements DrawableObject{
 	private int frameIndex;
 	private SpriteSheet body, eye;
 	
-	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int range, float cooldown, boolean isEnnemi){
+	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int rangeMin, int rangeMax, float cooldown, boolean isEnnemi){
 		this.species = species;
 		this.level = lvl;
-		this.skills = new Skills(life+lvl*5, attack, range, defense, (float)(1f+Math.random()/2.0));
+		this.skills = new Skills(life+lvl*5, attack, rangeMax, rangeMin, defense, (float)(1f+Math.random()/2.0));
 		this.isEnnemi = isEnnemi;
 		if(isEnnemi)
 			this.collisionGroup = Param.ENNEMIES_GROUP;
@@ -181,7 +181,7 @@ public abstract class Unit implements DrawableObject{
 			for (Unit u : s.units) {
 				int distance = u.getPosition() - this.getPosition();
 				distance = Math.abs(distance) - 64;
-				if(distance < this.skills.getRange()){
+				if(distance < this.skills.getRangeMax()){
 					unitsInRange.add(u);
 				}
 			}
