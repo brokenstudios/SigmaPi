@@ -36,9 +36,9 @@ public class Shield extends Unit {
 		}
 	}
 	@Override
-	protected int findBestPosition() {
+	protected float findBestPosition() {
 		// TODO find the best position to shoot ennemies
-		return getPosition();
+		return getPosition().x;
 	}
 	@Override
 	public void drawArms(GdxGraphics g) {

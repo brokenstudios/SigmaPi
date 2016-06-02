@@ -22,7 +22,7 @@ public class Spearman extends Unit {
 		return this.getClass().getSimpleName() + super.toString();
 	}
 	public void attack(int distance){
-		Vector2 position = new Vector2(getPosition(), Param.FLOOR_DEPTH+30);
+		Vector2 position = new Vector2(getPosition().x, Param.FLOOR_DEPTH+30);
 		new Spear(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, level+5);
 	}
 	public void attack(){
@@ -34,9 +34,9 @@ public class Spearman extends Unit {
 		drawArms(g);
 	}
 	@Override
-	protected int findBestPosition() {
+	protected float findBestPosition() {
 		// TODO find the best position to shoot ennemies
-		return getPosition();
+		return getPosition().x;
 	}
 	@Override
 	public void drawArms(GdxGraphics g) {
