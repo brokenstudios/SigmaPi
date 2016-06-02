@@ -159,8 +159,6 @@ public class Level extends RenderingScreen {
 		if (keycode == Keys.C) {
 			System.out.println("Camera pos = " + camera.x);
 			System.out.println("Company pos = " + PlayerCompany.getInstance().getHeroes().getPosition());
-			System.out.println(enemies);
-			System.out.println(enemies.isEmpty());
 		}
 		if (keycode == Keys.ESCAPE) {
 			dispose();
@@ -176,7 +174,9 @@ public class Level extends RenderingScreen {
 			camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes(), enemies);
 
 		// apply camera position
-		g.moveCamera(camera.x, Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
+		//TODO play with scale tp play with zoom :D enjoy your pain
+//		g.zoom(camera.z);
+		g.moveCamera(camera.x, 0, Param.MAP_WIDTH, Param.MAP_HEIGHT);
 		
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 		

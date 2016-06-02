@@ -63,21 +63,20 @@ public class Decor {
 		camera.x = x1 + Param.CAM_OFFSET;
 		camera.y = 0;
 
-		// When companies are close enough OR if enemies too far camera follow heroes
-		if (absDistance < Param.CAM_WIDTH || absDistance > Param.CAM_RANGE) {
-			camera.z = 0;
+		// When companies are not so far, camera will dezoom to show both
+		if(absDistance < Param.CAM_RANGE){
+			camera.z = 5;
 		}
 		
-		// When companies are not so far, camera will dezoom to show both
-		else if(absDistance < Param.CAM_RANGE){
-			System.out.println(("not so far"));
-			camera.z = 0.1f;
-		}
+		// When companies are close enough OR if enemies too far camera follow heroes
+		else if (absDistance < Param.CAM_WIDTH || absDistance > Param.CAM_RANGE) {
+			camera.z = 1;
+		}	
 		
 		// Input invalid!
 		else {
 			camera.x = Param.CAM_OFFSET;
-			camera.z = 0;
+			camera.z = 1;
 		}
 		
 		return camera;

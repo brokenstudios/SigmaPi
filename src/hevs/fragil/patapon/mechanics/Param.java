@@ -21,7 +21,7 @@ public abstract class Param {
 	//Default values of game window
 	public static final int CAM_HEIGHT = 900;
 	public static final int CAM_WIDTH = 1500;
-	public static final int CAM_RANGE = 3000;
+	public static final int CAM_RANGE = 1000;
 	public static final int CAM_OFFSET = 300;
 	
 	//Default values of maps dimensions (!= game window)
