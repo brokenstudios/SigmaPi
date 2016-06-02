@@ -1,9 +1,12 @@
 package hevs.fragil.patapon.units;
 
+import java.util.Vector;
+
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
+import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.Spear;
 
@@ -35,7 +38,22 @@ public class Spearman extends Unit {
 	}
 	@Override
 	protected float findBestPosition() {
-		// TODO find the best position to shoot enemies
+		Vector<Unit> unitsInMap = new Vector<Unit>();
+		Company enemies = CurrentLevel.getLevel().getEnnemies();
+		
+		// Get enemies to place unit correctly
+		for (Section s : enemies.sections) {
+			for (Unit u : s.units) {
+					unitsInMap.add(u);
+			}
+		}
+		
+		/* if an enemy is in range, don't move, just shoot
+		 * else return destination */
+		float distance = Math.abs(getPosition().x - unitsInMap.get(1).getPosition().x);
+		
+		if(true);
+		
 		return getPosition().x;
 	}
 	@Override

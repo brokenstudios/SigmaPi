@@ -188,6 +188,7 @@ public abstract class Unit implements DrawableObject{
 		for (Section s : ennemies.sections) {
 			for (Unit u : s.units) {
 				float distance = u.getPosition().x - this.getPosition().x;
+				// Subtraction of a half-sprite to find center2center distance
 				distance = Math.abs(distance) - 64;
 				if(distance < this.skills.getRangeMax()){
 					unitsInRange.add(u);
