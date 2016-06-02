@@ -57,7 +57,6 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 	public boolean applyDamage(float damage) {
 		if(life > 0){
 			life -= damage;
-			System.out.println(damage + " applied, life : " + life);
 			if(life <= 0){
 				kill();
 				return true;
@@ -75,6 +74,7 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 		else return false;
 	}
 	public void kill() {
+		System.out.println("Killed !");
 		getBody().setFixedRotation(false);
 		applyBodyAngularImpulse(-1300, true);
 	}

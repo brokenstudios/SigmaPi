@@ -234,10 +234,10 @@ public class Level extends RenderingScreen {
 			for (Unit u : s.units) {
 				if (u.isDead()) {
 					toKill.add(u);
-					if(s.units.retainAll(toKill)){
-						toKill.add(s);
-					}
 				}
+			}
+			if(toKill.containsAll(s.units)){
+				toKill.add(s);
 			}
 		}
 		for (Object o : toKill) {
@@ -261,10 +261,10 @@ public class Level extends RenderingScreen {
 			for (Unit u : s.units) {
 				if (u.isDead()) {
 					toKill.add(u);
-					if(s.units.containsAll(toKill)){
-						toKill.add(s);
-					}
 				}
+			}
+			if(toKill.containsAll(s.units)){
+				toKill.add(s);
 			}
 		}
 		for (Object o : toKill) {
