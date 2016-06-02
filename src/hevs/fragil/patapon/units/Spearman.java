@@ -16,7 +16,7 @@ public class Spearman extends Unit {
 		this(1,Species.random(), false);
 	}
 	public Spearman(int lvl, Species species, boolean isEnnemi){
-		super(lvl, species, 10, 10, 10, 100, 50, 500, isEnnemi);
+		super(lvl, species, 10, 10, 10, 100, 100, 100, 0.5f, isEnnemi);
 	}
 	public String toString(){
 		return this.getClass().getSimpleName() + super.toString();
