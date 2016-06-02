@@ -29,7 +29,7 @@ public class Decor {
 		this.setBackground(b);
 		// Calculate a forest
 		Point<Float> origin = new Point<Float>(0f, (float) Param.FLOOR_DEPTH);
-		processForest(5, origin, 5, 200f, 5);
+		processForest(15, origin, 5, 200f, 5);
 	}
 
 	/**
@@ -54,27 +54,28 @@ public class Decor {
 	 */
 	public Vector3 cameraProcess(Company c1, Company c2) {
 
+		// Process absolute distance
 		float x1 = c1.getPosition();
 		float x2 = c2.getPosition();
+		float absDistance = Math.abs(x2 - x1);
 		
 		// Camera always stick on the floor
 		camera.x = x1 + Param.CAM_OFFSET;
 		camera.y = 0;
 
-		// Process absolute distance
-		float absDistance = Math.abs(x2 - x1);
-
-		// Here both companies are in window
-		if (absDistance < Param.CAM_WIDTH) {
+		// When companies are close enough OR if enemies too far camera follow heroes
+		if (absDistance < Param.CAM_WIDTH || absDistance > Param.CAM_RANGE) {
 			camera.z = 0;
+		}
 		
-		// Will adapt zoom until both companies are visible
-		} else if(absDistance < Param.CAM_RANGE){
-			System.out.println(("point"));
+		// When companies are not so far, camera will dezoom to show both
+		else if(absDistance < Param.CAM_RANGE){
+			System.out.println(("not so far"));
 			camera.z = 0.1f;
-			
-		} else {
-			// Input invalid!
+		}
+		
+		// Input invalid!
+		else {
 			camera.x = Param.CAM_OFFSET;
 			camera.z = 0;
 		}

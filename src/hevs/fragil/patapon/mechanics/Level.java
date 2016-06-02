@@ -34,7 +34,7 @@ public class Level extends RenderingScreen {
 	private Sequence sequence;
 	private SoundSample heNote, sNote, soNote, yesNote;
 	private SoundSample snap, track;
-	private Company ennemies = new Company();
+	private Company enemies = new Company();
 
 	private boolean debugActive = false;
 	private MusicFlag snapState = MusicFlag.STOPPED;
@@ -81,7 +81,7 @@ public class Level extends RenderingScreen {
 		decor = new Decor(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
 		PlayerCompany.getInstance().initRandomHeroes(3, 3, 4);
 
-		ennemies.initEnnemies(2, 1, 1);
+		enemies.initEnnemies(2, 3, 4);
 
 		// Load the sound files
 		heNote = new SoundSample("data/music/HE.wav");
@@ -159,8 +159,8 @@ public class Level extends RenderingScreen {
 		if (keycode == Keys.C) {
 			System.out.println("Camera pos = " + camera.x);
 			System.out.println("Company pos = " + PlayerCompany.getInstance().getHeroes().getPosition());
-			System.out.println(ennemies);
-			System.out.println(ennemies.isEmpty());
+			System.out.println(enemies);
+			System.out.println(enemies.isEmpty());
 		}
 		if (keycode == Keys.ESCAPE) {
 			dispose();
@@ -170,10 +170,10 @@ public class Level extends RenderingScreen {
 
 	public void onGraphicRender(GdxGraphics g) {
 		// process camera position inside map limits
-		if(ennemies.isEmpty())
+		if(enemies.isEmpty())
 			camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());			
 		else
-			camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes(), ennemies);
+			camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes(), enemies);
 
 		// apply camera position
 		g.moveCamera(camera.x, Param.FLOOR_DEPTH, Param.MAP_WIDTH, Param.MAP_HEIGHT);
@@ -207,7 +207,7 @@ public class Level extends RenderingScreen {
 			sequence.step();
 			killUnits();
 			PlayerCompany.getInstance().getHeroes().intelligentMove();
-			ennemies.intelligentMove();
+			enemies.intelligentMove();
 
 			// display help
 			g.drawStringCentered(800, "Fever : " + sequence.getFever());
@@ -221,7 +221,7 @@ public class Level extends RenderingScreen {
 			frame.draw(g);
 			sequence.draw(g);
 			PlayerCompany.getInstance().getHeroes().draw(g);
-			ennemies.draw(g);
+			enemies.draw(g);
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 
@@ -255,8 +255,8 @@ public class Level extends RenderingScreen {
 		}
 		toKill.removeAllElements();
 
-		// remove ennemies
-		c = ennemies;
+		// remove enemies
+		c = enemies;
 		for (Section s : c.sections) {
 			for (Unit u : s.units) {
 				if (u.isDead()) {
@@ -334,7 +334,7 @@ public class Level extends RenderingScreen {
 	}
 
 	public Company getEnnemies() {
-		return ennemies;
+		return enemies;
 	}
 
 	private void createJoints() {
