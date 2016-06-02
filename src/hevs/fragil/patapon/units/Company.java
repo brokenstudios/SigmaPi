@@ -157,7 +157,7 @@ public class Company implements DrawableObject {
 			sections.elementAt(2).add(new Shield(0,Species.TAPI,true));
 		}
 		
-		int initialPos = getWidth()/2 + 1600;
+		int initialPos = getWidth()/2 + 1000;
 		moveAbsolute(initialPos, 100);
 		
 		//Load the image files

@@ -27,7 +27,7 @@ public abstract class Unit implements DrawableObject{
 	private float opacity = 1f;
 	private BodyPolygon hitBox;
 	//Hysteresis pattern to avoid vibrations due to physics
-	private Vector2 antiVibration = new Vector2(0,0);
+	private Vector2 antiVibration;
 	
 	//Drawables
 	private SpriteSheet legs;
@@ -44,6 +44,7 @@ public abstract class Unit implements DrawableObject{
 		else
 			this.collisionGroup = Param.HEROES_GROUP;
 		nUnits++;
+		expression = Expression.RIGHT;
 	}	
 	public void setPosition(int newPos, double totalTime){
 		if(hitBox != null)
@@ -51,6 +52,7 @@ public abstract class Unit implements DrawableObject{
 		else{
 			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH), collisionGroup, skills.getLife());
 			hitBox.getBody().setFixedRotation(true);
+			antiVibration = new Vector2(newPos, Param.FLOOR_DEPTH);
 		}
 	}
 	protected Vector2 getPosition(){
@@ -90,10 +92,18 @@ public abstract class Unit implements DrawableObject{
 		//Hysteresis pattern to avoid vibrations due to physics
 		float x = Math.round(getPosition().x - g.getCamera().position.x + Param.CAM_WIDTH / 2);
 		float y = Math.round(getPosition().y - g.getCamera().position.y + Param.CAM_HEIGHT / 2 - 37);
-		if(antiVibration.x < x)
-			antiVibration.x = x;
-		if(antiVibration.y < y)
-			antiVibration.y = y;
+		if(hitBox.getBodyLinearVelocity().x > 0){
+			if(antiVibration.x < x)
+				antiVibration.x = x;
+			if(antiVibration.y < y)
+				antiVibration.y = y;
+		}
+		else {
+			if(antiVibration.x > x)
+				antiVibration.x = x;
+			if(antiVibration.y > y)
+				antiVibration.y = y;
+		}
 		return new Vector2(antiVibration.x, antiVibration.y);
 	}
 	@Override
@@ -101,9 +111,9 @@ public abstract class Unit implements DrawableObject{
 		float stateTime = CurrentLevel.getLevel().getStateTime();
 		if(enableDeadAnimation){
 			float angle = hitBox.getBodyAngle();
-			legs.drawRotatedFrameAlpha(0, angle, getDrawPosition(g).x, getDrawPosition(g).y, -32, -35, opacity);
-			body.drawRotatedFrameAlpha(0, angle, getDrawPosition(g).x, getDrawPosition(g).y, -32, -25, opacity);
-			eye.drawRotatedFrameAlpha(expression.ordinal(), angle, getDrawPosition(g).x, getDrawPosition(g).y, -32, -13, opacity);
+			legs.drawRotatedFrameAlpha(0, angle, getDrawPosition(g).x, hitBox.getBodyPosition().y, -32, -35, opacity);
+			body.drawRotatedFrameAlpha(0, angle, getDrawPosition(g).x, hitBox.getBodyPosition().y, -32, -25, opacity);
+			eye.drawRotatedFrameAlpha(expression.ordinal(), angle, getDrawPosition(g).x, hitBox.getBodyPosition().y, -32, -13, opacity);
 		}
 		else {
 			frameIndex = legs.drawAllFrames(stateTime, getDrawPosition(g).x, getDrawPosition(g).y);
