@@ -3,6 +3,7 @@ package hevs.fragil.patapon.drawables;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,9 +15,10 @@ public class SpriteSheet {
 	SpriteBatch spriteBatch;
 	TextureRegion currentFrame;
 	float frameDuration;
+	float preAnimDelay = 0f;
 	private boolean flipped = false;
 	
-	public SpriteSheet(String url, int cols, int rows, float frameDuration, boolean flipped){
+	public SpriteSheet(String url, int cols, int rows, float frameDuration, boolean flipped, boolean looping){
 		this.flipped = flipped;
 		this.frameDuration = frameDuration;
 		sheet = new Texture(Gdx.files.internal(url));
@@ -28,8 +30,17 @@ public class SpriteSheet {
                 sprites[index++] = new Sprite(tmp[i][j]);
             }
         }
+
         animation = new Animation(frameDuration, sprites);
         spriteBatch = new SpriteBatch();
+        
+        if(looping)
+        	animation.setPlayMode(PlayMode.LOOP);
+        else
+        	animation.setPlayMode(PlayMode.NORMAL);
+	}
+	public void setPreAnimDelay(float delay){
+		preAnimDelay = delay;
 	}
 	public void drawFrame(int frameIndex, int posX, int posY){
 		spriteBatch.begin();
@@ -127,7 +138,13 @@ public class SpriteSheet {
 		tmp.draw(spriteBatch, alpha);
 		spriteBatch.end();
 	}
-	public float getDelay() {
+	public float getFrameDuration() {
 		return frameDuration;
+	}
+	public float getPreAnimDelay() {
+		return preAnimDelay;
+	}
+	public boolean finished(float stateTime) {
+		return animation.isAnimationFinished(stateTime);
 	}
 }

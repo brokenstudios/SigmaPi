@@ -2,9 +2,6 @@ package hevs.fragil.patapon.units;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.fragil.patapon.mechanics.CurrentLevel;
-import hevs.fragil.patapon.mechanics.Param;
-import hevs.fragil.patapon.mechanics.PlayerCompany;
 
 public class Shield extends Unit {
 	static double modLife = +1.0;
@@ -26,7 +23,6 @@ public class Shield extends Unit {
 	}
 	@Override
 	public void attack(){
-		attackAnimation(ArmsLine.SHIELD);
 		for (Unit u : getUnitsInRange()) {
 			if(u.isFatal(skills.getAttack())){
 				//this will be fatal !
@@ -98,4 +94,12 @@ public class Shield extends Unit {
 //		}
 		return getPosition().x;
 	}	
+	@Override
+	public ArmsLine getAttackAnimation() {
+		return ArmsLine.SHIELD;
+	}
+	@Override
+	protected float getPreAnimationDelay() {
+		return 0.6f;
+	}
 }

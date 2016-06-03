@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
@@ -79,7 +80,7 @@ public class Level extends RenderingScreen {
 		CurrentLevel.setLevel(this);
 
 		decor = new Decor(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
-		PlayerCompany.getInstance().initRandomHeroes(3, 3, 4);
+		PlayerCompany.getInstance().initRandomHeroes(1, 3, 4);
 
 		enemies.initEnnemies(2, 3, 4);
 
@@ -224,7 +225,6 @@ public class Level extends RenderingScreen {
 			enemies.draw(g);
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
-
 	}
 
 	private void killUnits() {

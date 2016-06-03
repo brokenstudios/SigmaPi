@@ -1,14 +1,10 @@
 package hevs.fragil.patapon.units;
 
-import java.util.Vector;
-
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
-import hevs.fragil.patapon.mechanics.PlayerCompany;
 import hevs.fragil.patapon.physics.Spear;
 
 public class Spearman extends Unit {
@@ -27,7 +23,6 @@ public class Spearman extends Unit {
 	}
 	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition().x, Param.FLOOR_DEPTH+30);
-		attackAnimation(ArmsLine.SPEARMAN);
 		new Spear(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, level+5);
 	}
 	public void attack(){
@@ -96,5 +91,13 @@ public class Spearman extends Unit {
 //			}	
 //		}
 		return getPosition().x;
+	}
+	@Override
+	public ArmsLine getAttackAnimation() {
+		return ArmsLine.SPEARMAN;
+	}
+	@Override
+	protected float getPreAnimationDelay() {
+		return 0.6f;
 	}
 }

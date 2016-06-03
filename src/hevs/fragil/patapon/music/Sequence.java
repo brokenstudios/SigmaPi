@@ -180,6 +180,6 @@ public class Sequence implements DrawableObject {
 	 * This is only to load files in the PortableApplication onInit method
 	 */
 	public static void loadSprites(String url) {
-		drums = new SpriteSheet(url, 1, 4, 0.2f, false);
+		drums = new SpriteSheet(url, 1, 4, 0.2f, false, false);
 	}
 }

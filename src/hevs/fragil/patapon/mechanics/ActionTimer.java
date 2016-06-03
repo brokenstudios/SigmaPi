@@ -128,10 +128,11 @@ public abstract class ActionTimer{
 	}
 	private static boolean attack(Company c){
 		progression += deltaTime;
-
+		
+		
 		for (Section s : c.sections) {
 			for (Unit u : s.units) {
-					u.attack(deltaTime);
+				u.attackRoutine();
 			}
 		}
 		
