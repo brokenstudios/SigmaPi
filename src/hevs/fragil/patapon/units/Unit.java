@@ -21,9 +21,9 @@ public abstract class Unit implements DrawableObject{
 	protected Expression expression = Expression.DEFAULT;
 	protected int collisionGroup;
 	protected ArmsLine armsLine = ArmsLine.WALK;
+	protected boolean isEnnemi;
 	private boolean enableDeadAnimation = false;
 	private boolean defend = false;
-	private boolean isEnnemi;
 	private float opacity = 1f;
 	private BodyPolygon hitBox;
 	//Hysteresis pattern to avoid vibrations due to physics

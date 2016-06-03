@@ -2,6 +2,9 @@ package hevs.fragil.patapon.units;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
+import hevs.fragil.patapon.mechanics.CurrentLevel;
+import hevs.fragil.patapon.mechanics.Param;
+import hevs.fragil.patapon.mechanics.PlayerCompany;
 
 public class Shield extends Unit {
 	static double modLife = +1.0;
@@ -36,7 +39,62 @@ public class Shield extends Unit {
 	}
 	@Override
 	protected float findBestPosition() {
-		// TODO find the best position to shoot ennemies
+//		// Define victims according to the attacker
+//		Company victims;
+//		if(isEnnemi){
+//			victims = PlayerCompany.getInstance().getHeroes();
+//		}else{
+//			victims = CurrentLevel.getLevel().getEnnemies(); 
+//		}
+//		
+//		float distance = Math.abs(getPosition().x - victims.getPosition());
+//		
+//		// Enemies always attack (when in range)
+//		if(isEnnemi){
+//			if(distance < Param.SIGHT){
+//				// If enemies company is in range, return actual position (so no move)
+//				if(distance <= getSkills().getRangeMax() && distance >= getSkills().getRangeMin()){
+//					return getPosition().x;			
+//				}
+//				// Else if enemies too far, move forward 
+//				else if(distance >= getSkills().getRangeMax()){
+//					return getPosition().x + distance - getSkills().getRange();
+//				}
+//				// Else if enemies are too close, retreat a little
+//				else if(distance <= getSkills().getRangeMin()){
+//					return getPosition().x - distance + getSkills().getRange();
+//				}
+//				else{
+//					return getPosition().x;
+//				}
+//			}
+//			else{
+//				return getPosition().x;
+//			}	
+//		}
+//		// Heroes must wait for player action
+//		else{
+//			if(distance < Param.SIGHT){
+//				// If enemies company is in range, return actual position (so no move)
+//				if(distance <= getSkills().getRangeMax() && distance >= getSkills().getRangeMin()){
+//					return getPosition().x;			
+//				}
+//				// Else if enemies too far, move forward 
+//				else if(distance >= getSkills().getRangeMax()){
+//					return getPosition().x + distance - getSkills().getRange();
+//				}
+//				// Else if enemies are too close, retreat a little
+//				else if(distance <= getSkills().getRangeMin()){
+//					return getPosition().x - distance + getSkills().getRange();
+//				}
+//				else{
+//					return getPosition().x;
+//				}
+//			}
+//			else{
+//				return getPosition().x;
+//			}	
+//		}
 		return getPosition().x;
 	}	
 }

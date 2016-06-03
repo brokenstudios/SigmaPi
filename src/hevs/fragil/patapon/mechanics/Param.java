@@ -56,6 +56,7 @@ public abstract class Param {
 	public static final float COOLDOWN_BASE = .5f;
 	public static final int ATTACK_BASE = 5;
 	public static final int RANGE_BASE = 0;
+	public static final int SIGHT = 800;
 
 	public static final int HEROES_GROUP = -1;
 	public static final int ENNEMIES_GROUP = -2;
