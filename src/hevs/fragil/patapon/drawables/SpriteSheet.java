@@ -13,10 +13,12 @@ public class SpriteSheet {
 	Sprite[] sprites;
 	SpriteBatch spriteBatch;
 	TextureRegion currentFrame;
+	float frameDuration;
 	private boolean flipped = false;
 	
 	public SpriteSheet(String url, int cols, int rows, float frameDuration, boolean flipped){
 		this.flipped = flipped;
+		this.frameDuration = frameDuration;
 		sheet = new Texture(Gdx.files.internal(url));
         TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth()/cols, sheet.getHeight()/rows);
         sprites = new Sprite[cols * rows];
@@ -124,5 +126,8 @@ public class SpriteSheet {
 			tmp.flip(true, false);
 		tmp.draw(spriteBatch, alpha);
 		spriteBatch.end();
+	}
+	public float getDelay() {
+		return frameDuration;
 	}
 }

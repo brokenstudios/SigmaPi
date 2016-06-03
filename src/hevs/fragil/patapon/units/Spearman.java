@@ -27,6 +27,7 @@ public class Spearman extends Unit {
 	}
 	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition().x, Param.FLOOR_DEPTH+30);
+		attackAnimation(ArmsLine.SPEARMAN);
 		new Spear(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, level+5);
 	}
 	public void attack(){

@@ -1,6 +1,7 @@
 package hevs.fragil.patapon.units;
 import java.util.Vector;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
@@ -15,16 +16,17 @@ public abstract class Unit implements DrawableObject{
 	
 	//Skills
 	protected Skills skills;
-	protected float timeCounter;
+	protected float cooldownCounter;
+	protected float animationCounter;
 	protected int level = 1;
 	protected Species species = Species.TAPI;
 	protected Expression expression = Expression.DEFAULT;
-	protected int collisionGroup;
 	protected ArmsLine armsLine = ArmsLine.WALK;
 	protected boolean isEnnemi;
 	private boolean enableDeadAnimation = false;
 	private boolean defend = false;
 	private float opacity = 1f;
+	protected int collisionGroup;
 	private BodyPolygon hitBox;
 	//Hysteresis pattern to avoid vibrations due to physics
 	private Vector2 antiVibration;
@@ -44,9 +46,28 @@ public abstract class Unit implements DrawableObject{
 		else
 			this.collisionGroup = Param.HEROES_GROUP;
 		nUnits++;
-		expression = Expression.RIGHT;
-	}	
+	}
+	protected void attackAnimation(ArmsLine a, int frameToShoot){
+		setArmsLine(a);
+		animationCounter = arms.getDelay() * 4;
+	}
+	private void setArmsLine(ArmsLine a) {
+		armsLine = a;
+	}
+	protected void animationCount(float dt){
+		if(animationCounter > 0){
+			animationCounter -= dt;
+			if(animationCounter <= 0){
+				armsLine = ArmsLine.WALK;
+			}
+		}
+	}
 	public void setPosition(int newPos, double totalTime){
+		if(unitsInRange())
+			expression = Expression.ANGRY;
+		else 
+			expression = Expression.DEFAULT;
+		
 		if(hitBox != null)
 			hitBox.moveToLinear(newPos, totalTime);
 		else{
@@ -56,7 +77,10 @@ public abstract class Unit implements DrawableObject{
 		}
 	}
 	protected Vector2 getPosition(){
-		return hitBox.getBodyWorldCenter();
+		if(hitBox != null)
+			return hitBox.getBodyWorldCenter();
+		else
+			return new Vector2(0,0);
 	}
 	protected void setLife(int life){
 		this.skills.setLife(life);
@@ -65,10 +89,11 @@ public abstract class Unit implements DrawableObject{
 		return ", Level : "+ level + ", Life : " + skills.getLife();
 	}
 	public void attack(float dt){
-		timeCounter += dt;
-		if(timeCounter > skills.getCooldown()){
+		cooldownCounter += dt;
+		expression = Expression.ANGRY;
+		if(cooldownCounter > skills.getCooldown()){
 			attack();
-			timeCounter = 0f;
+			cooldownCounter = 0f;
 		}
 	}
 	public boolean isDefending(){
@@ -109,6 +134,7 @@ public abstract class Unit implements DrawableObject{
 	@Override
 	public void draw(GdxGraphics g){
 		float stateTime = CurrentLevel.getLevel().getStateTime();
+		animationCount(Gdx.graphics.getDeltaTime());
 		if(enableDeadAnimation){
 			float angle = hitBox.getBodyAngle();
 			legs.drawRotatedFrameAlpha(0, angle, getDrawPosition(g).x, hitBox.getBodyPosition().y, -32, -35, opacity);
@@ -213,6 +239,20 @@ public abstract class Unit implements DrawableObject{
 			}
 		}
 		return unitsInRange;
+	}
+	protected boolean unitsInRange(){
+		Company ennemies = CurrentLevel.getLevel().getEnnemies();
+		for (Section s : ennemies.sections) {
+			for (Unit u : s.units) {
+				float distance = u.getPosition().x - this.getPosition().x;
+				// Subtraction of a half-sprite to find center2center distance
+				distance = Math.abs(distance) - 64;
+				if(distance < this.skills.getRangeMax()){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	protected abstract float findBestPosition();
 	public void move(){

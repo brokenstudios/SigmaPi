@@ -2,8 +2,6 @@ package hevs.fragil.patapon.units;
 
 import com.badlogic.gdx.math.Vector2;
 
-import ch.hevs.gdx2d.lib.GdxGraphics;
-import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.mechanics.PlayerCompany;
 import hevs.fragil.patapon.physics.Arrow;
@@ -27,7 +25,7 @@ public class Archer extends Unit {
 	}
 	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition().x, Param.FLOOR_DEPTH+30);
-		armsLine = ArmsLine.ARCHER;
+		attackAnimation(ArmsLine.ARCHER);
 		new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, level+5);
 	}
 	@Override

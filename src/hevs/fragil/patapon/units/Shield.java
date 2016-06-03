@@ -26,6 +26,7 @@ public class Shield extends Unit {
 	}
 	@Override
 	public void attack(){
+		attackAnimation(ArmsLine.SHIELD);
 		for (Unit u : getUnitsInRange()) {
 			if(u.isFatal(skills.getAttack())){
 				//this will be fatal !
