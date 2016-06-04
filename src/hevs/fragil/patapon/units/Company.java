@@ -7,6 +7,7 @@ import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.Action;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.Arrow;
+import hevs.fragil.patapon.physics.Spear;
 
 public class Company implements DrawableObject {
 	public String name = "";
@@ -107,7 +108,14 @@ public class Company implements DrawableObject {
 	public void remove(Section s){
 		sections.remove(s);
 	}
-	public void initRandom(int nb1, int nb2, int nb3) {
+	/**
+	 * @param nb1 : number of archers
+	 * @param nb2 : number of swordmans
+	 * @param nb3 : number of shields
+	 * @return a sample company that contains {@code nb1} archers,
+	 * {@code nb2} swordmans and {@code nb3}shields.
+	 */
+	public void initRandomHeroes(int nb1, int nb2, int nb3){
 		for(int i = 0 ; i < 3; i++){
 			add(new Section(Integer.toString(i)));
 		}
@@ -121,21 +129,20 @@ public class Company implements DrawableObject {
 			sections.elementAt(2).add(new Shield());
 		}
 		
-		int initialPos = getWidth()/2 + Param.SECTION_KEEPOUT;
+		int initialPos = getWidth()/2 + 50;
 		moveAbsolute(initialPos, 100);
 		
 		//Load the image files
 		for (Section s : sections) {
 			for (Unit u : s.units) {
-				u.setBodySprite("data/images/bodies64x102.png", 1,1);
+				u.setBodySprite("data/images/bodies64x102.png", 5, 5);
 				u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
-				u.setLegsSprite("data/images/legs64x42.png", 4, 1);
+				u.setLegsSprite("data/images/legs2_64x42.png", 4, 1);
 				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
-		
-		setCollisionGroup(Param.HEROES_GROUP);
+		Spear.setImgPath("data/images/fleche.png");
 	}
 	@Override
 	public void draw(GdxGraphics g) {

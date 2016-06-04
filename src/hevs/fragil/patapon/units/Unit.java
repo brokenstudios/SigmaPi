@@ -210,8 +210,9 @@ public abstract class Unit implements DrawableObject {
 			attack();
 			cooldownCounter = 0;
 		}
-		else if (cooldownCounter >= getCooldown() - getPreAnimationDelay())
+		if (cooldownCounter >= getCooldown() - getPreAnimationDelay()){
 			launchAnimation(getAttackAnimation());
+		}
 	}
 
 	public void applyImpulse(int intensity) {
