@@ -23,7 +23,7 @@ public class Spearman extends Unit {
 	}
 	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition().x, Param.FLOOR_DEPTH+30);
-		new Spear(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, level+5);
+		new Spear(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, skills.getLevel()+5);
 	}
 	public void attack(){
 		attack(600);
@@ -93,8 +93,8 @@ public class Spearman extends Unit {
 		return getPosition().x;
 	}
 	@Override
-	public ArmsLine getAttackAnimation() {
-		return ArmsLine.SPEARMAN;
+	public Gesture getAttackAnimation() {
+		return Gesture.SPEARMAN;
 	}
 	@Override
 	protected float getPreAnimationDelay() {

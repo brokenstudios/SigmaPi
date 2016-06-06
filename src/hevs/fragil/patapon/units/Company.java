@@ -4,7 +4,7 @@ import java.util.Vector;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
-import hevs.fragil.patapon.mechanics.Action;
+import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.Arrow;
 import hevs.fragil.patapon.physics.Spear;
@@ -13,7 +13,7 @@ public class Company implements DrawableObject {
 	public String name = "";
 	double feverFactor = 0.1;
 	public Vector<Section> sections = new Vector<Section>();
-	private Action action;
+	private State action;
 	private boolean ready;
 	public Company(){
 		this(0,"noname");
@@ -88,14 +88,14 @@ public class Company implements DrawableObject {
 			}
 		}		
 	}
-	public Action getAction(){
+	public State getAction(){
 		return action;
 	}
 	public void add(Section s){
 		sections.addElement(s);
 	}
-	public void setAction(Action a){
-		if((ready && a != null) || a == Action.STOP){
+	public void setAction(State a){
+		if((ready && a != null) || a == State.STOP){
 			System.out.println("action set : " + a);
 			action = a;
 			ready = false;
@@ -137,7 +137,7 @@ public class Company implements DrawableObject {
 			for (Unit u : s.units) {
 				u.setBodySprite("data/images/bodies64x102.png", 5, 5);
 				u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
-				u.setLegsSprite("data/images/legs2_64x42.png", 4, 1);
+				u.setLegsSprite("data/images/legs2_64x42.png", 4, 1, false);
 				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
 			}
 		}
@@ -172,7 +172,7 @@ public class Company implements DrawableObject {
 			for (Unit u : s.units) {
 				u.setBodySprite("data/images/badbody64x102.png", 1,1);
 				u.setEyeSprite("data/images/badeyes64x54.png", 3, 1);
-				u.setLegsSprite("data/images/legs64x42.png", 4, 1);
+				u.setLegsSprite("data/images/legs64x42.png", 4, 1, true);
 				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
 				u.setExpression(Expression.ANGRY);
 			}

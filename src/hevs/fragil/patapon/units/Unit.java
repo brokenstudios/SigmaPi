@@ -7,47 +7,35 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
-import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
+import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.physics.BodyPolygon;
 
 public abstract class Unit implements DrawableObject {
-	static int nUnits;
-
-	// Skills
-	protected Skills skills;
-	protected float cooldownCounter;
-	protected float animationCounter = -1;
-	protected int level = 1;
-	protected Species species = Species.TAPI;
-	protected Expression expression = Expression.DEFAULT;
-	protected ArmsLine armsLine = ArmsLine.WALK;
 	protected boolean isEnnemi;
-	private boolean enableDeadAnimation = false;
-	private boolean defend = false;
-	private float opacity = 1f;
+	private Species species = Species.TAPI;
+	
+	protected Skills skills ;
+	protected UnitRender anim ;
+	
+	protected float cooldownCounter;
+	
 	protected int collisionGroup;
 	private BodyPolygon hitBox;
-	// Hysteresis pattern to avoid vibrations due to physics
-	private Vector2 antiVibration;
+	
 
-	// Drawables
-	private SpriteSheet legs;
-	private int legsIndex;
-	private int armsIndex;
-	protected SpriteSheet body, eye, arms;
-
-	Unit(int lvl, Species species, int attack, int defense, int life, int distance, int rangeMin, int rangeMax, float cooldown, boolean isEnnemi) {
-		this.species = species;
-		this.level = lvl;
-		this.skills = new Skills(life + lvl * 5, attack, rangeMax, rangeMin, defense, (float) (1f + Math.random() / 2.0));
+	Unit(int lvl, Species s, int attack, int defense, int life, int distance, int rangeMin, int rangeMax, float cooldown, boolean isEnnemi) {
+		this.skills = new Skills(lvl, life, attack, rangeMax, rangeMin, defense, (float) (1f + Math.random() / 2.0));
 		this.isEnnemi = isEnnemi;
+		this.species = s;
+		
+		anim = new UnitRender(4 * species.ordinal() + lvl);
+		
 		if (isEnnemi)
 			this.collisionGroup = Param.ENNEMIES_GROUP;
 		else
 			this.collisionGroup = Param.HEROES_GROUP;
-		nUnits++;
 	}
 
 	public void setPosition(int newPos, double totalTime) {
@@ -56,7 +44,6 @@ public abstract class Unit implements DrawableObject {
 		else {
 			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH), collisionGroup, skills.getLife());
 			hitBox.getBody().setFixedRotation(true);
-			antiVibration = new Vector2(newPos, Param.FLOOR_DEPTH);
 		}
 	}
 
@@ -71,95 +58,41 @@ public abstract class Unit implements DrawableObject {
 		this.skills.setLife(life);
 	}
 
-		protected abstract ArmsLine getAttackAnimation();
+	protected abstract Gesture getAttackAnimation();
 	protected abstract float getPreAnimationDelay();
-	protected void launchAnimation(ArmsLine a) {
-		armsLine = a;
-		if(animationCounter == -1)
-			animationCounter = 0;
-	}
 
-	public boolean isDefending() {
-		return defend;
-	}
-
-	public void setDefending(boolean defend) {
-		// TODO disable it after the defend routine
-		this.defend = defend;
+	public void setState(State s) {
+		anim.setState(s);
 	}
 
 	public void receive(float damage) {
 		if (damage > getDefense())
-			enableDeadAnimation = this.hitBox.applyDamage(damage);
+			if(this.hitBox.applyDamage(damage)){
+				anim.setState(State.DYING);
+			}
 	}
 
 	private float getDefense() {
-		if (defend)
+		if (anim.getState() == State.DEFEND)
 			return skills.getDefense();
 		else
 			return 0;
 	}
 
-	protected Vector2 getDrawPosition(GdxGraphics g) {
-		// Hysteresis pattern to avoid vibrations due to physics
-		float x = Math.round(getPosition().x - g.getCamera().position.x + Param.CAM_WIDTH / 2);
-		float y = Math.round(getPosition().y - g.getCamera().position.y + Param.CAM_HEIGHT / 2 - 37);
-		
-		if (hitBox.getBodyLinearVelocity().x > 0) {
-			if (antiVibration.x < x) antiVibration.x = x;
-			if (antiVibration.y < y) antiVibration.y = y;
-		} 
-		else {
-			if (antiVibration.x > x) antiVibration.x = x;
-			if (antiVibration.y > y) antiVibration.y = y;
-		}
-		
-		return new Vector2(antiVibration.x, antiVibration.y);
-	}
+	
 
 	@Override
 	public void draw(GdxGraphics g) {
-		if (unitsInRange()) expression = Expression.ANGRY;
-		else expression = Expression.DEFAULT;
-	
-		if (enableDeadAnimation) drawDead(g);
-		else drawAlive(g);
-	}
-
-	private void drawAlive(GdxGraphics g) {
-		armsAnimation();
-		
-		float stateTime = CurrentLevel.getLevel().getStateTime();
-		
-		legsIndex = legs.drawAllFrames(stateTime, getDrawPosition(g).x, getDrawPosition(g).y);
-		body.drawWalkAnimation(legsIndex, (4 * (species.ordinal())) + (level), getDrawPosition(g).x, getDrawPosition(g).y + 10, 32, 38);
-		eye.drawWalkAnimation(legsIndex, expression.ordinal(), getDrawPosition(g).x, getDrawPosition(g).y + 22, 32, 38);
-		armsIndex = arms.drawFrames(stateTime, armsLine.ordinal() * 4, 4, getDrawPosition(g).x, getDrawPosition(g).y);
-	}
-
-	private void drawDead(GdxGraphics g) {
-		armsAnimation();
-		
+		float x = Math.round(getPosition().x - g.getCamera().position.x + Param.CAM_WIDTH / 2);
+		float y = Math.round(getPosition().y - g.getCamera().position.y + Param.CAM_HEIGHT / 2 - 37);
 		float angle = hitBox.getBodyAngle();
 		
-		legs.drawRotatedFrameAlpha(0, angle, getDrawPosition(g).x, hitBox.getBodyPosition().y, -32, -35, opacity);
-		body.drawRotatedFrameAlpha(0, angle, getDrawPosition(g).x, hitBox.getBodyPosition().y, -32, -25, opacity);
-		eye.drawRotatedFrameAlpha(expression.ordinal(), angle, getDrawPosition(g).x, hitBox.getBodyPosition().y, -32, -13, opacity);
-	}
-
-	private void armsAnimation() {
-		float dt = Gdx.graphics.getDeltaTime();
-		
-		if(animationCounter >= 0){
-			animationCounter += dt;
-		}
-		if(animationCounter >= 4 * arms.getFrameDuration()){
-			armsLine = ArmsLine.WALK;
-			animationCounter = -1;
-		}
-	}
-	protected int getArmsIndex() {
-		return armsIndex;
+		if (unitsInRange()) 
+			anim.setExpression(Expression.ANGRY);
+		else 
+			anim.setExpression(Expression.DEFAULT);
+	
+		anim.draw(g,x,y,angle);
 	}
 
 	public void setDelay(int delay) {
@@ -185,14 +118,11 @@ public abstract class Unit implements DrawableObject {
 
 	public boolean isDead() {
 		if (getLife() <= 0) {
-			enableDeadAnimation = true;
-			expression = Expression.DEAD;
-			opacity -= 0.005f;
-			if (opacity <= 0) {
-				return true;
-			}
+			anim.setState(State.DYING);
+			anim.setExpression(Expression.DYING);
 		}
-		return false;
+		//decrease opacity until total disappear
+		return anim.die();
 	}
 
 	public void destroyBox() {
@@ -211,7 +141,7 @@ public abstract class Unit implements DrawableObject {
 			cooldownCounter = 0;
 		}
 		if (cooldownCounter >= getCooldown() - getPreAnimationDelay()){
-			launchAnimation(getAttackAnimation());
+			anim.launch(getAttackAnimation());
 		}
 	}
 
@@ -222,12 +152,12 @@ public abstract class Unit implements DrawableObject {
 	}
 
 	public void setExpression(Expression exp) {
-		expression = exp;
+		anim.setExpression(exp);
 	}
 
 	public int getEndurance() {
 		int defense = 0;
-		if (defend)
+		if (anim.getState() == State.DEFEND)
 			defense = skills.getDefense();
 		return skills.getLife() + defense;
 	}
@@ -285,36 +215,27 @@ public abstract class Unit implements DrawableObject {
 		return cooldownCounter;
 	}
 
-
-	/**
-	 * This is only to load files in the PortableApplication onInit method
-	 */
-	public void setLegsSprite(String url, int cols, int rows) {
-		legs = new SpriteSheet(url, cols, rows, 0.2f, isEnnemi, true);
-	}
-
-	/**
-	 * This is only to load files in the PortableApplication onInit method
-	 */
-	public void setBodySprite(String url, int cols, int rows) {
-		body = new SpriteSheet(url, cols, rows, 0.2f, false, true);
-	}
-
-	/**
-	 * This is only to load files in the PortableApplication onInit method
-	 */
-	public void setEyeSprite(String url, int cols, int rows) {
-		eye = new SpriteSheet(url, cols, rows, 0.2f, false, true);
-	}
-
-	/**
-	 * This is only to load files in the PortableApplication onInit method
-	 */
-	public void setArmsSprite(String url, int cols, int rows) {
-		arms = new SpriteSheet(url, cols, rows, 0.2f, false, false);
-	}
-
 	public String toString() {
-		return ", Level : " + level + ", Life : " + skills.getLife();
+		return ", Level : " + skills.getLevel() + ", Life : " + skills.getLife();
+	}
+	
+	/** This is only to load files in the PortableApplication onInit method */
+	public void setLegsSprite(String url, int cols, int rows, boolean isEnnemi) {
+		anim.setLegsSprite(url, cols, rows, isEnnemi);
+	}
+
+	/** This is only to load files in the PortableApplication onInit method */
+	public void setBodySprite(String url, int cols, int rows) {
+		anim.setBodySprite(url, cols, rows);
+	}
+
+	/** This is only to load files in the PortableApplication onInit method */
+	public void setEyeSprite(String url, int cols, int rows) {
+		anim.setEyeSprite(url, cols, rows);
+	}
+
+	/** This is only to load files in the PortableApplication onInit method */
+	public void setArmsSprite(String url, int cols, int rows) {
+		anim.setArmsSprite(url, cols, rows);
 	}
 }

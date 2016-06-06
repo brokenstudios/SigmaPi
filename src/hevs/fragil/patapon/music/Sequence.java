@@ -8,7 +8,7 @@ import com.badlogic.gdx.Gdx;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.fragil.patapon.mechanics.Action;
+import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.mechanics.Param;
 
 public class Sequence implements DrawableObject {
@@ -25,7 +25,7 @@ public class Sequence implements DrawableObject {
 	private static SpriteSheet drums;
 	
 
-	public Action add(Drum d, float lastRythm){
+	public State add(Drum d, float lastRythm){
 		toDraw.add(d);
 		drawCountDown = Param.NOTE_REMANENCE;
 		
@@ -40,7 +40,7 @@ public class Sequence implements DrawableObject {
 			pause = true;
 			clearFever();
 			endSequence();
-			return Action.STOP;
+			return State.STOP;
 		}
 	
 		feverScore += juge();
@@ -50,7 +50,7 @@ public class Sequence implements DrawableObject {
 		
 		melody.add(d);
 	
-		Action a = getAction();
+		State a = getAction();
 		return a;
 	}
 	/**
@@ -67,7 +67,7 @@ public class Sequence implements DrawableObject {
 	/**
 	 * @return the corresponding action
 	 * */
-	private Action getAction(){
+	private State getAction(){
 		if(melody.size() >= 4){
 			//compare the last 5 ones
 			int startIndex = Math.max(melody.size()-5, 0);
@@ -90,10 +90,10 @@ public class Sequence implements DrawableObject {
 			//when a match is found, return the corresponding action
 			for(int i = 0; i < Param.COMBOS.length; i++){
 				if(Arrays.equals(last5Notes,Param.COMBOS[i]) || Arrays.equals(last4Notes,Param.COMBOS[i])){
-					System.out.println("Sequence " + Action.values()[i] + " recognized !");
+					System.out.println("Sequence " + State.values()[i] + " recognized !");
 					endSequence();
 					sigmapisTimeCounter = 2f;
-					return Action.values()[i];				
+					return State.values()[i];				
 				}
 			}
 			
@@ -101,7 +101,7 @@ public class Sequence implements DrawableObject {
 			System.out.println("No possible sequence found... Fever goes down !");
 			clearFever();
 			endSequence();
-			return Action.STOP;
+			return State.STOP;
 		}
 		
 		return null;

@@ -95,8 +95,8 @@ public class Shield extends Unit {
 		return getPosition().x;
 	}	
 	@Override
-	public ArmsLine getAttackAnimation() {
-		return ArmsLine.SHIELD;
+	public Gesture getAttackAnimation() {
+		return Gesture.SHIELD;
 	}
 	@Override
 	protected float getPreAnimationDelay() {

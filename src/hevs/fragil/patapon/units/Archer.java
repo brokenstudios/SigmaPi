@@ -10,7 +10,6 @@ public class Archer extends Unit {
 	static double modLife = -0.2;
 	static Skills modifier;
 	static int nArchers = 0;
-	int force = level * 400;
 	
 	public Archer(){
 		this((int)(4*Math.random()),Species.random(), false);
@@ -24,7 +23,7 @@ public class Archer extends Unit {
 	}
 	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition().x, Param.FLOOR_DEPTH+30);
-		new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, level+5);
+		new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, skills.getLevel() + 5);
 	}
 	@Override
 	public void attack() {
@@ -91,8 +90,8 @@ public class Archer extends Unit {
 		return getPosition().x;
 	}
 	@Override
-	public ArmsLine getAttackAnimation() {
-		return ArmsLine.ARCHER;
+	public Gesture getAttackAnimation() {
+		return Gesture.ARCHER;
 	}
 	@Override
 	protected float getPreAnimationDelay() {

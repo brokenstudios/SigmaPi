@@ -16,7 +16,7 @@ public class PlayerCompany {
 		heroes.initRandomHeroes(1, 0, 0);
 	}
 
-	public void setAction(Action action) {
+	public void setAction(State action) {
 		heroes.setAction(action);
 	}
 

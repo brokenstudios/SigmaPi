@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 
 public class SpriteSheet {
 	Animation animation;
@@ -101,6 +102,9 @@ public class SpriteSheet {
 		spriteBatch.end();
 		return index;
 	}
+	public int drawAllFrames(float time, Vector2 pos){
+		return drawAllFrames(time, pos.x, pos.y);
+	}
 	public int drawFrames(float time, int startIndex, int nbFrames, float posX, float posY){
 		currentFrame = animation.getKeyFrame(time, true);
 		TextureRegion[] a = animation.getKeyFrames();
@@ -115,6 +119,9 @@ public class SpriteSheet {
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 		return index;
+	}
+	public int drawFrames(float stateTime, int startIndex, int nbFrames, Vector2 pos) {
+		return drawFrames(stateTime, startIndex, nbFrames, pos.x, pos.y);
 	}
 	public void drawFrameAlpha(int frameIndex, int posX, int posY, float alpha) {
 		spriteBatch.begin();
@@ -146,5 +153,8 @@ public class SpriteSheet {
 	}
 	public boolean finished(float stateTime) {
 		return animation.isAnimationFinished(stateTime);
+	}
+	public void drawRotatedFrameAlpha(int spriteNumber, float angle, Vector2 pos, int offsetX, int offsetY, float alpha) {
+		drawRotatedFrameAlpha(spriteNumber, angle, pos.x, pos.y, offsetX, offsetY, alpha);
 	}
 }

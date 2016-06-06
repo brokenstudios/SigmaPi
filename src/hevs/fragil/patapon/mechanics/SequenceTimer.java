@@ -8,7 +8,7 @@ import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.Unit;
 
-public abstract class ActionTimer{
+public abstract class SequenceTimer{
 	private static float step = 0;
 	private static float deltaTime;
 	private static float feverScore;
@@ -22,7 +22,7 @@ public abstract class ActionTimer{
 		feverScore = fever;
 		switchAction(c.getAction(), c);
 	}
-	private static void switchAction(Action a, Company c){
+	private static void switchAction(State a, Company c){
 		boolean finished = false;
 		if(a != null){
 			if(playing == false){

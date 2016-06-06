@@ -95,7 +95,7 @@ public class Level extends RenderingScreen {
 		floor = new Floor(decor.getWidth());
 		sequence = new Sequence();
 		Sequence.loadSprites("data/images/drums102x102.png");
-		ActionTimer.loadFiles();
+		SequenceTimer.loadFiles();
 
 		debugRenderer = new DebugRenderer();
 	}
@@ -103,7 +103,7 @@ public class Level extends RenderingScreen {
 	public void onKeyDown(int keycode) {
 		if (keycode == Keys.NUM_1) {
 			heNote.play();
-			Action toDo = sequence.add(Drum.HE, sinceLastRythm);
+			State toDo = sequence.add(Drum.HE, sinceLastRythm);
 			PlayerCompany.getInstance().setAction(toDo);
 		}
 		if (keycode == Keys.NUM_2) {
@@ -119,13 +119,13 @@ public class Level extends RenderingScreen {
 			PlayerCompany.getInstance().setAction(sequence.add(Drum.YES, sinceLastRythm));
 		}
 		if (keycode == Keys.A) {
-			PlayerCompany.getInstance().setAction(Action.ATTACK);
+			PlayerCompany.getInstance().setAction(State.ATTACK);
 		}
 		if (keycode == Keys.M) {
-			PlayerCompany.getInstance().setAction(Action.WALK);
+			PlayerCompany.getInstance().setAction(State.WALK);
 		}
 		if (keycode == Keys.R) {
-			PlayerCompany.getInstance().setAction(Action.RETREAT);
+			PlayerCompany.getInstance().setAction(State.RETREAT);
 		}
 		if (keycode == Keys.D) {
 			debugActive = !debugActive;
@@ -328,7 +328,7 @@ public class Level extends RenderingScreen {
 	}
 
 	private void action() {
-		ActionTimer.run(PlayerCompany.getInstance().getHeroes(), sequence.getFever());
+		SequenceTimer.run(PlayerCompany.getInstance().getHeroes(), sequence.getFever());
 	}
 
 	public Company getEnnemies() {
