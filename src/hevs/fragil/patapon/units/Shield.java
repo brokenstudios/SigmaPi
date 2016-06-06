@@ -95,11 +95,11 @@ public class Shield extends Unit {
 		return getPosition().x;
 	}	
 	@Override
-	public Gesture getAttackAnimation() {
+	public Gesture getAttackGesture() {
 		return Gesture.SHIELD;
 	}
 	@Override
-	protected float getPreAnimationDelay() {
+	protected float getAttackDelay() {
 		return 0.6f;
 	}
 }

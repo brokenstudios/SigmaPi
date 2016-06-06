@@ -93,11 +93,11 @@ public class Spearman extends Unit {
 		return getPosition().x;
 	}
 	@Override
-	public Gesture getAttackAnimation() {
+	public Gesture getAttackGesture() {
 		return Gesture.SPEARMAN;
 	}
 	@Override
-	protected float getPreAnimationDelay() {
+	protected float getAttackDelay() {
 		return 0.6f;
 	}
 }

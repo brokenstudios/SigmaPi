@@ -11,7 +11,7 @@ import hevs.fragil.patapon.mechanics.State;
 public class UnitRender {
 	private Expression expression = Expression.DEFAULT;
 	private Gesture gesture = Gesture.WALK;
-	private State state;
+	private State state = State.WALK;
 	private float opacity = 1f;
 	
 	private int bodyIndex;
@@ -20,11 +20,10 @@ public class UnitRender {
 	
 	protected float counter = -1;
 	
-	private Stabilizer pos;
+	private Stabilizer pos = new Stabilizer();
 	
 	public UnitRender (int bodyIndex){
 		this.bodyIndex = bodyIndex;
-		this.pos = new Stabilizer();
 	}
 	public Expression getExpression() {
 		return expression;
@@ -56,7 +55,6 @@ public class UnitRender {
 		armsAnimation();
 		
 		float stateTime = CurrentLevel.getLevel().getStateTime();
-		
 		int legsIndex = legs.drawAllFrames(stateTime, pos.stabilized(position));
 		body.drawWalkAnimation(legsIndex, bodyIndex, pos.stabilized(position).x, pos.stabilized(position).y + 10, 32, 38);
 		eye.drawWalkAnimation(legsIndex, expression.ordinal(), pos.stabilized(position).x, pos.stabilized(position).y + 22, 32, 38);
@@ -65,7 +63,6 @@ public class UnitRender {
 
 	private void drawDead(GdxGraphics g, Vector2 position, float angle) {
 		armsAnimation();
-		
 		legs.drawRotatedFrameAlpha(0, angle, pos.stabilized(position), -32, -35, opacity);
 		body.drawRotatedFrameAlpha(0, angle, pos.stabilized(position), -32, -25, opacity);
 		eye.drawRotatedFrameAlpha(expression.ordinal(), angle, pos.stabilized(position), -32, -13, opacity);

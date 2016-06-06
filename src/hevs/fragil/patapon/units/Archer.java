@@ -90,11 +90,11 @@ public class Archer extends Unit {
 		return getPosition().x;
 	}
 	@Override
-	public Gesture getAttackAnimation() {
+	public Gesture getAttackGesture() {
 		return Gesture.ARCHER;
 	}
 	@Override
-	protected float getPreAnimationDelay() {
+	protected float getAttackDelay() {
 		return 0.8f;
 	}
 }

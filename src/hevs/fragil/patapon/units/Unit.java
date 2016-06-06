@@ -17,7 +17,7 @@ public abstract class Unit implements DrawableObject {
 	private Species species = Species.TAPI;
 	
 	protected Skills skills ;
-	protected UnitRender anim ;
+	protected UnitRender render ;
 	
 	protected float cooldownCounter;
 	
@@ -26,11 +26,11 @@ public abstract class Unit implements DrawableObject {
 	
 
 	Unit(int lvl, Species s, int attack, int defense, int life, int distance, int rangeMin, int rangeMax, float cooldown, boolean isEnnemi) {
-		this.skills = new Skills(lvl, life, attack, rangeMax, rangeMin, defense, (float) (1f + Math.random() / 2.0));
+		skills = new Skills(lvl, life, attack, rangeMax, rangeMin, defense, (float) (1f + Math.random() / 2.0));
 		this.isEnnemi = isEnnemi;
 		this.species = s;
 		
-		anim = new UnitRender(4 * species.ordinal() + lvl);
+		render = new UnitRender(4 * species.ordinal() + lvl);
 		
 		if (isEnnemi)
 			this.collisionGroup = Param.ENNEMIES_GROUP;
@@ -58,22 +58,23 @@ public abstract class Unit implements DrawableObject {
 		this.skills.setLife(life);
 	}
 
-	protected abstract Gesture getAttackAnimation();
-	protected abstract float getPreAnimationDelay();
+	protected abstract Gesture getAttackGesture();
+	protected abstract float getAttackDelay();
 
 	public void setState(State s) {
-		anim.setState(s);
+		render.setState(s);
 	}
 
 	public void receive(float damage) {
-		if (damage > getDefense())
+		if (damage > getDefense()){
 			if(this.hitBox.applyDamage(damage)){
-				anim.setState(State.DYING);
+				render.setState(State.DYING);
 			}
+		}
 	}
 
 	private float getDefense() {
-		if (anim.getState() == State.DEFEND)
+		if (render.getState() == State.DEFEND)
 			return skills.getDefense();
 		else
 			return 0;
@@ -88,11 +89,11 @@ public abstract class Unit implements DrawableObject {
 		float angle = hitBox.getBodyAngle();
 		
 		if (unitsInRange()) 
-			anim.setExpression(Expression.ANGRY);
+			render.setExpression(Expression.ANGRY);
 		else 
-			anim.setExpression(Expression.DEFAULT);
+			render.setExpression(Expression.DEFAULT);
 	
-		anim.draw(g,x,y,angle);
+		render.draw(g,x,y,angle);
 	}
 
 	public void setDelay(int delay) {
@@ -118,11 +119,12 @@ public abstract class Unit implements DrawableObject {
 
 	public boolean isDead() {
 		if (getLife() <= 0) {
-			anim.setState(State.DYING);
-			anim.setExpression(Expression.DYING);
+			render.setState(State.DYING);
+			render.setExpression(Expression.DYING);
+			//decrease opacity until total disappear
+			return render.die();
 		}
-		//decrease opacity until total disappear
-		return anim.die();
+		else return false;
 	}
 
 	public void destroyBox() {
@@ -140,8 +142,8 @@ public abstract class Unit implements DrawableObject {
 			attack();
 			cooldownCounter = 0;
 		}
-		if (cooldownCounter >= getCooldown() - getPreAnimationDelay()){
-			anim.launch(getAttackAnimation());
+		if (cooldownCounter >= getCooldown() - getAttackDelay()){
+			render.launch(getAttackGesture());
 		}
 	}
 
@@ -152,12 +154,12 @@ public abstract class Unit implements DrawableObject {
 	}
 
 	public void setExpression(Expression exp) {
-		anim.setExpression(exp);
+		render.setExpression(exp);
 	}
 
 	public int getEndurance() {
 		int defense = 0;
-		if (anim.getState() == State.DEFEND)
+		if (render.getState() == State.DEFEND)
 			defense = skills.getDefense();
 		return skills.getLife() + defense;
 	}
@@ -221,21 +223,21 @@ public abstract class Unit implements DrawableObject {
 	
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setLegsSprite(String url, int cols, int rows, boolean isEnnemi) {
-		anim.setLegsSprite(url, cols, rows, isEnnemi);
+		render.setLegsSprite(url, cols, rows, isEnnemi);
 	}
 
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setBodySprite(String url, int cols, int rows) {
-		anim.setBodySprite(url, cols, rows);
+		render.setBodySprite(url, cols, rows);
 	}
 
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setEyeSprite(String url, int cols, int rows) {
-		anim.setEyeSprite(url, cols, rows);
+		render.setEyeSprite(url, cols, rows);
 	}
 
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setArmsSprite(String url, int cols, int rows) {
-		anim.setArmsSprite(url, cols, rows);
+		render.setArmsSprite(url, cols, rows);
 	}
 }
