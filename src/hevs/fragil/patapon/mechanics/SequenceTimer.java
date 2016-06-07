@@ -138,6 +138,12 @@ public abstract class SequenceTimer{
 		
 		//action ended
 		if(progression >= Param.ATTACK_TIME) {
+			System.out.println("ended");
+			for (Section s : c.sections) {
+				for (Unit u : s.units) {
+					u.resetGesture();
+				}
+			}
 			progression = 0f;
 			return true;
 		}

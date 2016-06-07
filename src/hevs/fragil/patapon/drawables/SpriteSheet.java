@@ -9,19 +9,35 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * SpriteSheet management class to provide easy drawing and initialization
+ * @author Loïc Gillioz
+ */
 public class SpriteSheet {
 	Animation animation;
 	Texture sheet;
 	Sprite[] sprites;
 	SpriteBatch spriteBatch;
 	TextureRegion currentFrame;
+	
 	float frameDuration;
 	float preAnimDelay = 0f;
 	private boolean flipped = false;
 	
+	/**
+	 * Initialize a new Spritesheet
+	 * @author Loïc Gillioz
+	 * @param url : the image location
+	 * @param cols : number of cols in your spritesheet image
+	 * @param rows : number of rows in your spritesheet image
+	 * @param frameDuration : duration of each frame of the animation
+	 * @param flipped : true if flipped
+	 * @param looping : true if looping animation
+	 */
 	public SpriteSheet(String url, int cols, int rows, float frameDuration, boolean flipped, boolean looping){
 		this.flipped = flipped;
 		this.frameDuration = frameDuration;
+		
 		sheet = new Texture(Gdx.files.internal(url));
         TextureRegion[][] tmp = TextureRegion.split(sheet, sheet.getWidth()/cols, sheet.getHeight()/rows);
         sprites = new Sprite[cols * rows];
@@ -40,9 +56,12 @@ public class SpriteSheet {
         else
         	animation.setPlayMode(PlayMode.NORMAL);
 	}
-	public void setPreAnimDelay(float delay){
-		preAnimDelay = delay;
-	}
+	/**
+	 * Draws a frame at given position
+	 * @param frameIndex : index of the frame in the spritesheet (left to right, up to down)
+	 * @param posX : x location in pixels
+	 * @param posY : y location in pixels
+	 */
 	public void drawFrame(int frameIndex, int posX, int posY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[frameIndex];
@@ -52,6 +71,15 @@ public class SpriteSheet {
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}
+	/**
+	 * Draws a special walk animation for unit bodies, simulates a walk effect by applying rotations
+	 * @param walkIndex : index of the walk animation from the legs
+	 * @param spriteNumber : frame to draw (in the body spritesheet)
+	 * @param posX : draw location in x 
+	 * @param posY : draw location in y
+	 * @param originX : x center of the frame (for rotation)
+	 * @param originY : y center of the frame (for rotation)
+	 */
 	public void drawWalkAnimation(int walkIndex, int spriteNumber, float posX, float posY, float originX, float originY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
@@ -76,16 +104,23 @@ public class SpriteSheet {
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}
-	public void drawRotatedFrame(int spriteNumber, float angle, float posX, float posY, float offsetX, float offsetY){
+	/**
+	 * Draws a rotated frame with a given angle
+	 * @param spriteNumber : index of the frame in the spritesheet table
+	 * @param angle : rotation angle applied in radians
+	 * @param posX : draw location in x 
+	 * @param posY : draw location in y
+	 * @param originX : x center of the frame (for rotation)
+	 * @param originY : y center of the frame (for rotation)
+	 */
+	public void drawRotatedFrame(int spriteNumber, float angle, float posX, float posY, float originX, float originY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
-		tmp.setOrigin(32, 38);
+		tmp.setOrigin(originX, originY);
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
 		tmp.setRotation((float)Math.toDegrees(angle));
-		float x = posX + (float) (offsetX * Math.cos(angle) + offsetY * Math.abs(Math.sin(angle)));
-		float y = posY + (float) (offsetY * Math.cos(angle) + (offsetX-10) * Math.abs(Math.sin(angle)));
-		tmp.setPosition(x, y);
+		tmp.setPosition(posX, posY);
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}

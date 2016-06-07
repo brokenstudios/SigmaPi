@@ -35,6 +35,6 @@ public class Archer extends Unit {
 	}
 	@Override
 	protected float getAttackDelay() {
-		return 0.8f;
+		return 0.6f;
 	}
 }

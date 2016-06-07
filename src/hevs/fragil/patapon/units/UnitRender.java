@@ -10,32 +10,47 @@ import hevs.fragil.patapon.mechanics.State;
 
 public class UnitRender {
 	private Expression expression = Expression.DEFAULT;
+	
 	private Gesture gesture = Gesture.WALK;
+	
 	private State state = State.WALK;
+	
 	private float opacity = 1f;
+	protected int nAttacks;
 	
 	private int bodyIndex;
 	
 	private SpriteSheet body, eye, arms, legs;
 	
 	protected float counter = -1;
+	protected float cooldownCounter;
+	
+	private boolean gestureRunning = false;
 	
 	private Stabilizer pos = new Stabilizer();
+	public boolean attack = false;
 	
+	/**
+	 * Constructor for a new UnitRender
+	 * @param bodyIndex : the body sprite index
+	 * @param preDelay : the delay for the attack animation
+	 */
 	public UnitRender (int bodyIndex){
 		this.bodyIndex = bodyIndex;
 	}
+	
+	
 	public Expression getExpression() {
 		return expression;
 	}
 	public void setExpression(Expression expression) {
 		this.expression = expression;
 	}
-	public Gesture getArmnimation() {
+	public Gesture getGesture() {
 		return gesture;
 	}
-	public void setArmnimation(Gesture armnimation) {
-		this.gesture = armnimation;
+	public void setGesture(Gesture gesture) {
+		this.gesture = gesture;
 	}
 
 	public void setState(State s) {
@@ -52,7 +67,7 @@ public class UnitRender {
 			drawAlive(g, pos.stabilized(x,y));
 	}
 	private void drawAlive(GdxGraphics g, Vector2 position) {
-		armsAnimation();
+		gestureSwitch();
 		
 		float stateTime = CurrentLevel.getLevel().getStateTime();
 		int legsIndex = legs.drawAllFrames(stateTime, pos.stabilized(position));
@@ -62,12 +77,12 @@ public class UnitRender {
 	}
 
 	private void drawDead(GdxGraphics g, Vector2 position, float angle) {
-		armsAnimation();
-		legs.drawRotatedFrameAlpha(0, angle, pos.stabilized(position), -32, -35, opacity);
-		body.drawRotatedFrameAlpha(0, angle, pos.stabilized(position), -32, -25, opacity);
+		gestureSwitch();
+		legs.drawRotatedFrameAlpha(0, angle, position, -32, -35, opacity);
+		body.drawRotatedFrameAlpha(0, angle, position, -32, -25, opacity);
 		eye.drawRotatedFrameAlpha(expression.ordinal(), angle, pos.stabilized(position), -32, -13, opacity);
 	}
-	private void armsAnimation() {
+	private void gestureSwitch() {
 		float dt = Gdx.graphics.getDeltaTime();
 		
 		if(counter >= 0){
@@ -79,9 +94,12 @@ public class UnitRender {
 		}
 	}
 	protected void launch(Gesture a) {
-		setArmnimation(a);
-		if(counter == -1)
-			counter = 0;
+		if(gesture != a){
+			System.out.println("gesture "+a+" launched");
+			setGesture(a);
+			if(counter == -1)
+				counter = 0;
+		}
 	}
 	public boolean die() {
 		opacity -= 0.005f;
@@ -108,5 +126,8 @@ public class UnitRender {
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setArmsSprite(String url, int cols, int rows) {
 		arms = new SpriteSheet(url, cols, rows, 0.2f, false, false);
+	}
+	public boolean gestureRunning() {
+		return gestureRunning;
 	}
 }

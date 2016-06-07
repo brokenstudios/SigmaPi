@@ -20,14 +20,17 @@ public abstract class Unit implements DrawableObject {
 	protected Skills skills ;
 	protected UnitRender render ;
 	
-	protected float cooldownCounter;
+	private float counter;
+	
+	private int attackStep;
+	private int nAttacks;
 	
 	protected int collisionGroup;
 	private BodyPolygon hitBox;
 	
 
 	Unit(int lvl, Species s, int attack, int defense, int life, int distance, int rangeMin, int rangeMax, float cooldown, boolean isEnnemi) {
-		skills = new Skills(lvl, life, attack, rangeMax, rangeMin, defense, (float) (1f + Math.random() / 2.0));
+		skills = new Skills(lvl, life, attack, rangeMax, rangeMin, defense, cooldown);
 		this.isEnnemi = isEnnemi;
 		this.species = s;
 		
@@ -80,8 +83,6 @@ public abstract class Unit implements DrawableObject {
 		else
 			return 0;
 	}
-
-	
 
 	@Override
 	public void draw(GdxGraphics g) {
@@ -138,13 +139,42 @@ public abstract class Unit implements DrawableObject {
 	
 	public void attackRoutine(){
 		float dt = Gdx.graphics.getDeltaTime();
-		cooldownCounter += dt;
-		if(cooldownCounter >= getCooldown()){
-			attack();
-			cooldownCounter = 0;
+		counter += dt;
+
+		if(attackStep == 0){
+			System.out.println("cooldown");
+			if(counter >= getCooldown()){
+				//le temps de faire encore un tir ?
+				if(nAttacks < (int)(2f / (getCooldown()+0.8f))){
+					render.launch(getAttackGesture());
+					attackStep++;
+					counter = 0;
+				}
+				else {
+					System.out.println("on tire plus du tout poto");
+					attackStep = 0;
+					counter = 0;
+					nAttacks = 0;
+				}
+			}
 		}
-		if (cooldownCounter >= getCooldown() - getAttackDelay()){
-			render.launch(getAttackGesture());
+		else if(attackStep == 1){
+			System.out.println("pre delay");
+			if(counter >= getAttackDelay()){
+				counter = 0;
+				System.out.println("attack launched at :" + counter);
+				attack();
+				nAttacks++;
+				System.out.println(nAttacks);
+				attackStep++;
+			}
+		}
+		else if(attackStep == 2){
+			System.out.println("postdelay at :"  + counter);
+			if(counter >= 0.8f - getAttackDelay()){
+				counter = 0;
+				attackStep = 0;
+			}
 		}
 	}
 
@@ -255,7 +285,7 @@ public abstract class Unit implements DrawableObject {
 	}
 
 	public float getCounter() {
-		return cooldownCounter;
+		return counter;
 	}
 
 	public String toString() {
@@ -280,5 +310,9 @@ public abstract class Unit implements DrawableObject {
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setArmsSprite(String url, int cols, int rows) {
 		render.setArmsSprite(url, cols, rows);
+	}
+
+	public void resetGesture() {
+		
 	}
 }
