@@ -205,8 +205,8 @@ public class Level extends RenderingScreen {
 			action();
 			sequence.step();
 			killUnits();
-			PlayerCompany.getInstance().getHeroes().intelligentMove();
-			enemies.intelligentMove();
+			PlayerCompany.getInstance().getHeroes().aiMove();
+			enemies.aiMove();
 
 			// display help
 			g.drawStringCentered(800, "Fever : " + sequence.getFever());

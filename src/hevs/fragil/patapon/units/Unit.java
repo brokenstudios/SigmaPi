@@ -9,6 +9,7 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
+import hevs.fragil.patapon.mechanics.PlayerCompany;
 import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.physics.BodyPolygon;
 
@@ -88,7 +89,7 @@ public abstract class Unit implements DrawableObject {
 		float y = Math.round(getPosition().y - g.getCamera().position.y + Param.CAM_HEIGHT / 2 - 37);
 		float angle = hitBox.getBodyAngle();
 		
-		if (unitsInRange()) 
+		if (unitsInSight()) 
 			render.setExpression(Expression.ANGRY);
 		else 
 			render.setExpression(Expression.DEFAULT);
@@ -188,25 +189,65 @@ public abstract class Unit implements DrawableObject {
 	}
 
 	protected boolean unitsInRange() {
-		Company ennemies = CurrentLevel.getLevel().getEnnemies();
-		for (Section s : ennemies.sections) {
-			for (Unit u : s.units) {
-				float distance = u.getPosition().x - this.getPosition().x;
-				// Subtraction of a half-sprite to find center2center distance
-				distance = Math.abs(distance) - 64;
-				if (distance < this.skills.getRangeMax()) {
-					return true;
-				}
-			}
+		if (unitToEnemiDistance() > skills.getRangeMin() && unitToEnemiDistance() < skills.getRangeMax()) {
+			return true;
+		}
+		return false;
+	}
+	protected boolean unitsInSight() {
+		if (unitToEnemiDistance() < Param.SIGHT) {
+			return true;
 		}
 		return false;
 	}
 
-	protected abstract float findBestPosition();
+	protected boolean unitsTooClose() {
+		if (unitToEnemiDistance() < skills.getRangeMin()) {
+			return true;
+		}
+		return false;
+	}
+	protected boolean unitsTooFar() {
+		if (unitToEnemiDistance() > skills.getRangeMax()) {
+			return true;
+		}
+		return false;
+	}
 
-	public void move() {
-		if (findBestPosition() != getPosition().x)
-			setPosition((int) findBestPosition(), Math.abs(getPosition().x - findBestPosition()) / Param.UNIT_SPEED);
+	protected float unitToEnemiDistance() {
+		Company enemies;
+		if(isEnnemi)enemies = PlayerCompany.getInstance().getHeroes();
+		else enemies = CurrentLevel.getLevel().getEnnemies();
+		
+		float distance = -1;
+		for (Section s : enemies.sections) {
+			for (Unit u : s.units) {
+				if(distance > u.getPosition().x - getPosition().x || distance == -1)
+					distance = u.getPosition().x - getPosition().x;
+			}
+		}
+		distance = Math.abs(distance) - 64;
+		return distance;
+	}
+
+	public void aiMove() {
+		float dt = Gdx.graphics.getDeltaTime();
+		
+		if(unitsInSight()){
+			// If enemies company is not in range, we must move
+			if(!unitsInRange()){
+				// Else if enemies are too close, move backward
+				if(unitsTooClose() && !isEnnemi || unitsTooFar() && isEnnemi){
+					int newPos = (int)(getPosition().x - Param.UNIT_SPEED * dt);
+					setPosition(newPos, dt);
+				}
+				// Else if enemies too far, move forward 
+				else {
+					int newPos = (int)(getPosition().x + Param.UNIT_SPEED * dt);
+					setPosition(newPos, dt);
+				}
+			}
+		}
 	}
 
 	public float getCooldown() {

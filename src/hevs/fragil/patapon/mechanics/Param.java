@@ -82,7 +82,8 @@ public abstract class Param {
 	public static final Drum[] 		RETREAT = {Drum.S, Drum.HE, Drum.S, Drum.HE};
 	public static final Drum[] 		CHARGE = {Drum.S, Drum.S, Drum.SO, Drum.SO};
 	public static final Drum[][]	COMBOS = {WALK,ATTACK,DEFEND,MIRACLE,RETREAT,CHARGE};
-
+	
+	//pixels per second
 	public static final int UNIT_SPEED = 100;
 	
 	//Colors

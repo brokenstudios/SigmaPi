@@ -179,10 +179,10 @@ public class Company implements DrawableObject {
 		}
 		Arrow.setImgPath("data/images/fleche.png");
 	}
-	public void intelligentMove() {
+	public void aiMove() {
 		for (Section s : sections) {
 			for (Unit u : s.units) {
-				u.move();
+				u.aiMove();
 			}
 		}
 	}
