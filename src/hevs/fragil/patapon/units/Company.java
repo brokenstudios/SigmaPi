@@ -2,6 +2,8 @@ package hevs.fragil.patapon.units;
 import java.util.Iterator;
 import java.util.Vector;
 
+import com.badlogic.gdx.graphics.Color;
+
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.State;
@@ -15,6 +17,8 @@ public class Company implements DrawableObject {
 	public Vector<Section> sections = new Vector<Section>();
 	private State action;
 	private boolean ready;
+	private int fixedPos;
+	
 	public Company(){
 		this(0,"noname");
 	}
@@ -25,7 +29,7 @@ public class Company implements DrawableObject {
 		this(pos, "noname");
 	}
 	public Company(int pos, String name){
-		moveAbsolute(pos, 0.1);
+		setPosition(pos, 0.1);
 		this.name = name;   
 		this.ready = true;
 	}
@@ -76,11 +80,13 @@ public class Company implements DrawableObject {
 		int nSections = sections.size();
 		return (int)(width + (nSections-1)*Param.SECTION_KEEPOUT);
 	}
-	public void moveAbsolute(int newPos, double totalTime){
+	public void setPosition(int newPos, double totalTime){
 		int width = getWidth();
 		float screenMargin = newPos - width/2f;
+		
 		if(screenMargin > 0){
 			float tempPos = screenMargin;
+			fixedPos = newPos;
 			for (Section section : sections) {
 				tempPos += section.getWidth()/2f;
 				section.move((int)tempPos,totalTime);
@@ -130,7 +136,7 @@ public class Company implements DrawableObject {
 		}
 		
 		int initialPos = getWidth()/2 + 50;
-		moveAbsolute(initialPos, 100);
+		setPosition(initialPos, 100);
 		
 		//Load the image files
 		for (Section s : sections) {
@@ -149,6 +155,11 @@ public class Company implements DrawableObject {
 		for (Section section : sections) {
 			section.draw(g);
 		}
+		
+		// Only to debug move processing
+//		g.drawFilledCircle(getPosition(), Param.FLOOR_DEPTH, 10, Color.YELLOW);
+//		g.drawCircle(getPosition() - Param.COMPANY_WIDTH, Param.FLOOR_DEPTH, 10);
+//		g.drawCircle(getPosition() + Param.COMPANY_WIDTH, Param.FLOOR_DEPTH, 10);
 	}
 	public void initEnnemies(int nb1, int nb2, int nb3) {
 		for(int i = 0 ; i < 3; i++){
@@ -165,7 +176,7 @@ public class Company implements DrawableObject {
 		}
 		
 		int initialPos = getWidth()/2 + 1000;
-		moveAbsolute(initialPos, 100);
+		setPosition(initialPos, 100);
 		
 		//Load the image files
 		for (Section s : sections) {
@@ -182,7 +193,7 @@ public class Company implements DrawableObject {
 	public void aiMove() {
 		for (Section s : sections) {
 			for (Unit u : s.units) {
-				u.aiMove();
+				u.aiMove(fixedPos);
 			}
 		}
 	}

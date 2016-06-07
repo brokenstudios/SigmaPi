@@ -60,7 +60,7 @@ public abstract class Param {
 	public static final int RANGE_BASE = 0;
 	public static final int SIGHT = 800;
 	// Ranges where units can move without restrictions
-	public static final int COMPANY_WIDTH = 300;
+	public static final int COMPANY_WIDTH = 500;
 	public static final int SECTION_WIDTH = 100;
 
 	public static final int HEROES_GROUP = -1;

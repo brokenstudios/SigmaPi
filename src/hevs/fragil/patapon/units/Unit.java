@@ -14,7 +14,7 @@ import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.physics.BodyPolygon;
 
 public abstract class Unit implements DrawableObject {
-	protected boolean isEnnemi;
+	protected boolean isEnemy;
 	private Species species = Species.TAPI;
 	
 	protected Skills skills ;
@@ -28,7 +28,7 @@ public abstract class Unit implements DrawableObject {
 
 	Unit(int lvl, Species s, int attack, int defense, int life, int distance, int rangeMin, int rangeMax, float cooldown, boolean isEnnemi) {
 		skills = new Skills(lvl, life, attack, rangeMax, rangeMin, defense, (float) (1f + Math.random() / 2.0));
-		this.isEnnemi = isEnnemi;
+		this.isEnemy = isEnnemi;
 		this.species = s;
 		
 		render = new UnitRender(4 * species.ordinal() + lvl);
@@ -213,7 +213,7 @@ public abstract class Unit implements DrawableObject {
 
 	protected float unitToEnemiDistance() {
 		Company enemies;
-		if(isEnnemi)enemies = PlayerCompany.getInstance().getHeroes();
+		if(isEnemy)enemies = PlayerCompany.getInstance().getHeroes();
 		else enemies = CurrentLevel.getLevel().getEnnemies();
 		
 		float distance = -1;
@@ -234,40 +234,37 @@ public abstract class Unit implements DrawableObject {
 	protected boolean unitInCompanyRange(){
 		float dt = Gdx.graphics.getDeltaTime();
 		int newPos;
+		Range companyRange = new Range(getPosition().x - Param.COMPANY_WIDTH, getPosition().x + Param.COMPANY_WIDTH);
 		
 		// First, process new position
 		// Else if enemies are too close, set move to left
-		if(unitsTooClose() && !isEnnemi || unitsTooFar() && isEnnemi){
-			newPos = (int)(getPosition().x - Param.UNIT_SPEED * dt);	
+		if(unitsTooClose() && !isEnemy || unitsTooFar() && isEnemy){
+			newPos = (int)(getPosition().x - Param.UNIT_SPEED * dt);			
 		}
 		// Else if enemies too far, set move to right 
 		else {
 			newPos = (int)(getPosition().x + Param.UNIT_SPEED * dt);
 		}
-		
-		// Then return boolean depending of range
-		// Two vectors containing company max/min and new position max/min ranges
-		// TODO replace vector2 x/y by something else
-		Range companyRange = new Range(getPosition().x + Param.COMPANY_WIDTH, getPosition().x - Param.COMPANY_WIDTH);
-		Range posRange = new Range(newPos - getPosition().x, newPos + getPosition().x);
-		
-		// Return true when unit could move freely
-		if(posRange.getMin() > companyRange.getMin() && posRange.getMax() < companyRange.getMax()){
-			return true;
-		}
-		else{
+	
+		// Then if destination is in company range, do not move anymore
+		if(newPos > companyRange.getMax() && newPos < companyRange.getMin()){
 			return false;
+		}
+		// If unit is a NPC, it can move, else must wait until player action 
+		else{
+			// Problem, company center follow unit, so how block player company and not enemies
+			return isEnemy? true : false;
 		}
 	}
 
-	public void aiMove() {
+	public void aiMove(int fixedPos) {
 		float dt = Gdx.graphics.getDeltaTime();
 		
 		if(unitsInSight()){
 			// If enemies company is not in range, unit must move
 			if(!unitsInRange()){
 				// Else if enemies are too close, move to the left
-				if(unitsTooClose() && !isEnnemi || unitsTooFar() && isEnnemi){
+				if(unitsTooClose() && !isEnemy || unitsTooFar() && isEnemy){
 					int newPos = (int)(getPosition().x - Param.UNIT_SPEED * dt);
 					//If units are in range, check if they're reachable in company range
 					if(unitInCompanyRange()){
@@ -278,6 +275,7 @@ public abstract class Unit implements DrawableObject {
 				else {
 					int newPos = (int)(getPosition().x + Param.UNIT_SPEED * dt);
 					//If units are in range, check if they're reachable in company range
+					// TODO fix Player company moving, only enemies are allowed to
 					if(unitInCompanyRange()){
 						setPosition(newPos, dt);						
 					}
