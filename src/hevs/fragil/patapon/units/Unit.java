@@ -81,8 +81,6 @@ public abstract class Unit implements DrawableObject {
 			return 0;
 	}
 
-	
-
 	@Override
 	public void draw(GdxGraphics g) {
 		float x = Math.round(getPosition().x - g.getCamera().position.x + Param.CAM_WIDTH / 2);
@@ -131,10 +129,8 @@ public abstract class Unit implements DrawableObject {
 	public void destroyBox() {
 		hitBox.destroy();
 	}
-
 	
 	protected abstract void attack();
-	
 	
 	public void attackRoutine(){
 		float dt = Gdx.graphics.getDeltaTime();
@@ -207,6 +203,7 @@ public abstract class Unit implements DrawableObject {
 		}
 		return false;
 	}
+	
 	protected boolean unitsTooFar() {
 		if (unitToEnemiDistance() > skills.getRangeMax()) {
 			return true;
@@ -229,22 +226,61 @@ public abstract class Unit implements DrawableObject {
 		distance = Math.abs(distance) - 64;
 		return distance;
 	}
+	
+	/**
+	 * Check if new position is available in company range
+	 * @return true when allright
+	 */
+	protected boolean unitInCompanyRange(){
+		float dt = Gdx.graphics.getDeltaTime();
+		int newPos;
+		
+		// First, process new position
+		// Else if enemies are too close, set move to left
+		if(unitsTooClose() && !isEnnemi || unitsTooFar() && isEnnemi){
+			newPos = (int)(getPosition().x - Param.UNIT_SPEED * dt);	
+		}
+		// Else if enemies too far, set move to right 
+		else {
+			newPos = (int)(getPosition().x + Param.UNIT_SPEED * dt);
+		}
+		
+		// Then return boolean depending of range
+		// Two vectors containing company max/min and new position max/min ranges
+		// TODO replace vector2 x/y by something else
+		Range companyRange = new Range(getPosition().x + Param.COMPANY_WIDTH, getPosition().x - Param.COMPANY_WIDTH);
+		Range posRange = new Range(newPos - getPosition().x, newPos + getPosition().x);
+		
+		// Return true when unit could move freely
+		if(posRange.getMin() > companyRange.getMin() && posRange.getMax() < companyRange.getMax()){
+			return true;
+		}
+		else{
+			return false;
+		}
+	}
 
 	public void aiMove() {
 		float dt = Gdx.graphics.getDeltaTime();
 		
 		if(unitsInSight()){
-			// If enemies company is not in range, we must move
+			// If enemies company is not in range, unit must move
 			if(!unitsInRange()){
-				// Else if enemies are too close, move backward
+				// Else if enemies are too close, move to the left
 				if(unitsTooClose() && !isEnnemi || unitsTooFar() && isEnnemi){
 					int newPos = (int)(getPosition().x - Param.UNIT_SPEED * dt);
-					setPosition(newPos, dt);
+					//If units are in range, check if they're reachable in company range
+					if(unitInCompanyRange()){
+						setPosition(newPos, dt);						
+					}
 				}
-				// Else if enemies too far, move forward 
+				// Else if enemies too far, move to right 
 				else {
 					int newPos = (int)(getPosition().x + Param.UNIT_SPEED * dt);
-					setPosition(newPos, dt);
+					//If units are in range, check if they're reachable in company range
+					if(unitInCompanyRange()){
+						setPosition(newPos, dt);						
+					}
 				}
 			}
 		}

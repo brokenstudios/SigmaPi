@@ -53,10 +53,15 @@ public abstract class Param {
 	public static final float WALK_TIME_BONUS = .5f;
 	public static final float RETREAT_TIME_BONUS = .1f;
 
+	//********************************************************
+	//Units parameters
 	public static final float COOLDOWN_BASE = .5f;
 	public static final int ATTACK_BASE = 5;
 	public static final int RANGE_BASE = 0;
 	public static final int SIGHT = 800;
+	// Ranges where units can move without restrictions
+	public static final int COMPANY_WIDTH = 300;
+	public static final int SECTION_WIDTH = 100;
 
 	public static final int HEROES_GROUP = -1;
 	public static final int ENNEMIES_GROUP = -2;
@@ -65,6 +70,7 @@ public abstract class Param {
 	public static final float ATTACK_TIME = 2f;
 	public static final float CHARGE_TIME = 2f;
 	public static final float DEFEND_TIME = 2f;
+	//********************************************************
 	
 	//Music tolerances 
 	public static final float PASS = .1f;
