@@ -183,7 +183,7 @@ public class Company implements DrawableObject {
 		for (Section s : sections) {
 			for (Unit u : s.units) {
 				u.setBodySprite("data/images/badbody64x102.png", 1,1);
-				u.setEyeSprite("data/images/badeyes64x54.png", 3, 1);
+				u.setEyeSprite("data/images/badeyes64x54.png", 7, 1);
 				u.setLegsSprite("data/images/legs64x42.png", 4, 1, true);
 				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
 				u.setExpression(Look.ANGRY);

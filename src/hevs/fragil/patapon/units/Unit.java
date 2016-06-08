@@ -93,8 +93,10 @@ public abstract class Unit implements DrawableObject {
 		
 		if (unitsInRange()) 
 			render.setLook(Look.ANGRY);
-		else if(unitsInSight() && !isEnemy)
-			render.setLook(Look.RIGHT);
+		else if(unitsInSight()){
+			if(isEnemy) render.setLook(Look.LEFT);
+			else render.setLook(Look.RIGHT);
+		}
 		else 
 			render.setLook(Look.DEFAULT);
 	
