@@ -144,24 +144,23 @@ public abstract class Unit implements DrawableObject {
 		counter += dt;
 
 		if(attackStep == 0){
-			System.out.println("cooldown");
 			if(counter >= getCooldown()){
+				System.out.println("cooldown at : " + counter);
+				System.out.println("n attacks : " + nAttacks);
 				//le temps de faire encore un tir ?
 				if(nAttacks < (int)(2f / (getCooldown()+0.8f))){
+					System.out.println("étape suivante");
 					render.launch(getAttackGesture());
 					attackStep++;
 					counter = 0;
 				}
 				else {
-					System.out.println("on tire plus du tout poto");
-					attackStep = 0;
-					counter = 0;
-					nAttacks = 0;
+					System.out.println("plus le temps de tirer, bro !");
 				}
 			}
 		}
 		else if(attackStep == 1){
-			System.out.println("pre delay");
+			System.out.println("pre delay at : " + counter);
 			if(counter >= getAttackDelay()){
 				counter = 0;
 				System.out.println("attack launched at :" + counter);
@@ -172,7 +171,7 @@ public abstract class Unit implements DrawableObject {
 			}
 		}
 		else if(attackStep == 2){
-			System.out.println("postdelay at :"  + counter);
+			System.out.println("postdelay at : "  + counter);
 			if(counter >= 0.8f - getAttackDelay()){
 				counter = 0;
 				attackStep = 0;
@@ -353,6 +352,7 @@ public abstract class Unit implements DrawableObject {
 	}
 
 	public void resetGesture() {
-		
+		counter = 0;
+		nAttacks = 0;
 	}
 }
