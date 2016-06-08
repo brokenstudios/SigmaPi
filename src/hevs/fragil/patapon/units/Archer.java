@@ -31,11 +31,9 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void attack() {
-		if(unitsInRange()){
-			Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
-			int distance = (int)(victim.getPosition().x - getPosition().x);
-			attack(distance+32);
-		}
+		Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
+		int distance = (int)(victim.getPosition().x - getPosition().x);
+		attack(distance+32);
 	}
 	@Override
 	public Gesture getAttackGesture() {

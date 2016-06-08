@@ -152,38 +152,40 @@ public abstract class Unit implements DrawableObject {
 		float dt = Gdx.graphics.getDeltaTime();
 		counter += dt;
 
-		//Sort of state machine (PATATE MACHINE)
-		switch(attackStep){
-			case 0 :
-				if(counter >= getCooldown()){
-					//is remaining time sufficient for another shoot ?
-					if(nAttacks < (int)(2f / (getCooldown()+0.8f))){
-						//end of cooldown, launch animation
-						render.launch(getAttackGesture());
-						attackStep++;
-						counter = 0;
+		if(unitsInRange()){
+			//Sort of state machine (PATATE MACHINE)
+			switch(attackStep){
+				case 0 :
+					if(counter >= getCooldown()){
+						//is remaining time sufficient for another shoot ?
+						if(nAttacks < (int)(2f / (getCooldown()+0.8f))){
+							//end of cooldown, launch animation
+							render.launch(getAttackGesture());
+							attackStep++;
+							counter = 0;
+						}
+						//stuck in cooldown state until the end, when time insufficient
 					}
-					//stuck in cooldown state until the end, when time insufficient
-				}
-				break;
-			
-			case 1 :
-				if(counter >= getAttackDelay()){
-					//animation pre shoot ended, shoot
-					counter = 0;
-					attack();
-					nAttacks++;
-					attackStep++;
-				}
-				break;
-			
-			case 2 :
-				if(counter >= 0.8f - getAttackDelay()){
-					//animation ended, retun to cooldown state
-					counter = 0;
-					attackStep = 0;
-				}
-				break;
+					break;
+				
+				case 1 :
+					if(counter >= getAttackDelay()){
+						//animation pre shoot ended, shoot
+						counter = 0;
+						attack();
+						nAttacks++;
+						attackStep++;
+					}
+					break;
+				
+				case 2 :
+					if(counter >= 0.8f - getAttackDelay()){
+						//animation ended, retun to cooldown state
+						counter = 0;
+						attackStep = 0;
+					}
+					break;
+			}
 		}
 	}
 

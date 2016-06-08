@@ -30,12 +30,9 @@ public class Spearman extends Unit {
 			new Spear(position, 180-(int)(Math.random()*20) + 45 , -distance, collisionGroup, skills.getLevel() + 5);
 	}
 	public void attack(){
-		if(unitsInRange()){
-			Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
-			int distance = (int)(victim.getPosition().x - getPosition().x);
-			attack(distance+32);
-			System.out.println(unitsInRange());
-		}
+		Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
+		int distance = (int)(victim.getPosition().x - getPosition().x);
+		attack(distance+32);
 	}
 	@Override
 	public void draw(GdxGraphics g) {

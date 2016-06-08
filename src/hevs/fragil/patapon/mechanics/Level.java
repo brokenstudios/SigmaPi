@@ -224,7 +224,7 @@ public class Level extends RenderingScreen {
 	}
 
 	private void killUnits() {
-		// remove heroes
+		//Remove heroes
 		Company c = PlayerCompany.getCompany();
 		for (Section s : c.sections) {
 			for (Unit u : s.units) {
@@ -232,10 +232,12 @@ public class Level extends RenderingScreen {
 					toKill.add(u);
 				}
 			}
+			//remove the section if all of its units are killed
 			if(toKill.containsAll(s.units)){
 				toKill.add(s);
 			}
 		}
+		//remove every object to kill
 		for (Object o : toKill) {
 			if(o instanceof Unit){
 				((Unit) o).destroyBox();
@@ -251,7 +253,7 @@ public class Level extends RenderingScreen {
 		}
 		toKill.removeAllElements();
 
-		// remove enemies
+		//Do the same to remove enemies
 		c = enemies;
 		for (Section s : c.sections) {
 			for (Unit u : s.units) {
