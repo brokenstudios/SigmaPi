@@ -157,9 +157,9 @@ public class Company implements DrawableObject {
 		}
 		
 		// Only to debug move processing
-//		g.drawFilledCircle(getPosition(), Param.FLOOR_DEPTH, 10, Color.YELLOW);
-//		g.drawCircle(getPosition() - Param.COMPANY_WIDTH, Param.FLOOR_DEPTH, 10);
-//		g.drawCircle(getPosition() + Param.COMPANY_WIDTH, Param.FLOOR_DEPTH, 10);
+		g.drawFilledCircle(getPosition(), Param.FLOOR_DEPTH, 10, Color.YELLOW);
+		g.drawCircle(getPosition() - Param.COMPANY_WIDTH, Param.FLOOR_DEPTH, 10);
+		g.drawCircle(getPosition() + Param.COMPANY_WIDTH, Param.FLOOR_DEPTH, 10);
 	}
 	public void initEnnemies(int nb1, int nb2, int nb3) {
 		for(int i = 0 ; i < 3; i++){

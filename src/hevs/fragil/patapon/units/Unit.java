@@ -30,7 +30,7 @@ public abstract class Unit implements DrawableObject {
 	
 
 	Unit(int lvl, Species s, int attack, int defense, int life, int distance, int rangeMin, int rangeMax, float cooldown, boolean isEnnemi) {
-		skills = new Skills(lvl, life, attack, rangeMax, rangeMin, defense, (float) (1f + Math.random() / 2.0));
+		skills = new Skills(lvl, life, attack, rangeMin, rangeMax, defense, (float) (1f + Math.random() / 2.0));
 		this.isEnemy = isEnnemi;
 		this.species = s;
 		
@@ -96,6 +96,10 @@ public abstract class Unit implements DrawableObject {
 			render.setExpression(Expression.DEFAULT);
 	
 		render.draw(g,x,y,angle);
+	
+		// Some debug info (display unit range)
+		String s = getSkills().getRangeMin() + " " + getSkills().getRangeMax();
+		g.drawString(getPosition().x - 32, 200, s);
 	}
 
 	public void setDelay(int delay) {
@@ -300,7 +304,7 @@ public abstract class Unit implements DrawableObject {
 					int newPos = (int)(getPosition().x - Param.UNIT_SPEED * dt);
 					//If units are in range, check if they're reachable in company range
 					if(unitInCompanyRange()){
-						setPosition(newPos, dt);						
+						setPosition(newPos, dt/5);						
 					}
 				}
 				// Else if enemies too far, move to right 
@@ -309,7 +313,7 @@ public abstract class Unit implements DrawableObject {
 					//If units are in range, check if they're reachable in company range
 					// TODO fix Player company moving, only enemies are allowed to
 					if(unitInCompanyRange()){
-						setPosition(newPos, dt);						
+						setPosition(newPos, dt/5);						
 					}
 				}
 			}
