@@ -30,7 +30,7 @@ public abstract class Unit implements DrawableObject {
 	
 
 	Unit(int lvl, Species s, int attack, int defense, int life, int distance, int rangeMin, int rangeMax, float cooldown, boolean isEnnemi) {
-		skills = new Skills(lvl, life, attack, rangeMin, rangeMax, defense, (float) (1f + Math.random() / 2.0));
+		skills = new Skills(lvl, life, attack, rangeMin, rangeMax, defense, cooldown);
 		this.isEnemy = isEnnemi;
 		this.species = s;
 		
