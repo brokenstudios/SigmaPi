@@ -1,160 +1,197 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.9" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="hevs.fragil.patapon.drawables.SpriteSheet" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/drawables/SpriteSheet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1721" y="1100"/>    
+  <class id="1" language="java" name="hevs.fragil.patapon.units.Unit" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/units/Unit.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="114" x="605" y="224"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="hevs.fragil.patapon.physics.StickyInfo" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/physics/StickyInfo.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="135" width="173" x="666" y="37"/>    
+  <enumeration id="2" language="java" name="hevs.fragil.patapon.units.Look" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/units/Look.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="137" y="190"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="3" language="java" name="hevs.fragil.patapon.units.Shield" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/units/Shield.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="114" x="451" y="317"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="hevs.fragil.patapon.physics.Projectile" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/physics/Projectile.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="985" y="627"/>    
+  <enumeration id="4" language="java" name="hevs.fragil.patapon.units.Species" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/units/Species.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="939" y="209"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="5" language="java" name="hevs.fragil.patapon.units.Company" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/units/Company.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="114" x="605" y="38"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="hevs.fragil.patapon.physics.BodyPolygon" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/physics/BodyPolygon.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1917" y="722"/>    
+  <class id="6" language="java" name="hevs.fragil.patapon.units.Range" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/units/Range.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="53" width="114" x="770" y="38"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="hevs.fragil.patapon.drawables.Frame" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/drawables/Frame.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="171" width="147" x="479" y="37"/>    
+  <class id="7" language="java" name="hevs.fragil.patapon.units.UnitRender" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/units/UnitRender.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="382" y="251"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <interface id="6" language="java" name="hevs.fragil.patapon.physics.CollidedObject" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/physics/CollidedObject.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="81" width="135" x="1669" y="37"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </interface>  
-  <class id="7" language="java" name="hevs.fragil.patapon.physics.Projectile" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/physics/Projectile.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1267" y="624"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="8" language="java" name="hevs.fragil.patapon.units.Spearman" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/units/Spearman.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2101" y="1036"/>    
+    <position height="53" width="114" x="605" y="317"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="9" language="java" name="hevs.fragil.patapon.units.Skills" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/units/Skills.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="173" width="261" x="2181" y="1273"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="10" language="java" name="hevs.fragil.patapon.units.Shield" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/units/Shield.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2523" y="1036"/>    
+    <position height="-1" width="-1" x="937" y="268"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <enumeration id="11" language="java" name="hevs.fragil.patapon.units.Species" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/units/Species.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="153" width="115" x="1304" y="37"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </enumeration>  
-  <class id="12" language="java" name="hevs.fragil.patapon.units.Company" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/units/Company.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="130" width="315" x="2149" y="254"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="hevs.fragil.patapon.units.Section" project="SigmaPi" 
+  <enumeration id="10" language="java" name="hevs.fragil.patapon.units.Gesture" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/units/Gesture.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="137" y="251"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </enumeration>  
+  <class id="11" language="java" name="hevs.fragil.patapon.units.Stabilizer" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/units/Stabilizer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="138" y="313"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="12" language="java" name="hevs.fragil.patapon.units.Section" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/units/Section.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="130" width="251" x="2182" y="422"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="53" width="114" x="605" y="131"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="hevs.fragil.patapon.units.Archer" project="SigmaPi" 
+  <class id="13" language="java" name="hevs.fragil.patapon.units.Archer" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/units/Archer.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="2312" y="1063"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <enumeration id="15" language="java" name="hevs.fragil.patapon.music.Drum" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/music/Drum.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="53" width="220" x="446" y="632"/>    
-    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </enumeration>  
-  <class id="16" language="java" name="hevs.fragil.patapon.music.Sequence" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/music/Sequence.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="551" y="432"/>    
+    <position height="53" width="114" x="759" y="317"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <association id="17">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="18" name="sections">        
-        <position height="0" width="0" x="-74" y="-188"/>      
-      </attribute>      
-      <multiplicity id="19" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-74" y="-188"/>      
-      </multiplicity>    
+  <generalization id="14">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="15">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="16" name="gesture"/>      
+      <multiplicity id="17" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="18">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="19" name="render"/>      
+      <multiplicity id="20" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="21">    
+    <end type="SOURCE" refId="5" navigable="false">      
+      <attribute id="22" name="sections"/>      
+      <multiplicity id="23" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="24">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="25" name="pos"/>      
+      <multiplicity id="26" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="27">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="28" name="skills"/>      
+      <multiplicity id="29" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="30">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="31" name="look"/>      
+      <multiplicity id="32" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="33">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <generalization id="34">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="1"/>  
+  </generalization>  
+  <association id="35">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="36" name="units"/>      
+      <multiplicity id="37" minimum="0" maximum="2147483647"/>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="38">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="39" name="species"/>      
+      <multiplicity id="40" minimum="0" maximum="1"/>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
