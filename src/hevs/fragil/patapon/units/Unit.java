@@ -29,7 +29,9 @@ public abstract class Unit implements DrawableObject {
 	protected int collisionGroup;
 	private BodyPolygon hitBox;
 	
-
+	Unit(){
+		
+	}
 	Unit(int lvl, Species s, int attack, int defense, int life, int distance, int rangeMin, int rangeMax, float cooldown, boolean isEnnemi) {
 		skills = new Skills(lvl, life, attack, rangeMin, rangeMax, defense, cooldown);
 		this.isEnemy = isEnnemi;
@@ -274,8 +276,8 @@ public abstract class Unit implements DrawableObject {
 		return 0;
 	}
 	
-	protected float unitToUnitDistance(Unit u1, Unit u2){
-		return Math.abs(u1.getPosition().x - u2.getPosition().x);
+	protected float unitToUnitDistance(Unit u1){
+		return Math.abs(u1.getPosition().x - getPosition().x);
 	}
 	
 	/**
@@ -308,32 +310,32 @@ public abstract class Unit implements DrawableObject {
 		}
 	}
 
-	public void freeMove() {
-		float dt = Gdx.graphics.getDeltaTime();
-		
-		if(unitsInSight()){
-			// If enemies company is not in range, unit must move
-			if(!unitsInRange()){
-				// Else if enemies are too close, move to the left
-				if(unitsTooClose() && !isEnemy || unitsTooFar() && isEnemy){
-					int newPos = (int)(getPosition().x - Param.UNIT_SPEED * dt);
-					//If units are in range, check if they're reachable in company range
-					if(unitInCompanyRange()){
-						setPosition(newPos, dt/5);						
-					}
-				}
-				// Else if enemies too far, move to right 
-				else {
-					int newPos = (int)(getPosition().x + Param.UNIT_SPEED * dt);
-					//If units are in range, check if they're reachable in company range
-					// TODO fix Player company moving, only enemies are allowed to
-					if(unitInCompanyRange()){
-						setPosition(newPos, dt/5);						
-					}
-				}
-			}
-		}
-	}
+//	public void freeMove() {
+//		float dt = Gdx.graphics.getDeltaTime();
+//		
+//		if(unitsInSight()){
+//			// If enemies company is not in range, unit must move
+//			if(!unitsInRange()){
+//				// Else if enemies are too close, move to the left
+//				if(unitsTooClose() && !isEnemy || unitsTooFar() && isEnemy){
+//					int newPos = (int)(getPosition().x - Param.UNIT_SPEED * dt);
+//					//If units are in range, check if they're reachable in company range
+//					if(unitInCompanyRange()){
+//						setPosition(newPos, dt/5);						
+//					}
+//				}
+//				// Else if enemies too far, move to right 
+//				else {
+//					int newPos = (int)(getPosition().x + Param.UNIT_SPEED * dt);
+//					//If units are in range, check if they're reachable in company range
+//					// TODO fix Player company moving, only enemies are allowed to
+//					if(unitInCompanyRange()){
+//						setPosition(newPos, dt/5);						
+//					}
+//				}
+//			}
+//		}
+//	}
 
 	public float getCooldown() {
 		return skills.getCooldown();
@@ -370,5 +372,52 @@ public abstract class Unit implements DrawableObject {
 	public void resetGesture() {
 		counter = 0;
 		nAttacks = 0;
+	}
+
+	public Unit findNextReachableEnemy() {
+		Company enemies;
+		if(isEnemy)enemies = PlayerCompany.getInstance().getHeroes();
+		else enemies = CurrentLevel.getLevel().getEnnemies();
+		
+		Unit nearest = null;
+		float rangeDistance = -1;
+		if(!enemies.isEmpty()){
+			for (Section s : enemies.sections) {
+				for (Unit u : s.units) {
+					if(Math.abs(u.getPosition().x - getSkills().getRangeMax()) < rangeDistance || rangeDistance == -1){
+						rangeDistance = Math.abs(u.getPosition().x - getSkills().getRangeMax());
+						nearest = u;
+					}
+					if(Math.abs(getSkills().getRangeMin() - u.getPosition().x) < rangeDistance){
+						rangeDistance = Math.abs(getSkills().getRangeMin() - u.getPosition().x);
+						nearest = u;
+					}
+				}
+			}
+		}
+		return nearest;	
+	}
+	public int desiredPos(boolean increaseDistance) {
+		float dt = Gdx.graphics.getDeltaTime();
+		float desiredPos = getPosition().x;
+		if(increaseDistance){
+			if(isEnemy)
+				desiredPos += Param.UNIT_SPEED * dt;
+			else
+				desiredPos -= Param.UNIT_SPEED * dt;
+		}
+		else{
+			if(isEnemy)
+				desiredPos -= Param.UNIT_SPEED * dt;
+			else
+				desiredPos += Param.UNIT_SPEED * dt;
+		}
+
+		return (int)desiredPos;
+	}
+	public boolean isInRange(float u2uDistance) {
+		if(skills.getRangeMin() < u2uDistance && u2uDistance < skills.getRangeMax())
+			return true;
+		return false;
 	}
 }

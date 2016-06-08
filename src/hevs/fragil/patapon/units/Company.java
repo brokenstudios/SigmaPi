@@ -2,6 +2,7 @@ package hevs.fragil.patapon.units;
 import java.util.Iterator;
 import java.util.Vector;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
@@ -193,15 +194,37 @@ public class Company implements DrawableObject {
 	}
 	public void aiMove() {
 		if(freeToMove){
-			for (Section s : sections) {
-				for (Unit u : s.units) {
-					u.freeMove();
+			freeMove();
+		}
+		else
+			regroup();
+	}
+	private void freeMove(){
+		for (Section s : sections) {
+			for (Unit u : s.units) {
+				//when no enemy is in the units's range, unit must try to find a better place
+				if(u.getUnitsInRange().isEmpty()){
+					float u2uDistance = u.unitToUnitDistance(u.findNextReachableEnemy());
+					//if we are too near, we must increase the distance
+					boolean increaseDistance = (u2uDistance < u.getSkills().getRangeMin());
+					//get desired position depending of increase or decrease of the distance with enemies
+					int desiredPos = u.desiredPos(increaseDistance);
+					//test if this new position is contained between the company maximum limits
+					if(isInCompanyRange(desiredPos)){
+						//if desiredPos is in company range
+						setPosition(u.desiredPos(false), Gdx.graphics.getDeltaTime());
+					}
 				}
-			}			
+			}
 		}
-		else{
-			setPosition(fixedPos, 2f);
-		}
+	}
+	private boolean isInCompanyRange(int desiredPos) {
+		if(fixedPos - Param.COMPANY_WIDTH < desiredPos && desiredPos < fixedPos + Param.COMPANY_WIDTH)
+			return true;
+		return false;
+	}
+	private void regroup(){
+		
 	}
 	public boolean isEmpty() {
 		return sections.isEmpty();
