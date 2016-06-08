@@ -83,9 +83,9 @@ public class UnitRender {
 
 	private void drawDead(GdxGraphics g, Vector2 position, float angle) {
 		gestureSwitch();
-		legs.drawRotatedFrameAlpha(0, angle, position, -32, -35, opacity);
-		body.drawRotatedFrameAlpha(0, angle, position, -32, -25, opacity);
-		eye.drawRotatedFrameAlpha(look.ordinal(), angle, pos.stabilized(position), -32, -13, opacity);
+		legs.drawRotatedFrameAlpha(0, angle, position, opacity);
+		body.drawRotatedFrameAlpha(bodyIndex, angle, position, opacity);
+		eye.drawRotatedFrameAlpha(Look.DYING.ordinal(), angle, position, opacity);
 	}
 	private void gestureSwitch() {
 		float dt = Gdx.graphics.getDeltaTime();

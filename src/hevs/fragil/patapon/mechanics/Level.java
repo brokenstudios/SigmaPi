@@ -195,7 +195,7 @@ public class Level extends RenderingScreen {
 		} else {
 			// clear the screen with the decor background
 			g.clear(decor.getBackground());
-
+			debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
 			// stick flying objects
 			createJoints();
 

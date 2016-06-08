@@ -167,16 +167,23 @@ public class SpriteSheet {
 		tmp.draw(spriteBatch, alpha);
 		spriteBatch.end();
 	}
-	public void drawRotatedFrameAlpha(int spriteNumber, float angle, float posX, float posY, float offsetX, float offsetY, float alpha) {
+	public void drawRotatedFrameAlpha(int spriteNumber, float angle, float posX, float posY, float alpha) {
 		spriteBatch.begin();
+		System.out.println(posY);
 		Sprite tmp = sprites[spriteNumber];
-		tmp.setOrigin(32, 38);
+		tmp.setOriginCenter();
+		//rotate the sprite around the left down corner
 		tmp.setRotation((float)Math.toDegrees(angle));
-		float x = posX + (float) (offsetX * Math.cos(angle) + offsetY * Math.abs(Math.sin(angle)));
-		float y = posY + (float) (offsetY * Math.cos(angle) + (offsetX-10) * Math.abs(Math.sin(angle)));
-		tmp.setPosition(x, y);
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
+		//location of the left down corner depends of offsets :
+		float offsetX = 32 - tmp.getWidth()/2;
+		float offsetY = tmp.getHeight()/2 - 38;
+		Vector2 offset = new Vector2(offsetX, offsetY);
+		Vector2 pos = new Vector2(posX, posY);
+		offset.rotateRad(angle);
+		pos.add(offset);
+		tmp.setPosition(pos.x, pos.y);
 		tmp.draw(spriteBatch, alpha);
 		spriteBatch.end();
 	}
@@ -189,7 +196,7 @@ public class SpriteSheet {
 	public boolean finished(float stateTime) {
 		return animation.isAnimationFinished(stateTime);
 	}
-	public void drawRotatedFrameAlpha(int spriteNumber, float angle, Vector2 pos, int offsetX, int offsetY, float alpha) {
-		drawRotatedFrameAlpha(spriteNumber, angle, pos.x, pos.y, offsetX, offsetY, alpha);
+	public void drawRotatedFrameAlpha(int spriteNumber, float angle, Vector2 pos, float alpha){
+		drawRotatedFrameAlpha(spriteNumber, angle, pos.x, pos.y, alpha);
 	}
 }

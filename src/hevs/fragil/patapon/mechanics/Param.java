@@ -93,7 +93,8 @@ public abstract class Param {
 	public static final int UNIT_SPEED = 100;
 	
 	//Colors
-	public static Color BACKGROUND = rgbToFloat(222,184,135);
+//	public static Color BACKGROUND = rgbToFloat(222,184,135);
+	public static Color BACKGROUND = Color.BLUE;
 	
 	private static Color rgbToFloat(int r, int g, int b){
 		Color temp = new Color();
