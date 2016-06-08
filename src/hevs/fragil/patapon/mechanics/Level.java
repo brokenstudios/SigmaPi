@@ -80,7 +80,7 @@ public class Level extends RenderingScreen {
 
 		decor = new Decor(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
 
-		enemies.initEnnemies(2, 3, 4);
+		enemies.initEnnemies(1, 1, 1);
 
 		// Load the sound files
 		heNote = new SoundSample("data/music/HE.wav");
@@ -192,8 +192,6 @@ public class Level extends RenderingScreen {
 			action();
 			sequence.step();
 			killUnits();
-			PlayerCompany.getInstance().getHeroes().aiMove();
-			enemies.aiMove();
 		} else {
 			// clear the screen with the decor background
 			g.clear(decor.getBackground());
@@ -207,8 +205,6 @@ public class Level extends RenderingScreen {
 			action();
 			sequence.step();
 			killUnits();
-			PlayerCompany.getInstance().getHeroes().aiMove();
-			enemies.aiMove();
 
 			// display help
 			g.drawStringCentered(800, "Fever : " + sequence.getFever());

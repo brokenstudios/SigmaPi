@@ -40,7 +40,7 @@ public class Sequence implements DrawableObject {
 			pause = true;
 			clearFever();
 			endSequence();
-			return State.STOP;
+			return State.IDLE;
 		}
 	
 		feverScore += juge();
@@ -101,7 +101,7 @@ public class Sequence implements DrawableObject {
 			System.out.println("No possible sequence found... Fever goes down !");
 			clearFever();
 			endSequence();
-			return State.STOP;
+			return State.IDLE;
 		}
 		
 		return null;

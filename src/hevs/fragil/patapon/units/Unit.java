@@ -103,10 +103,10 @@ public abstract class Unit implements DrawableObject {
 		render.draw(g,x,y,angle);
 	
 		// Some debug info (display unit range)
-//		if(!isEnemy){
-//			g.drawFilledRectangle(x + skills.getRangeMin(), y, 10, 10, 0, getColor());
-//			g.drawFilledRectangle(x + skills.getRangeMax(), y, 10, 10, 0, getColor());
-//		}
+		if(isEnemy){
+			g.drawFilledRectangle(x - skills.getRangeMin(), y, 10, 10, 0, getColor());
+			g.drawFilledRectangle(x - skills.getRangeMax(), y, 10, 10, 0, getColor());
+		}
 	}
 
 	public void setDelay(int delay) {
@@ -326,7 +326,6 @@ public abstract class Unit implements DrawableObject {
 				else {
 					int newPos = (int)(getPosition().x + Param.UNIT_SPEED * dt);
 					//If units are in range, check if they're reachable in company range
-					// TODO fix Player company moving, only enemies are allowed to
 					if(unitInCompanyRange()){
 						setPosition(newPos, dt/5);						
 					}
