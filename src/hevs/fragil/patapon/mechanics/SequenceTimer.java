@@ -42,7 +42,8 @@ public abstract class SequenceTimer{
 								break;
 				case CHARGE : 	finished = charge(c);
 								break;
-				case STOP :		finished = stop(c);
+				case IDLE :		finished = stop(c);
+								c.aiMove();
 								playing = false;
 								lalala.stop();
 								break;

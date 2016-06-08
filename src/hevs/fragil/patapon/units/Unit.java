@@ -105,10 +105,10 @@ public abstract class Unit implements DrawableObject {
 		render.draw(g,x,y,angle);
 	
 		// Some debug info (display unit range)
-//		if(!isEnemy){
-//			g.drawFilledRectangle(x + skills.getRangeMin(), y, 10, 10, 0, getColor());
-//			g.drawFilledRectangle(x + skills.getRangeMax(), y, 10, 10, 0, getColor());
-//		}
+		if(isEnemy){
+			g.drawFilledRectangle(x - skills.getRangeMin(), y, 10, 10, 0, getColor());
+			g.drawFilledRectangle(x - skills.getRangeMax(), y, 10, 10, 0, getColor());
+		}
 	}
 
 	public void setDelay(int delay) {
@@ -309,33 +309,6 @@ public abstract class Unit implements DrawableObject {
 			return isEnemy? true : false;
 		}
 	}
-
-//	public void freeMove() {
-//		float dt = Gdx.graphics.getDeltaTime();
-//		
-//		if(unitsInSight()){
-//			// If enemies company is not in range, unit must move
-//			if(!unitsInRange()){
-//				// Else if enemies are too close, move to the left
-//				if(unitsTooClose() && !isEnemy || unitsTooFar() && isEnemy){
-//					int newPos = (int)(getPosition().x - Param.UNIT_SPEED * dt);
-//					//If units are in range, check if they're reachable in company range
-//					if(unitInCompanyRange()){
-//						setPosition(newPos, dt/5);						
-//					}
-//				}
-//				// Else if enemies too far, move to right 
-//				else {
-//					int newPos = (int)(getPosition().x + Param.UNIT_SPEED * dt);
-//					//If units are in range, check if they're reachable in company range
-//					// TODO fix Player company moving, only enemies are allowed to
-//					if(unitInCompanyRange()){
-//						setPosition(newPos, dt/5);						
-//					}
-//				}
-//			}
-//		}
-//	}
 
 	public float getCooldown() {
 		return skills.getCooldown();

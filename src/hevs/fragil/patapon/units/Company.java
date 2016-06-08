@@ -18,7 +18,7 @@ public class Company implements DrawableObject {
 	public Vector<Section> sections = new Vector<Section>();
 	private State action;
 	private boolean ready;
-	private boolean freeToMove;
+	private boolean freeToMove = false;
 	private int fixedPos;
 	
 	public Company(){
@@ -103,7 +103,7 @@ public class Company implements DrawableObject {
 		sections.addElement(s);
 	}
 	public void setAction(State a){
-		if((ready && a != null) || a == State.STOP){
+		if((ready && a != null) || a == State.IDLE){
 			System.out.println("action set : " + a);
 			action = a;
 			ready = false;
@@ -159,9 +159,9 @@ public class Company implements DrawableObject {
 		}
 		
 		// Only to debug move processing
-		g.drawFilledCircle(getPosition() - g.getCamera().position.x + Param.CAM_WIDTH / 2, Param.FLOOR_DEPTH, 10, Color.YELLOW);
-		g.drawFilledCircle(getPosition() - Param.COMPANY_WIDTH - g.getCamera().position.x + Param.CAM_WIDTH / 2, Param.FLOOR_DEPTH, 10, Color.CYAN);
-		g.drawFilledCircle(getPosition() + Param.COMPANY_WIDTH - g.getCamera().position.x + Param.CAM_WIDTH / 2, Param.FLOOR_DEPTH, 10, Color.CYAN);
+//		g.drawFilledCircle(getPosition() - g.getCamera().position.x + Param.CAM_WIDTH / 2, Param.FLOOR_DEPTH, 10, Color.YELLOW);
+//		g.drawFilledCircle(getPosition() - Param.COMPANY_WIDTH - g.getCamera().position.x + Param.CAM_WIDTH / 2, Param.FLOOR_DEPTH, 10, Color.CYAN);
+//		g.drawFilledCircle(getPosition() + Param.COMPANY_WIDTH - g.getCamera().position.x + Param.CAM_WIDTH / 2, Param.FLOOR_DEPTH, 10, Color.CYAN);
 	}
 	public void initEnnemies(int nb1, int nb2, int nb3) {
 		for(int i = 0 ; i < 3; i++){
