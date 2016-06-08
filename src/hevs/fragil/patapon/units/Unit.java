@@ -101,11 +101,10 @@ public abstract class Unit implements DrawableObject {
 		render.draw(g,x,y,angle);
 	
 		// Some debug info (display unit range)
-		if(!isEnemy){
-			
-			g.drawFilledRectangle(x + skills.getRangeMin(), y, 10, 10, 0, getColor());
-			g.drawFilledRectangle(x + skills.getRangeMax(), y, 10, 10, 0, getColor());
-		}
+//		if(!isEnemy){
+//			g.drawFilledRectangle(x + skills.getRangeMin(), y, 10, 10, 0, getColor());
+//			g.drawFilledRectangle(x + skills.getRangeMax(), y, 10, 10, 0, getColor());
+//		}
 	}
 
 	public void setDelay(int delay) {
@@ -214,9 +213,9 @@ public abstract class Unit implements DrawableObject {
 		for (Section s : ennemies.sections) {
 			for (Unit u : s.units) {
 				float distance = u.getPosition().x - this.getPosition().x;
-				// Subtraction of a half-sprite to find center2center distance
+				// Subtraction of two half-sprite to find center2center distance
 				distance = Math.abs(distance) - 64;
-				if (distance < this.skills.getRangeMax()) {
+				if (distance < skills.getRangeMax() && distance > skills.getRangeMin()) {
 					unitsInRange.add(u);
 				}
 			}
@@ -225,11 +224,12 @@ public abstract class Unit implements DrawableObject {
 	}
 
 	protected boolean unitsInRange() {
-		if (unitToEnemiDistance() > skills.getRangeMin() && unitToEnemiDistance() < skills.getRangeMax()) {
-			return true;
+		if (getUnitsInRange().isEmpty()){
+			return false;
 		}
-		return false;
+		return true;
 	}
+	
 	protected boolean unitsInSight() {
 		if (unitToEnemiDistance() < Param.SIGHT) {
 			return true;
@@ -259,12 +259,18 @@ public abstract class Unit implements DrawableObject {
 		float distance = -1;
 		for (Section s : enemies.sections) {
 			for (Unit u : s.units) {
-				if(distance > u.getPosition().x - getPosition().x || distance == -1)
-					distance = u.getPosition().x - getPosition().x;
+				if(distance > Math.abs(u.getPosition().x - getPosition().x) || distance == -1)
+					distance = Math.abs(u.getPosition().x - getPosition().x);
 			}
 		}
-		distance = Math.abs(distance) - 64;
+		// Subtract 64 (2 half-sprite) to match range (0 to x, ...)
+		distance -= 64;
+		System.out.println(distance);
 		return distance;
+	}
+	
+	protected float unitToUnitDistance(Unit u1, Unit u2){
+		return Math.abs(u1.getPosition().x - u2.getPosition().x);
 	}
 	
 	/**
