@@ -257,16 +257,19 @@ public abstract class Unit implements DrawableObject {
 		else enemies = CurrentLevel.getLevel().getEnnemies();
 		
 		float distance = -1;
-		for (Section s : enemies.sections) {
-			for (Unit u : s.units) {
-				if(distance > Math.abs(u.getPosition().x - getPosition().x) || distance == -1)
-					distance = Math.abs(u.getPosition().x - getPosition().x);
+		if(!enemies.isEmpty()){
+			for (Section s : enemies.sections) {
+				for (Unit u : s.units) {
+					if(distance > Math.abs(u.getPosition().x - getPosition().x) || distance == -1)
+						distance = Math.abs(u.getPosition().x - getPosition().x);
+				}
 			}
+			// Subtract 64 (2 half-sprite) to match range (0 to x, ...)
+			distance -= 64;
+			return distance;			
 		}
-		// Subtract 64 (2 half-sprite) to match range (0 to x, ...)
-		distance -= 64;
-		System.out.println(distance);
-		return distance;
+		
+		return 0;
 	}
 	
 	protected float unitToUnitDistance(Unit u1, Unit u2){
