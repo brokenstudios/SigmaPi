@@ -104,28 +104,28 @@ public class Level extends RenderingScreen {
 		if (keycode == Keys.NUM_1) {
 			heNote.play();
 			State toDo = sequence.add(Drum.HE, sinceLastRythm);
-			PlayerCompany.getInstance().setAction(toDo);
+			PlayerCompany.getCompany().setAction(toDo);
 		}
 		if (keycode == Keys.NUM_2) {
 			sNote.play();
-			PlayerCompany.getInstance().setAction(sequence.add(Drum.S, sinceLastRythm));
+			PlayerCompany.getCompany().setAction(sequence.add(Drum.S, sinceLastRythm));
 		}
 		if (keycode == Keys.NUM_3) {
 			soNote.play();
-			PlayerCompany.getInstance().setAction(sequence.add(Drum.SO, sinceLastRythm));
+			PlayerCompany.getCompany().setAction(sequence.add(Drum.SO, sinceLastRythm));
 		}
 		if (keycode == Keys.NUM_4) {
 			yesNote.play();
-			PlayerCompany.getInstance().setAction(sequence.add(Drum.YES, sinceLastRythm));
+			PlayerCompany.getCompany().setAction(sequence.add(Drum.YES, sinceLastRythm));
 		}
 		if (keycode == Keys.A) {
-			PlayerCompany.getInstance().setAction(State.ATTACK);
+			PlayerCompany.getCompany().setAction(State.ATTACK);
 		}
 		if (keycode == Keys.M) {
-			PlayerCompany.getInstance().setAction(State.WALK);
+			PlayerCompany.getCompany().setAction(State.WALK);
 		}
 		if (keycode == Keys.R) {
-			PlayerCompany.getInstance().setAction(State.RETREAT);
+			PlayerCompany.getCompany().setAction(State.RETREAT);
 		}
 		if (keycode == Keys.D) {
 			debugActive = !debugActive;
@@ -157,7 +157,7 @@ public class Level extends RenderingScreen {
 		// Display camera and company informations (only for debug)
 		if (keycode == Keys.C) {
 			System.out.println("Camera pos = " + camera.x);
-			System.out.println("Company pos = " + PlayerCompany.getInstance().getHeroes().getPosition());
+			System.out.println("Company pos = " + PlayerCompany.getCompany().getPosition());
 		}
 		if (keycode == Keys.ESCAPE) {
 			dispose();
@@ -168,9 +168,9 @@ public class Level extends RenderingScreen {
 	public void onGraphicRender(GdxGraphics g) {
 		// process camera position inside map limits
 		if(enemies.isEmpty())
-			camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes());			
+			camera = decor.cameraProcess(PlayerCompany.getCompany());			
 		else
-			camera = decor.cameraProcess(PlayerCompany.getInstance().getHeroes(), enemies);
+			camera = decor.cameraProcess(PlayerCompany.getCompany(), enemies);
 
 		// apply camera position
 		//TODO play with scale tp play with zoom :D enjoy your pain
@@ -217,7 +217,7 @@ public class Level extends RenderingScreen {
 			decor.draw(g);
 			frame.draw(g);
 			sequence.draw(g);
-			PlayerCompany.getInstance().getHeroes().draw(g);
+			PlayerCompany.getCompany().draw(g);
 			enemies.draw(g);
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
@@ -225,7 +225,7 @@ public class Level extends RenderingScreen {
 
 	private void killUnits() {
 		// remove heroes
-		Company c = PlayerCompany.getInstance().getHeroes();
+		Company c = PlayerCompany.getCompany();
 		for (Section s : c.sections) {
 			for (Unit u : s.units) {
 				if (u.isDead()) {
@@ -326,7 +326,7 @@ public class Level extends RenderingScreen {
 	}
 
 	private void action() {
-		SequenceTimer.run(PlayerCompany.getInstance().getHeroes(), sequence.getFever());
+		SequenceTimer.run(PlayerCompany.getCompany(), sequence.getFever());
 	}
 
 	public Company getEnnemies() {

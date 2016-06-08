@@ -3,12 +3,11 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
-import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.mechanics.Param;
+import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.physics.Arrow;
 import hevs.fragil.patapon.physics.Spear;
 
@@ -224,7 +223,35 @@ public class Company implements DrawableObject {
 		return false;
 	}
 	private void regroup(){
-		
+		for (Section s : sections) {
+			for (Unit u : s.units) {
+				//get position in the perfect rank
+				int orderedPos = getOrderedPosition(u);
+				
+				int newPos;
+				float dt = Gdx.graphics.getDeltaTime();
+				//move to the right when too left, else move to the left
+				if(orderedPos < u.getPosition().x)
+					newPos = (int) (u.getPosition().x + Param.UNIT_SPEED * dt);
+				else 
+					newPos = (int) (u.getPosition().x - Param.UNIT_SPEED * dt);
+				
+				u.setPosition(newPos, dt);
+			}
+		}
+	}
+	private int getOrderedPosition(Unit u) {
+		int index = 0;
+		int sectionNumber = 0;
+		for (Section s : sections) {
+			if(s.units.contains(u)){
+				index = s.units.indexOf(u);
+			}
+			sectionNumber++;
+		}
+		int startPosition = fixedPos - getMinWidth() / 2;
+		int orderedPos = startPosition + sectionNumber * (Param.SECTION_KEEPOUT + Param.SECTION_WIDTH) + index * Param.UNIT_WIDTH;
+		return orderedPos;
 	}
 	public boolean isEmpty() {
 		return sections.isEmpty();

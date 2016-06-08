@@ -257,7 +257,7 @@ public abstract class Unit implements DrawableObject {
 
 	protected float unitToEnemiDistance() {
 		Company enemies;
-		if(isEnemy)enemies = PlayerCompany.getInstance().getHeroes();
+		if(isEnemy)enemies = PlayerCompany.getCompany();
 		else enemies = CurrentLevel.getLevel().getEnnemies();
 		
 		float distance = -1;
@@ -349,7 +349,7 @@ public abstract class Unit implements DrawableObject {
 
 	public Unit findNextReachableEnemy() {
 		Company enemies;
-		if(isEnemy)enemies = PlayerCompany.getInstance().getHeroes();
+		if(isEnemy)enemies = PlayerCompany.getCompany();
 		else enemies = CurrentLevel.getLevel().getEnnemies();
 		
 		Unit nearest = null;

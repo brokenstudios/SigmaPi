@@ -3,10 +3,8 @@ package hevs.fragil.patapon.mechanics;
 import com.badlogic.gdx.Gdx;
 
 /**
- * A not so stinky factory/singleton class
- * 
- * @author loicg
- *
+ * Singleton pattern containing the current level
+ * Level alterable by the {@code setLevel(Level l)} method.
  */
 public class CurrentLevel {
 	private static Level instance = null;

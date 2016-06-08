@@ -8,25 +8,18 @@ import hevs.fragil.patapon.units.Company;
  */
 public class PlayerCompany {
 	//TODO get saved company if exist
-	private Company heroes ;
-	private static PlayerCompany instance = null;
+	private static Company instance ;
 	
 	private PlayerCompany(){
-		heroes = new Company("heroes");
-		heroes.initRandomHeroes(1, 1, 1);
+		instance = new Company("heroes");
+		instance.initRandomHeroes(1, 1, 1);
 	}
-
-	public void setAction(State action) {
-		heroes.setAction(action);
-	}
-
-	public Company getHeroes() {
-		return heroes;
-	}
-	public static PlayerCompany getInstance() {
+	public static Company getCompany() {
 		//TODO create new player company on new game 
+		//For instance, the player company is randomly initialized
 		if (instance == null) {
-			instance = new PlayerCompany();
+			instance = new Company();
+			instance.initRandomHeroes(1, 1, 1);
 		}
 		return instance;
 	}
