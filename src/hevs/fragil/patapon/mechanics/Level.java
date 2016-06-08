@@ -192,6 +192,8 @@ public class Level extends RenderingScreen {
 			action();
 			sequence.step();
 			killUnits();
+			PlayerCompany.getInstance().getHeroes().aiMove();
+			enemies.aiMove();
 		} else {
 			// clear the screen with the decor background
 			g.clear(decor.getBackground());

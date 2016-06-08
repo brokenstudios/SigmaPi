@@ -29,7 +29,7 @@ public class Section implements DrawableObject {
 	public int getWidth(){
 		return units.size()*Param.UNIT_WIDTH;
 	}
-	public void move(int newPos, double totalTime){
+	public void setPosition(int newPos, double totalTime){
 		int width = getWidth();
 		double margin = newPos - width/2.0 + Param.UNIT_WIDTH/2.0;
 		if(margin > 0){

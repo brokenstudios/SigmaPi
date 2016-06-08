@@ -3,6 +3,7 @@ package hevs.fragil.patapon.units;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
@@ -35,7 +36,6 @@ public abstract class Unit implements DrawableObject {
 		this.species = s;
 		
 		render = new UnitRender(4 * species.ordinal() + lvl);
-		
 		if (isEnnemi)
 			this.collisionGroup = Param.ENNEMIES_GROUP;
 		else
@@ -64,6 +64,7 @@ public abstract class Unit implements DrawableObject {
 
 	protected abstract Gesture getAttackGesture();
 	protected abstract float getAttackDelay();
+	protected abstract Color getColor();
 
 	public void setState(State s) {
 		render.setState(s);
@@ -90,16 +91,21 @@ public abstract class Unit implements DrawableObject {
 		float y = Math.round(getPosition().y - g.getCamera().position.y + Param.CAM_HEIGHT / 2 - 37);
 		float angle = hitBox.getBodyAngle();
 		
-		if (unitsInSight()) 
-			render.setExpression(Expression.ANGRY);
+		if (unitsInRange()) 
+			render.setLook(Look.ANGRY);
+		else if(unitsInSight() && !isEnemy)
+			render.setLook(Look.RIGHT);
 		else 
-			render.setExpression(Expression.DEFAULT);
+			render.setLook(Look.DEFAULT);
 	
 		render.draw(g,x,y,angle);
 	
 		// Some debug info (display unit range)
-		String s = getSkills().getRangeMin() + " " + getSkills().getRangeMax();
-		g.drawString(getPosition().x - 32, 200, s);
+		if(!isEnemy){
+			
+			g.drawFilledRectangle(x + skills.getRangeMin(), y, 10, 10, 0, getColor());
+			g.drawFilledRectangle(x + skills.getRangeMax(), y, 10, 10, 0, getColor());
+		}
 	}
 
 	public void setDelay(int delay) {
@@ -126,7 +132,7 @@ public abstract class Unit implements DrawableObject {
 	public boolean isDead() {
 		if (getLife() <= 0) {
 			render.setState(State.DYING);
-			render.setExpression(Expression.DYING);
+			render.setLook(Look.DYING);
 			//decrease opacity until total disappear
 			return render.die();
 		}
@@ -143,39 +149,38 @@ public abstract class Unit implements DrawableObject {
 		float dt = Gdx.graphics.getDeltaTime();
 		counter += dt;
 
-		if(attackStep == 0){
-			if(counter >= getCooldown()){
-				System.out.println("cooldown at : " + counter);
-				System.out.println("n attacks : " + nAttacks);
-				//le temps de faire encore un tir ?
-				if(nAttacks < (int)(2f / (getCooldown()+0.8f))){
-					System.out.println("étape suivante");
-					render.launch(getAttackGesture());
-					attackStep++;
+		//Sort of state machine (PATATE MACHINE)
+		switch(attackStep){
+			case 0 :
+				if(counter >= getCooldown()){
+					//is remaining time sufficient for another shoot ?
+					if(nAttacks < (int)(2f / (getCooldown()+0.8f))){
+						//end of cooldown, launch animation
+						render.launch(getAttackGesture());
+						attackStep++;
+						counter = 0;
+					}
+					//stuck in cooldown state until the end, when time insufficient
+				}
+				break;
+			
+			case 1 :
+				if(counter >= getAttackDelay()){
+					//animation pre shoot ended, shoot
 					counter = 0;
+					attack();
+					nAttacks++;
+					attackStep++;
 				}
-				else {
-					System.out.println("plus le temps de tirer, bro !");
+				break;
+			
+			case 2 :
+				if(counter >= 0.8f - getAttackDelay()){
+					//animation ended, retun to cooldown state
+					counter = 0;
+					attackStep = 0;
 				}
-			}
-		}
-		else if(attackStep == 1){
-			System.out.println("pre delay at : " + counter);
-			if(counter >= getAttackDelay()){
-				counter = 0;
-				System.out.println("attack launched at :" + counter);
-				attack();
-				nAttacks++;
-				System.out.println(nAttacks);
-				attackStep++;
-			}
-		}
-		else if(attackStep == 2){
-			System.out.println("postdelay at : "  + counter);
-			if(counter >= 0.8f - getAttackDelay()){
-				counter = 0;
-				attackStep = 0;
-			}
+				break;
 		}
 	}
 
@@ -185,8 +190,8 @@ public abstract class Unit implements DrawableObject {
 		hitBox.applyBodyLinearImpulse(force, pos, true);
 	}
 
-	public void setExpression(Expression exp) {
-		render.setExpression(exp);
+	public void setExpression(Look exp) {
+		render.setLook(exp);
 	}
 
 	public int getEndurance() {
@@ -292,7 +297,7 @@ public abstract class Unit implements DrawableObject {
 		}
 	}
 
-	public void aiMove(int fixedPos) {
+	public void freeMove() {
 		float dt = Gdx.graphics.getDeltaTime();
 		
 		if(unitsInSight()){

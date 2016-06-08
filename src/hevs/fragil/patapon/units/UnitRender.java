@@ -9,7 +9,7 @@ import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.State;
 
 public class UnitRender {
-	private Expression expression = Expression.DEFAULT;
+	private Look look = Look.DEFAULT;
 	
 	private Gesture gesture = Gesture.WALK;
 	
@@ -28,6 +28,7 @@ public class UnitRender {
 	private boolean gestureRunning = false;
 	
 	private Stabilizer pos = new Stabilizer();
+	
 	public boolean attack = false;
 	
 	/**
@@ -40,11 +41,11 @@ public class UnitRender {
 	}
 	
 	
-	public Expression getExpression() {
-		return expression;
+	public Look getLook() {
+		return look;
 	}
-	public void setExpression(Expression expression) {
-		this.expression = expression;
+	public void setLook(Look expression) {
+		this.look = expression;
 	}
 	public Gesture getGesture() {
 		return gesture;
@@ -59,6 +60,10 @@ public class UnitRender {
 	public State getState() {
 		return state;
 	}
+	
+	public Vector2 getPos(){
+		return pos.getStabilizedPos();
+	}
 
 	public void draw(GdxGraphics g, float x, float y, float angle) {
 		if (state == State.DYING) 
@@ -72,7 +77,7 @@ public class UnitRender {
 		float stateTime = CurrentLevel.getLevel().getStateTime();
 		int legsIndex = legs.drawAllFrames(stateTime, pos.stabilized(position));
 		body.drawWalkAnimation(legsIndex, bodyIndex, pos.stabilized(position).x, pos.stabilized(position).y + 10, 32, 38);
-		eye.drawWalkAnimation(legsIndex, expression.ordinal(), pos.stabilized(position).x, pos.stabilized(position).y + 22, 32, 38);
+		eye.drawWalkAnimation(legsIndex, look.ordinal(), pos.stabilized(position).x, pos.stabilized(position).y + 22, 32, 38);
 		arms.drawFrames(stateTime, gesture.ordinal() * 4, 4, pos.stabilized(position));
 	}
 
@@ -80,7 +85,7 @@ public class UnitRender {
 		gestureSwitch();
 		legs.drawRotatedFrameAlpha(0, angle, position, -32, -35, opacity);
 		body.drawRotatedFrameAlpha(0, angle, position, -32, -25, opacity);
-		eye.drawRotatedFrameAlpha(expression.ordinal(), angle, pos.stabilized(position), -32, -13, opacity);
+		eye.drawRotatedFrameAlpha(look.ordinal(), angle, pos.stabilized(position), -32, -13, opacity);
 	}
 	private void gestureSwitch() {
 		float dt = Gdx.graphics.getDeltaTime();

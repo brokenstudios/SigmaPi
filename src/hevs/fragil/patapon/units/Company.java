@@ -17,6 +17,7 @@ public class Company implements DrawableObject {
 	public Vector<Section> sections = new Vector<Section>();
 	private State action;
 	private boolean ready;
+	private boolean freeToMove;
 	private int fixedPos;
 	
 	public Company(){
@@ -29,7 +30,7 @@ public class Company implements DrawableObject {
 		this(pos, "noname");
 	}
 	public Company(int pos, String name){
-		setPosition(pos, 0.1);
+		setPosition(pos, 0.1f);
 		this.name = name;   
 		this.ready = true;
 	}
@@ -72,7 +73,7 @@ public class Company implements DrawableObject {
 	public int getNbSections(){
 		return sections.size();
 	}
-	public int getWidth(){
+	public int getMinWidth(){
 		int width = 0;
 		for (Section section : sections) {
 			width += section.getWidth();
@@ -80,8 +81,8 @@ public class Company implements DrawableObject {
 		int nSections = sections.size();
 		return (int)(width + (nSections-1)*Param.SECTION_KEEPOUT);
 	}
-	public void setPosition(int newPos, double totalTime){
-		int width = getWidth();
+	public void setPosition(int newPos, float totalTime){
+		int width = getMinWidth();
 		float screenMargin = newPos - width/2f;
 		
 		if(screenMargin > 0){
@@ -89,7 +90,7 @@ public class Company implements DrawableObject {
 			fixedPos = newPos;
 			for (Section section : sections) {
 				tempPos += section.getWidth()/2f;
-				section.move((int)tempPos,totalTime);
+				section.setPosition((int)tempPos,totalTime);
 				tempPos += section.getWidth()/2f + Param.SECTION_KEEPOUT;
 			}
 		}		
@@ -135,7 +136,7 @@ public class Company implements DrawableObject {
 			sections.elementAt(2).add(new Shield());
 		}
 		
-		int initialPos = getWidth()/2 + 50;
+		int initialPos = getMinWidth()/2 + 50;
 		setPosition(initialPos, 100);
 		
 		//Load the image files
@@ -157,9 +158,9 @@ public class Company implements DrawableObject {
 		}
 		
 		// Only to debug move processing
-		g.drawFilledCircle(getPosition(), Param.FLOOR_DEPTH, 10, Color.YELLOW);
-		g.drawCircle(getPosition() - Param.COMPANY_WIDTH, Param.FLOOR_DEPTH, 10);
-		g.drawCircle(getPosition() + Param.COMPANY_WIDTH, Param.FLOOR_DEPTH, 10);
+		g.drawFilledCircle(getPosition() - g.getCamera().position.x + Param.CAM_WIDTH / 2, Param.FLOOR_DEPTH, 10, Color.YELLOW);
+		g.drawFilledCircle(getPosition() - Param.COMPANY_WIDTH - g.getCamera().position.x + Param.CAM_WIDTH / 2, Param.FLOOR_DEPTH, 10, Color.CYAN);
+		g.drawFilledCircle(getPosition() + Param.COMPANY_WIDTH - g.getCamera().position.x + Param.CAM_WIDTH / 2, Param.FLOOR_DEPTH, 10, Color.CYAN);
 	}
 	public void initEnnemies(int nb1, int nb2, int nb3) {
 		for(int i = 0 ; i < 3; i++){
@@ -175,7 +176,7 @@ public class Company implements DrawableObject {
 			sections.elementAt(2).add(new Shield(0,Species.TAPI,true));
 		}
 		
-		int initialPos = getWidth()/2 + 1000;
+		int initialPos = getMinWidth()/2 + 1000;
 		setPosition(initialPos, 100);
 		
 		//Load the image files
@@ -185,19 +186,30 @@ public class Company implements DrawableObject {
 				u.setEyeSprite("data/images/badeyes64x54.png", 3, 1);
 				u.setLegsSprite("data/images/legs64x42.png", 4, 1, true);
 				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
-				u.setExpression(Expression.ANGRY);
+				u.setExpression(Look.ANGRY);
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
 	}
 	public void aiMove() {
-		for (Section s : sections) {
-			for (Unit u : s.units) {
-				u.aiMove(fixedPos);
-			}
+		if(freeToMove){
+			for (Section s : sections) {
+				for (Unit u : s.units) {
+					u.freeMove();
+				}
+			}			
+		}
+		else{
+			setPosition(fixedPos, 2f);
 		}
 	}
 	public boolean isEmpty() {
 		return sections.isEmpty();
+	}
+	public void regroupUnits() {
+		freeToMove = false;
+	}
+	public void freeUnits(){
+		freeToMove = true;
 	}
 }

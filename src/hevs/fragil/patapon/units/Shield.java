@@ -1,5 +1,7 @@
 package hevs.fragil.patapon.units;
 
+import com.badlogic.gdx.graphics.Color;
+
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 
@@ -41,5 +43,9 @@ public class Shield extends Unit {
 	@Override
 	protected float getAttackDelay() {
 		return 0.6f;
+	}
+	@Override
+	protected Color getColor() {
+		return Color.YELLOW;
 	}
 }

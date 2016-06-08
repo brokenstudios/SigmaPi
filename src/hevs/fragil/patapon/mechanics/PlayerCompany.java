@@ -13,7 +13,7 @@ public class PlayerCompany {
 	
 	private PlayerCompany(){
 		heroes = new Company("heroes");
-		heroes.initRandomHeroes(1, 0, 0);
+		heroes.initRandomHeroes(1, 1, 1);
 	}
 
 	public void setAction(State action) {

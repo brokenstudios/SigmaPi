@@ -1,5 +1,6 @@
 package hevs.fragil.patapon.units;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
 import hevs.fragil.patapon.mechanics.Param;
@@ -23,11 +24,18 @@ public class Archer extends Unit {
 	}
 	public void attack(int distance){
 		Vector2 position = new Vector2(getPosition().x, Param.FLOOR_DEPTH+30);
-		new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, skills.getLevel() + 5);
+		if(distance > 0)
+			new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, skills.getLevel() + 5);
+		else
+			new Arrow(position, 180-(int)(Math.random()*20) + 45 , -distance, collisionGroup, skills.getLevel() + 5);
 	}
 	@Override
 	public void attack() {
-		attack(skills.getRangeMax());
+		if(unitsInRange()){
+			Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
+			int distance = (int)(victim.getPosition().x - getPosition().x);
+			attack(distance+32);
+		}
 	}
 	@Override
 	public Gesture getAttackGesture() {
@@ -36,5 +44,9 @@ public class Archer extends Unit {
 	@Override
 	protected float getAttackDelay() {
 		return 0.6f;
+	}
+	@Override
+	protected Color getColor() {
+		return Color.BLUE;
 	}
 }

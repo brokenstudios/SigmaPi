@@ -59,4 +59,8 @@ public class Stabilizer {
 	public Vector2 stabilized(Vector2 pos) {
 		return stabilized(pos.x, pos.y);
 	}
+	
+	public Vector2 getStabilizedPos(){
+		return stabilizer;
+	}
 }

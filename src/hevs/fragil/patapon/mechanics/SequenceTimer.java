@@ -56,14 +56,23 @@ public abstract class SequenceTimer{
 		}
 	}
 	private static boolean charge(Company c) {
+		// Disable automatic unit placement
+		c.regroupUnits();
+		
 		//increase attack skills for this time
 		return wait(Param.CHARGE_TIME, c);
 	}
 	private static boolean miracle(Company c) {
+		// Disable automatic unit placement
+		c.regroupUnits();
+		
 		//TODO new screen launch !
 		return true;
 	}
 	private static boolean defend(Company c) {
+		// Disable automatic unit placement
+		c.regroupUnits();
+		
 		//TODO increase defend skills for this time
 		return wait(Param.DEFEND_TIME, c);
 	}
@@ -75,7 +84,8 @@ public abstract class SequenceTimer{
 		}
 		
 		progression += deltaTime/totalTime;
-		c.setPosition( (int) Interpolation.fade.apply(start, end, progression), deltaTime);
+		c.setPosition((int) Interpolation.fade.apply(start, end, progression), deltaTime);
+		
 		if(progression >= 1f){
 			progression = 0f;
 			return true;
@@ -101,12 +111,18 @@ public abstract class SequenceTimer{
 	private static boolean walk(Company c){
 		float time = Param.WALK_TIME;
 		
+		// Disable automatic unit placement
+		c.regroupUnits();
+		
 		//add bonus time (faster move with fever)
 		time -= Param.WALK_TIME_BONUS/100.0f * feverScore;
 		
 		return shift(time, Param.WALK_WIDTH, c);
 	}
 	private static boolean retreat(Company c){
+		// Disable automatic unit placement
+		c.regroupUnits();
+		
 		float time = Param.RETREAT_TIME;
 		float bonus = (float) (Param.RETREAT_TIME_BONUS/100.0f * feverScore);
 		if (step == 0f) {
@@ -129,6 +145,8 @@ public abstract class SequenceTimer{
 	private static boolean attack(Company c){
 		progression += deltaTime;
 		
+		// Enable automatic unit placement
+		c.freeUnits();
 		
 		for (Section s : c.sections) {
 			for (Unit u : s.units) {

@@ -18,8 +18,8 @@ public class Skills {
 	 * @param defense
 	 * @param cooldown
 	 */
-	Skills(int level, int life, int attack, int rangeMax, int rangeMin, int defense, float cooldown){
-		this.setRange(rangeMax, rangeMin);
+	Skills(int level, int life, int attack, int rangeMin, int rangeMax, int defense, float cooldown){
+		this.setRange(rangeMin, rangeMax);
 		this.setCooldown(cooldown);
 		this.setLife(life);
 		this.setDefense(defense);
@@ -35,7 +35,7 @@ public class Skills {
 	public int getRangeMin() {
 		return rangeMin;
 	}
-	public void setRange(int rangeMax, int rangeMin) {
+	public void setRange(int rangeMin, int rangeMax) {
 		this.rangeMax = rangeMax;
 		this.rangeMin = rangeMin;
 	}
