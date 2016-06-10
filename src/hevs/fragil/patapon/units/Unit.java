@@ -215,8 +215,11 @@ public abstract class Unit implements DrawableObject {
 
 	protected Vector<Unit> getUnitsInRange() {
 		Vector<Unit> unitsInRange = new Vector<Unit>();
-		Company ennemies = CurrentLevel.getLevel().getEnnemies();
-		for (Section s : ennemies.sections) {
+		Company enemies;
+		if(isEnemy)enemies = PlayerCompany.getCompany();
+		else enemies = CurrentLevel.getLevel().getEnemies();
+		
+		for (Section s : enemies.sections) {
 			for (Unit u : s.units) {
 				float distance = u.getPosition().x - this.getPosition().x;
 				// Subtraction of two half-sprite to find center2center distance
@@ -260,7 +263,7 @@ public abstract class Unit implements DrawableObject {
 	protected float unitToEnemiDistance() {
 		Company enemies;
 		if(isEnemy)enemies = PlayerCompany.getCompany();
-		else enemies = CurrentLevel.getLevel().getEnnemies();
+		else enemies = CurrentLevel.getLevel().getEnemies();
 		
 		float distance = -1;
 		if(!enemies.isEmpty()){
@@ -352,7 +355,7 @@ public abstract class Unit implements DrawableObject {
 	public Unit findNextReachableEnemy() {
 		Company enemies;
 		if(isEnemy)enemies = PlayerCompany.getCompany();
-		else enemies = CurrentLevel.getLevel().getEnnemies();
+		else enemies = CurrentLevel.getLevel().getEnemies();
 		
 		Unit nearest = null;
 		float rangeDistance = -1;

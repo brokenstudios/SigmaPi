@@ -331,7 +331,7 @@ public class Level extends RenderingScreen {
 		SequenceTimer.run(PlayerCompany.getCompany(), sequence.getFever());
 	}
 
-	public Company getEnnemies() {
+	public Company getEnemies() {
 		return enemies;
 	}
 
