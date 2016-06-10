@@ -90,11 +90,11 @@ public abstract class Param {
 	public static final Drum[][]	COMBOS = {WALK,ATTACK,DEFEND,MIRACLE,RETREAT,CHARGE};
 	
 	//pixels per second
-	public static final int UNIT_SPEED = 100;
+	public static final int UNIT_SPEED = 1000;
 	
 	//Colors
-//	public static Color BACKGROUND = rgbToFloat(222,184,135);
-	public static Color BACKGROUND = Color.BLUE;
+	public static Color BACKGROUND = rgbToFloat(222,184,135);
+//	public static Color BACKGROUND = Color.BLUE;
 	
 	private static Color rgbToFloat(int r, int g, int b){
 		Color temp = new Color();

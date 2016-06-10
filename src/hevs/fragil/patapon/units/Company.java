@@ -2,8 +2,6 @@ package hevs.fragil.patapon.units;
 import java.util.Iterator;
 import java.util.Vector;
 
-import javax.swing.plaf.synth.SynthScrollBarUI;
-
 import com.badlogic.gdx.Gdx;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
@@ -206,8 +204,9 @@ public class Company implements DrawableObject {
 			for (Unit u : s.units) {
 				//when no enemy is in the units's range, unit must try to find a better place
 				if(u.getUnitsInRange().isEmpty()){
-					float u2uDistance = u.unitToUnitDistance(u.findNextReachableEnemy());
 					
+					float u2uDistance = u.unitToUnitDistance(u.findNextReachableEnemy());
+					System.out.println(u2uDistance);
 					//if we are too near, we must increase the distance
 					boolean increaseDistance = (u2uDistance < u.getSkills().getRangeMin());
 					
@@ -228,19 +227,7 @@ public class Company implements DrawableObject {
 			for (Unit u : s.units) {
 				//get position in the perfect rank
 				int orderedPos = getOrderedPosition(u);
-				
-				int newPos;
-				float dt = Gdx.graphics.getDeltaTime();
-				System.out.println("is at : " + u.getPosition());
-				System.out.println("want to go to : " + orderedPos);
-				//move to the right when too left, else move to the left
-				if(orderedPos > u.getPosition().x)
-					newPos = (int) (u.getPosition().x + Param.UNIT_SPEED * dt);
-				else
-					newPos = (int) (u.getPosition().x - Param.UNIT_SPEED * dt);
-				
-				System.out.println("new position : " + newPos);
-				u.setPosition(newPos, dt);
+				u.setPosition(orderedPos, 1f);
 			}
 		}
 	}

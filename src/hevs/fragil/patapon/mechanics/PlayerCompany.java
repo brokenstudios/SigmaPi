@@ -11,15 +11,13 @@ public class PlayerCompany {
 	private static Company instance ;
 	
 	private PlayerCompany(){
-		instance = new Company("heroes");
-		instance.initRandomHeroes(1, 1, 1);
 	}
 	public static Company getCompany() {
 		//TODO create new player company on new game 
 		//For instance, the player company is randomly initialized
 		if (instance == null) {
 			instance = new Company();
-			instance.initRandomHeroes(2, 2, 2);
+			instance.initRandomHeroes(2, 0, 0);
 		}
 		return instance;
 	}

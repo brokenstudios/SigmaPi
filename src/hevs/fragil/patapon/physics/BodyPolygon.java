@@ -4,8 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsPolygon;
-import ch.hevs.gdx2d.components.physics.utils.PhysicsConstants;
-import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
 
 public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 	static Vector2 dimensions =  new Vector2(3,80);
@@ -30,8 +28,9 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 		nArrows++;
 	}
 	public void moveToLinear(int position, double travelTime) {
-		double distanceToTravel = position - getBodyPosition().x;
-		distanceToTravel *= PhysicsConstants.PIXEL_TO_METERS;
+		System.out.println(position);
+		travelTime *= 1000;
+		double distanceToTravel = position - (int)getBodyPosition().x;
 		double globalSpeed = distanceToTravel / travelTime;
 		int fps = Gdx.graphics.getFramesPerSecond();
 

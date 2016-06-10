@@ -88,7 +88,7 @@ public abstract class SequenceTimer{
 		}
 		
 		progression += deltaTime/totalTime;
-		c.setPosition((int) Interpolation.fade.apply(start, end, progression));
+		c.setPosition((int)Interpolation.fade.apply(start, end, progression));
 		
 		if(progression >= 1f){
 			progression = 0f;

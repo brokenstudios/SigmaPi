@@ -105,10 +105,10 @@ public abstract class Unit implements DrawableObject {
 		render.draw(g,x,y,angle);
 	
 		// Some debug info (display unit range)
-//		if(isEnemy){
-//			g.drawFilledRectangle(x - skills.getRangeMin(), y, 10, 10, 0, getColor());
-//			g.drawFilledRectangle(x - skills.getRangeMax(), y, 10, 10, 0, getColor());
-//		}
+		if(!isEnemy){
+			g.drawFilledRectangle(x + skills.getRangeMin(), y, 10, 10, 0, getColor());
+			g.drawFilledRectangle(x + skills.getRangeMax(), y, 10, 10, 0, getColor());
+		}
 	}
 
 	public void setDelay(int delay) {
@@ -282,7 +282,10 @@ public abstract class Unit implements DrawableObject {
 	}
 	
 	protected float unitToUnitDistance(Unit u1){
-		return Math.abs(u1.getPosition().x - getPosition().x);
+		if(u1 != null)
+			return Math.abs(u1.getPosition().x - getPosition().x);
+		else
+			return 0;
 	}
 	
 	/**
@@ -362,11 +365,11 @@ public abstract class Unit implements DrawableObject {
 		if(!enemies.isEmpty()){
 			for (Section s : enemies.sections) {
 				for (Unit u : s.units) {
-					if(Math.abs(u.getPosition().x - getSkills().getRangeMax()) < rangeDistance || rangeDistance == -1){
+					if(Math.abs(u.getPosition().x - getPosition().x + getSkills().getRangeMax()) < rangeDistance || rangeDistance == -1){
 						rangeDistance = Math.abs(u.getPosition().x - getSkills().getRangeMax());
 						nearest = u;
 					}
-					if(Math.abs(getSkills().getRangeMin() - u.getPosition().x) < rangeDistance){
+					if(Math.abs(getPosition().x + getSkills().getRangeMin() - u.getPosition().x) < rangeDistance){
 						rangeDistance = Math.abs(getSkills().getRangeMin() - u.getPosition().x);
 						nearest = u;
 					}
