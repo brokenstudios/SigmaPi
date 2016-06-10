@@ -1,5 +1,6 @@
 package hevs.fragil.patapon.drawables;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -77,26 +78,25 @@ public class SpriteSheet {
 	 * @param spriteNumber : frame to draw (in the body spritesheet)
 	 * @param posX : draw location in x 
 	 * @param posY : draw location in y
-	 * @param originX : x center of the frame (for rotation)
-	 * @param originY : y center of the frame (for rotation)
+	 * @param originY : y rotation center
 	 */
-	public void drawWalkAnimation(int walkIndex, int spriteNumber, float posX, float posY, float originX, float originY){
+	public void drawWalkAnimation(int walkIndex, int spriteNumber, float posX, float posY, float originY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
 		float angle = 0f;
 		switch(walkIndex){
-			case 0 : 	angle = -1;  
-						posY -=3;
+			case 0 : 	angle = -3;  
 						break;
 			case 1 : 	angle = 0;
-						break;
-			case 2 : 	angle = 1;
 						posY -=3;
 						break;
+			case 2 : 	angle = 3;
+						break;
 			case 3 : 	angle = 0;
+						posY -=3;
 						break;
 		}
-		tmp.setOrigin(originX, originY);
+		tmp.setOrigin(32, originY);
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
 		tmp.setRotation(angle);
@@ -113,14 +113,14 @@ public class SpriteSheet {
 	 * @param originX : x center of the frame (for rotation)
 	 * @param originY : y center of the frame (for rotation)
 	 */
-	public void drawRotatedFrame(int spriteNumber, float angle, float posX, float posY, float originX, float originY){
+	public void drawRotatedFrame(int spriteNumber, float angle, float posX, float posY, float originX, float originY, float offsetX, float offsetY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
-		tmp.setOrigin(originX, originY);
-		if(flipped && tmp.isFlipX() == false)
-			tmp.flip(true, false);
+		tmp.setOrigin(offsetX, offsetY);
 		tmp.setRotation((float)Math.toDegrees(angle));
-		tmp.setPosition(posX, posY);
+		float x = posX + (float) (originX * Math.cos(angle) + originY * Math.abs(Math.sin(angle)));
+		float y = posY + (float) (originY * Math.cos(angle) + originX * Math.abs(Math.sin(angle)));
+		tmp.setPosition(x, y);
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}
@@ -176,14 +176,14 @@ public class SpriteSheet {
 		tmp.setRotation((float)Math.toDegrees(angle));
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
-		//location of the left down corner depends of offsets :
-		float offsetX = 32 - tmp.getWidth()/2;
-		float offsetY = tmp.getHeight()/2 - 38;
-		Vector2 offset = new Vector2(offsetX, offsetY);
-		Vector2 pos = new Vector2(posX, posY);
-		offset.rotateRad(angle);
-		pos.add(offset);
-		tmp.setPosition(pos.x, pos.y);
+//		//location of the left down corner depends of offsets :
+//		float offsetX = 32 - tmp.getWidth()/2;
+//		float offsetY = tmp.getHeight()/2 - 38;
+//		Vector2 offset = new Vector2(offsetX, offsetY);
+//		Vector2 pos = new Vector2(posX, posY);
+//		offset.rotateRad(angle);
+//		pos.add(offset);
+		tmp.setPosition(posX, posY);
 		tmp.draw(spriteBatch, alpha);
 		spriteBatch.end();
 	}

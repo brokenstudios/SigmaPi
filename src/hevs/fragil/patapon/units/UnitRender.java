@@ -74,18 +74,19 @@ public class UnitRender {
 	private void drawAlive(GdxGraphics g, Vector2 position) {
 		gestureSwitch();
 		
-		float stateTime = CurrentLevel.getLevel().getStateTime();
-		int legsIndex = legs.drawAllFrames(stateTime, pos.stabilized(position));
-		body.drawWalkAnimation(legsIndex, bodyIndex, pos.stabilized(position).x, pos.stabilized(position).y + 10, 32, 38);
-		eye.drawWalkAnimation(legsIndex, look.ordinal(), pos.stabilized(position).x, pos.stabilized(position).y + 22, 32, 38);
-		arms.drawFrames(stateTime, gesture.ordinal() * 4, 4, pos.stabilized(position));
+		float stateTime = CurrentLevel.getLevel().getStateTime ();
+		int legsIndex = legs.drawAllFrames(stateTime, position);
+		body.drawWalkAnimation(legsIndex, bodyIndex, position.x, position.y + 10, 37);
+		eye.drawWalkAnimation(legsIndex, look.ordinal(), position.x, position.y + 22, 24);
+		arms.drawFrames(stateTime, gesture.ordinal() * 4, 4, position);
 	}
 
 	private void drawDead(GdxGraphics g, Vector2 position, float angle) {
 		gestureSwitch();
-		legs.drawRotatedFrameAlpha(0, angle, position, opacity);
-		body.drawRotatedFrameAlpha(bodyIndex, angle, position, opacity);
-		eye.drawRotatedFrameAlpha(Look.DYING.ordinal(), angle, position, opacity);
+		legs.drawRotatedFrame(0, angle, position.x, position.y, -5, -40, 32, 38);
+		body.drawRotatedFrame(bodyIndex, angle, position.x, position.y, -5, -25, 32, 38);
+		eye.drawRotatedFrame(Look.DYING.ordinal(), angle, position.x, position.y, -5, -13, 32, 38);
+		arms.drawRotatedFrame(0, angle, position.x, position.y, 11, -40, 48, 38);
 	}
 	private void gestureSwitch() {
 		float dt = Gdx.graphics.getDeltaTime();
@@ -120,7 +121,7 @@ public class UnitRender {
 
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setBodySprite(String url, int cols, int rows) {
-		body = new SpriteSheet(url, cols, rows, 0.2f, false, true);
+		body = new SpriteSheet(url, cols, rows, 1f, false, true);
 	}
 
 	/** This is only to load files in the PortableApplication onInit method */
