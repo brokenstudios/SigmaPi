@@ -29,6 +29,10 @@ public abstract class SequenceTimer{
 //				lalala.play();
 				playing = true;
 			}
+
+			// process moves
+			c.aiMove();
+			
 			switch(a){
 				case WALK : 	finished = walk(c);
 								break;
@@ -43,7 +47,6 @@ public abstract class SequenceTimer{
 				case CHARGE : 	finished = charge(c);
 								break;
 				case IDLE :		finished = stop(c);
-								c.aiMove();
 								playing = false;
 								lalala.stop();
 								break;
@@ -85,7 +88,7 @@ public abstract class SequenceTimer{
 		}
 		
 		progression += deltaTime/totalTime;
-		c.setPosition((int) Interpolation.fade.apply(start, end, progression), deltaTime);
+		c.setPosition((int) Interpolation.fade.apply(start, end, progression));
 		
 		if(progression >= 1f){
 			progression = 0f;

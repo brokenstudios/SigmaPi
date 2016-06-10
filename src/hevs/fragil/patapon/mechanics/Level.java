@@ -173,8 +173,7 @@ public class Level extends RenderingScreen {
 			camera = decor.cameraProcess(PlayerCompany.getCompany(), enemies);
 
 		// apply camera position
-		//TODO play with scale tp play with zoom :D enjoy your pain
-//		g.zoom(camera.z);
+		//TODO play with scale to play with zoom :D enjoy your pain
 		g.moveCamera(camera.x, 0, Param.MAP_WIDTH, Param.MAP_HEIGHT);
 		
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
@@ -195,7 +194,7 @@ public class Level extends RenderingScreen {
 		} else {
 			// clear the screen with the decor background
 			g.clear(decor.getBackground());
-			debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
+			
 			// stick flying objects
 			createJoints();
 

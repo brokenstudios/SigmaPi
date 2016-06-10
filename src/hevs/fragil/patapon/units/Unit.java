@@ -105,10 +105,10 @@ public abstract class Unit implements DrawableObject {
 		render.draw(g,x,y,angle);
 	
 		// Some debug info (display unit range)
-		if(isEnemy){
-			g.drawFilledRectangle(x - skills.getRangeMin(), y, 10, 10, 0, getColor());
-			g.drawFilledRectangle(x - skills.getRangeMax(), y, 10, 10, 0, getColor());
-		}
+//		if(isEnemy){
+//			g.drawFilledRectangle(x - skills.getRangeMin(), y, 10, 10, 0, getColor());
+//			g.drawFilledRectangle(x - skills.getRangeMax(), y, 10, 10, 0, getColor());
+//		}
 	}
 
 	public void setDelay(int delay) {

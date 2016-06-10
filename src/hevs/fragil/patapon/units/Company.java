@@ -2,6 +2,8 @@ package hevs.fragil.patapon.units;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.swing.plaf.synth.SynthScrollBarUI;
+
 import com.badlogic.gdx.Gdx;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
@@ -30,7 +32,6 @@ public class Company implements DrawableObject {
 		this(pos, "noname");
 	}
 	public Company(int pos, String name){
-		setPosition(pos, 0.1f);
 		this.name = name;   
 		this.ready = true;
 	}
@@ -39,6 +40,16 @@ public class Company implements DrawableObject {
 			for (Unit u : s.units) {
 				u.setCollisionGroup(collisionGroup);
 			}
+		}
+	}
+	public void setPosition(int newPos){
+		fixedPos = newPos;
+	}
+	public void setAction(State a){
+		if((ready && a != null) || a == State.IDLE){
+			System.out.println("action set : " + a);
+			action = a;
+			ready = false;
 		}
 	}
 	public String toString(){
@@ -53,14 +64,7 @@ public class Company implements DrawableObject {
 		return t;
 	}
 	public float getPosition(){
-		float xSum = 0;
-		for (Section s : sections) {
-			for (Unit u : s.units) {
-				xSum += u.getPosition().x;
-			}
-		}
-	
-		return xSum / getNbUnits();
+		return fixedPos;
 	}
 	public int getNbUnits(){
 		int s = 0;
@@ -81,32 +85,11 @@ public class Company implements DrawableObject {
 		int nSections = sections.size();
 		return (int)(width + (nSections-1)*Param.SECTION_KEEPOUT);
 	}
-	public void setPosition(int newPos, float totalTime){
-		int width = getMinWidth();
-		float screenMargin = newPos - width/2f;
-		
-		if(screenMargin > 0){
-			float tempPos = screenMargin;
-			fixedPos = newPos;
-			for (Section section : sections) {
-				tempPos += section.getWidth()/2f;
-				section.setPosition((int)tempPos,totalTime);
-				tempPos += section.getWidth()/2f + Param.SECTION_KEEPOUT;
-			}
-		}		
-	}
 	public State getAction(){
 		return action;
 	}
 	public void add(Section s){
 		sections.addElement(s);
-	}
-	public void setAction(State a){
-		if((ready && a != null) || a == State.IDLE){
-			System.out.println("action set : " + a);
-			action = a;
-			ready = false;
-		}
 	}
 	public void actionFinished(){
 		action = null;
@@ -137,7 +120,19 @@ public class Company implements DrawableObject {
 		}
 		
 		int initialPos = getMinWidth()/2 + 50;
-		setPosition(initialPos, 100);
+		
+		int width = getMinWidth();
+		float screenMargin = initialPos - width/2f;
+		
+		if(screenMargin > 0){
+			float tempPos = screenMargin;
+			fixedPos = initialPos;
+			for (Section section : sections) {
+				tempPos += section.getWidth()/2f;
+				section.setPosition((int)tempPos, 0.1f);
+				tempPos += section.getWidth()/2f + Param.SECTION_KEEPOUT;
+			}
+		}
 		
 		//Load the image files
 		for (Section s : sections) {
@@ -148,14 +143,9 @@ public class Company implements DrawableObject {
 				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
 			}
 		}
+		
 		Arrow.setImgPath("data/images/fleche.png");
 		Spear.setImgPath("data/images/fleche.png");
-	}
-	@Override
-	public void draw(GdxGraphics g) {
-		for (Section section : sections) {
-			section.draw(g);
-		}
 	}
 	public void initEnnemies(int nb1, int nb2, int nb3) {
 		for(int i = 0 ; i < 3; i++){
@@ -172,7 +162,19 @@ public class Company implements DrawableObject {
 		}
 		
 		int initialPos = getMinWidth()/2 + 1000;
-		setPosition(initialPos, 100);
+		
+		int width = getMinWidth();
+		float screenMargin = initialPos - width/2f;
+		
+		if(screenMargin > 0){
+			float tempPos = screenMargin;
+			fixedPos = initialPos;
+			for (Section section : sections) {
+				tempPos += section.getWidth()/2f;
+				section.setPosition((int)tempPos, 0.1f);
+				tempPos += section.getWidth()/2f + Param.SECTION_KEEPOUT;
+			}
+		}
 		
 		//Load the image files
 		for (Section s : sections) {
@@ -185,6 +187,12 @@ public class Company implements DrawableObject {
 			}
 		}
 		Arrow.setImgPath("data/images/fleche.png");
+	}
+	@Override
+	public void draw(GdxGraphics g) {
+		for (Section section : sections) {
+			section.draw(g);
+		}
 	}
 	public void aiMove() {
 		if(freeToMove){
@@ -199,23 +207,21 @@ public class Company implements DrawableObject {
 				//when no enemy is in the units's range, unit must try to find a better place
 				if(u.getUnitsInRange().isEmpty()){
 					float u2uDistance = u.unitToUnitDistance(u.findNextReachableEnemy());
+					
 					//if we are too near, we must increase the distance
 					boolean increaseDistance = (u2uDistance < u.getSkills().getRangeMin());
+					
 					//get desired position depending of increase or decrease of the distance with enemies
 					int desiredPos = u.desiredPos(increaseDistance);
+					
 					//test if this new position is contained between the company maximum limits
 					if(isInCompanyRange(desiredPos)){
 						//if desiredPos is in company range
-						setPosition(u.desiredPos(false), Gdx.graphics.getDeltaTime());
+						u.setPosition(u.desiredPos(false), Gdx.graphics.getDeltaTime());
 					}
 				}
 			}
 		}
-	}
-	private boolean isInCompanyRange(int desiredPos) {
-		if(fixedPos - Param.COMPANY_WIDTH < desiredPos && desiredPos < fixedPos + Param.COMPANY_WIDTH)
-			return true;
-		return false;
 	}
 	private void regroup(){
 		for (Section s : sections) {
@@ -225,22 +231,43 @@ public class Company implements DrawableObject {
 				
 				int newPos;
 				float dt = Gdx.graphics.getDeltaTime();
+				System.out.println("is at : " + u.getPosition());
+				System.out.println("want to go to : " + orderedPos);
 				//move to the right when too left, else move to the left
-				if(orderedPos < u.getPosition().x)
+				if(orderedPos > u.getPosition().x)
 					newPos = (int) (u.getPosition().x + Param.UNIT_SPEED * dt);
-				else 
+				else
 					newPos = (int) (u.getPosition().x - Param.UNIT_SPEED * dt);
 				
+				System.out.println("new position : " + newPos);
 				u.setPosition(newPos, dt);
 			}
 		}
 	}
-	private int getOrderedPosition(Unit u) {
+	public void regroupUnits() {
+		freeToMove = false;
+	}
+	public void freeUnits(){
+		freeToMove = true;
+	}
+	private boolean isInCompanyRange(int desiredPos) {
+		if(fixedPos - Param.COMPANY_WIDTH < desiredPos && desiredPos < fixedPos + Param.COMPANY_WIDTH)
+			return true;
+		return false;
+	}
+	
+	/**
+	 * Return ordered position of {@code unit}
+	 * @param  unit : unit that must move
+	 * @return desired position
+	 */
+	private int getOrderedPosition(Unit unit) {
 		int index = 0;
 		int sectionNumber = 0;
 		for (Section s : sections) {
-			if(s.units.contains(u)){
-				index = s.units.indexOf(u);
+			if(s.units.contains(unit)){
+				index = s.units.indexOf(unit);
+				break;
 			}
 			sectionNumber++;
 		}
@@ -250,11 +277,5 @@ public class Company implements DrawableObject {
 	}
 	public boolean isEmpty() {
 		return sections.isEmpty();
-	}
-	public void regroupUnits() {
-		freeToMove = false;
-	}
-	public void freeUnits(){
-		freeToMove = true;
 	}
 }
