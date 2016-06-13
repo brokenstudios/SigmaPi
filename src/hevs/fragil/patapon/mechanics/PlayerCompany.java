@@ -17,7 +17,7 @@ public class PlayerCompany {
 		//For instance, the player company is randomly initialized
 		if (instance == null) {
 			instance = new Company();
-			instance.initRandomHeroes(2, 0, 0);
+			instance.initRandomHeroes(2, 2, 2);
 		}
 		return instance;
 	}

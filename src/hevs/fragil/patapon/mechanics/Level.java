@@ -154,13 +154,18 @@ public class Level extends RenderingScreen {
 				break;
 			}
 		}
-		// Display camera and company informations (only for debug)
+		
+		// Some manual actions to camera
 		if (keycode == Keys.LEFT) {
-			decor.moveManually(-10);
+			decor.addManualOffset(-10);
 		}
 		if (keycode == Keys.RIGHT) {
-			decor.moveManually(10);
+			decor.addManualOffset(10);
 		}
+		if (keycode == Keys.CONTROL_RIGHT){
+			decor.centerCamera();
+		}
+		
 		if (keycode == Keys.ESCAPE) {
 			dispose();
 			System.exit(0);
@@ -175,6 +180,9 @@ public class Level extends RenderingScreen {
 
 		// apply camera position
 		//TODO play with scale to play with zoom :D enjoy your pain
+//		System.out.println("camera x : " + camera.x);
+//		System.out.println("getCamera x : " + g.getCamera().position.x);
+//		System.out.println("offset : " + decor.getManualOffset());
 		g.moveCamera(camera.x, 0, Param.MAP_WIDTH, Param.MAP_HEIGHT);
 		
 		if (debugActive) {
@@ -357,6 +365,10 @@ public class Level extends RenderingScreen {
 				iter.remove();
 			}
 		}
+	}
+	
+	public void displayCamera(GdxGraphics g){
+		System.out.println("Camera x : " + g.getCamera().position.x);
 	}
 
 	public float getStateTime() {

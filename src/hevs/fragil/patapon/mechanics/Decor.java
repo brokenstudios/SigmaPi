@@ -14,7 +14,7 @@ import hevs.fragil.patapon.units.Company;
 public class Decor {
 	private int width;
 	private int height;
-	private int manualCommand;
+	private int manualOffset;
 	private Color background;
 	private Vector3 camera = new Vector3();
 	private Vector<DrawableObject> toDraw = new Vector<DrawableObject>();
@@ -42,7 +42,7 @@ public class Decor {
 		if(c1.isEmpty())
 			return new Vector3(0,0,0);
 		
-		camera.x = c1.getPosition() + Param.CAM_OFFSET + manualCommand;
+		camera.x = c1.getPosition() + Param.CAM_OFFSET + manualOffset;
 		camera.y = 0;
 		camera.z = 0;
 		
@@ -68,7 +68,7 @@ public class Decor {
 		float absDistance = Math.abs(x2 - x1);
 		
 		// Camera always stick on the floor
-		camera.x = x1 + Param.CAM_OFFSET + manualCommand;
+		camera.x = x1 + Param.CAM_OFFSET + manualOffset;
 		camera.y = 0;
 
 		// When companies are not so far, camera will dezoom to show both
@@ -83,10 +83,11 @@ public class Decor {
 		
 		// Input invalid!
 		else {
-			camera.x = Param.CAM_OFFSET + manualCommand;
+			camera.x = Param.CAM_OFFSET + manualOffset;
 			camera.z = 1;
 		}
 		
+		// TODO work only with a return new Vector3?
 		return camera;
 	}
 
@@ -148,7 +149,35 @@ public class Decor {
 			d.draw(g);
 		}
 	}
-	public void moveManually(int amountPixels){
-		manualCommand += amountPixels;
+	
+	public int getManualOffset(){
+		return manualOffset;
+	}
+	
+	public void setManualOffset(int newValue){
+		manualOffset = newValue;
+	}
+	
+	/**
+	 * Allow to add an offset to the camera in map limits
+	 * @param amountPixels User given offset
+	 */
+	public void addManualOffset(int amountPixels){
+		// Set a minimal value to camera (placed by center of window)
+		// Pas les bonnes conditions, voir feuille LFD haha
+		if(manualOffset + amountPixels > Param.CAM_WIDTH/2 && manualOffset + amountPixels < Param.MAP_WIDTH-Param.CAM_WIDTH/2)
+			manualOffset += amountPixels;
+		// If out of boundaries, set offset to zero
+		else
+			manualOffset = 0;
+		
+		System.out.println(manualOffset + amountPixels);
+	}
+	
+	/**
+	 * Automatic camera centering on player company by setting the camera offset to zero
+	 */
+	public void centerCamera(){
+		manualOffset = 0;
 	}
 }
