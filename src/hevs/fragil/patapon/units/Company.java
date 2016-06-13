@@ -225,11 +225,17 @@ public class Company implements DrawableObject {
 		}
 	}
 	private void regroup(){
+		float dt = Gdx.graphics.getDeltaTime();
 		for (Section s : sections) {
 			for (Unit u : s.units) {
+				float desiredPos = u.getPosition().x;
 				//get position in the perfect rank
-				int orderedPos = getOrderedPosition(u);
-				u.setPosition(orderedPos, 1f);
+				if(u.getPosition().x < getOrderedPosition(u))
+					desiredPos += Param.UNIT_SPEED * dt;
+				else
+					desiredPos -= Param.UNIT_SPEED * dt;
+				
+				u.setPosition((int)desiredPos, dt);
 			}
 		}
 	}

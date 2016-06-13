@@ -36,7 +36,7 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 
 		// Check if this speed will cause overshoot in the next time step.
 		// If so, we need to scale the speed down to just enough to reach
-		// the target point. (Assuming here a step length based on 60 fps)
+		// the target point.
 		double stepDistance = globalSpeed * (1.0/fps);
 		if ( Math.abs(stepDistance) > Math.abs(distanceToTravel) )
 		    globalSpeed *= ( distanceToTravel / stepDistance );
@@ -52,9 +52,7 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 		return collisionGroup;
 	}
 	@Override
-	/**
-	 * Return true if fatal shock
-	 */
+	/** Return true when damage leads to death */
 	public boolean applyDamage(float damage) {
 		if(life > 0){
 			life -= damage;
