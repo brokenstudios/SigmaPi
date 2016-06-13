@@ -1,0 +1,115 @@
+ \documentclass[a4paper,10pt]{article}
+ \usepackage[utf8]{inputenc}  
+ \usepackage[T1]{fontenc}
+ \usepackage{graphicx}
+ \graphicspath{{images/}} 
+ 
+ \usepackage{wrapfig} 
+ \usepackage{amsmath} 
+ \usepackage{gensymb}
+ \usepackage{fancyhdr}
+ \usepackage{lastpage}
+ \usepackage{textcomp}
+ \usepackage{color}
+ \usepackage{colortbl}
+ \usepackage[table]{xcolor}
+ \usepackage{courier}
+ \usepackage{setspace}
+ \usepackage{listings}
+ \usepackage{ulem}%
+ \usepackage{geometry}
+ \usepackage{array}
+ \geometry{a4paper,
+ total = {140mm, 237mm},
+ left = 35mm,
+ top = 30mm}
+ \newcommand{\minus}{\scalebox{0.6}[1.0]{$-$}} 
+ \newcommand{\signature}[2]{%
+  \par\nobreak\bigskip
+  \begin{singlespace}%
+  \mbox{}\hfill\begin{tabular}{p{8cm} }
+      \rule{8cm}{0.5pt}\newline{}%
+        \textbf{#1}\\%
+       #2 %
+  \end{tabular}%
+  \end{singlespace}%
+  \medskip%
+ }
+ \renewcommand{\lstlistingname}{Extrait de code}
+ \lstset{
+ language=Java,
+ basicstyle=\scriptsize\ttfamily, 
+ upquote=true,
+ aboveskip={1.5\baselineskip},
+ columns=fullflexible,
+ showstringspaces=false,
+ extendedchars=true,
+ frame=single,
+ breaklines=true,
+ showtabs=false,
+ showspaces=false,
+ showstringspaces=false,
+ identifierstyle=\ttfamily,
+ keywordstyle=\color[rgb]{0.2,0.2,0.2},
+ commentstyle=\color[rgb]{0.133,0.545,0.133},
+ stringstyle=\color[rgb]{0.627,0.126,0.941},
+ tabsize=5,
+ }
+ \pagestyle{fancy}
+ \fancyhead[R]{Projet final SigmaPi}
+ \fancyfoot[C]{\thepage}
+ \fancyhead[L]{Loïc Gillioz, Loïc Fracheboud}
+ \author{Loïc Gillioz, Loïc Fracheboud}
+ \title{Informatique - Projet final \\ \Huge SigmaPi (Patapon-like)}
+ \date{13 juin 2016}
+ \begin{document}
+ \maketitle
+ \begin{figure}[!h]
+ \centering
+ \includegraphics[scale=0.15]{images/icones}
+ \end{figure}
+ \pagebreak
+ 
+ \section{Description sommaire du jeu}
+  SigmaPi est basé sur le jeu sorti sur PSP "Patapon". Ce jeu connu un grand succès et c'est désormais une des références des jeux de rythme.
+  \paragraph*{Structure UML}
+  Comme on peut le voir sur la figure suivante, l'architecture du jeux est assez riche. On peut distinguer plusieurs groupes dédiés à des tâches communes, graphismes, mécanique de jeux, etc.
+  \paragraph*{Description des classes}
+Ici j'imagine une description détaillée de quelques classes et un rapide résumé des autres
+  \section{Confrontation au planning}
+  Maintenant que le projet est terminé, nous pouvons tirer un bilan sur le planning prévu et celui réalisé. Pour rappel, nous avions planifié le travail comme suit :
+  \paragraph{}
+ \newcolumntype{M}[1]{>{\raggedright}m{#1}}
+ {\rowcolors{1}{lightgray}{white}
+\begin{tabular}{M{9cm}lc}
+\bf Fonctionnalité & \bf  Date & \bf Importance \tabularnewline
+Gestion des séquences de notes & Implémenté & +++ \tabularnewline
+Gestion des actions par fonction (p.ex. les archers tirent des flèches, lanciers des lances, les épéistes frappent mais ne lancent rien) & 06.05.2016 & +++ \tabularnewline
+    Déplacement de la caméra selon la position des SigmaPis & 12.05.2016  & +++\tabularnewline
+    Utilisation de la physique pour les objets balistiques et des collisions & 20.05.2016 & ++ \tabularnewline
+    Utilisation des collisions pour appliquer les dégâts aux unités & 20.05.2016 & ++\tabularnewline
+    Adaptation des aptitudes des SigmaPis selon leur niveau et race & 12.06.2016 & ++\tabularnewline
+    Création d'animations sans SpriteSheets (transformations par calcul) & 12.06.2016 & + \tabularnewline
+Décors récursifs & 26.05.2016 & + \tabularnewline
+    Mise en place d'un scénario & 12.06.2016 & -- \tabularnewline 
+    Réserve pour les imprévus & 19.06.2016 & *left blank* \tabularnewline
+\end{tabular}}
+
+ \paragraph{}
+ Nous n'avons pas réellement respecté le planning, en fait des éléments se sont retrouvés très vite codé dans la timeline (par exemple les arbres récursifs ou les animations sans SpriteSheets) tandis que d'autres ne sont pas encore implémentés, notamment les différents niveaux de SigmaPis
+ 
+ \vspace{30pt}
+ \begin{wrapfigure}[0]{r}{6cm}
+ \vspace{-52pt}
+ \centering
+ \includegraphics[scale=0.5]{signgillioz}
+ \end{wrapfigure}
+ \signature{Loïc Gillioz}{Sion, le 21 avril 2016} 
+ 
+ \begin{wrapfigure}[0]{r}{6cm}
+ \vspace{-52pt}
+ \centering
+ \includegraphics[scale=1]{signfracheboud}
+ \end{wrapfigure}
+ \signature{Loïc Fracheboud}{Sion, le 21 avril 2016} 
+ \end{document}
