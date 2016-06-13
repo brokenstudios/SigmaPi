@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
@@ -191,6 +192,10 @@ public class Company implements DrawableObject {
 		for (Section section : sections) {
 			section.draw(g);
 		}
+		g.setColor(Color.RED);
+		g.drawRectangle(getPosition(), 20, 10, 100, 0);
+		g.drawRectangle(getPosition()-Param.COMPANY_WIDTH/2, 20, 10, 200, 0);
+		g.drawRectangle(getPosition()+Param.COMPANY_WIDTH/2, 20, 10, 200, 0);
 	}
 	public void aiMove() {
 		if(freeToMove){
@@ -204,13 +209,10 @@ public class Company implements DrawableObject {
 			for (Unit u : s.units) {
 				//when no enemy is in the units's range, unit must try to find a better place
 				if(u.getUnitsInRange().isEmpty()){
-					
 					float u2uDistance = u.unitToUnitDistance(u.findNextReachableEnemy());
-					System.out.println(u2uDistance);
 					//if we are too near, we must increase the distance
 					boolean increaseDistance = (u2uDistance < u.getSkills().getRangeMin());
-					
-					//get desired position depending of increase or decrease of the distance with enemies
+					//get desired position depending of increase or decrease the distance with enemies
 					int desiredPos = u.desiredPos(increaseDistance);
 					
 					//test if this new position is contained between the company maximum limits
@@ -238,7 +240,7 @@ public class Company implements DrawableObject {
 		freeToMove = true;
 	}
 	private boolean isInCompanyRange(int desiredPos) {
-		if(fixedPos - Param.COMPANY_WIDTH < desiredPos && desiredPos < fixedPos + Param.COMPANY_WIDTH)
+		if(fixedPos - Param.COMPANY_WIDTH/2 < desiredPos && desiredPos < fixedPos + Param.COMPANY_WIDTH/2)
 			return true;
 		return false;
 	}

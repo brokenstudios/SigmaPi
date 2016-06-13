@@ -155,9 +155,11 @@ public class Level extends RenderingScreen {
 			}
 		}
 		// Display camera and company informations (only for debug)
-		if (keycode == Keys.C) {
-			System.out.println("Camera pos = " + camera.x);
-			System.out.println("Company pos = " + PlayerCompany.getCompany().getPosition());
+		if (keycode == Keys.LEFT) {
+			decor.moveManually(-10);
+		}
+		if (keycode == Keys.RIGHT) {
+			decor.moveManually(10);
 		}
 		if (keycode == Keys.ESCAPE) {
 			dispose();
@@ -166,51 +168,42 @@ public class Level extends RenderingScreen {
 	}
 
 	public void onGraphicRender(GdxGraphics g) {
+		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
+		
 		// process camera position inside map limits
-		if(enemies.isEmpty())
-			camera = decor.cameraProcess(PlayerCompany.getCompany());			
-		else
-			camera = decor.cameraProcess(PlayerCompany.getCompany(), enemies);
+		camera = decor.cameraProcess(PlayerCompany.getCompany(), enemies);
 
 		// apply camera position
 		//TODO play with scale to play with zoom :D enjoy your pain
 		g.moveCamera(camera.x, 0, Param.MAP_WIDTH, Param.MAP_HEIGHT);
 		
-		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
-		
 		if (debugActive) {
 			g.clear();
 			debugRenderer.render(PhysicsWorld.getInstance(), g.getCamera().combined);
-			
-			// stick flying objects
-			createJoints();
-
-			// update objects
-			stepProjectiles(g);
-			rythm();
-			action();
-			sequence.step();
-			killUnits();
-		} else {
+		} 
+		else {
 			// clear the screen with the decor background
 			g.clear(decor.getBackground());
-			
-			// stick flying objects
-			createJoints();
+		}
+		
+		// stick flying objects
+		createJoints();
 
-			// update objects
-			stepProjectiles(g);
-			rythm();
-			action();
-			sequence.step();
-			killUnits();
-
+		// update objects
+		stepProjectiles(g);
+		rythm();
+		action();
+		sequence.step();
+		killUnits();
+		
+		
+		if(!debugActive){
 			// display help
 			g.drawStringCentered(800, "Fever : " + sequence.getFever());
 			g.drawStringCentered(780, "T to disable/enable track");
 			g.drawStringCentered(760, "S to disable/enable snap");
 			g.drawStringCentered(740, "D to disable/enable debug mode");
-
+			
 			// display objects
 			floor.draw(g);
 			decor.draw(g);

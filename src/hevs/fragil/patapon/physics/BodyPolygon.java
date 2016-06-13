@@ -49,7 +49,7 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 	}
 	@Override
 	public int getCollisionGroup() {
-		return 0;
+		return collisionGroup;
 	}
 	@Override
 	/**

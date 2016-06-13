@@ -14,6 +14,7 @@ import hevs.fragil.patapon.units.Company;
 public class Decor {
 	private int width;
 	private int height;
+	private int manualCommand;
 	private Color background;
 	private Vector3 camera = new Vector3();
 	private Vector<DrawableObject> toDraw = new Vector<DrawableObject>();
@@ -38,7 +39,10 @@ public class Decor {
 	 * @return camera x position
 	 */
 	public Vector3 cameraProcess(Company c1){
-		camera.x = c1.getPosition() + Param.CAM_OFFSET;
+		if(c1.isEmpty())
+			return new Vector3(0,0,0);
+		
+		camera.x = c1.getPosition() + Param.CAM_OFFSET + manualCommand;
 		camera.y = 0;
 		camera.z = 0;
 		
@@ -53,14 +57,18 @@ public class Decor {
 	 * @return camera complete position (x, y, z)
 	 */
 	public Vector3 cameraProcess(Company c1, Company c2) {
-
+		if(c1.isEmpty())
+			return cameraProcess(c2);
+		if(c2.isEmpty())
+			return cameraProcess(c1);
+		
 		// Process absolute distance
 		float x1 = c1.getPosition();
 		float x2 = c2.getPosition();
 		float absDistance = Math.abs(x2 - x1);
 		
 		// Camera always stick on the floor
-		camera.x = x1 + Param.CAM_OFFSET;
+		camera.x = x1 + Param.CAM_OFFSET + manualCommand;
 		camera.y = 0;
 
 		// When companies are not so far, camera will dezoom to show both
@@ -75,7 +83,7 @@ public class Decor {
 		
 		// Input invalid!
 		else {
-			camera.x = Param.CAM_OFFSET;
+			camera.x = Param.CAM_OFFSET + manualCommand;
 			camera.z = 1;
 		}
 		
@@ -139,5 +147,8 @@ public class Decor {
 		for (DrawableObject d : toDraw) {
 			d.draw(g);
 		}
+	}
+	public void moveManually(int amountPixels){
+		manualCommand += amountPixels;
 	}
 }
