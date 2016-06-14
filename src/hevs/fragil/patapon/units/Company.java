@@ -46,7 +46,7 @@ public class Company implements DrawableObject {
 	}
 	public void setAction(State a){
 		if((ready && a != null) || a == State.IDLE){
-			System.out.println("action set : " + a);
+//			System.out.println("action set : " + a);
 			action = a;
 			ready = false;
 		}
@@ -204,6 +204,7 @@ public class Company implements DrawableObject {
 		else
 			regroup();
 	}
+	// TODO avoid units superposition
 	private void freeMove(){
 		for (Section s : sections) {
 			for (Unit u : s.units) {
@@ -217,8 +218,22 @@ public class Company implements DrawableObject {
 					
 					//test if this new position is contained between the company maximum limits
 					if(isInCompanyRange(desiredPos)){
-						//if desiredPos is in company range
-						u.setPosition(u.desiredPos(false), Gdx.graphics.getDeltaTime());
+						//if desiredPos is in company range and free from unit
+						float distance = 0;
+						// Check next unit in section, if last of section, check next section
+						if(!(s.units.lastElement() == u)){
+							distance = s.units.elementAt(s.units.indexOf(u)+1).getPosition().x - u.getPosition().x;							
+						}
+						else if(!(sections.lastElement() == s)){
+							distance = sections.elementAt(sections.indexOf(s)+1).units.firstElement().getPosition().x;
+							distance -= u.getPosition().x;
+						}
+						
+						distance = Math.abs(distance);
+						System.out.println("distance " + distance);
+						if(distance > Param.BODY_WIDTH/2){
+							u.setPosition(u.desiredPos(false), Gdx.graphics.getDeltaTime());							
+						}
 					}
 				}
 			}
@@ -267,7 +282,7 @@ public class Company implements DrawableObject {
 			sectionNumber++;
 		}
 		int startPosition = fixedPos - getMinWidth() / 2;
-		int orderedPos = startPosition + sectionNumber * (Param.SECTION_KEEPOUT + Param.SECTION_WIDTH) + index * Param.UNIT_WIDTH;
+		int orderedPos = startPosition + sectionNumber * (Param.SECTION_KEEPOUT + Param.SECTION_WIDTH) + index * Param.BODY_WIDTH;
 		return orderedPos;
 	}
 	public boolean isEmpty() {

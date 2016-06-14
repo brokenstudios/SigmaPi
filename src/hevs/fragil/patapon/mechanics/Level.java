@@ -366,10 +366,6 @@ public class Level extends RenderingScreen {
 			}
 		}
 	}
-	
-	public void displayCamera(GdxGraphics g){
-		System.out.println("Camera x : " + g.getCamera().position.x);
-	}
 
 	public float getStateTime() {
 		return stateTime;

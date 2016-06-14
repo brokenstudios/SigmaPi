@@ -1,6 +1,7 @@
 package hevs.fragil.patapon.mechanics;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 
 import hevs.fragil.patapon.music.Drum;
 
@@ -14,8 +15,11 @@ public abstract class Param {
 	public static final int LIFE_BASE = 10;
 	
 	//TODO These should be gotten from sprite width
-	public static final int UNIT_WIDTH = 48;
+	public static final int UNIT_SPRITE_W = 224;
+	public static final int UNIT_SPRITE_H = 192;
+	public static final int BODY_WIDTH = 62;
 	public static final int SECTION_KEEPOUT = 64;
+	public static final Vector2 UNIT_POS = new Vector2(100, 100);
 	//********************************************************
 	
 	//Default values of game window
@@ -94,7 +98,6 @@ public abstract class Param {
 	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(222,184,135);
-//	public static Color BACKGROUND = Color.BLUE;
 	
 	private static Color rgbToFloat(int r, int g, int b){
 		Color temp = new Color();
