@@ -1,6 +1,7 @@
 package hevs.fragil.patapon.units;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
@@ -116,22 +117,22 @@ public class UnitRender {
 	}
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setLegsSprite(String url, int cols, int rows, boolean isEnnemi) {
-		legs = new SpriteSheet(url, cols, rows, 0.2f, isEnnemi, true);
+		legs = new SpriteSheet(url, cols, rows, 0.2f, isEnnemi, PlayMode.LOOP);
 	}
 
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setBodySprite(String url, int cols, int rows) {
-		body = new SpriteSheet(url, cols, rows, 1f, false, true);
+		body = new SpriteSheet(url, cols, rows, 1f, false, PlayMode.LOOP);
 	}
 
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setEyeSprite(String url, int cols, int rows) {
-		eye = new SpriteSheet(url, cols, rows, 0.2f, false, true);
+		eye = new SpriteSheet(url, cols, rows, 0.2f, false, PlayMode.LOOP);
 	}
 
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setArmsSprite(String url, int cols, int rows) {
-		arms = new SpriteSheet(url, cols, rows, 0.2f, false, false);
+		arms = new SpriteSheet(url, cols, rows, 0.2f, false, PlayMode.NORMAL);
 	}
 	public boolean gestureRunning() {
 		return gestureRunning;

@@ -35,7 +35,7 @@ public class SpriteSheet {
 	 * @param flipped : true if flipped
 	 * @param looping : true if looping animation
 	 */
-	public SpriteSheet(String url, int cols, int rows, float frameDuration, boolean flipped, boolean looping){
+	public SpriteSheet(String url, int cols, int rows, float frameDuration, boolean flipped, PlayMode playMode){
 		this.flipped = flipped;
 		this.frameDuration = frameDuration;
 		
@@ -52,10 +52,20 @@ public class SpriteSheet {
         animation = new Animation(frameDuration, sprites);
         spriteBatch = new SpriteBatch();
         
-        if(looping)
-        	animation.setPlayMode(PlayMode.LOOP);
-        else
-        	animation.setPlayMode(PlayMode.NORMAL);
+        switch(playMode){
+        case LOOP 			:	animation.setPlayMode(PlayMode.LOOP);
+								break;
+        case LOOP_PINGPONG 	:	animation.setPlayMode(PlayMode.LOOP);
+								break;
+		case LOOP_RANDOM 	:	animation.setPlayMode(PlayMode.LOOP);
+								break;
+		case LOOP_REVERSED 	:	animation.setPlayMode(PlayMode.LOOP);
+								break;
+		case NORMAL 		:	animation.setPlayMode(PlayMode.LOOP);
+								break;
+		case REVERSED 		:	animation.setPlayMode(PlayMode.LOOP);
+								break;
+        }
 	}
 	/**
 	 * Draws a frame at given position

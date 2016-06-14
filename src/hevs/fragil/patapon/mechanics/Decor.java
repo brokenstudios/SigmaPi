@@ -162,16 +162,10 @@ public class Decor {
 	 * Allow to add an offset to the camera in map limits
 	 * @param amountPixels User given offset
 	 */
+	// TODO write it better, with a check of limits and things like that
 	public void addManualOffset(int amountPixels){
 		// Set a minimal value to camera (placed by center of window)
-		// Pas les bonnes conditions, voir feuille LFD haha
-		if(manualOffset + amountPixels > Param.CAM_WIDTH/2 && manualOffset + amountPixels < Param.MAP_WIDTH-Param.CAM_WIDTH/2)
-			manualOffset += amountPixels;
-		// If out of boundaries, set offset to zero
-		else
-			manualOffset = 0;
-		
-		System.out.println(manualOffset + amountPixels);
+		manualOffset += amountPixels;;
 	}
 	
 	/**

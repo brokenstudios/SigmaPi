@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
@@ -180,6 +181,6 @@ public class Sequence implements DrawableObject {
 	 * This is only to load files in the PortableApplication onInit method
 	 */
 	public static void loadSprites(String url) {
-		drums = new SpriteSheet(url, 1, 4, 0.2f, false, false);
+		drums = new SpriteSheet(url, 1, 4, 0.2f, false, PlayMode.NORMAL);
 	}
 }

@@ -157,10 +157,10 @@ public class Level extends RenderingScreen {
 		
 		// Some manual actions to camera
 		if (keycode == Keys.LEFT) {
-			decor.addManualOffset(-10);
+			decor.addManualOffset(-50);
 		}
 		if (keycode == Keys.RIGHT) {
-			decor.addManualOffset(10);
+			decor.addManualOffset(50);
 		}
 		if (keycode == Keys.CONTROL_RIGHT){
 			decor.centerCamera();
