@@ -3,12 +3,14 @@ package hevs.fragil.patapon.mechanics;
 import java.util.Vector;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 
 import ch.hevs.gdx2d.components.geometry.Point;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.drawables.Tree;
+import hevs.fragil.patapon.units.Box;
 import hevs.fragil.patapon.units.Company;
 
 public class Decor {
@@ -31,6 +33,15 @@ public class Decor {
 		// Calculate a forest
 		Point<Float> origin = new Point<Float>(0f, (float) Param.FLOOR_DEPTH);
 		processForest(15, origin, 5, 200f, 5);
+		addBoxesTower(4, 5000);
+		addBoxesTower(5, 5000);
+		addBoxesTower(10, 5000);
+	}
+
+	private void addBoxesTower(int height, int x) {
+		for(int i = 0; i <= height ; i++){
+			toDraw.add(new Box(new Vector2 (x, i*50), 80, 50));
+		}
 	}
 
 	/**

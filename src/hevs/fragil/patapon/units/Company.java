@@ -200,15 +200,9 @@ public class Company implements DrawableObject {
 	public void aiMove() {
 		if(freeToMove){
 			freeMove();
-			if(sections.firstElement().units.firstElement().isEnemy){
-				System.out.println("free move");
-			}
 		}
 		else{
 			regroup();
-			if(sections.firstElement().units.firstElement().isEnemy){
-				System.out.println("regroup");
-			}
 		}
 	}
 	
