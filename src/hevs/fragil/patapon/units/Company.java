@@ -150,14 +150,14 @@ public class Company implements DrawableObject {
 		for(int i = 0 ; i < 3; i++){
 			add(new Section(Integer.toString(i)));
 		}
-		for(int i = 0 ; i < nb1; i++){
-			sections.elementAt(0).add(new Archer(0,Species.TAPI,true));
+		for(int i = 0 ; i < nb3; i++){
+			sections.elementAt(0).add(new Shield(0,Species.TAPI,true));
 		}
 		for(int i = 0 ; i < nb2; i++){
 			sections.elementAt(1).add(new Spearman(0,Species.TAPI,true));
 		}
-		for(int i = 0 ; i < nb3; i++){
-			sections.elementAt(2).add(new Shield(0,Species.TAPI,true));
+		for(int i = 0 ; i < nb1; i++){
+			sections.elementAt(2).add(new Archer(0,Species.TAPI,true));
 		}
 		
 		int initialPos = getMinWidth()/2 + 1000;
@@ -200,19 +200,28 @@ public class Company implements DrawableObject {
 	public void aiMove() {
 		if(freeToMove){
 			freeMove();
+			if(sections.firstElement().units.firstElement().isEnemy){
+				System.out.println("free move");
+			}
 		}
-		else
+		else{
 			regroup();
+			if(sections.firstElement().units.firstElement().isEnemy){
+				System.out.println("regroup");
+			}
+		}
 	}
-	// TODO avoid units superposition
+	
 	private void freeMove(){
 		for (Section s : sections) {
 			for (Unit u : s.units) {
 				//when no enemy is in the units's range, unit must try to find a better place
 				if(u.getUnitsInRange().isEmpty()){
 					float u2uDistance = u.unitToUnitDistance(u.findNextReachableEnemy());
+					
 					//if we are too near, we must increase the distance
 					boolean increaseDistance = (u2uDistance < u.getSkills().getRangeMin());
+					
 					//get desired position depending of increase or decrease the distance with enemies
 					int desiredPos = u.desiredPos(increaseDistance);
 					
@@ -220,18 +229,11 @@ public class Company implements DrawableObject {
 					if(isInCompanyRange(desiredPos)){
 						//if desiredPos is in company range and free from unit
 						float distance = 0;
-						// Check next unit in section, if last of section, check next section
-						if(!(s.units.lastElement() == u)){
-							distance = s.units.elementAt(s.units.indexOf(u)+1).getPosition().x - u.getPosition().x;							
-						}
-						else if(!(sections.lastElement() == s)){
-							distance = sections.elementAt(sections.indexOf(s)+1).units.firstElement().getPosition().x;
-							distance -= u.getPosition().x;
-						}
+						
+						distance = getUnit2UnitDistance();
 						
 						distance = Math.abs(distance);
-						System.out.println("distance " + distance);
-						if(distance > Param.BODY_WIDTH/2){
+						if(distance > Param.UNIT_BODY_WIDTH/2){
 							u.setPosition(u.desiredPos(false), Gdx.graphics.getDeltaTime());							
 						}
 					}
@@ -245,9 +247,9 @@ public class Company implements DrawableObject {
 			for (Unit u : s.units) {
 				float desiredPos = u.getPosition().x;
 				//get position in the perfect rank
-				if(u.getPosition().x < getOrderedPosition(u))
+				if(u.getPosition().x < getOrderedPosition(u) - Param.UNIT_POSITION_TOLERANCE)
 					desiredPos += Param.UNIT_SPEED * dt;
-				else
+				else if(u.getPosition().x > getOrderedPosition(u) + Param.UNIT_POSITION_TOLERANCE)
 					desiredPos -= Param.UNIT_SPEED * dt;
 				
 				u.setPosition((int)desiredPos, dt);
@@ -266,6 +268,39 @@ public class Company implements DrawableObject {
 		return false;
 	}
 	
+	private float getUnit2UnitDistance(){
+		float distance = 0;
+				
+		for (Section s : sections) {
+			for (Unit u : s.units) {
+				if(u.isEnemy){
+					// Check next unit in section, if last of section, check next section
+					if(!(s.units.firstElement() == u)){
+						distance = s.units.elementAt(s.units.indexOf(u)-1).getPosition().x - u.getPosition().x;							
+					}
+					else if(!(sections.firstElement() == s)){
+						distance = sections.elementAt(sections.indexOf(s)-1).units.firstElement().getPosition().x;
+						distance -= u.getPosition().x;
+					}
+					
+				}
+				else{
+					// Check next unit in section, if last of section, check next section
+					if(!(s.units.lastElement() == u)){
+						distance = s.units.elementAt(s.units.indexOf(u)+1).getPosition().x - u.getPosition().x;							
+					}
+					else if(!(sections.lastElement() == s)){
+						distance = sections.elementAt(sections.indexOf(s)+1).units.firstElement().getPosition().x;
+						distance -= u.getPosition().x;
+					}
+				}
+			}
+		}
+		distance = Math.abs(distance);				
+		
+		return distance;
+	}
+	
 	/**
 	 * Return ordered position of {@code unit}
 	 * @param  unit : unit that must move
@@ -282,7 +317,8 @@ public class Company implements DrawableObject {
 			sectionNumber++;
 		}
 		int startPosition = fixedPos - getMinWidth() / 2;
-		int orderedPos = startPosition + sectionNumber * (Param.SECTION_KEEPOUT + Param.SECTION_WIDTH) + index * Param.BODY_WIDTH;
+		int orderedPos = startPosition + sectionNumber * (Param.SECTION_KEEPOUT + Param.SECTION_WIDTH) + index * Param.UNIT_BODY_WIDTH;
+
 		return orderedPos;
 	}
 	public boolean isEmpty() {

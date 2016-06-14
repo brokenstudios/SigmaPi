@@ -105,10 +105,10 @@ public abstract class Unit implements DrawableObject {
 		render.draw(g,x,y,angle);
 	
 		// Some debug info (display unit range)
-		if(!isEnemy){
-			g.drawFilledRectangle(x + skills.getRangeMin(), y, 10, 10, 0, getColor());
-			g.drawFilledRectangle(x + skills.getRangeMax(), y, 10, 10, 0, getColor());
-		}
+//		if(!isEnemy){
+//			g.drawFilledRectangle(x + skills.getRangeMin(), y, 10, 10, 0, getColor());
+//			g.drawFilledRectangle(x + skills.getRangeMax(), y, 10, 10, 0, getColor());
+//		}
 	}
 
 	public void setDelay(int delay) {
@@ -223,7 +223,7 @@ public abstract class Unit implements DrawableObject {
 			for (Unit u : s.units) {
 				float distance = u.getPosition().x - this.getPosition().x;
 				// Subtraction of two half-sprite to find center2center distance
-				distance = Math.abs(distance) - 64;
+				distance = Math.abs(distance) - Param.UNIT_BODY_WIDTH;
 				if (distance < skills.getRangeMax() && distance > skills.getRangeMin()) {
 					unitsInRange.add(u);
 				}

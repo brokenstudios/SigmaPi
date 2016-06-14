@@ -27,17 +27,17 @@ public class Section implements DrawableObject {
 		this.name = name;   
 	}
 	public int getWidth(){
-		return units.size()*Param.BODY_WIDTH;
+		return units.size()*Param.UNIT_BODY_WIDTH;
 	}
 	public void setPosition(int newPos, double totalTime){
 		int width = getWidth();
-		double margin = newPos - width/2.0 + Param.BODY_WIDTH/2.0;
+		double margin = newPos - width/2.0 + Param.UNIT_BODY_WIDTH/2.0;
 		if(margin > 0){
 			globalPosition = newPos;
 			double tempPos = margin;
 			for (Unit unit : units) {
 				unit.setPosition((int)tempPos, totalTime);
-				tempPos += Param.BODY_WIDTH;
+				tempPos += Param.UNIT_BODY_WIDTH;
 			}
 		}		
 	}
@@ -52,11 +52,11 @@ public class Section implements DrawableObject {
 	}
 	public void add(Unit u){
 		units.addElement(u);
-		width += Param.BODY_WIDTH;
+		width += Param.UNIT_BODY_WIDTH;
 	}
 	public void remove(Unit u){
 		units.remove(u);
-		width -= Param.BODY_WIDTH;
+		width -= Param.UNIT_BODY_WIDTH;
 	}
 	@Override
 	public void draw(GdxGraphics g) {

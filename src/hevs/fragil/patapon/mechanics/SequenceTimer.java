@@ -52,7 +52,7 @@ public abstract class SequenceTimer{
 								break;
 				default : 		
 								break;
-			}	
+			}
 			if(finished){
 				playing = false;
 				c.actionFinished();

@@ -17,7 +17,7 @@ public abstract class Param {
 	//TODO These should be gotten from sprite width
 	public static final int UNIT_SPRITE_W = 224;
 	public static final int UNIT_SPRITE_H = 192;
-	public static final int BODY_WIDTH = 62;
+	public static final int UNIT_BODY_WIDTH = 62;
 	public static final int SECTION_KEEPOUT = 64;
 	public static final Vector2 UNIT_POS = new Vector2(100, 100);
 	//********************************************************
@@ -63,6 +63,7 @@ public abstract class Param {
 	public static final int ATTACK_BASE = 5;
 	public static final int RANGE_BASE = 0;
 	public static final int SIGHT = 800;
+	public static final int UNIT_POSITION_TOLERANCE = 10;
 	// Ranges where units can move without restrictions
 	public static final int COMPANY_WIDTH = 500;
 	public static final int SECTION_WIDTH = 100;

@@ -28,7 +28,6 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 		nArrows++;
 	}
 	public void moveToLinear(int position, double travelTime) {
-//		System.out.println(position);
 		travelTime *= 1000;
 		double distanceToTravel = position - (int)getBodyPosition().x;
 		double globalSpeed = distanceToTravel / travelTime;

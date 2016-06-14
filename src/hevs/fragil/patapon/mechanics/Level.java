@@ -80,7 +80,7 @@ public class Level extends RenderingScreen {
 
 		decor = new Decor(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
 
-		enemies.initEnnemies(50,0,0);
+		enemies.initEnnemies(2,2,2);
 
 		// Load the sound files
 		heNote = new SoundSample("data/music/HE.wav");
@@ -329,6 +329,7 @@ public class Level extends RenderingScreen {
 
 	private void action() {
 		SequenceTimer.run(PlayerCompany.getCompany(), sequence.getFever());
+		enemies.aiMove();
 	}
 
 	public Company getEnemies() {
