@@ -45,8 +45,10 @@ public abstract class Unit implements DrawableObject {
 	}
 
 	public void setPosition(int newPos, double totalTime) {
-		if (hitBox != null)
-			hitBox.moveToLinear(newPos, totalTime);
+		if (hitBox != null){
+			if(!render.die())
+				hitBox.moveToLinear(newPos, totalTime);
+		}
 		else {
 			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH), collisionGroup, skills.getLife());
 			hitBox.getBody().setFixedRotation(true);
