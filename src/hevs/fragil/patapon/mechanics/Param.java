@@ -95,7 +95,7 @@ public abstract class Param {
 	public static final Drum[][]	COMBOS = {WALK,ATTACK,DEFEND,MIRACLE,RETREAT,CHARGE};
 	
 	//pixels per second
-	public static final int UNIT_SPEED = 250;
+	public static final int UNIT_SPEED = 300;
 	
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(222,184,135);

@@ -102,7 +102,7 @@ public class Decor {
 	 * @param position
 	 */
 	public void processTree(Point<Float> position) {
-		toDraw.addElement(new Tree(position, 3, 200f, 5));
+		toDraw.add(new Tree(position, 3, 200f, 5));
 	}
 
 	/**

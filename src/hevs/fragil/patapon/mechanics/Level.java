@@ -225,6 +225,7 @@ public class Level extends RenderingScreen {
 			sequence.draw(g);
 			PlayerCompany.getCompany().draw(g);
 			enemies.draw(g);
+			drawProjectiles(g);
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 	}
@@ -389,6 +390,20 @@ public class Level extends RenderingScreen {
 			Projectile projectile = iter.next();
 
 			projectile.step(Gdx.graphics.getDeltaTime());
+
+			// If a ball is not visible anymore, it should be destroyed
+			if (projectile.shouldBeDestroyed()) {
+				// Mark the ball for deletion when possible
+				projectile.destroy();
+				// Remove the ball from the collection as well
+				iter.remove();
+			}
+		}
+	}
+	private void drawProjectiles(GdxGraphics g){
+		for (Iterator<Projectile> iter = flyingOjects.iterator(); iter.hasNext();) {
+			Projectile projectile = iter.next();
+
 			projectile.draw(g);
 
 			// If a ball is not visible anymore, it should be destroyed
@@ -403,5 +418,9 @@ public class Level extends RenderingScreen {
 
 	public float getStateTime() {
 		return stateTime;
+	}
+
+	public Decor getDecor() {
+		return decor;
 	}
 }

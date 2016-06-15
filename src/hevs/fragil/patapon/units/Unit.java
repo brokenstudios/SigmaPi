@@ -13,6 +13,7 @@ import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.mechanics.PlayerCompany;
 import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.physics.BodyPolygon;
+import hevs.fragil.patapon.physics.Tower;
 
 public abstract class Unit implements DrawableObject {
 	protected boolean isEnemy;
@@ -46,8 +47,9 @@ public abstract class Unit implements DrawableObject {
 
 	public void setPosition(int newPos, double totalTime) {
 		if (hitBox != null){
-			if(!render.die())
+			if(!render.die()){
 				hitBox.moveToLinear(newPos, totalTime);
+			}
 		}
 		else {
 			hitBox = new BodyPolygon(new Vector2(newPos, Param.FLOOR_DEPTH), collisionGroup, skills.getLife());
@@ -402,5 +404,19 @@ public abstract class Unit implements DrawableObject {
 		if(skills.getRangeMin() < u2uDistance && u2uDistance < skills.getRangeMax())
 			return true;
 		return false;
+	}
+	public Vector<Tower> getTowersInRange() {
+		Vector<Tower> towers = new Vector<Tower>();
+		
+		if(!CurrentLevel.getLevel().getDecor().toDraw.isEmpty()){
+			for (DrawableObject d : CurrentLevel.getLevel().getDecor().toDraw) {
+				if(d instanceof Tower){
+					if(((Tower)d).getLeftLimit() < getSkills().getRangeMax()){
+						towers.add((Tower)d);
+					}
+				}
+			}
+		}
+		return towers;
 	}
 }

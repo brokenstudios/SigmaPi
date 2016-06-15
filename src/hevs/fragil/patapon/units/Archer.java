@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.Arrow;
+import hevs.fragil.patapon.physics.Tower;
 
 public class Archer extends Unit {
 	//Skills modifiers
@@ -31,9 +32,16 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void attack() {
-		Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
-		int distance = (int)(victim.getPosition().x - getPosition().x);
-		attack(distance+32);
+		if(getTowersInRange().isEmpty()){
+			Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
+			int distance = (int)(victim.getPosition().x - getPosition().x);
+			attack(distance+32);
+		}
+		else{
+			Tower victim = getTowersInRange().elementAt((int)(Math.random()*getTowersInRange().size()));
+			int distance = (int)(victim.getLeftLimit() - getPosition().x);
+			attack(distance+50);
+		}
 	}
 	@Override
 	public Gesture getAttackGesture() {

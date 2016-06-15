@@ -67,4 +67,12 @@ public class Tower extends PhysicsStaticBox implements DrawableObject, CollidedO
 		head = new SpriteSheet("data/images/tower_head.png", 1, 1, 1, false, PlayMode.NORMAL);
 	}
 
+	public boolean isOccuped(int posToTry) {
+		if(posToTry < x+50 && posToTry > x-50)
+			return true;
+		return false;
+	}
+	public int getLeftLimit(){
+		return x-50;
+	}
 }

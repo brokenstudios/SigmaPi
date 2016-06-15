@@ -5,7 +5,6 @@ import java.util.Random;
 import ch.hevs.gdx2d.components.geometry.Point;
 import ch.hevs.gdx2d.components.graphics.Turtle;
 import ch.hevs.gdx2d.lib.GdxGraphics;
-import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.Param;
 
 public class Tree implements VisibleObject {

@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.Color;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
+import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.physics.Arrow;
 import hevs.fragil.patapon.physics.Spear;
+import hevs.fragil.patapon.physics.Tower;
 
 public class Company implements DrawableObject {
 	public String name = "";
@@ -42,11 +44,26 @@ public class Company implements DrawableObject {
 		}
 	}
 	public void setPosition(int newPos){
-		fixedPos = newPos;
+		//move to the right, must check next position with right company limit
+		if(newPos > fixedPos){
+			if(areaClear(newPos + Param.COMPANY_WIDTH/2))
+				fixedPos = newPos;
+		}
+		//move to the left, must check next position with left company limit
+		else if (areaClear(newPos - Param.COMPANY_WIDTH/2))
+				fixedPos = newPos;
+	}
+	private boolean areaClear(int posToTry) {
+		for (DrawableObject d : CurrentLevel.getLevel().getDecor().toDraw) {
+			if(d instanceof Tower){
+				return ((Tower) d).isOccuped(posToTry);
+			}
+		}
+		return true;
 	}
 	public void setAction(State a){
 		if((ready && a != null) || a == State.IDLE){
-//			System.out.println("action set : " + a);
+			System.out.println("action set : " + a);
 			action = a;
 			ready = false;
 		}
@@ -200,13 +217,9 @@ public class Company implements DrawableObject {
 	public void aiMove() {
 		if(freeToMove){
 			freeMove();
-//			if(sections.firstElement().units.firstElement().isEnemy)
-//				System.out.println("free move");
 		}
 		else{
 			regroup();
-//			if(sections.firstElement().units.firstElement().isEnemy)
-//				System.out.println("regroup");
 		}
 	}
 	
@@ -214,7 +227,7 @@ public class Company implements DrawableObject {
 		for (Section s : sections) {
 			for (Unit u : s.units) {
 				//when no enemy is in the units's range, unit must try to find a better place
-				if(u.getUnitsInRange().isEmpty()){
+				if(u.getUnitsInRange().isEmpty() && u.getTowersInRange().isEmpty()){
 					float u2uDistance = u.unitToUnitDistance(u.findNextReachableEnemy());
 					
 					//if we are too near, we must increase the distance
@@ -226,11 +239,10 @@ public class Company implements DrawableObject {
 					//test if this new position is contained between the company maximum limits
 					if(isInCompanyRange(desiredPos)){
 						//if desiredPos is in company range and free from unit
-						float distance = 0;
-						
-						distance = getUnit2UnitDistance();
-						
+						float distance = getNextUnitDistance();
 						distance = Math.abs(distance);
+						
+						//avoid hidden units
 						if(distance > Param.UNIT_BODY_WIDTH/2){
 							u.setPosition(u.desiredPos(false), Gdx.graphics.getDeltaTime());							
 						}
@@ -243,10 +255,12 @@ public class Company implements DrawableObject {
 		float dt = Gdx.graphics.getDeltaTime();
 		for (Section s : sections) {
 			for (Unit u : s.units) {
-				float desiredPos = u.getPosition().x;
 				//get position in the perfect rank
+				float desiredPos = u.getPosition().x;
+				//move to the right
 				if(u.getPosition().x < getOrderedPosition(u) - Param.UNIT_POSITION_TOLERANCE)
 					desiredPos += Param.UNIT_SPEED * dt;
+				//move to the left
 				else if(u.getPosition().x > getOrderedPosition(u) + Param.UNIT_POSITION_TOLERANCE)
 					desiredPos -= Param.UNIT_SPEED * dt;
 				
@@ -266,7 +280,7 @@ public class Company implements DrawableObject {
 		return false;
 	}
 	
-	private float getUnit2UnitDistance(){
+	private float getNextUnitDistance(){
 		float distance = 0;
 				
 		for (Section s : sections) {
@@ -316,7 +330,6 @@ public class Company implements DrawableObject {
 		}
 		int startPosition = fixedPos - getMinWidth() / 2;
 		int orderedPos = startPosition + sectionNumber * (Param.SECTION_KEEPOUT + Param.SECTION_WIDTH) + index * Param.UNIT_BODY_WIDTH;
-
 		return orderedPos;
 	}
 	public boolean isEmpty() {
