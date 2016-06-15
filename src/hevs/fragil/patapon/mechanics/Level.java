@@ -21,8 +21,10 @@ import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.physics.Floor;
+import hevs.fragil.patapon.physics.Fragment;
 import hevs.fragil.patapon.physics.Projectile;
 import hevs.fragil.patapon.physics.StickyInfo;
+import hevs.fragil.patapon.physics.Tower;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.Unit;
@@ -79,6 +81,9 @@ public class Level extends RenderingScreen {
 		CurrentLevel.setLevel(this);
 
 		decor = new Decor(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
+		Tower.loadFiles();
+		Mountains.loadFiles();
+		Clouds.loadFiles();
 
 		enemies.initEnnemies(2,2,2);
 
@@ -203,6 +208,7 @@ public class Level extends RenderingScreen {
 		action();
 		sequence.step();
 		killUnits();
+		destroyObjects();
 		
 		
 		if(!debugActive){
@@ -221,6 +227,33 @@ public class Level extends RenderingScreen {
 			enemies.draw(g);
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
+	}
+
+	private void destroyObjects() {
+		Vector<DrawableObject> toDestroy = new Vector<DrawableObject>();
+		Vector<DrawableObject> newFragments = new Vector<DrawableObject>();
+		for (DrawableObject d : decor.toDraw) {
+			int h = 0;
+			int x = 0;
+			if(d instanceof Tower){
+				if(((Tower)d).isExploded()){
+					x = ((Tower)d).getPos();
+					h = ((Tower)d).getHeight();
+					((Tower)d).destroy();
+					toDestroy.add(d);
+				}
+				//create h/20 lines of 5 bricks
+				for(int i = 0 ; i < h ; i++){
+					for(int j = 0 ; j < 5 ; j++){
+						newFragments.add(new Fragment(x - 50 + j*20, Param.FLOOR_DEPTH + i*20, 20, 20));
+					}
+				}
+			}
+		}
+		for (DrawableObject d : toDestroy) {
+			decor.toDraw.remove(d);
+		}
+		decor.toDraw.addAll(newFragments);
 	}
 
 	private void killUnits() {

@@ -76,7 +76,7 @@ public class SpriteSheet {
 	public void drawFrame(int frameIndex, int posX, int posY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[frameIndex];
-		tmp.setPosition(posX - tmp.getWidth()/2, posY);
+		tmp.setPosition(posX - tmp.getHeight()/2, posY);
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
 		tmp.draw(spriteBatch);

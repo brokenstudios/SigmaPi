@@ -64,9 +64,12 @@ public abstract class Projectile extends PhysicsPolygon{
 	public void collision(AbstractPhysicsObject theOtherObject, float energy) {
 		//Change collision group to avoid undesired new connections
 		if(theOtherObject instanceof BodyPolygon && !stuck){
-			((BodyPolygon)theOtherObject).applyDamage(damage);
-			setCollisionGroup(((BodyPolygon)theOtherObject).getCollisionGroup());
-			System.out.println(((BodyPolygon)theOtherObject).getCollisionGroup());
+			((CollidedObject)theOtherObject).applyDamage(damage);
+			setCollisionGroup(((CollidedObject)theOtherObject).getCollisionGroup());
+		}
+		if(theOtherObject instanceof Tower && !stuck){
+			((CollidedObject)theOtherObject).applyDamage(damage);
+			setCollisionGroup(((CollidedObject)theOtherObject).getCollisionGroup());
 		}
 		if(!(theOtherObject instanceof Projectile) && !stuck){
 			//Create a joint to stick to the other object if not already stuck nor hit an arrow
