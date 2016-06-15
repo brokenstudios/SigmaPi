@@ -8,7 +8,7 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.Param;
 
-public class Tree implements DrawableObject {
+public class Tree implements VisibleObject {
 
 	private Random r;
 	private long seed;
@@ -195,11 +195,9 @@ public class Tree implements DrawableObject {
 	}
 
 	@Override
-	public void draw(GdxGraphics g) {
-		float camPosX = g.getCamera().position.x;
-		
+	public void draw(GdxGraphics g) {		
 		//Check if the trees are on screen
-		if(location.x < camPosX + Param.CAM_WIDTH && location.x > camPosX - Param.CAM_WIDTH){
+		if(isVisible(g, location.x)){
 			if (t != null) {
 				// for oscillation
 				time += 4;
@@ -212,5 +210,19 @@ public class Tree implements DrawableObject {
 				t = new Turtle(g, Param.CAM_WIDTH, Param.CAM_HEIGHT);
 	
 		}
+	}
+
+	@Override
+	public boolean isVisible(GdxGraphics g, float objectPos) {
+		boolean visible;
+		float camPosX = g.getCamera().position.x;
+		
+		if(objectPos < camPosX + Param.CAM_WIDTH && objectPos > camPosX - Param.CAM_WIDTH){
+			visible = true;
+		}
+		else
+			visible = false;
+		
+		return visible;
 	}
 }
