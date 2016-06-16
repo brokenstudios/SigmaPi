@@ -47,7 +47,7 @@ public abstract class Unit implements DrawableObject {
 
 	public void setPosition(int newPos, double totalTime) {
 		if (hitBox != null){
-			if(!isDead()){
+			if(!isDying()){
 				hitBox.moveToLinear(newPos, totalTime);
 			}
 		}
@@ -142,6 +142,13 @@ public abstract class Unit implements DrawableObject {
 			render.setLook(Look.DYING);
 			//decrease opacity until total disappear
 			return render.die();
+		}
+		else return false;
+	}
+	
+	public boolean isDying() {
+		if (getLife() <= 0) {
+			return true;
 		}
 		else return false;
 	}

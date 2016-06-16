@@ -8,5 +8,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/SigmaPi/gdx2d-desktop-1.2.2-20160512.182623-6-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="/gdx2d-demoDesktop/libs/gdx2d-desktop-1.2.1.jar" sourcepath="/gdx2d-demoDesktop/libs/gdx2d-desktop-1.2.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

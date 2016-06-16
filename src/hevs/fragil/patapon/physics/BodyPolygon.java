@@ -74,6 +74,6 @@ public class BodyPolygon extends PhysicsPolygon implements CollidedObject {
 	public void kill() {
 		System.out.println("Killed !");
 		getBody().setFixedRotation(false);
-		applyBodyAngularImpulse(-10, true);
+		applyBodyAngularImpulse(-1300, true);
 	}
 }

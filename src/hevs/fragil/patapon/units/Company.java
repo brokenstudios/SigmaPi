@@ -226,25 +226,27 @@ public class Company implements DrawableObject {
 	private void freeMove(){
 		for (Section s : sections) {
 			for (Unit u : s.units) {
-				//when no enemy is in the units's range, unit must try to find a better place
-				if(u.getUnitsInRange().isEmpty() && u.getTowersInRange().isEmpty()){
-					float u2uDistance = u.unitToUnitDistance(u.findNextReachableEnemy());
-					
-					//if we are too near, we must increase the distance
-					boolean increaseDistance = (u2uDistance < u.getSkills().getRangeMin());
-					
-					//get desired position depending of increase or decrease the distance with enemies
-					int desiredPos = u.desiredPos(increaseDistance);
-					
-					//test if this new position is contained between the company maximum limits
-					if(isInCompanyRange(desiredPos)){
-						//if desiredPos is in company range and free from unit
-						float distance = getNextUnitDistance();
-						distance = Math.abs(distance);
+				if(!u.isDying()){
+					//when no enemy is in the units's range, unit must try to find a better place
+					if(u.getUnitsInRange().isEmpty() && u.getTowersInRange().isEmpty()){
+						float u2uDistance = u.unitToUnitDistance(u.findNextReachableEnemy());
 						
-						//avoid hidden units
-						if(distance > Param.UNIT_BODY_WIDTH/2){
-							u.setPosition(u.desiredPos(false), Gdx.graphics.getDeltaTime());							
+						//if we are too near, we must increase the distance
+						boolean increaseDistance = (u2uDistance < u.getSkills().getRangeMin());
+						
+						//get desired position depending of increase or decrease the distance with enemies
+						int desiredPos = u.desiredPos(increaseDistance);
+						
+						//test if this new position is contained between the company maximum limits
+						if(isInCompanyRange(desiredPos)){
+							//if desiredPos is in company range and free from unit
+							float distance = getNextUnitDistance();
+							distance = Math.abs(distance);
+							
+							//avoid hidden units
+							if(distance > Param.UNIT_BODY_WIDTH/2){
+								u.setPosition(u.desiredPos(false), Gdx.graphics.getDeltaTime());							
+							}
 						}
 					}
 				}
@@ -255,19 +257,21 @@ public class Company implements DrawableObject {
 		float dt = Gdx.graphics.getDeltaTime();
 		for (Section s : sections) {
 			for (Unit u : s.units) {
-				//get position in the perfect rank
-				float desiredPos = u.getPosition().x;
-				//move to the right
-				if(u.getPosition().x < getOrderedPosition(u) - Param.UNIT_POSITION_TOLERANCE)
-					desiredPos += Param.UNIT_SPEED * dt;
-				//move to the left
-				else if(u.getPosition().x > getOrderedPosition(u) + Param.UNIT_POSITION_TOLERANCE)
-					desiredPos -= Param.UNIT_SPEED * dt;
-				
-				if(!u.isEnemy)
-					System.out.println("ordered : " + getOrderedPosition(u) + " desired : " + desiredPos + " real : " + u.getPosition().x);
-				
-				u.setPosition((int)desiredPos, dt);
+				if(!u.isDying()){
+					//get position in the perfect rank
+					float desiredPos = u.getPosition().x;
+					//move to the right
+					if(u.getPosition().x < getOrderedPosition(u) - Param.UNIT_POSITION_TOLERANCE)
+						desiredPos += Param.UNIT_SPEED * dt;
+					//move to the left
+					else if(u.getPosition().x > getOrderedPosition(u) + Param.UNIT_POSITION_TOLERANCE)
+						desiredPos -= Param.UNIT_SPEED * dt;
+					
+					if(!u.isEnemy)
+						System.out.println("ordered : " + getOrderedPosition(u) + " desired : " + desiredPos + " real : " + u.getPosition().x);
+					
+					u.setPosition((int)desiredPos, dt);					
+				}
 			}
 		}
 	}
