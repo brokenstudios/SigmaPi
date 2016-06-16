@@ -179,7 +179,6 @@ public class SpriteSheet {
 	}
 	public void drawRotatedFrameAlpha(int spriteNumber, float angle, float posX, float posY, float alpha) {
 		spriteBatch.begin();
-		System.out.println(posY);
 		Sprite tmp = sprites[spriteNumber];
 		tmp.setOriginCenter();
 		//rotate the sprite around the left down corner

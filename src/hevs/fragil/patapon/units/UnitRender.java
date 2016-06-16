@@ -102,7 +102,6 @@ public class UnitRender {
 	}
 	protected void launch(Gesture a) {
 		if(gesture != a){
-			System.out.println("gesture "+a+" launched");
 			setGesture(a);
 			if(counter == -1)
 				counter = 0;

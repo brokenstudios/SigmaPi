@@ -84,7 +84,6 @@ public abstract class SequenceTimer{
 		if(progression == 0f){
 			start = c.getPosition();
 			end = start + distance;
-			System.out.println("company will shift from/to : " + start + " / "+ end);
 		}
 		
 		progression += deltaTime/totalTime;
@@ -97,14 +96,9 @@ public abstract class SequenceTimer{
 		else return false;
 	}
 	private static boolean wait(double time, Company c){
-		if(progression == 0f){
-			System.out.println("**Wait routine : wait " + time + " s");
-		}
-		
 		progression += deltaTime;
 		
 		if(progression >= time ){
-			System.out.println("**->Wait routine finished");
 			progression = 0f;
 			return true ;
 		}
@@ -160,7 +154,6 @@ public abstract class SequenceTimer{
 		
 		//action ended
 		if(progression >= Param.ATTACK_TIME) {
-			System.out.println("ended");
 			for (Section s : c.sections) {
 				for (Unit u : s.units) {
 					u.resetGesture();

@@ -63,7 +63,6 @@ public class Company implements DrawableObject {
 	}
 	public void setAction(State a){
 		if((ready && a != null) || a == State.IDLE){
-			System.out.println("action set : " + a);
 			action = a;
 			ready = false;
 		}
@@ -209,10 +208,6 @@ public class Company implements DrawableObject {
 		for (Section section : sections) {
 			section.draw(g);
 		}
-		g.setColor(Color.RED);
-		g.drawRectangle(getPosition(), 20, 10, 100, 0);
-		g.drawRectangle(getPosition()-Param.COMPANY_WIDTH/2, 20, 10, 200, 0);
-		g.drawRectangle(getPosition()+Param.COMPANY_WIDTH/2, 20, 10, 200, 0);
 	}
 	public void aiMove() {
 		if(freeToMove){
@@ -266,9 +261,6 @@ public class Company implements DrawableObject {
 					//move to the left
 					else if(u.getPosition().x > getOrderedPosition(u) + Param.UNIT_POSITION_TOLERANCE)
 						desiredPos -= Param.UNIT_SPEED * dt;
-					
-					if(!u.isEnemy)
-						System.out.println("ordered : " + getOrderedPosition(u) + " desired : " + desiredPos + " real : " + u.getPosition().x);
 					
 					u.setPosition((int)desiredPos, dt);					
 				}

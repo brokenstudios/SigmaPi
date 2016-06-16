@@ -185,9 +185,6 @@ public class Level extends RenderingScreen {
 
 		// apply camera position
 		//TODO play with scale to play with zoom :D enjoy your pain
-//		System.out.println("camera x : " + camera.x);
-//		System.out.println("getCamera x : " + g.getCamera().position.x);
-//		System.out.println("offset : " + decor.getManualOffset());
 		g.moveCamera(camera.x, 0, Param.MAP_WIDTH, Param.MAP_HEIGHT);
 		
 		if (debugActive) {

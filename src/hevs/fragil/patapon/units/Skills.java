@@ -9,7 +9,7 @@ public class Skills {
 	private int level = 1;
 	
 	/**
-	 * Coucou !
+	 * Allow to instantiate some skills
 	 * @param level
 	 * @param life
 	 * @param attack
