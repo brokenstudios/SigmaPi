@@ -152,10 +152,10 @@ public class Company implements DrawableObject {
 		//Load the image files
 		for (Section s : sections) {
 			for (Unit u : s.units) {
-				u.setBodySprite("data/images/bodies64x102.png", 5, 5);
-				u.setEyeSprite("data/images/eyes64x54.png", 7, 1);
-				u.setLegsSprite("data/images/legs2_64x42.png", 4, 1, false);
-				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
+				u.setBodySprite("data/images/bodies.png", 5,5);
+				u.setEyeSprite("data/images/eyes.png", 5, 2);
+				u.setLegsSprite("data/images/legs.png", 4, 1, false);
+				u.setArmsSprite(4, 6, false);
 			}
 		}
 		
@@ -194,10 +194,10 @@ public class Company implements DrawableObject {
 		//Load the image files
 		for (Section s : sections) {
 			for (Unit u : s.units) {
-				u.setBodySprite("data/images/badbody64x102.png", 1,1);
-				u.setEyeSprite("data/images/badeyes64x54.png", 7, 1);
-				u.setLegsSprite("data/images/legs64x42.png", 4, 1, true);
-				u.setArmsSprite("data/images/arms64x96.png", 4, 8);
+				u.setBodySprite("data/images/badbody.png", 1,1);
+				u.setEyeSprite("data/images/badeyes.png", 5, 2);
+				u.setLegsSprite("data/images/legs.png", 4, 1, true);
+				u.setArmsSprite(4, 6, true);
 				u.setExpression(Look.ANGRY);
 			}
 		}

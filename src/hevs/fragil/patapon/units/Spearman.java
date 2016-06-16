@@ -39,15 +39,15 @@ public class Spearman extends Unit {
 		super.draw(g);
 	}
 	@Override
-	public Gesture getAttackGesture() {
-		return Gesture.SPEARMAN;
-	}
-	@Override
 	protected float getAttackDelay() {
 		return 0.6f;
 	}
 	@Override
 	protected Color getColor() {
 		return Color.GRAY;
+	}
+	@Override
+	protected String getUrl() {
+		return "data/images/arms_spears.png";
 	}
 }

@@ -68,7 +68,6 @@ public abstract class Unit implements DrawableObject {
 		this.skills.setLife(life);
 	}
 
-	protected abstract Gesture getAttackGesture();
 	protected abstract float getAttackDelay();
 	protected abstract Color getColor();
 
@@ -171,7 +170,7 @@ public abstract class Unit implements DrawableObject {
 						//is remaining time sufficient for another shoot ?
 						if(nAttacks < (int)(2f / (getCooldown()+0.8f))){
 							//end of cooldown, launch animation
-							render.launch(getAttackGesture());
+							render.launch(Gesture.ATTACK);
 							attackStep++;
 							counter = 0;
 						}
@@ -357,10 +356,11 @@ public abstract class Unit implements DrawableObject {
 	}
 
 	/** This is only to load files in the PortableApplication onInit method */
-	public void setArmsSprite(String url, int cols, int rows) {
-		render.setArmsSprite(url, cols, rows);
+	public void setArmsSprite(int cols, int rows, boolean isEnnemi) {
+		render.setArmsSprite(getUrl(), cols, rows, isEnnemi);
 	}
 
+	protected abstract String getUrl();
 	public void resetGesture() {
 		counter = 0;
 		nAttacks = 0;

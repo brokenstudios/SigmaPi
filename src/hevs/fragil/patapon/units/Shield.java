@@ -37,15 +37,15 @@ public class Shield extends Unit {
 		}
 	}
 	@Override
-	public Gesture getAttackGesture() {
-		return Gesture.SHIELD;
-	}
-	@Override
 	protected float getAttackDelay() {
 		return 0.6f;
 	}
 	@Override
 	protected Color getColor() {
 		return Color.YELLOW;
+	}
+	@Override
+	protected String getUrl() {
+		return "data/images/arms_swords.png";
 	}
 }

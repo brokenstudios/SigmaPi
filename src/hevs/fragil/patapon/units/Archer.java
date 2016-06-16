@@ -44,15 +44,15 @@ public class Archer extends Unit {
 		}
 	}
 	@Override
-	public Gesture getAttackGesture() {
-		return Gesture.ARCHER;
-	}
-	@Override
 	protected float getAttackDelay() {
 		return 0.6f;
 	}
 	@Override
 	protected Color getColor() {
 		return Color.BLUE;
+	}
+	@Override
+	protected String getUrl() {
+		return "data/images/arms_bows.png";
 	}
 }
