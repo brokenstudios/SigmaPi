@@ -223,7 +223,7 @@ public abstract class Unit implements DrawableObject {
 		return fatal;
 	}
 
-	protected Vector<Unit> getUnitsInRange() {
+	public Vector<Unit> getUnitsInRange() {
 		Vector<Unit> unitsInRange = new Vector<Unit>();
 		Company enemies;
 		if(isEnemy)enemies = PlayerCompany.getCompany();

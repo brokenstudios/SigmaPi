@@ -29,27 +29,32 @@ public abstract class Projectile extends PhysicsPolygon{
 		enableCollisionListener();
 
 		applyBodyForceToCenter(processForce(startPos, distance), true);
+		if(distance<0)
+			startAngle = 180 - startAngle;
+		
 		CurrentLevel.getLevel().add(this);
 	}
 	/**
 	 * Compute the necessary force for the arrow to travel the {@code distance} parameter
 	 * @param startPos : start position from the arrow (give essentially the y coordinate)
-	 * @param distance : the distance to travel
+	 * @param Distance : the distance to travel
 	 * @return the force to apply during 1 fps
 	 */
 	private Vector2 processForce(Vector2 startPos, double distance) {
 		double startAngleRad = Math.toRadians(startAngle);
 		Vector2 g = PhysicsWorld.getInstance().getGravity();
-
+		double absDistance = Math.abs(distance);
+		
 		double a = -g.y / 2 / Math.tan(startAngleRad);
 		double b = 0;
-		double c = -PhysicsConstants.PIXEL_TO_METERS * (startPos.y / Math.tan(startAngleRad) + distance);
+		double c = -PhysicsConstants.PIXEL_TO_METERS * (startPos.y / Math.tan(startAngleRad) + absDistance);
 
 		double t1 = (-b - Math.sqrt(Math.pow(b, 2) - 4 * a * c)) / (2 * a);
 		double t2 = (-b + Math.sqrt(Math.pow(b, 2) - 4 * a * c)) / (2 * a);
+	
 		double t = Math.max(t1, t2);
 
-		double vx = (PhysicsConstants.PIXEL_TO_METERS * distance / t);
+		double vx = (PhysicsConstants.PIXEL_TO_METERS * absDistance / t);
 		double v = vx / Math.cos(startAngleRad);
 		double a0 = v * 60;
 		double f0 = a0 * getBodyMass();
@@ -57,6 +62,10 @@ public abstract class Projectile extends PhysicsPolygon{
 		Vector2 force = new Vector2();
 		force.x = (float) (f0 * Math.cos(startAngleRad));
 		force.y = (float) (f0 * Math.sin(startAngleRad));
+		
+		if(distance < 0)
+			force.x = -force.x;
+		
 		return force;
 	}
 

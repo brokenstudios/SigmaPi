@@ -28,14 +28,14 @@ public class Archer extends Unit {
 		if(distance > 0)
 			new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, skills.getLevel() + 5);
 		else
-			new Arrow(position, 180-(int)(Math.random()*20) + 45 , -distance, collisionGroup, skills.getLevel() + 5);
+			new Arrow(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, skills.getLevel() + 5);
 	}
 	@Override
 	public void attack() {
 		if(getTowersInRange().isEmpty()){
 			Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
 			int distance = (int)(victim.getPosition().x - getPosition().x);
-			attack(distance+32);
+			attack(distance);
 		}
 		else{
 			Tower victim = getTowersInRange().elementAt((int)(Math.random()*getTowersInRange().size()));

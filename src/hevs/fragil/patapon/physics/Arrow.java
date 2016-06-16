@@ -54,7 +54,7 @@ public class Arrow extends Projectile{
 		double vNorm = Math.sqrt(v.x * v.x + v.y * v.y) * getBodyMass();
 
 		// process lift force relative to the angle and the velocity
-		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 15)) * vNorm * 8 * dt);
+		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle)) * vNorm * 8 * dt);
 
 		// apply air damping
 		applyBodyTorque(lift, true);
