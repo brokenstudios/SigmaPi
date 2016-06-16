@@ -115,6 +115,7 @@ public class UnitRender {
 		}
 		return false;
 	}
+	
 	/** This is only to load files in the PortableApplication onInit method */
 	public void setLegsSprite(String url, int cols, int rows, boolean isEnnemi) {
 		legs = new SpriteSheet(url, cols, rows, 0.2f, isEnnemi, PlayMode.LOOP);

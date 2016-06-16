@@ -47,7 +47,7 @@ public abstract class Unit implements DrawableObject {
 
 	public void setPosition(int newPos, double totalTime) {
 		if (hitBox != null){
-			if(!render.die()){
+			if(!isDead()){
 				hitBox.moveToLinear(newPos, totalTime);
 			}
 		}

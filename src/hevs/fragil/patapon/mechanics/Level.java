@@ -44,7 +44,7 @@ public class Level extends RenderingScreen {
 
 	DebugRenderer debugRenderer;
 
-	private Vector<Projectile> flyingOjects = new Vector<Projectile>();
+	private Vector<Projectile> projectiles = new Vector<Projectile>();
 	private Vector<StickyInfo> toJoin = new Vector<StickyInfo>();
 	private Vector<PhysicsPolygon> toDisable = new Vector<PhysicsPolygon>();
 	private Vector<DrawableObject> toKill = new Vector<DrawableObject>();
@@ -61,7 +61,7 @@ public class Level extends RenderingScreen {
 	}
 
 	public void add(Projectile o) {
-		flyingOjects.add(o);
+		projectiles.add(o);
 	}
 
 	@Override
@@ -386,7 +386,7 @@ public class Level extends RenderingScreen {
 
 	private void stepProjectiles(GdxGraphics g) {
 		// Should be used like that
-		for (Iterator<Projectile> iter = flyingOjects.iterator(); iter.hasNext();) {
+		for (Iterator<Projectile> iter = projectiles.iterator(); iter.hasNext();) {
 			Projectile projectile = iter.next();
 
 			projectile.step(Gdx.graphics.getDeltaTime());
@@ -401,7 +401,7 @@ public class Level extends RenderingScreen {
 		}
 	}
 	private void drawProjectiles(GdxGraphics g){
-		for (Iterator<Projectile> iter = flyingOjects.iterator(); iter.hasNext();) {
+		for (Iterator<Projectile> iter = projectiles.iterator(); iter.hasNext();) {
 			Projectile projectile = iter.next();
 
 			projectile.draw(g);

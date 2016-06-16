@@ -264,6 +264,9 @@ public class Company implements DrawableObject {
 				else if(u.getPosition().x > getOrderedPosition(u) + Param.UNIT_POSITION_TOLERANCE)
 					desiredPos -= Param.UNIT_SPEED * dt;
 				
+				if(!u.isEnemy)
+					System.out.println("ordered : " + getOrderedPosition(u) + " desired : " + desiredPos + " real : " + u.getPosition().x);
+				
 				u.setPosition((int)desiredPos, dt);
 			}
 		}
