@@ -250,7 +250,7 @@ public abstract class Unit implements DrawableObject {
 	}
 	
 	protected boolean unitsInSight() {
-		if (unitToEnemiDistance() < Param.SIGHT) {
+		if (unitToEnemiDistance() < Param.SIGHT && unitToEnemiDistance()!=0) {
 			return true;
 		}
 		return false;
