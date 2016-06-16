@@ -201,6 +201,7 @@ public class Level extends RenderingScreen {
 
 		// update objects
 		stepProjectiles(g);
+		stepFragments();
 		rythm();
 		action();
 		sequence.step();
@@ -225,6 +226,27 @@ public class Level extends RenderingScreen {
 			drawProjectiles(g);
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
+	}
+
+	private void stepFragments() {
+		Vector<DrawableObject> toDestroy = new Vector<DrawableObject>();
+		
+		for (DrawableObject d : decor.toDraw) {
+			if(d instanceof Fragment){
+				if(((Fragment)d).step()){
+					toDestroy.add(d);
+				}
+			}
+			
+		}
+		
+		for (DrawableObject d : toDestroy) {
+			((Fragment)d).destroy();
+			decor.toDraw.remove(d);
+		}
+		
+		toDestroy.removeAllElements();
+		
 	}
 
 	private void destroyObjects() {
@@ -252,6 +274,7 @@ public class Level extends RenderingScreen {
 			decor.toDraw.remove(d);
 		}
 		decor.toDraw.addAll(newFragments);
+		toDestroy.removeAllElements();
 	}
 
 	private void killUnits() {

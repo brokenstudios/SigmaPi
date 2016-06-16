@@ -9,6 +9,7 @@ import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 
 public class Fragment extends PhysicsBox implements DrawableObject {
 	int w, h;
+	float opacity = 1;
 	
 	public Fragment(int x, int y, int w, int h){
 		super("brick",new Vector2(x,y), w, h, 10,0.1f,1f);
@@ -30,6 +31,15 @@ public class Fragment extends PhysicsBox implements DrawableObject {
 		g.drawFilledRectangle(x, y, w, h, angle, Color.WHITE);
 		g.setColor(Color.BLACK);
 		g.drawRectangle(x, y, w, h, angle);
+	}
+	
+	public boolean step(){
+		opacity -=0.01f;
+		
+		if(opacity <= 0){
+			return true;
+		}
+		return false;
 	}
 	
 }

@@ -26,11 +26,11 @@ public class Tower extends PhysicsStaticBox implements DrawableObject, CollidedO
 	public void draw(GdxGraphics g) {
 		for(int i = 0 ; i < h ; i++){
 			if(i%2 == 0)
-				basis1.drawFrame(0, (int)(x - g.getCamera().position.x + Param.CAM_WIDTH / 2)-50, Param.FLOOR_DEPTH + i*20);
+				basis1.drawFrame(0, (int)(x - g.getCamera().position.x + Param.CAM_WIDTH / 2)-40, Param.FLOOR_DEPTH + i*20);
 			else
-				basis2.drawFrame(0, (int)(x - g.getCamera().position.x + Param.CAM_WIDTH / 2)-50, Param.FLOOR_DEPTH + i*20);
+				basis2.drawFrame(0, (int)(x - g.getCamera().position.x + Param.CAM_WIDTH / 2)-40, Param.FLOOR_DEPTH + i*20);
 		}
-		head.drawFrame(0, (int)(x - g.getCamera().position.x + Param.CAM_WIDTH / 2)-50, Param.FLOOR_DEPTH + h*20);
+		head.drawFrame(0, (int)(x - g.getCamera().position.x + Param.CAM_WIDTH / 2)-40, Param.FLOOR_DEPTH + h*20);
 		
 	}
 	@Override
