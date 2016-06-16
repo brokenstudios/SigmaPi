@@ -90,6 +90,7 @@ public class Sequence implements DrawableObject {
 			//when a match is found, return the corresponding action
 			for(int i = 0; i < Param.COMBOS.length; i++){
 				if(Arrays.equals(last5Notes,Param.COMBOS[i]) || Arrays.equals(last4Notes,Param.COMBOS[i])){
+					System.out.println("Sequence " + State.values()[i] + " recognized !");
 					endSequence();
 					sigmapisTimeCounter = 2f;
 					return State.values()[i];				
@@ -97,6 +98,7 @@ public class Sequence implements DrawableObject {
 			}
 			
 			//indicates bad sequence
+			System.out.println("No possible sequence found... Fever goes down !");
 			clearFever();
 			endSequence();
 			return State.IDLE;
@@ -134,6 +136,7 @@ public class Sequence implements DrawableObject {
 			if((sequenceInProgress && sinceLastDrum > Param.MUSIC_BAR + Param.PASS)
 					|| (!sequenceInProgress && sinceLastDrum > 5*Param.MUSIC_BAR + Param.PASS)){
 				
+				System.out.println("too long ! : " + sinceLastDrum);
 				pause = true;
 				clearFever();
 				endSequence();
@@ -155,6 +158,7 @@ public class Sequence implements DrawableObject {
 		} else if (delay < Param.PASS) {
 			return 1;
 		} else {
+			System.out.println("Bad rythm ! : " + sinceLastRythm);
 			pause = true;
 			clearFever();
 			endSequence();
