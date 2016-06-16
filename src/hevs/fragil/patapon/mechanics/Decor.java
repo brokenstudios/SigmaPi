@@ -32,8 +32,8 @@ public class Decor {
 		// Calculate a forest
 		Point<Float> origin = new Point<Float>(0f, (float) Param.FLOOR_DEPTH);
 		toDraw.add(new Clouds(100, 4));
-		toDraw.add(new Mountains(700, 2));
-		toDraw.add(new Mountains(4100, 2));
+		toDraw.add(new Mountains(0, 2));
+		toDraw.add(new Mountains(3800, 2));
 		processForest(10, origin, 5, 200f, 5);
 		toDraw.add(new Tower(600, 6));
 		
