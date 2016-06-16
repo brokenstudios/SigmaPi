@@ -179,6 +179,6 @@ public abstract class SequenceTimer{
 		return true;
 	}
 	public static void loadFiles(){
-		lalala = new SoundSample("data/music/LALALA.mp3");
+		lalala = new SoundSample("data/music/lalala.mp3");
 	}
 }
