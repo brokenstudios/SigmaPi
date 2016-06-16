@@ -75,7 +75,6 @@ public class UnitRender {
 	private void drawAlive(GdxGraphics g, Vector2 position) {
 		gestureSwitch();
 		
-		position.add(-96, 0);
 		float stateTime = CurrentLevel.getLevel().getStateTime();
 		int legsIndex = legs.drawAllFrames(stateTime, position);
 		body.drawWalkAnimation(legsIndex, bodyIndex, position.x, position.y-5);
@@ -84,11 +83,11 @@ public class UnitRender {
 	}
 
 	private void drawDead(GdxGraphics g, Vector2 position, float angle) {
-//		gestureSwitch();
-//		legs.drawRotatedFrame(0, angle, position.x, position.y, -5, -40, 32, 38);
-//		body.drawRotatedFrame(bodyIndex, angle, position.x, position.y, -5, -25, 32, 38);
-//		eye.drawRotatedFrame(Look.DYING.ordinal(), angle, position.x, position.y, -5, -13, 32, 38);
-//		arms.drawRotatedFrame(0, angle, position.x, position.y, 11, -40, 48, 38);
+		gestureSwitch();
+		legs.drawRotatedFrame(0, angle, position.x, position.y);
+		body.drawRotatedFrame(bodyIndex, angle, position.x, position.y);
+		eye.drawRotatedFrame(Look.DYING.ordinal(), angle, position.x, position.y);
+		arms.drawRotatedFrame(0, angle, position.x, position.y);
 	}
 	private void gestureSwitch() {
 		float dt = Gdx.graphics.getDeltaTime();

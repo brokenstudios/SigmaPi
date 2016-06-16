@@ -136,10 +136,8 @@ public class SpriteSheet {
 	 * @param angle : rotation angle applied in radians
 	 * @param posX : draw location in x 
 	 * @param posY : draw location in y
-	 * @param originX : x center of the frame (for rotation)
-	 * @param originY : y center of the frame (for rotation)
 	 */
-	public void drawRotatedFrame(int spriteNumber, float angle, float posX, float posY, float originX, float originY, float offsetX, float offsetY){
+	public void drawRotatedFrame(int spriteNumber, float angle, float posX, float posY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
 		if(flipped){
@@ -152,8 +150,6 @@ public class SpriteSheet {
 			tmp.setPosition(posX, posY);
 		}
 		tmp.setRotation((float)Math.toDegrees(angle));
-		float x = posX + (float) (originX * Math.cos(angle) + originY * Math.abs(Math.sin(angle)));
-		float y = posY + (float) (originY * Math.cos(angle) + originX * Math.abs(Math.sin(angle)));
 		tmp.draw(spriteBatch);
 		spriteBatch.end();
 	}
