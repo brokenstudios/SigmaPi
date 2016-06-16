@@ -13,7 +13,7 @@ public class PlayerCompany {
 	private PlayerCompany(){
 	}
 	public static Company getCompany() {
-		//TODO create new player company on new game 
+		//TODO create new player company on new game and save it in a file
 		//For instance, the player company is randomly initialized
 		if (instance == null) {
 			instance = new Company();
