@@ -32,12 +32,12 @@ public class Decor {
 		// Calculate a forest
 		Point<Float> origin = new Point<Float>(0f, (float) Param.FLOOR_DEPTH);
 		toDraw.add(new Clouds(100, 4));
-		toDraw.add(new Mountains(100, 2));
-		processForest(15, origin, 5, 200f, 5);
+		toDraw.add(new Mountains(700, 2));
+		toDraw.add(new Mountains(4100, 2));
+		processForest(10, origin, 5, 200f, 5);
 		toDraw.add(new Tower(600, 6));
 		
 	}
-
 
 	/**
 	 * The camera follow the given company
@@ -115,13 +115,23 @@ public class Decor {
 	 */
 	public void processForest(int density, Point<Float> origin, int complexity, float size, int penWidth) {
 		float x = origin.x, y = origin.y;
-
+		float ratio = width/density;
+		
 		for (int i = 0; i < density; i++) {
-			x += width/density;
+			x += ratio;
 			
-			//TODO modifiy space, size, pen randomly
+			// Add some "natural" rendering
+			float randomOffset = (float)(ratio*Math.random());
+			if(randomOffset < ratio/3 && randomOffset > 0){
+				if(Math.random() > 0.5f)
+					x += randomOffset;
+				else
+					x -= randomOffset;
+			}
 			
 			toDraw.add(new Tree(new Point<Float>(x, y), complexity, size, penWidth));
+			
+			randomOffset = 0;
 		}
 	}
 
@@ -168,7 +178,6 @@ public class Decor {
 	 * Allow to add an offset to the camera in map limits
 	 * @param amountPixels User given offset
 	 */
-	// TODO write it better, with a check of limits and things like that
 	public void addManualOffset(int amountPixels){
 		// Set a minimal value to camera (placed by center of window)
 		manualOffset += amountPixels;;

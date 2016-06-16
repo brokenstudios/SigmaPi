@@ -162,10 +162,10 @@ public class Level extends RenderingScreen {
 		
 		// Some manual actions to camera
 		if (keycode == Keys.LEFT) {
-			decor.addManualOffset(-50);
+			decor.addManualOffset(-500);
 		}
 		if (keycode == Keys.RIGHT) {
-			decor.addManualOffset(50);
+			decor.addManualOffset(500);
 		}
 		if (keycode == Keys.CONTROL_RIGHT){
 			decor.centerCamera();
@@ -206,8 +206,7 @@ public class Level extends RenderingScreen {
 		action();
 		sequence.step();
 		killUnits();
-		destroyObjects();
-		
+		destroyObjects();		
 		
 		if(!debugActive){
 			// display help
