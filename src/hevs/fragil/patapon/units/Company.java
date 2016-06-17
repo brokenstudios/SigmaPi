@@ -46,12 +46,12 @@ public class Company implements DrawableObject {
 	public void setPosition(int newPos){
 		//move to the right, must check next position with right company limit
 		if(newPos > fixedPos){
-			if(areaClear(newPos + (Param.COMPANY_WIDTH +getMinWidth())/2)){
+			if(areaClear(newPos + (Param.COMPANY_MARGIN +getMinWidth())/2)){
 				fixedPos = newPos;
 			}
 		}
 		//move to the left, must check next position with left company limit
-		else if (areaClear(newPos - (Param.COMPANY_WIDTH +getMinWidth())/2))
+		else if (areaClear(newPos - (Param.COMPANY_MARGIN +getMinWidth())/2))
 				fixedPos = newPos;
 	}
 	private boolean areaClear(int posToTry) {
@@ -210,15 +210,6 @@ public class Company implements DrawableObject {
 		for (Section section : sections) {
 			section.draw(g);
 		}
-		if(!sections.isEmpty() && !sections.firstElement().units.firstElement().isEnemy){
-			g.setColor(Color.RED);
-			g.drawRectangle(getPosition(), 20, 10, 100, 0);
-			g.drawRectangle(getPosition()-(Param.COMPANY_WIDTH+getMinWidth())/2, 20, 10, 200, 0);
-			g.drawRectangle(getPosition()+(Param.COMPANY_WIDTH+getMinWidth())/2, 20, 10, 200, 0);
-			g.setColor(Color.BLUE);
-			g.drawRectangle(getPosition()-Param.COMPANY_WIDTH/2, 20, 10, 200, 0);
-			g.drawRectangle(getPosition()+Param.COMPANY_WIDTH/2, 20, 10, 200, 0);
-		}
 	}
 	public void aiMove() {
 		if(freeToMove){
@@ -286,7 +277,7 @@ public class Company implements DrawableObject {
 		freeToMove = true;
 	}
 	private boolean isInCompanyRange(int desiredPos) {
-		if(fixedPos - (Param.COMPANY_WIDTH + getMinWidth())/2 < desiredPos && desiredPos < fixedPos + (Param.COMPANY_WIDTH + getMinWidth())/2)
+		if(fixedPos - (Param.COMPANY_MARGIN + getMinWidth())/2 < desiredPos && desiredPos < fixedPos + (Param.COMPANY_MARGIN + getMinWidth())/2)
 			return true;
 		return false;
 	}

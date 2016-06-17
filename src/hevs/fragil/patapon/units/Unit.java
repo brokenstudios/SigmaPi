@@ -307,7 +307,7 @@ public abstract class Unit implements DrawableObject {
 	protected boolean unitInCompanyRange(){
 		float dt = Gdx.graphics.getDeltaTime();
 		int newPos;
-		Range companyRange = new Range(getPosition().x - Param.COMPANY_WIDTH, getPosition().x + Param.COMPANY_WIDTH);
+		Range companyRange = new Range(getPosition().x - Param.COMPANY_MARGIN, getPosition().x + Param.COMPANY_MARGIN);
 		
 		// First, process new position
 		// Else if enemies are too close, set move to left

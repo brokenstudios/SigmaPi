@@ -140,14 +140,16 @@ public class SpriteSheet {
 	public void drawRotatedFrame(int spriteNumber, float angle, float posX, float posY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
+		Vector2 offset = new Vector2();
+//		offset.set(Math.cos(angle), Math.sin(angle));
 		if(flipped){
-			tmp.setOrigin(96+32, 58);
 			tmp.setPosition(posX-32-96, posY);
+			tmp.setOrigin(96+32, 58);
 
 		}
 		else {
-			tmp.setOrigin(96, 58);
 			tmp.setPosition(posX-96, posY);
+			tmp.setOrigin(96, 58);
 		}
 		tmp.setRotation((float)Math.toDegrees(angle));
 		tmp.draw(spriteBatch);

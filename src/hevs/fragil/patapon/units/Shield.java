@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
+import hevs.fragil.patapon.drawables.Tower;
 
 public class Shield extends Unit {
 	static double modLife = +1.0;
@@ -36,6 +37,9 @@ public class Shield extends Unit {
 					u.applyImpulse(4000);					
 				}
 			}
+		}
+		for (Tower t : getTowersInRange()) {
+			t.applyDamage(skills.getAttack());
 		}
 	}
 	@Override

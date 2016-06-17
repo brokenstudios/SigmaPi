@@ -12,14 +12,13 @@ public class Fragment extends PhysicsBox implements DrawableObject {
 	float opacity = 1;
 	
 	public Fragment(int x, int y, int w, int h){
-		super("brick",new Vector2(x,y), w, h, 10,0.1f,1f);
+		super("brick",new Vector2(x,y), w, h, 30000,0.1f,1f);
 		this.w = w;
 		this.h = h;
-		this.setCollisionGroup(-4);
-		Vector2 impulse = new Vector2(2.5f-(float)(Math.random()*5), (float)(Math.random()*3));
+		this.setCollisionGroup(-1);
+		Vector2 impulse = new Vector2(2.5f-(float)(Math.random()*5), (float)(Math.random()*4));
 		this.setBodyAngularDamping(8);
 		this.applyBodyLinearImpulse(impulse, getBodyWorldCenter(), true);
-		
 	}
 
 	@Override
