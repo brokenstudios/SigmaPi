@@ -31,8 +31,10 @@ public class Shield extends Unit {
 				u.receive(skills.getAttack());
 			}
 			else{
-				u.receive(skills.getAttack());
-				u.applyImpulse(4000);
+				if(!isEnemy){
+					u.receive(skills.getAttack());
+					u.applyImpulse(4000);					
+				}
 			}
 		}
 	}

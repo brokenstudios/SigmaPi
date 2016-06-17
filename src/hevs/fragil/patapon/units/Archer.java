@@ -31,15 +31,17 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void attack() {
-		if(getTowersInRange().isEmpty()){
+		if(getTowersInRange().isEmpty() || isEnemy){
 			Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
 			int distance = (int)(victim.getPosition().x - getPosition().x);
 			attack(distance+32);
 		}
 		else{
-			Tower victim = getTowersInRange().elementAt((int)(Math.random()*getTowersInRange().size()));
-			int distance = (int)(victim.getLeftLimit() - getPosition().x);
-			attack(distance+50);
+			if(!isEnemy){
+				Tower victim = getTowersInRange().elementAt((int)(Math.random()*getTowersInRange().size()));
+				int distance = (int)(victim.getLeftLimit() - getPosition().x);
+				attack(distance+50);				
+			}
 		}
 	}
 	@Override
