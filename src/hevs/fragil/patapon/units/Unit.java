@@ -420,7 +420,7 @@ public abstract class Unit implements DrawableObject {
 		if(!CurrentLevel.getLevel().getDecor().toDraw.isEmpty()){
 			for (DrawableObject d : CurrentLevel.getLevel().getDecor().toDraw) {
 				if(d instanceof Tower){
-					if(((Tower)d).getLeftLimit() < getSkills().getRangeMax()){
+					if(((Tower)d).getLeftLimit() < getSkills().getRangeMax() + getPosition().x){
 						towers.add((Tower)d);
 					}
 				}
