@@ -12,7 +12,7 @@ public class Arrow extends Projectile{
 	private static float[] arrowVertices = { -1, 0, -1, 40, 0, 50, 1, 40, 1, 0 };
 
 	public Arrow(Vector2 startPos, int startAngle, int distance, int collisionGroup, int damage) {
-		super(startPos,startAngle,collisionGroup,distance,damage,getArrowVertices(startAngle),"arrow");
+		super(startPos,startAngle,collisionGroup,distance,damage,getArrowVertices(startAngle,(distance<0)),"arrow");
 	}
 
 	public Vector2 getSpike() {
@@ -22,10 +22,13 @@ public class Arrow extends Projectile{
 		return temp;
 	}
 
-	private static Vector2[] getArrowVertices(int angle) {
+	private static Vector2[] getArrowVertices(int angle, boolean flipped) {
 		Polygon poly = new Polygon(arrowVertices);
 		poly.setOrigin(0, 40);
-		poly.rotate(angle - 90);
+		if(flipped)
+			poly.rotate(270-angle);
+		else
+			poly.rotate(angle - 90);
 		return verticesToVector2(poly.getTransformedVertices());
 	}
 
@@ -54,8 +57,9 @@ public class Arrow extends Projectile{
 		double vNorm = Math.sqrt(v.x * v.x + v.y * v.y) * getBodyMass();
 
 		// process lift force relative to the angle and the velocity
-		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle)) * vNorm * 8 * dt);
-
+		float lift = (float) (-Math.cos(angle) * vNorm * 12 * dt);
+		if(v.x < 0)
+			lift = -lift;
 		// apply air damping
 		applyBodyTorque(lift, true);
 

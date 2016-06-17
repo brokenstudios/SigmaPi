@@ -35,7 +35,7 @@ public class Archer extends Unit {
 		if(getTowersInRange().isEmpty()){
 			Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
 			int distance = (int)(victim.getPosition().x - getPosition().x);
-			attack(distance);
+			attack(distance+32);
 		}
 		else{
 			Tower victim = getTowersInRange().elementAt((int)(Math.random()*getTowersInRange().size()));
