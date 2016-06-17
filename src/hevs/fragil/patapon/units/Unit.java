@@ -162,9 +162,10 @@ public abstract class Unit implements DrawableObject {
 		float dt = Gdx.graphics.getDeltaTime();
 		counter += dt;
 
-		if(unitsInRange()){
-			//Sort of state machine (PATATE MACHINE)
-			switch(attackStep){
+		if(!isDying()){
+			if(unitsInRange()){
+				//Sort of state machine (PATATE MACHINE)
+				switch(attackStep){
 				case 0 :
 					if(counter >= getCooldown()){
 						//is remaining time sufficient for another shoot ?
@@ -177,7 +178,7 @@ public abstract class Unit implements DrawableObject {
 						//stuck in cooldown state until the end, when time insufficient
 					}
 					break;
-				
+					
 				case 1 :
 					if(counter >= getAttackDelay()){
 						//animation pre shoot ended, shoot
@@ -187,7 +188,7 @@ public abstract class Unit implements DrawableObject {
 						attackStep++;
 					}
 					break;
-				
+					
 				case 2 :
 					if(counter >= 0.8f - getAttackDelay()){
 						//animation ended, retun to cooldown state
@@ -195,7 +196,8 @@ public abstract class Unit implements DrawableObject {
 						attackStep = 0;
 					}
 					break;
-			}
+				}
+			}			
 		}
 	}
 
