@@ -3,7 +3,6 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
@@ -46,8 +45,9 @@ public class Company implements DrawableObject {
 	public void setPosition(int newPos){
 		//move to the right, must check next position with right company limit
 		if(newPos > fixedPos){
-			if(areaClear(newPos + Param.COMPANY_WIDTH/2))
+			if(areaClear(newPos + Param.COMPANY_WIDTH/2)){
 				fixedPos = newPos;
+			}
 		}
 		//move to the left, must check next position with left company limit
 		else if (areaClear(newPos - Param.COMPANY_WIDTH/2))
@@ -56,7 +56,7 @@ public class Company implements DrawableObject {
 	private boolean areaClear(int posToTry) {
 		for (DrawableObject d : CurrentLevel.getLevel().getDecor().toDraw) {
 			if(d instanceof Tower){
-				return ((Tower) d).isOccuped(posToTry);
+				return !((Tower) d).isOccuped(posToTry);
 			}
 		}
 		return true;
@@ -65,6 +65,7 @@ public class Company implements DrawableObject {
 		if((ready && a != null) || a == State.IDLE){
 			action = a;
 			ready = false;
+			System.out.println("action : " + a + " set !");
 		}
 	}
 	public String toString(){

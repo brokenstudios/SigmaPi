@@ -85,7 +85,7 @@ public class Level extends RenderingScreen {
 		Mountains.loadFiles();
 		Clouds.loadFiles();
 
-		enemies.initEnnemies(2,2,2);
+		enemies.initEnnemies(1,0,0);
 
 		// Load the sound files
 		heNote = new SoundSample("data/music/HE.wav");

@@ -36,6 +36,9 @@ public class Decor {
 		toDraw.add(new Mountains(3800, 2));
 		processForest(10, origin, 5, 200f, 5);
 		toDraw.add(new Tower(1500, 10));
+		toDraw.add(new Tower(2000, 10));
+		toDraw.add(new Tower(2200, 10));
+		toDraw.add(new Tower(2500, 10));
 		
 	}
 

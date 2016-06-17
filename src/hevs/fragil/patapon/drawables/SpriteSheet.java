@@ -117,12 +117,12 @@ public class SpriteSheet {
 		}	
 		if(flipped){
 			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32, posY);
+			tmp.setPosition(posX-32-96, posY);
 
 		}
 		else {
 			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX, posY);
+			tmp.setPosition(posX-96, posY);
 		}
 		tmp.setRotation(angle);
 //		if(flipped && tmp.isFlipX() == false)
@@ -142,12 +142,12 @@ public class SpriteSheet {
 		Sprite tmp = sprites[spriteNumber];
 		if(flipped){
 			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32, posY);
+			tmp.setPosition(posX-32-96, posY);
 
 		}
 		else {
 			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX, posY);
+			tmp.setPosition(posX-96, posY);
 		}
 		tmp.setRotation((float)Math.toDegrees(angle));
 		tmp.draw(spriteBatch);
@@ -161,12 +161,12 @@ public class SpriteSheet {
 		Sprite tmp = sprites[index];
 		if(flipped){
 			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32, posY);
+			tmp.setPosition(posX-32-96, posY);
 
 		}
 		else {
 			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX, posY);
+			tmp.setPosition(posX-96, posY);
 		}
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
@@ -187,12 +187,12 @@ public class SpriteSheet {
 		Sprite tmp = sprites[index];
 		if(flipped){
 			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32, posY);
+			tmp.setPosition(posX-32-96, posY);
 
 		}
 		else {
 			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX, posY);
+			tmp.setPosition(posX-96, posY);
 		}
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
@@ -208,12 +208,12 @@ public class SpriteSheet {
 		Sprite tmp = sprites[frameIndex];
 		if(flipped){
 			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32, posY);
+			tmp.setPosition(posX-32-96, posY);
 
 		}
 		else {
 			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX, posY);
+			tmp.setPosition(posX-96, posY);
 		}
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
@@ -225,12 +225,12 @@ public class SpriteSheet {
 		Sprite tmp = sprites[spriteNumber];
 		if(flipped){
 			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32, posY);
+			tmp.setPosition(posX-32-96, posY);
 
 		}
 		else {
 			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX, posY);
+			tmp.setPosition(posX-96, posY);
 		}
 		//rotate the sprite around the left down corner
 		tmp.setRotation((float)Math.toDegrees(angle));

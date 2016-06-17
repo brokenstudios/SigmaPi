@@ -82,6 +82,7 @@ public abstract class SequenceTimer{
 	}
 	private static boolean shift(float totalTime, int distance, Company c){
 		if(progression == 0f){
+			System.out.println("Company will shift from : " + c.getPosition() + " to : " + (c.getPosition() + distance));
 			start = c.getPosition();
 			end = start + distance;
 		}

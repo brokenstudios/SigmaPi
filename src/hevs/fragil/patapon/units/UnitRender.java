@@ -84,10 +84,10 @@ public class UnitRender {
 
 	private void drawDead(GdxGraphics g, Vector2 position, float angle) {
 		gestureSwitch();
-		legs.drawRotatedFrame(0, angle, position.x, position.y);
-		body.drawRotatedFrame(bodyIndex, angle, position.x, position.y);
-		eye.drawRotatedFrame(Look.DYING.ordinal(), angle, position.x, position.y);
-		arms.drawRotatedFrame(0, angle, position.x, position.y);
+		legs.drawRotatedFrame(0, angle, position.x, (float) (position.y-Math.cos(angle)*32));
+		body.drawRotatedFrame(bodyIndex, angle, position.x, (float) (position.y-Math.cos(angle)*32));
+		eye.drawRotatedFrame(Look.DYING.ordinal(), angle, position.x, (float) (position.y-Math.cos(angle)*32));
+		arms.drawRotatedFrame(0, angle, position.x, (float) (position.y-Math.cos(angle)*32));
 	}
 	private void gestureSwitch() {
 		float dt = Gdx.graphics.getDeltaTime();
