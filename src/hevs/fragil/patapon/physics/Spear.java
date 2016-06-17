@@ -9,10 +9,13 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 public class Spear extends Projectile{
 	// for every arrow
 	private static BitmapImage img;
+	//TODO put this boolean into the projectile super class
+	private boolean flipped;
 	private static float[] spearVertices = { -1, 0, -1, 90, 0, 100, 1, 90, 1, 0 };
 
 	public Spear(Vector2 startPos, int startAngle, int distance, int collisionGroup, int damage) {
-		super(startPos,startAngle,collisionGroup,distance,damage,getArrowVertices(startAngle),"arrow");
+		super(startPos,startAngle,collisionGroup,distance,damage,getSpearVertices(startAngle,(distance<0)),"arrow");
+		this.flipped = (distance<0);
 	}
 
 	public Vector2 getSpike() {
@@ -22,26 +25,32 @@ public class Spear extends Projectile{
 		return temp;
 	}
 
-	private static Vector2[] getArrowVertices(int angle) {
+	private static Vector2[] getSpearVertices(int angle, boolean flipped) {
 		Polygon poly = new Polygon(spearVertices);
 		poly.setOrigin(0, 40);
-		poly.rotate(angle - 90);
+		if(flipped)
+			poly.rotate(270-angle);
+		else
+			poly.rotate(angle - 90);
 		return verticesToVector2(poly.getTransformedVertices());
 	}
 
 	@Override
 	public void draw(GdxGraphics g) {
-		float angleDegrees = getBodyAngleDeg() + startAngle;
-		double angleRadians = Math.toRadians(angleDegrees);
-		// better penetration depending of the impact angle
-		int distance = (int) (5 * Math.cos(angleRadians));
-		Vector2 offset = new Vector2 (
-				(float) Math.cos(angleRadians) * distance,
-				(float) Math.sin(angleRadians) * distance
-		);
+		float angleDegrees;
+		if(flipped)
+			angleDegrees = getBodyAngleDeg() - startAngle + 180 ;
+		else
+			angleDegrees = getBodyAngleDeg() + startAngle;
+//		// better penetration depending of the impact angle
+//		int distance = (int) (5 * Math.cos(angleRadians));
+//		Vector2 offset = new Vector2 (
+//				(float) Math.cos(angleRadians) * distance,
+//				(float) Math.sin(angleRadians) * distance
+//		);
 
 		Vector2 pos = getBodyWorldCenter();
-		pos = pos.add(offset);
+//		pos = pos.add(offset);
 		g.drawAlphaPicture(pos.x, pos.y, angleDegrees, .4f, life, img);
 	}
 
@@ -56,8 +65,9 @@ public class Spear extends Projectile{
 		double vNorm = Math.sqrt(v.x * v.x + v.y * v.y) * getBodyMass();
 
 		// process lift force relative to the angle and the velocity
-		float lift = (float) (-Math.cos(angle + Math.toRadians(startAngle - 20)) * vNorm  * 60 * dt);
-
+		float lift = (float) (-Math.cos(angle) * vNorm  * 120 * dt);
+		if(v.x < 0)
+			lift = -lift;
 		// apply air damping
 		applyBodyTorque(lift, true);
 
