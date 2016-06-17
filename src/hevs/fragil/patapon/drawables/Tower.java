@@ -12,9 +12,9 @@ public abstract class Tower extends PhysicsStaticBox implements DrawableObject, 
 	private int x;
 	private int h;
 	private float life = 10;
-	protected static SpriteSheet basis1;
-	protected static SpriteSheet basis2;
-	protected static SpriteSheet head;
+	protected SpriteSheet basis1;
+	protected SpriteSheet basis2;
+	protected SpriteSheet head;
 	
 	public Tower(int x, int h){
 		super("tower", new Vector2(x, Param.FLOOR_DEPTH + h/2*20), 100, h*20);
@@ -28,7 +28,7 @@ public abstract class Tower extends PhysicsStaticBox implements DrawableObject, 
 	public void draw(GdxGraphics g) {
 		for(int i = 0 ; i < h ; i++){
 			if(i%2 == 0)
-				getBasis1().drawFrame(0, (int)(x - g.getCamera().position.x + Param.CAM_WIDTH / 2)-50, Param.FLOOR_DEPTH + i*20);
+				basis1.drawFrame(0, (int)(x - g.getCamera().position.x + Param.CAM_WIDTH / 2)-50, Param.FLOOR_DEPTH + i*20);
 			else
 				basis2.drawFrame(0, (int)(x - g.getCamera().position.x + Param.CAM_WIDTH / 2)-50, Param.FLOOR_DEPTH + i*20);
 		}
@@ -71,13 +71,5 @@ public abstract class Tower extends PhysicsStaticBox implements DrawableObject, 
 	}
 	public int getLeftLimit(){
 		return x-50;
-	}
-
-	public static SpriteSheet getBasis1() {
-		return basis1;
-	}
-
-	public static void setBasis1(SpriteSheet basis1) {
-		Tower.basis1 = basis1;
 	}
 }

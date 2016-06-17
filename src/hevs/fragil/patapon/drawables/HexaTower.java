@@ -11,7 +11,7 @@ public class HexaTower extends Tower {
 
 	@Override
 	public void loadFiles() {
-		basis1 = new SpriteSheet("data/images/tower_hexa_basis1.png", 1, 1, 1, false, PlayMode.NORMAL);
+		basis1 = new SpriteSheet("data/images/tower_hexa_basis.png", 1, 1, 1, false, PlayMode.NORMAL);
 		basis2 = new SpriteSheet("data/images/tower_hexa_basis2.png", 1, 1, 1, false, PlayMode.NORMAL);
 		head = new SpriteSheet("data/images/tower_hexa_head.png", 1, 1, 1, false, PlayMode.NORMAL);
 	}
