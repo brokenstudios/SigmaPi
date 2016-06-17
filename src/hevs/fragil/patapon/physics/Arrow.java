@@ -9,10 +9,12 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 public class Arrow extends Projectile{
 	// for every arrow
 	private static BitmapImage img;
+	private boolean flipped;
 	private static float[] arrowVertices = { -1, 0, -1, 40, 0, 50, 1, 40, 1, 0 };
 
 	public Arrow(Vector2 startPos, int startAngle, int distance, int collisionGroup, int damage) {
 		super(startPos,startAngle,collisionGroup,distance,damage,getArrowVertices(startAngle,(distance<0)),"arrow");
+		this.flipped = (distance<0);
 	}
 
 	public Vector2 getSpike() {
@@ -34,15 +36,19 @@ public class Arrow extends Projectile{
 
 	@Override
 	public void draw(GdxGraphics g) {
-		float angleDegrees = getBodyAngleDeg() + startAngle;
-		double angleRadians = Math.toRadians(angleDegrees);
-		// better penetration depending of the impact angle
-		int distance = 3 + (int) (5 * Math.cos(angleRadians));
-		Vector2 offset = new Vector2((float) Math.cos(angleRadians) * distance,
-				(float) Math.sin(angleRadians) * distance);
+		float angleDegrees;
+		if(flipped)
+			angleDegrees = getBodyAngleDeg() - startAngle + 180 ;
+		else
+			angleDegrees = getBodyAngleDeg() + startAngle;
+//		double angleRadians = getBodyAngle();
+//		// better penetration depending of the impact angle
+//		int distance = 3 + (int) (5 * Math.cos(angleRadians));
+//		Vector2 offset = new Vector2((float) Math.cos(angleRadians) * distance,
+//				(float) Math.sin(angleRadians) * distance);
 
 		Vector2 pos = getBodyWorldCenter();
-		pos = pos.add(offset);
+//		pos = pos.add(offset);
 		g.drawAlphaPicture(pos.x, pos.y, angleDegrees, .2f, life, img);
 	}
 
