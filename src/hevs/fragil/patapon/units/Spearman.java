@@ -28,15 +28,17 @@ public class Spearman extends Unit {
 		new Spear(position, (int)(Math.random()*20) + 45 , distance, collisionGroup, skills.getLevel() + 5);
 	}
 	public void attack(){
-		if(getTowersInRange().isEmpty()){
+		if(getTowersInRange().isEmpty() || isEnemy){
 			Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
 			int distance = (int)(victim.getPosition().x - getPosition().x);
 			attack(distance+32);
 		}
 		else{
-			Tower victim = getTowersInRange().elementAt((int)(Math.random()*getTowersInRange().size()));
-			int distance = (int)(victim.getLeftLimit() - getPosition().x);
-			attack(distance+50);
+			if(!isEnemy){
+				Tower victim = getTowersInRange().elementAt((int)(Math.random()*getTowersInRange().size()));
+				int distance = (int)(victim.getLeftLimit() - getPosition().x);
+				attack(distance+50);				
+			}
 		}
 	}
 	@Override
