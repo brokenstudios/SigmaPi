@@ -45,12 +45,12 @@ public class Company implements DrawableObject {
 	public void setPosition(int newPos){
 		//move to the right, must check next position with right company limit
 		if(newPos > fixedPos){
-			if(areaClear(newPos + Param.COMPANY_WIDTH/2)){
+			if(areaClear(newPos + (Param.COMPANY_WIDTH +getMinWidth())/2)){
 				fixedPos = newPos;
 			}
 		}
 		//move to the left, must check next position with left company limit
-		else if (areaClear(newPos - Param.COMPANY_WIDTH/2))
+		else if (areaClear(newPos - (Param.COMPANY_WIDTH +getMinWidth())/2))
 				fixedPos = newPos;
 	}
 	private boolean areaClear(int posToTry) {
@@ -275,7 +275,7 @@ public class Company implements DrawableObject {
 		freeToMove = true;
 	}
 	private boolean isInCompanyRange(int desiredPos) {
-		if(fixedPos - Param.COMPANY_WIDTH/2 < desiredPos && desiredPos < fixedPos + Param.COMPANY_WIDTH/2)
+		if(fixedPos - (Param.COMPANY_WIDTH + getMinWidth())/2 < desiredPos && desiredPos < fixedPos + (Param.COMPANY_WIDTH + getMinWidth())/2)
 			return true;
 		return false;
 	}
@@ -330,6 +330,7 @@ public class Company implements DrawableObject {
 		}
 		int startPosition = fixedPos - getMinWidth() / 2;
 		int orderedPos = startPosition + sectionNumber * (Param.SECTION_KEEPOUT + Param.SECTION_WIDTH) + index * Param.UNIT_BODY_WIDTH;
+		System.out.println(orderedPos);
 		return orderedPos;
 	}
 	public boolean isEmpty() {
