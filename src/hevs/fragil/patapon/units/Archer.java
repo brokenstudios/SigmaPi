@@ -1,5 +1,7 @@
 package hevs.fragil.patapon.units;
 
+import javax.swing.plaf.synth.SynthScrollBarUI;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
@@ -29,15 +31,18 @@ public class Archer extends Unit {
 	}
 	@Override
 	public void attack() {
+		System.out.println(getTowersInRange());
 		if(getTowersInRange().isEmpty()){
 			Unit victim = getUnitsInRange().elementAt((int)(Math.random()*getUnitsInRange().size()));
 			int distance = (int)(victim.getPosition().x - getPosition().x);
 			attack(distance+32);
+			System.out.println("no tower");
 		}
 		else{
 			Tower victim = getTowersInRange().elementAt((int)(Math.random()*getTowersInRange().size()));
 			int distance = (int)(victim.getLeftLimit() - getPosition().x);
 			attack(distance+50);
+			System.out.println("TOWER");
 		}
 	}
 	@Override

@@ -64,6 +64,9 @@ public class Tower extends PhysicsStaticBox implements DrawableObject, CollidedO
 		basis1 = new SpriteSheet("data/images/tower_basis1.png", 1, 1, 1, false, PlayMode.NORMAL);
 		basis2 = new SpriteSheet("data/images/tower_basis2.png", 1, 1, 1, false, PlayMode.NORMAL);
 		head = new SpriteSheet("data/images/tower_head.png", 1, 1, 1, false, PlayMode.NORMAL);
+//		basis1 = new SpriteSheet("data/images/tower_hexa_basis.png", 1, 1, 1, false, PlayMode.NORMAL);
+//		basis2 = new SpriteSheet("data/images/tower_hexa_basis2.png", 1, 1, 1, false, PlayMode.NORMAL);
+//		head = new SpriteSheet("data/images/tower_hexa_basis2.png", 1, 1, 1, false, PlayMode.NORMAL);
 	}
 
 	public boolean isOccuped(int posToTry) {

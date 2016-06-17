@@ -163,7 +163,7 @@ public abstract class Unit implements DrawableObject {
 		counter += dt;
 
 		if(!isDying()){
-			if(unitsInRange()){
+			if(unitsInRange() || !getTowersInRange().isEmpty()){
 				//Sort of state machine (PATATE MACHINE)
 				switch(attackStep){
 				case 0 :
