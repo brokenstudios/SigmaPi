@@ -96,7 +96,7 @@ public abstract class Unit implements DrawableObject {
 		float y = Math.round(getPosition().y - g.getCamera().position.y + Param.CAM_HEIGHT / 2 - 37);
 		float angle = hitBox.getBodyAngle();
 		
-		if (unitsInRange()) 
+		if (unitsInRange() || !getTowersInRange().isEmpty()) 
 			render.setLook(Look.ANGRY);
 		else if(unitsInSight()){
 			if(isEnemy) render.setLook(Look.LEFT);
