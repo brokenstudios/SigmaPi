@@ -1,13 +1,11 @@
 package hevs.fragil.patapon.units;
 
-import javax.swing.plaf.synth.SynthScrollBarUI;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
+import hevs.fragil.patapon.drawables.Tower;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.physics.Arrow;
-import hevs.fragil.patapon.physics.Tower;
 
 public class Archer extends Unit {
 	//Skills modifiers

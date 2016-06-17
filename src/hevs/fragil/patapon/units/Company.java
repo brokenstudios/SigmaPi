@@ -7,12 +7,12 @@ import com.badlogic.gdx.graphics.Color;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
+import hevs.fragil.patapon.drawables.Tower;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.physics.Arrow;
 import hevs.fragil.patapon.physics.Spear;
-import hevs.fragil.patapon.physics.Tower;
 
 public class Company implements DrawableObject {
 	public String name = "";

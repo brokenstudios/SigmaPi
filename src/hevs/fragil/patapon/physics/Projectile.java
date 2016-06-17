@@ -7,6 +7,7 @@ import ch.hevs.gdx2d.components.physics.utils.PhysicsConstants;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.physics.AbstractPhysicsObject;
 import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
+import hevs.fragil.patapon.drawables.Tower;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
 
 public abstract class Projectile extends PhysicsPolygon{

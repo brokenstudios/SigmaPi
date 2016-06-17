@@ -8,12 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
+import hevs.fragil.patapon.drawables.Tower;
 import hevs.fragil.patapon.mechanics.CurrentLevel;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.mechanics.PlayerCompany;
 import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.physics.BodyPolygon;
-import hevs.fragil.patapon.physics.Tower;
 
 public abstract class Unit implements DrawableObject {
 	protected boolean isEnemy;

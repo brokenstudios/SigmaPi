@@ -8,8 +8,8 @@ import com.badlogic.gdx.math.Vector3;
 import ch.hevs.gdx2d.components.geometry.Point;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
+import hevs.fragil.patapon.drawables.HexaTower;
 import hevs.fragil.patapon.drawables.Tree;
-import hevs.fragil.patapon.physics.Tower;
 import hevs.fragil.patapon.units.Company;
 
 public class Decor {
@@ -35,10 +35,10 @@ public class Decor {
 		toDraw.add(new Mountains(0, 2));
 		toDraw.add(new Mountains(3800, 2));
 		processForest(10, origin, 5, 200f, 5);
-		toDraw.add(new Tower(1500, 10));
-		toDraw.add(new Tower(2000, 10));
-		toDraw.add(new Tower(2200, 10));
-		toDraw.add(new Tower(2500, 10));
+		toDraw.add(new HexaTower(1500, 10));
+		toDraw.add(new HexaTower(2000, 10));
+		toDraw.add(new HexaTower(2200, 10));
+		toDraw.add(new HexaTower(2500, 10));
 		
 	}
 

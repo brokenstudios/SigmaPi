@@ -18,13 +18,13 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
 import hevs.fragil.patapon.drawables.Frame;
+import hevs.fragil.patapon.drawables.Tower;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.Fragment;
 import hevs.fragil.patapon.physics.Projectile;
 import hevs.fragil.patapon.physics.StickyInfo;
-import hevs.fragil.patapon.physics.Tower;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.Unit;
@@ -81,7 +81,6 @@ public class Level extends RenderingScreen {
 		CurrentLevel.setLevel(this);
 
 		decor = new Decor(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
-		Tower.loadFiles();
 		Mountains.loadFiles();
 		Clouds.loadFiles();
 
