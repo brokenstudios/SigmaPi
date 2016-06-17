@@ -3,6 +3,7 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
@@ -209,6 +210,15 @@ public class Company implements DrawableObject {
 		for (Section section : sections) {
 			section.draw(g);
 		}
+		if(!sections.isEmpty() && !sections.firstElement().units.firstElement().isEnemy){
+			g.setColor(Color.RED);
+			g.drawRectangle(getPosition(), 20, 10, 100, 0);
+			g.drawRectangle(getPosition()-(Param.COMPANY_WIDTH+getMinWidth())/2, 20, 10, 200, 0);
+			g.drawRectangle(getPosition()+(Param.COMPANY_WIDTH+getMinWidth())/2, 20, 10, 200, 0);
+			g.setColor(Color.BLUE);
+			g.drawRectangle(getPosition()-Param.COMPANY_WIDTH/2, 20, 10, 200, 0);
+			g.drawRectangle(getPosition()+Param.COMPANY_WIDTH/2, 20, 10, 200, 0);
+		}
 	}
 	public void aiMove() {
 		if(freeToMove){
@@ -263,6 +273,7 @@ public class Company implements DrawableObject {
 					else if(u.getPosition().x > getOrderedPosition(u) + Param.UNIT_POSITION_TOLERANCE)
 						desiredPos -= Param.UNIT_SPEED * dt;
 					
+					System.out.println(getOrderedPosition(u));
 					u.setPosition((int)desiredPos, dt);					
 				}
 			}
@@ -329,8 +340,11 @@ public class Company implements DrawableObject {
 			sectionNumber++;
 		}
 		int startPosition = fixedPos - getMinWidth() / 2;
-		int orderedPos = startPosition + sectionNumber * (Param.SECTION_KEEPOUT + Param.SECTION_WIDTH) + index * Param.UNIT_BODY_WIDTH;
-		System.out.println(orderedPos);
+		int previousSectionsWidth = 0;
+		for (int i = 0 ; i < sectionNumber ; i++) {
+			previousSectionsWidth += sections.elementAt(i).getWidth() + Param.SECTION_KEEPOUT;
+		}
+		int orderedPos = startPosition + previousSectionsWidth + index * Param.UNIT_BODY_WIDTH;
 		return orderedPos;
 	}
 	public boolean isEmpty() {
