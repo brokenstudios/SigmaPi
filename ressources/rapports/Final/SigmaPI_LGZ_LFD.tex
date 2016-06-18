@@ -100,9 +100,9 @@
   Les différentes classes de ce niveau servent à générer des menus permettants de modifier les options du jeux, lancer une partie, etc. Pour l'instant nous n'avons pas implémenté ces fonctions, elles ne sont pas fondamentales.
   \begin{figure}[!h]
  \centering
- \vspace{-45pt}
- \includegraphics[scale=0.3]{images/menu}
- \caption{Menu actuel, quelques indications flottantes au-dessus du champs de bataille}
+ \vspace{-10pt}
+ \includegraphics[scale=0.2]{images/menu}
+ \caption{Au lancement du jeu quelques lignes pour les informations importantes}
  \end{figure}
   \paragraph{music}
   Toute la gestion des séquences entrées par le joueur est traitée ici.
@@ -111,7 +111,34 @@
   \paragraph{units}
   Ici nous avons toutes les classes qui s'occupent de la partie graphique du jeu, par exemple la classe SpriteSheet qui permet d'initialiser et travailler facilement avec les spritesheets.
   
-  \pagebreak  
+  \pagebreak 
+  \section{Architecture}
+  Eclaircissons quelques points intéréssants du fonctionnement du jeu.
+  \paragraph{Intelligence artificielle (AI)}
+  SCHEMA AU PROPRE DE LA PHOTO DU TABLEAU?
+  Dans le jeu il y a deux types d'AI. La plus évidente est celle des adversaires. Lors d'une partie, ils sont créés et placés à une position x dans le niveau. Lorsque le joueur s'en approchera suffisamment, ils vont devenir agressifs et attaquer. Sachant que chaque unité à une certaine portée, ils vont se déplacer dans une zone définie afin de pouvoir nous atteindre.
+  \newline Pour le joueur il existe un système similaire. C'est-à-dire que ses unités possèdent aussi une zone dans laquelle elle peuvent se déplacer pour faire correspondre leur portée à la position de la victime. La différence par rapport aux unités gérées par le jeu c'est que leur zone d'action bouge en fonction des actions du joueur.
+  \newline Le deuxième point intéressant qui ne concerne que le joueur, c'est la faculté des unités à se regrouper selon un ordre bien défini lors des déplacements.
+  \newline Tout ceci est possible grâce à une série de calculs determinants les déplacements potentiels et leur conséquences. En fonction de cela (et de la volonté du joueur), le système donne les instructions finales.
+  
+  \paragraph{Arbres récursifs}
+  Dans le jeu on peut voir des arbres se mouvants au gré d'un vent parfaitement inexistant. Ces arbres sont générés avec les principes de récursivité et un peu de hasard. Nous avons défini quelques motifs de base (ligne simple/double, hexagone vide/rempli, etc) et quelques règles (chaque section est composée d'un élément ligne, puis un élément hexagone et à nouveau une ligne ou juste un élément ligne seul). A partir de là on peut générer un arbre.
+ \begin{figure}[!h]
+ \centering
+ \vspace{-10pt}
+ \includegraphics[scale=0.4]{images/tree}
+ \caption{Exemple d'arbre, niveau de récursivité V}
+ \end{figure}
+  \newline Dans la classe de gestion du décors on peut donc appeler cette fonction de dessin d'arbre pour en faire une forêt. Dans notre cas, une forêt représente l'ensemble des arbres présents sur le niveau. La génération d'une forêt prend quelques paramètres en entrée et génère ensuite le nombre d'arbre désirés, avec une taille et un niveau de récursivité moyens afin d'avoir un résultat cohérent visuellement.
+  \newline Reprenons l'arbre de la section précédente et comparons le à son voisin. On voit qu'ils ont le même niveau de récurivité, mais pas la même taille, ni la même structure.
+ \begin{figure}[!h]
+ \centering
+ \vspace{-10pt}
+ \includegraphics[scale=0.3]{images/trees}
+ \caption{Deux arbres générés par le jeu}
+ \end{figure}
+  
+  \pagebreak 
   \section{Confrontation au planning}
   Maintenant que le projet est terminé, nous pouvons tirer un bilan sur le planning prévu et celui réalisé. Pour rappel, nous avions planifié le travail comme suit :
   \paragraph{}
@@ -138,9 +165,9 @@ Décors récursifs & 26.05.2016 & + \tabularnewline
  \pagebreak
  \section{Conclusion}
  Le jeu est loin d'être fini du point de vue du gameplay, il manque en effet beaucoup d'éléments pour se rapprocher de la richesse de Patapon. En revanche nous avons maintenant une base solide qui offre l'architecture nécessaire au jeu.
- Ce projet nous a beaucoup plu par tous les aspects abordés, que ce soit l'utilisation de git, de fonctions obscures du Java ou encore des merveilles d'Illustrator pour générer les spritesheets.
+ \newline Ce projet nous a beaucoup plu par tous les aspects abordés, que ce soit l'application de principes vu trop rapidements en théorie (ou pas du tout), l'utilisation de git, de fonctions obscures du Java ou encore des merveilles d'Illustrator pour générer les spritesheets.
  En résumé, beaucoup de plaisir!
- Merci à vous pour votre investissement et votre constante bonne humeur qui est contagieuse!
+ Merci à vous pour votre investissement, votre intérêt et votre constante et contagieuse bonne humeur!
  Bon été.
  
  \vspace{30pt}
