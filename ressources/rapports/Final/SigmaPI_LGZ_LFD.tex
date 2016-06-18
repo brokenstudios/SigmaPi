@@ -68,14 +68,50 @@
  \centering
  \includegraphics[scale=0.15]{images/icones}
  \end{figure}
+ \begin{figure}[!h]
+ \centering
+ \includegraphics[scale=0.5]{images/couverture}
+ \end{figure}
  \pagebreak
  
  \section{Description sommaire du jeu}
-  SigmaPi est basé sur le jeu sorti sur PSP "Patapon". Ce jeu connu un grand succès et c'est désormais une des références des jeux de rythme.
+  SigmaPi est basé sur le jeu sorti sur PSP "Patapon". Ce jeu connu un grand succès et c'est désormais une des références des jeux de rythme. On y contrôle un groupe de personnages par le biais de quatre tambours en entrant des séquences (par exemple 3x carré puis 1x rond donne l'ordre d'avancer). On doit donc traverser des niveaux 2D à l'aide d'un nombre restreint de séquences.
   \paragraph*{Structure UML}
-  Comme on peut le voir sur la figure suivante, l'architecture du jeux est assez riche. On peut distinguer plusieurs groupes dédiés à des tâches communes, graphismes, mécanique de jeux, etc.
-  \paragraph*{Description des classes}
-Ici j'imagine une description détaillée de quelques classes et un rapide résumé des autres
+  Comme on peut le voir sur la figure suivante, l'architecture du jeux est assez riche. On peut distinguer plusieurs groupes dédiés à des tâches communes, graphismes, mécanique de jeux, etc. INSERT UML
+  \newline La structure du projet est composée de six packages différents :\begin{itemize}
+  \item {\itshape drawable}
+  \item {\itshape mechanics}
+  \item {\itshape menus}
+  \item {\itshape music}
+  \item {\itshape physics}
+  \item {\itshape units}
+  \end{itemize}
+  \paragraph{drawable}
+  Ici nous avons toutes les classes qui s'occupent de la partie graphique du jeu, par exemple la classe SpriteSheet qui permet d'initialiser et travailler facilement avec les spritesheets.
+ \begin{figure}[!h]
+ \centering
+ \vspace{-45pt}
+ \includegraphics[scale=0.3]{images/legs}
+ \caption{Spritesheet des jambes des SigmaPi}
+ \end{figure}
+  \paragraph{mechanics}
+  Ce package est axé sur la mécanique du jeu, c'est-à-dire gérer l'état des unités, instancier un niveau (donc des décors, les unités adverses et du joueur, etc).
+  \paragraph{menus}
+  Les différentes classes de ce niveau servent à générer des menus permettants de modifier les options du jeux, lancer une partie, etc. Pour l'instant nous n'avons pas implémenté ces fonctions, elles ne sont pas fondamentales.
+  \begin{figure}[!h]
+ \centering
+ \vspace{-45pt}
+ \includegraphics[scale=0.3]{images/menu}
+ \caption{Menu actuel, quelques indications flottantes au-dessus du champs de bataille}
+ \end{figure}
+  \paragraph{music}
+  Toute la gestion des séquences entrées par le joueur est traitée ici.
+  \paragraph{physics}
+  La physique est utile à plusieurs fonctions du jeu, notamment pour les flèches/lances et les hitboxes des unités.
+  \paragraph{units}
+  Ici nous avons toutes les classes qui s'occupent de la partie graphique du jeu, par exemple la classe SpriteSheet qui permet d'initialiser et travailler facilement avec les spritesheets.
+  
+  \pagebreak  
   \section{Confrontation au planning}
   Maintenant que le projet est terminé, nous pouvons tirer un bilan sur le planning prévu et celui réalisé. Pour rappel, nous avions planifié le travail comme suit :
   \paragraph{}
@@ -96,7 +132,16 @@ Décors récursifs & 26.05.2016 & + \tabularnewline
 \end{tabular}}
 
  \paragraph{}
- Nous n'avons pas réellement respecté le planning, en fait des éléments se sont retrouvés très vite codé dans la timeline (par exemple les arbres récursifs ou les animations sans SpriteSheets) tandis que d'autres ne sont pas encore implémentés, notamment les différents niveaux de SigmaPis
+ Nous n'avons pas réellement respecté le planning, en fait des éléments se sont retrouvés très vite codé dans la timeline (par exemple les arbres récursifs ou les animations sans SpriteSheets) tandis que d'autres ne sont pas encore implémentés, notamment les différents niveaux de SigmaPis. 
+ \newline Nous avons plutôt concentrés nos efforts sur une architecture de jeux puissante par sa souplesse. De cette façon, le gameplay sera relativement simple à implémenter puisque il n'y aura pas à créer beaucoup de choses, il suffira grossièrement d'instancier les élements nécessaires à un jeux agréable (niveaux de puissance des unités, modification de leurs paramètres, génération de décors uniques, etc..).
+ 
+ \pagebreak
+ \section{Conclusion}
+ Le jeu est loin d'être fini du point de vue du gameplay, il manque en effet beaucoup d'éléments pour se rapprocher de la richesse de Patapon. En revanche nous avons maintenant une base solide qui offre l'architecture nécessaire au jeu.
+ Ce projet nous a beaucoup plu par tous les aspects abordés, que ce soit l'utilisation de git, de fonctions obscures du Java ou encore des merveilles d'Illustrator pour générer les spritesheets.
+ En résumé, beaucoup de plaisir!
+ Merci à vous pour votre investissement et votre constante bonne humeur qui est contagieuse!
+ Bon été.
  
  \vspace{30pt}
  \begin{wrapfigure}[0]{r}{6cm}
