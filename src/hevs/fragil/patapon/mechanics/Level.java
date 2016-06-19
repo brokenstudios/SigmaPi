@@ -95,7 +95,7 @@ public class Level extends RenderingScreen {
 		Mountains.loadFiles();
 		Clouds.loadFiles();
 
-		enemies.initEnnemies(2,1,3);
+		enemies.initEnnemies(2,0,0);
 
 		// Load the sound files
 		heNote = new SoundSample("data/music/HE.wav");
@@ -133,6 +133,15 @@ public class Level extends RenderingScreen {
 			yesNote.play();
 			PlayerCompany.getCompany().setAction(sequence.add(Drum.YES, sinceLastRythm));
 		}
+		if (keycode == Keys.A) {
+			PlayerCompany.getCompany().setAction(State.ATTACK);
+		}
+		if (keycode == Keys.M) {
+			PlayerCompany.getCompany().setAction(State.WALK);
+		}
+		if (keycode == Keys.R) {
+			PlayerCompany.getCompany().setAction(State.RETREAT);
+		}
 		if (keycode == Keys.D) {
 			debugActive = !debugActive;
 		}
@@ -160,22 +169,8 @@ public class Level extends RenderingScreen {
 				break;
 			}
 		}
-		if (keycode == Keys.ESCAPE) {
-			dispose();
-			System.exit(0);
-		}
-		/* Some manual commands for debug or easy demo */
-		// Enble these to play without taking care of rythms
-		if (keycode == Keys.A) {
-			PlayerCompany.getCompany().setAction(State.ATTACK);
-		}
-		if (keycode == Keys.M) {
-			PlayerCompany.getCompany().setAction(State.WALK);
-		}
-		if (keycode == Keys.R) {
-			PlayerCompany.getCompany().setAction(State.RETREAT);
-		}
-		// Enable these to navigate easily in scenery with camera
+		
+		// Some manual actions to camera
 		if (keycode == Keys.LEFT) {
 			scenery.addManualOffset(-500);
 		}
@@ -184,6 +179,11 @@ public class Level extends RenderingScreen {
 		}
 		if (keycode == Keys.CONTROL_RIGHT){
 			scenery.centerCamera();
+		}
+		
+		if (keycode == Keys.ESCAPE) {
+			dispose();
+			System.exit(0);
 		}
 	}
 
@@ -217,8 +217,9 @@ public class Level extends RenderingScreen {
 		sequence.step();
 		killUnits();
 		destroyObjects();		
-		
+
 		if(!debugActive){		
+
 			// display objects
 			floor.draw(g);
 			scenery.draw(g);

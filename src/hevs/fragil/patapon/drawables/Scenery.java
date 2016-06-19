@@ -45,8 +45,7 @@ public class Scenery {
 		toDraw.add(new BasicTower(1500, 10));
 		toDraw.add(new BasicTower(2000, 10));
 		toDraw.add(new BasicTower(4000, 10));
-		toDraw.add(new HexaTower(5500, 10));
-		
+		toDraw.add(new HexaTower(5500, 10));		
 	}
 
 	/**

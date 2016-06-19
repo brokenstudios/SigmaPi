@@ -179,7 +179,7 @@ public class Company implements DrawableObject {
 		
 		// Set the initial position
 		int initialPos = getMinWidth()/2 + 4000;
-		
+	
 		int width = getMinWidth();
 		float screenMargin = initialPos - width/2f;
 		
