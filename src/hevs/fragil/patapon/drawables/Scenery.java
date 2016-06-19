@@ -13,7 +13,13 @@ import hevs.fragil.patapon.physics.BasicTower;
 import hevs.fragil.patapon.physics.HexaTower;
 import hevs.fragil.patapon.units.Company;
 
-public class Decor {
+/**
+ * Scenery class to manage every item drawn in the game window. 
+ * Principally manages camera moves and dynamic visible elements drawing.
+ * For instance, this class creates its own elements given in the constructor.
+ * TODO This class should be able to read some map files and instantiate them.
+ */
+public class Scenery {
 	private int width;
 	private int height;
 	private int manualOffset;
@@ -22,12 +28,12 @@ public class Decor {
 	public Vector<DrawableObject> toDraw = new Vector<DrawableObject>();
 
 	/**
-	 * Decor constructor
+	 * Scenery constructor
 	 * @param w	define the map width
 	 * @param h define the map height
 	 * @param b define the map background color
 	 */
-	public Decor(int w, int h, Color b) {
+	public Scenery(int w, int h, Color b) {
 		this.width = w;
 		this.setBackground(b);
 		// Calculate a forest
@@ -44,7 +50,7 @@ public class Decor {
 	}
 
 	/**
-	 * The camera follow the given company
+	 * The camera follows the given company
 	 * @param c1
 	 * @return camera x position
 	 */
@@ -64,7 +70,7 @@ public class Decor {
 	 * priority to the player company.
 	 * @param c1
 	 * @param c2
-	 * @return camera complete position (x, y, z)
+	 * @return camera's complete position (x, y, z)
 	 */
 	public Vector3 cameraProcess(Company c1, Company c2) {
 		if(c1.isEmpty())
@@ -179,8 +185,8 @@ public class Decor {
 	}
 	
 	/**
-	 * Allow to add an offset to the camera in map limits
-	 * @param amountPixels User given offset
+	 * Allow to move the camera manually.
+	 * @param amountPixels : user given offset
 	 */
 	public void addManualOffset(int amountPixels){
 		// Set a minimal value to camera (placed by center of window)

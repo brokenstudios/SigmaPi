@@ -10,16 +10,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </enumeration>  
-  <class id="2" language="java" name="hevs.fragil.patapon.mechanics.Resources" project="SigmaPi" 
-    file="/SigmaPi/src/hevs/fragil/patapon/mechanics/Resources.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="53" width="139" x="502" y="214"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="false"/>      
-      <operations public="false" package="false" protected="false" private="false" static="false"/>    
-    </display>  
-  </class>  
-  <class id="3" language="java" name="hevs.fragil.patapon.mechanics.SequenceTimer" project="SigmaPi" 
+  <class id="2" language="java" name="hevs.fragil.patapon.mechanics.SequenceTimer" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/mechanics/SequenceTimer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="53" width="139" x="691" y="214"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -28,7 +19,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <enumeration id="4" language="java" name="hevs.fragil.patapon.units.State" project="SigmaPi" 
+  <enumeration id="3" language="java" name="hevs.fragil.patapon.units.State" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/units/State.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="53" width="139" x="870" y="214"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -37,7 +28,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </enumeration>  
-  <class id="5" language="java" name="hevs.fragil.patapon.mechanics.Level" project="SigmaPi" 
+  <class id="4" language="java" name="hevs.fragil.patapon.mechanics.Level" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/mechanics/Level.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="53" width="139" x="1049" y="317"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -46,7 +37,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="hevs.fragil.patapon.mechanics.Param" project="SigmaPi" 
+  <class id="5" language="java" name="hevs.fragil.patapon.mechanics.Param" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/mechanics/Param.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="939" y="96"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -55,7 +46,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="hevs.fragil.patapon.mechanics.CurrentLevel" project="SigmaPi" 
+  <class id="6" language="java" name="hevs.fragil.patapon.mechanics.CurrentLevel" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/mechanics/CurrentLevel.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="53" width="139" x="1049" y="214"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -64,7 +55,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="hevs.fragil.patapon.mechanics.EnemiesTimer" project="SigmaPi" 
+  <class id="7" language="java" name="hevs.fragil.patapon.mechanics.EnemiesTimer" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/mechanics/EnemiesTimer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="760" y="326"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -73,7 +64,7 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="hevs.fragil.patapon.mechanics.PlayerCompany" project="SigmaPi" 
+  <class id="8" language="java" name="hevs.fragil.patapon.mechanics.PlayerCompany" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/mechanics/PlayerCompany.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="571" y="326"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -82,34 +73,26 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <association id="10">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="11" name="trackState"/>      
-      <multiplicity id="12" minimum="0" maximum="1"/>    
+  <association id="9">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="10" name="trackState"/>      
+      <multiplicity id="11" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="13">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="14" name="inst"/>      
-      <multiplicity id="15" minimum="0" maximum="1"/>    
+  <association id="12">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="13" name="instance"/>      
+      <multiplicity id="14" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
+    <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="16">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="17" name="instance"/>      
-      <multiplicity id="18" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="19">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="20" name="snapState"/>      
-      <multiplicity id="21" minimum="0" maximum="1"/>    
+  <association id="15">    
+    <end type="SOURCE" refId="4" navigable="false">      
+      <attribute id="16" name="snapState"/>      
+      <multiplicity id="17" minimum="0" maximum="1"/>    
     </end>    
     <end type="TARGET" refId="1" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

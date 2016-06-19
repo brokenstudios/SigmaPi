@@ -6,6 +6,9 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.drawables.SpriteSheet;
 
+/**
+ * Cloud image with parallax effect proportional to {@code zRatio}
+ */
 public class Clouds implements DrawableObject {
 	private static SpriteSheet clouds;
 	private int x,z;

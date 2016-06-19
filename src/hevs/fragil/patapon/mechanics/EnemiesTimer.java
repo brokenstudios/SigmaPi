@@ -7,6 +7,10 @@ import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.State;
 import hevs.fragil.patapon.units.Unit;
 
+/**
+ * This class manages the enemies movements. Identical to SequenceTimer class, 
+ * with less options.
+ */
 public abstract class EnemiesTimer{
 	private static float deltaTime;
 	private static float progression;

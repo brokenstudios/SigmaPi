@@ -12,6 +12,10 @@ import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.mechanics.Param;
 import hevs.fragil.patapon.units.State;
 
+/**
+ * This class manages drums sequences, 
+ * and principally returns a new State depending of the recognized sequence.
+ */
 public class Sequence implements DrawableObject {
 	//actual sequence
 	private Vector<Drum> melody = new Vector<Drum>();

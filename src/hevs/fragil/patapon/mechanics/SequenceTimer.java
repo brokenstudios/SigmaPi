@@ -9,6 +9,10 @@ import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.State;
 import hevs.fragil.patapon.units.Unit;
 
+/**
+ * This class manages the company movements and actions. It helps creating animations.
+ * This is called every FPS, and process the automatic movements of the units.
+ */
 public abstract class SequenceTimer{
 	private static float step = 0;
 	private static float deltaTime;
@@ -27,7 +31,8 @@ public abstract class SequenceTimer{
 		boolean finished = false;
 		if(a != null){
 			if(playing == false){
-//				lalala.play();
+				//for instance, this song is way too annoying (so we don't play it)
+				//lalala.play();
 				playing = true;
 			}
 

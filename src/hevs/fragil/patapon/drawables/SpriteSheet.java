@@ -27,7 +27,6 @@ public class SpriteSheet {
 	
 	/**
 	 * Initialize a new Spritesheet
-	 * @author Loïc Gillioz
 	 * @param url : the image location
 	 * @param cols : number of cols in your spritesheet image
 	 * @param rows : number of rows in your spritesheet image
@@ -140,8 +139,7 @@ public class SpriteSheet {
 	public void drawRotatedFrame(int spriteNumber, float angle, float posX, float posY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
-		Vector2 offset = new Vector2();
-		offset.set(0, (float)Math.sin(angle)*(30));
+		Vector2 offset = new Vector2(0, (float)Math.sin(angle)*30);
 		if(flipped){
 			tmp.setOrigin(96+32, 58);
 			tmp.setPosition(posX-32-96 + offset.x, posY + offset.y);

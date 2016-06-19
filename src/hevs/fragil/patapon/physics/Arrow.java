@@ -6,6 +6,11 @@ import com.badlogic.gdx.math.Vector2;
 import ch.hevs.gdx2d.components.bitmaps.BitmapImage;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 
+/**
+ * 
+ * @author loicg
+ *
+ */
 public class Arrow extends Projectile{
 	// for every arrow
 	private static BitmapImage img;

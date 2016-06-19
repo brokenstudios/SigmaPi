@@ -6,6 +6,9 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.Param;
 
+/**
+ * Blinking frame that blinks every time {@code toogle()} is called.
+ */
 public class Frame implements DrawableObject{
 	static boolean display = true;
 	private int frames = 0;

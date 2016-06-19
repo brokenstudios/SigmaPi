@@ -18,7 +18,7 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
 import hevs.fragil.patapon.drawables.Clouds;
-import hevs.fragil.patapon.drawables.Decor;
+import hevs.fragil.patapon.drawables.Scenery;
 import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.drawables.Mountains;
 import hevs.fragil.patapon.music.Drum;
@@ -33,8 +33,14 @@ import hevs.fragil.patapon.units.Section;
 import hevs.fragil.patapon.units.State;
 import hevs.fragil.patapon.units.Unit;
 
+/**
+ * Level class to instantiate a new Level. This contains its own 
+ * Scenery and other elements particular to this level.
+ * For instance, the level is always the same.
+ * TODO This class should be able to read files and creates itself in function.
+ */
 public class Level extends RenderingScreen {
-	private Decor decor;
+	private Scenery scenery;
 	private Floor floor;
 	private Frame frame;
 	private Sequence sequence;
@@ -84,7 +90,7 @@ public class Level extends RenderingScreen {
 		PhysicsWorld.getInstance();
 		CurrentLevel.setLevel(this);
 
-		decor = new Decor(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
+		scenery = new Scenery(Param.MAP_WIDTH, Param.CAM_HEIGHT, Param.BACKGROUND);
 		Mountains.loadFiles();
 		Clouds.loadFiles();
 
@@ -100,7 +106,7 @@ public class Level extends RenderingScreen {
 
 		// Create a default map and the floor that belong
 		frame = new Frame();
-		floor = new Floor(decor.getWidth());
+		floor = new Floor(scenery.getWidth());
 		sequence = new Sequence();
 		Sequence.loadSprites("data/images/drums102x102.png");
 		SequenceTimer.loadFiles();
@@ -165,13 +171,13 @@ public class Level extends RenderingScreen {
 		
 		// Some manual actions to camera
 		if (keycode == Keys.LEFT) {
-			decor.addManualOffset(-500);
+			scenery.addManualOffset(-500);
 		}
 		if (keycode == Keys.RIGHT) {
-			decor.addManualOffset(500);
+			scenery.addManualOffset(500);
 		}
 		if (keycode == Keys.CONTROL_RIGHT){
-			decor.centerCamera();
+			scenery.centerCamera();
 		}
 		
 		if (keycode == Keys.ESCAPE) {
@@ -184,7 +190,7 @@ public class Level extends RenderingScreen {
 		PhysicsWorld.updatePhysics(Gdx.graphics.getDeltaTime());
 		
 		// process camera position inside map limits
-		camera = decor.cameraProcess(PlayerCompany.getCompany(), enemies);
+		camera = scenery.cameraProcess(PlayerCompany.getCompany(), enemies);
 
 		// apply camera position
 		//TODO play with scale to play with zoom :D enjoy your pain
@@ -196,7 +202,7 @@ public class Level extends RenderingScreen {
 		} 
 		else {
 			// clear the screen with the decor background
-			g.clear(decor.getBackground());
+			g.clear(scenery.getBackground());
 		}
 		
 		// stick flying objects
@@ -220,7 +226,7 @@ public class Level extends RenderingScreen {
 			
 			// display objects
 			floor.draw(g);
-			decor.draw(g);
+			scenery.draw(g);
 			frame.draw(g);
 			sequence.draw(g);
 			PlayerCompany.getCompany().draw(g);
@@ -233,7 +239,7 @@ public class Level extends RenderingScreen {
 	private void stepFragments() {
 		Vector<DrawableObject> toDestroy = new Vector<DrawableObject>();
 		
-		for (DrawableObject d : decor.toDraw) {
+		for (DrawableObject d : scenery.toDraw) {
 			if(d instanceof Fragment){
 				if(((Fragment)d).step()){
 					toDestroy.add(d);
@@ -244,7 +250,7 @@ public class Level extends RenderingScreen {
 		
 		for (DrawableObject d : toDestroy) {
 			((Fragment)d).destroy();
-			decor.toDraw.remove(d);
+			scenery.toDraw.remove(d);
 		}
 		
 		toDestroy.removeAllElements();
@@ -254,7 +260,7 @@ public class Level extends RenderingScreen {
 	private void destroyObjects() {
 		Vector<DrawableObject> toDestroy = new Vector<DrawableObject>();
 		Vector<DrawableObject> newFragments = new Vector<DrawableObject>();
-		for (DrawableObject d : decor.toDraw) {
+		for (DrawableObject d : scenery.toDraw) {
 			int h = 0;
 			int x = 0;
 			if(d instanceof Tower){
@@ -273,9 +279,9 @@ public class Level extends RenderingScreen {
 			}
 		}
 		for (DrawableObject d : toDestroy) {
-			decor.toDraw.remove(d);
+			scenery.toDraw.remove(d);
 		}
-		decor.toDraw.addAll(newFragments);
+		scenery.toDraw.addAll(newFragments);
 		toDestroy.removeAllElements();
 	}
 
@@ -442,7 +448,7 @@ public class Level extends RenderingScreen {
 		return stateTime;
 	}
 
-	public Decor getDecor() {
-		return decor;
+	public Scenery getDecor() {
+		return scenery;
 	}
 }

@@ -7,6 +7,9 @@ import ch.hevs.gdx2d.components.graphics.Turtle;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.mechanics.Param;
 
+/**
+ * Recursive random hexagonal tree using a Logo-like drawing utility called Turtle.
+ */
 public class Tree implements VisibleObject {
 
 	private Random r;

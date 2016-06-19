@@ -14,7 +14,7 @@ public class GameManager extends PortableApplication {
 
 	@Override
 	public void onInit() {
-		setTitle("Ce jeu sera vôtre jeu !");
+		setTitle("SIGMAPI - 2016 - Broken Studios - Loïc Fracheboud, Loïc Gillioz, S2d");
 //		screenManager.registerScreen(Menu.class);
 //		screenManager.registerScreen(LevelSelection.class);
 		screenManager.registerScreen(Level.class);
@@ -31,8 +31,10 @@ public class GameManager extends PortableApplication {
 		if (keycode == Input.Keys.TAB)
 			screenManager.sliceTransitionToNext();
 		
+		//TODO must wait until screen transition finished ! 
+		//Otherwise this causes bugs
+		
 		//call keydown on the current screen
-		//TODO wait until screen transition finished
 		else
 			screenManager.getActiveScreen().onKeyDown(keycode);
 	}
