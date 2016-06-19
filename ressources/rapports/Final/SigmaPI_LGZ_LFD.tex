@@ -169,6 +169,9 @@ Afin de gérer au mieux les versions de notre code, nous avons utilisé les fonc
   Pour créer une trajectoire réaliste, on applique un moment sur le projectile proportionnel à l'angle qu'il forme avec le sol. Cette technique a été inspirée du tutoriel d'iForce2D\footnote{Sticky Projectiles, http://www.iforce2d.net/b2dtut/sticky-projectiles}, qui parlait de créer des flèches qui se plantent à l'impact. \\
   Pour les faire se planter à l'impact, là aussi nous nous sommes largement inspirés du tutoriel qui proposait de créer des joints en passant des "StickyInfo", ce que nous avons entièrement repris. \\ 
   
+  \paragraph{Tours et explosions}
+  Les tours à détruire sont premièrement composées d'un box physique statique, qui empêche n'importe quel autre objet de la déplacer. Cela évite des problèmes de collisions et de forces inutiles. Lors de réception des dégâts, la tour baisse ses points de vie. Lorsque la tour n'a plus de points de vie, 
+  
   \paragraph{Arbres récursifs}
   Dans le jeu on peut voir des arbres se mouvants au gré d'un vent parfaitement inexistant. Ces arbres sont générés avec les principes de récursivité et un peu de hasard. Nous avons défini quelques motifs de base (ligne simple/double, hexagone vide/rempli, etc) et quelques règles (chaque section est composée d'un élément ligne, puis un élément hexagone et à nouveau une ligne ou juste un élément ligne seul). A partir de là on peut générer un arbre.
 \newline Dans la classe de gestion du décors on peut donc appeler cette fonction de dessin d'arbre pour en faire une forêt. Dans notre cas, une forêt représente l'ensemble des arbres présents sur le niveau. La génération d'une forêt prend quelques paramètres en entrée et génère ensuite le nombre d'arbre désirés, avec une taille et un niveau de récursivité moyens afin d'avoir un résultat cohérent visuellement.
