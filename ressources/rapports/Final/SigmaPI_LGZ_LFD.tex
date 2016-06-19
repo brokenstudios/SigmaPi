@@ -160,19 +160,26 @@ Afin de gérer au mieux les versions de notre code, nous avons utilisé les fonc
   Eclaircissons quelques points intéréssants du fonctionnement du jeu.
   \paragraph{Intelligence artificielle (AI)}
   Dans le jeu il y a deux types d'AI. La plus évidente est celle des adversaires. Lors d'une partie, ils sont créés et placés à une position x dans le niveau. Lorsque le joueur s'en approchera suffisamment, ils vont devenir agressifs et attaquer. Sachant que chaque unité à une certaine portée, ils vont se déplacer dans une zone définie afin de pouvoir nous atteindre.
-  \newline Pour le joueur il existe un système similaire. C'est-à-dire que ses unités possèdent aussi une zone dans laquelle elle peuvent se déplacer pour faire correspondre leur portée à la position de la victime. La différence par rapport aux unités gérées par le jeu c'est que leur zone d'action bouge en fonction des actions du joueur.
+  \newline Pour le joueur il existe un système similaire. C'est-à-dire que ses unités possèdent aussi une zone dans laquelle elle peuvent se déplacer pour faire correspondre leur portée à la position de la victime. La différence par rapport aux unités ennemies est que leur zone d'action bouge en fonction des actions du joueur.
   \newline Le deuxième point intéressant qui ne concerne que le joueur, c'est la faculté des unités à se regrouper selon un ordre bien défini lors des déplacements.
-  \newline Tout ceci est possible grâce à une série de calculs determinants les déplacements potentiels et leur conséquences. En fonction de cela (et de la volonté du joueur), le système donne les instructions finales.
+  \newline Tout ceci est possible grâce à une série de calculs déterminant les déplacements potentiels et leurs conséquences. En fonction de cela (et de la volonté du joueur), le système donne les instructions finales. Le code est entièrement commenté pour un bonne compréhension des différentes étapes de décision des unités.
+   
+    \paragraph{Vol des projectiles}
+  Les projectiles sont respectivement les flèches ou les lances. Dans les 2 cas, leur trajectoire en vol est gérée par la physique selon le modèle dans le vide. La simulation dans le vide pose problème car les projectiles n'ont aucune raison de voler comme dans la vraie vie. En effet, l'empennage des flèches et leur centre de gravité dévié les fait voler en tournant pour se planter dans le sol ou les ennemis. Sans cela, les flèches ne tournent pas et ce n'est vraiment pas réaliste.\\
+  Pour créer une trajectoire réaliste, on applique un moment sur le projectile proportionnel à l'angle qu'il forme avec le sol. Cette technique a été inspirée du tutoriel d'iForce2D\footnote{Sticky Projectiles, http://www.iforce2d.net/b2dtut/sticky-projectiles}, qui parlait de créer des flèches qui se plantent à l'impact. \\
+  Pour les faire se planter à l'impact, là aussi nous nous sommes largement inspirés du tutoriel qui proposait de créer des joints en passant des "StickyInfo", ce que nous avons entièrement repris. \\ 
   
   \paragraph{Arbres récursifs}
   Dans le jeu on peut voir des arbres se mouvants au gré d'un vent parfaitement inexistant. Ces arbres sont générés avec les principes de récursivité et un peu de hasard. Nous avons défini quelques motifs de base (ligne simple/double, hexagone vide/rempli, etc) et quelques règles (chaque section est composée d'un élément ligne, puis un élément hexagone et à nouveau une ligne ou juste un élément ligne seul). A partir de là on peut générer un arbre.
+  
  \begin{figure}[!h]
  \centering
  \vspace{-10pt}
  \includegraphics[scale=0.4]{images/tree}
  \caption{Exemple d'arbre, niveau de récursivité V}
  \end{figure}
-  \newline Dans la classe de gestion du décors on peut donc appeler cette fonction de dessin d'arbre pour en faire une forêt. Dans notre cas, une forêt représente l'ensemble des arbres présents sur le niveau. La génération d'une forêt prend quelques paramètres en entrée et génère ensuite le nombre d'arbre désirés, avec une taille et un niveau de récursivité moyens afin d'avoir un résultat cohérent visuellement.
+ 
+Dans la classe de gestion du décors on peut donc appeler cette fonction de dessin d'arbre pour en faire une forêt. Dans notre cas, une forêt représente l'ensemble des arbres présents sur le niveau. La génération d'une forêt prend quelques paramètres en entrée et génère ensuite le nombre d'arbre désirés, avec une taille et un niveau de récursivité moyens afin d'avoir un résultat cohérent visuellement.
   \newline Reprenons l'arbre de la section précédente et comparons le à son voisin. On voit qu'ils ont le même niveau de récurivité, mais pas la même taille, ni la même structure.
  \begin{figure}[!h]
  \centering
