@@ -1,10 +1,9 @@
-package hevs.fragil.patapon.mechanics;
+package hevs.fragil.patapon.drawables;
 
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
-import hevs.fragil.patapon.drawables.SpriteSheet;
 
 public class Mountains implements DrawableObject {
 	private static SpriteSheet mountains;

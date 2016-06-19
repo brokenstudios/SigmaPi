@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.fragil.patapon.drawables.Tower;
+import hevs.fragil.patapon.physics.Tower;
 
 public class Shield extends Unit {
 	static double modLife = +1.0;

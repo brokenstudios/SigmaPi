@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.fragil.patapon.mechanics.State;
 import hevs.fragil.patapon.mechanics.Param;
+import hevs.fragil.patapon.units.State;
 
 public class Sequence implements DrawableObject {
 	//actual sequence

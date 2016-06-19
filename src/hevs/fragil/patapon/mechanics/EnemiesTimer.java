@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
+import hevs.fragil.patapon.units.State;
 import hevs.fragil.patapon.units.Unit;
 
 public abstract class EnemiesTimer{

@@ -1,4 +1,4 @@
-package hevs.fragil.patapon.mechanics;
+package hevs.fragil.patapon.drawables;
 
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 

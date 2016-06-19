@@ -1,12 +1,12 @@
-package hevs.fragil.patapon.drawables;
+package hevs.fragil.patapon.physics;
 
 import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsStaticBox;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
+import hevs.fragil.patapon.drawables.SpriteSheet;
 import hevs.fragil.patapon.mechanics.Param;
-import hevs.fragil.patapon.physics.CollidedObject;
 
 public abstract class Tower extends PhysicsStaticBox implements DrawableObject, CollidedObject{
 	private int x;

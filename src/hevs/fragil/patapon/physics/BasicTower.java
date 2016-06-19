@@ -1,6 +1,8 @@
-package hevs.fragil.patapon.drawables;
+package hevs.fragil.patapon.physics;
 
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+
+import hevs.fragil.patapon.drawables.SpriteSheet;
 
 public class BasicTower extends Tower {
 

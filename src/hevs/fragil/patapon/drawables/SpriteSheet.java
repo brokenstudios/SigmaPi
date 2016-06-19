@@ -141,15 +141,15 @@ public class SpriteSheet {
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
 		Vector2 offset = new Vector2();
-//		offset.set(Math.cos(angle), Math.sin(angle));
+		offset.set(0, (float)Math.sin(angle)*(30));
 		if(flipped){
-			tmp.setPosition(posX-32-96, posY);
 			tmp.setOrigin(96+32, 58);
+			tmp.setPosition(posX-32-96 + offset.x, posY + offset.y);
 
 		}
 		else {
-			tmp.setPosition(posX-96, posY);
 			tmp.setOrigin(96, 58);
+			tmp.setPosition(posX-96 + offset.x, posY + offset.y);
 		}
 		tmp.setRotation((float)Math.toDegrees(angle));
 		tmp.draw(spriteBatch);

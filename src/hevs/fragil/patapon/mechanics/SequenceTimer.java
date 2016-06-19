@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Interpolation;
 import ch.hevs.gdx2d.components.audio.SoundSample;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
+import hevs.fragil.patapon.units.State;
 import hevs.fragil.patapon.units.Unit;
 
 public abstract class SequenceTimer{

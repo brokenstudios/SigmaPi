@@ -17,16 +17,20 @@ import ch.hevs.gdx2d.desktop.physics.DebugRenderer;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
+import hevs.fragil.patapon.drawables.Clouds;
+import hevs.fragil.patapon.drawables.Decor;
 import hevs.fragil.patapon.drawables.Frame;
-import hevs.fragil.patapon.drawables.Tower;
+import hevs.fragil.patapon.drawables.Mountains;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Sequence;
 import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.Fragment;
 import hevs.fragil.patapon.physics.Projectile;
 import hevs.fragil.patapon.physics.StickyInfo;
+import hevs.fragil.patapon.physics.Tower;
 import hevs.fragil.patapon.units.Company;
 import hevs.fragil.patapon.units.Section;
+import hevs.fragil.patapon.units.State;
 import hevs.fragil.patapon.units.Unit;
 
 public class Level extends RenderingScreen {

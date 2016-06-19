@@ -1,4 +1,4 @@
-package hevs.fragil.patapon.mechanics;
+package hevs.fragil.patapon.drawables;
 
 import java.util.Vector;
 
@@ -8,9 +8,9 @@ import com.badlogic.gdx.math.Vector3;
 import ch.hevs.gdx2d.components.geometry.Point;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
-import hevs.fragil.patapon.drawables.BasicTower;
-import hevs.fragil.patapon.drawables.HexaTower;
-import hevs.fragil.patapon.drawables.Tree;
+import hevs.fragil.patapon.mechanics.Param;
+import hevs.fragil.patapon.physics.BasicTower;
+import hevs.fragil.patapon.physics.HexaTower;
 import hevs.fragil.patapon.units.Company;
 
 public class Decor {
