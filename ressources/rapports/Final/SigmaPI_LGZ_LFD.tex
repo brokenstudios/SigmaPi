@@ -89,7 +89,15 @@
   \pagebreak
   
   \paragraph*{Structure UML}
-  Comme on peut le voir sur la figure suivante, l'architecture du jeu est assez riche. On peut distinguer plusieurs groupes dédiés à des tâches communes, graphismes, mécanique de jeux, etc. INSERT UML
+  L'architecture du jeu est assez riche. On peut distinguer plusieurs groupes dédiés à des tâches communes, graphismes, mécanique de jeux, etc.
+  \newline L'image suivante illustre un des packages, celui des unités. On y voit donc les différents héritages des archers, lanciers et épéistes qui découlent tous de la même classe. De la même manière on peut voir la constitution des sections et de la compagnie.
+  \newline On peut y lire également le découpage du rendu graphique sur la gauche.
+  \begin{figure}[!h]
+ \centering
+ \vspace{-1pt}
+ \includegraphics[scale=0.4]{images/units}
+ \caption{Diagramme UML du package des unités}
+ \end{figure}
   \newline La structure du projet est composée de six packages différents :\begin{itemize}
   \item {\itshape drawable}
   \item {\itshape mechanics}
