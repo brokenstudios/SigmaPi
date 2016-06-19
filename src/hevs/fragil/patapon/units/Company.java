@@ -177,8 +177,7 @@ public class Company implements DrawableObject {
 			sections.elementAt(2).add(new Archer(0,Species.TAPI,true));
 		}
 		
-		// Set the initial position
-		int initialPos = getMinWidth()/2 + 5000;
+		int initialPos = getMinWidth()/2 + 1000;
 		
 		int width = getMinWidth();
 		float screenMargin = initialPos - width/2f;
