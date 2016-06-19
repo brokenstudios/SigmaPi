@@ -178,7 +178,7 @@ public class Company implements DrawableObject {
 		}
 		
 		// Set the initial position
-		int initialPos = getMinWidth()/2 + 5000;
+		int initialPos = getMinWidth()/2 + 4000;
 		
 		int width = getMinWidth();
 		float screenMargin = initialPos - width/2f;
@@ -263,8 +263,6 @@ public class Company implements DrawableObject {
 					//move to the left
 					else if(u.getPosition().x > getOrderedPosition(u) + Param.UNIT_POSITION_TOLERANCE)
 						desiredPos -= Param.UNIT_SPEED * dt;
-					
-					System.out.println(getOrderedPosition(u));
 					u.setPosition((int)desiredPos, dt);					
 				}
 			}

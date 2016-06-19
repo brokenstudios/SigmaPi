@@ -5,6 +5,7 @@ import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
@@ -217,15 +218,7 @@ public class Level extends RenderingScreen {
 		killUnits();
 		destroyObjects();		
 		
-		if(!debugActive){
-			// display help
-			g.drawStringCentered(800, "Fever : " + sequence.getFever());
-			g.drawStringCentered(780, "T to disable/enable track");
-			g.drawStringCentered(760, "S to disable/enable snap");
-			g.drawStringCentered(740, "D to disable/enable debug mode");
-			g.drawStringCentered(720, "Num(1, 2, 3, 4) = Note(He, S, So, Yes)");
-			g.drawStringCentered(700, "Use A, M, R for Attack, Walk, Retreat and arrows to move camera");
-			
+		if(!debugActive){		
 			// display objects
 			floor.draw(g);
 			scenery.draw(g);
@@ -234,6 +227,19 @@ public class Level extends RenderingScreen {
 			PlayerCompany.getCompany().draw(g);
 			enemies.draw(g);
 			drawProjectiles(g);
+			
+			// display help
+			g.setColor(Color.BLACK);
+			g.drawString(g.getCamera().position.x-700, 870, "Sequence Walk : He He He S");
+			g.drawString(g.getCamera().position.x-700, 850, "Sequence Attack : S S He S");
+			g.drawString(g.getCamera().position.x-700, 830, "Sequence Retreat : S He S He");
+			g.drawString(g.getCamera().position.x-700, 780, "Fever : " + sequence.getFever());
+			g.drawStringCentered(760, "T to disable/enable track");
+			g.drawStringCentered(740, "S to disable/enable snap");
+			g.drawStringCentered(720, "D to disable/enable debug mode");
+			g.drawStringCentered(700, "Num(1, 2, 3, 4) = Note(He, S, So, Yes)");
+			g.drawStringCentered(680, "Use A, M, R for Attack, Walk, Retreat and arrows to move camera");
+			g.drawStringCentered(660, "The hexagonal tower symbolize the level end, destroy it to 'win' ");
 		}
 		stateTime += Gdx.graphics.getDeltaTime();
 	}

@@ -44,8 +44,8 @@ public class Scenery {
 		processForest(10, origin, 5, 200f, 5);
 		toDraw.add(new BasicTower(1500, 10));
 		toDraw.add(new BasicTower(2000, 10));
-		toDraw.add(new BasicTower(5000, 10));
-		toDraw.add(new HexaTower(7000, 10));
+		toDraw.add(new BasicTower(4000, 10));
+		toDraw.add(new HexaTower(5500, 10));
 		
 	}
 

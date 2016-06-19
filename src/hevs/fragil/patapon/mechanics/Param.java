@@ -30,7 +30,7 @@ public abstract class Param {
 	
 	//Default values of maps dimensions (!= game window)
 	public static final int MAP_HEIGHT = 3000;
-	public static final int MAP_WIDTH = 8000;
+	public static final int MAP_WIDTH = 6000;
 	public static final int FLOOR_DEPTH = 30;
 	public static final int FRAME_DEGRADE_STEPS = 10;
 	
