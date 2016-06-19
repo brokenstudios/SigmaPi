@@ -94,7 +94,7 @@ public class Level extends RenderingScreen {
 		Mountains.loadFiles();
 		Clouds.loadFiles();
 
-		enemies.initEnnemies(2,0,0);
+		enemies.initEnnemies(2,1,3);
 
 		// Load the sound files
 		heNote = new SoundSample("data/music/HE.wav");
@@ -132,15 +132,6 @@ public class Level extends RenderingScreen {
 			yesNote.play();
 			PlayerCompany.getCompany().setAction(sequence.add(Drum.YES, sinceLastRythm));
 		}
-		if (keycode == Keys.A) {
-			PlayerCompany.getCompany().setAction(State.ATTACK);
-		}
-		if (keycode == Keys.M) {
-			PlayerCompany.getCompany().setAction(State.WALK);
-		}
-		if (keycode == Keys.R) {
-			PlayerCompany.getCompany().setAction(State.RETREAT);
-		}
 		if (keycode == Keys.D) {
 			debugActive = !debugActive;
 		}
@@ -168,8 +159,22 @@ public class Level extends RenderingScreen {
 				break;
 			}
 		}
-		
-		// Some manual actions to camera
+		if (keycode == Keys.ESCAPE) {
+			dispose();
+			System.exit(0);
+		}
+		/* Some manual commands for debug or easy demo */
+		// Enble these to play without taking care of rythms
+		if (keycode == Keys.A) {
+			PlayerCompany.getCompany().setAction(State.ATTACK);
+		}
+		if (keycode == Keys.M) {
+			PlayerCompany.getCompany().setAction(State.WALK);
+		}
+		if (keycode == Keys.R) {
+			PlayerCompany.getCompany().setAction(State.RETREAT);
+		}
+		// Enable these to navigate easily in scenery with camera
 		if (keycode == Keys.LEFT) {
 			scenery.addManualOffset(-500);
 		}
@@ -178,11 +183,6 @@ public class Level extends RenderingScreen {
 		}
 		if (keycode == Keys.CONTROL_RIGHT){
 			scenery.centerCamera();
-		}
-		
-		if (keycode == Keys.ESCAPE) {
-			dispose();
-			System.exit(0);
 		}
 	}
 
@@ -223,6 +223,8 @@ public class Level extends RenderingScreen {
 			g.drawStringCentered(780, "T to disable/enable track");
 			g.drawStringCentered(760, "S to disable/enable snap");
 			g.drawStringCentered(740, "D to disable/enable debug mode");
+			g.drawStringCentered(720, "Num(1, 2, 3, 4) = Note(He, S, So, Yes)");
+			g.drawStringCentered(700, "Use A, M, R for Attack, Walk, Retreat and arrows to move camera");
 			
 			// display objects
 			floor.draw(g);
