@@ -76,10 +76,12 @@
  \pagebreak
  
  \section{Description sommaire du jeu}
-  SigmaPi est basé sur le jeu sorti sur PSP "Patapon". Ce jeu connu un grand succès et c'est désormais une des références des jeux de rythme. On y contrôle un groupe de personnages par le biais de quatre tambours en entrant des séquences (par exemple 3x carré puis 1x rond donne l'ordre d'avancer). On doit donc traverser des niveaux 2D à l'aide d'un nombre restreint de séquences.
+  SigmaPi est basé sur le jeu sorti sur PSP "Patapon". Ce dernier jeu, sorti en 2006, connu un grand succès et c'est désormais une des références des jeux de rythme. On y contrôle un groupe de guerriers par le biais de quatre tambours, en entrant des séquences (par exemple 3x carré puis 1x rond donne l'ordre d'avancer). On compte une petite dizaine de combinaisons, selon la version du jeu. Il est possible d'attaquer, de défendre, d'avancer, d'éviter, de charger une attaque, de faire pleuvoir, etc. Chacune de ces actions est exécutée à la suite d'une séquence spécifique. \\
+Le but du jeu est donc de traverser des niveaux 2D à l'aide des différents ordres. Les niveaux du jeu original sont soit des niveaux de chasse (simples animaux pacifiques), de combat contre une tribu rivale, ou encore de combat contre un grand boss.
+Dans notre jeu, nous n'avons implémenté que le type de niveau comprenant une tribu adverse.
 
-  \paragraph{Github}
-  Afin de gérer au mieux les versions de notre code, nous avons utilisé les fonctions de github. Vous pouvez donc retrouver tout l'historique de développement et tout le code à cette adresse : {\itshape https://github.com/loicfracheboud/SigmaPi}
+ \paragraph{GitHub}
+Afin de gérer au mieux les versions de notre code, nous avons utilisé les fonctions de GitHub. Vous pouvez donc retrouver tout l'historique de développement et tout le code à cette adresse : {\itshape https://github.com/loicfracheboud/SigmaPi}
   \begin{figure}[!h]
  \centering
  \vspace{5pt}
@@ -89,41 +91,69 @@
   \pagebreak
   
   \paragraph*{Structure UML}
-  L'architecture du jeu est assez riche. On peut distinguer plusieurs groupes dédiés à des tâches communes, graphismes, mécanique de jeux, etc.
-  \newline L'image suivante illustre un des packages, celui des unités. On y voit donc les différents héritages des archers, lanciers et épéistes qui découlent tous de la même classe. De la même manière on peut voir la constitution des sections et de la compagnie.
-  \newline On peut y lire également le découpage du rendu graphique sur la gauche.
-  \begin{figure}[!h]
+  L'architecture du jeu comptant 46 classes, nous avons jugé utile de les séparer en plusieurs packages. On peut distinguer ci-dessous les packages dédiés à des tâches communes, graphismes, mécanique de jeux, etc.  
+  
+ \begin{figure}[!h]
  \centering
- \vspace{-1pt}
- \includegraphics[scale=0.4]{images/units}
- \caption{Diagramme UML du package des unités}
+ \includegraphics[scale=0.32]{images/Complete}
+ \caption{Les 6 packages des classes}
  \end{figure}
-  \newline La structure du projet est composée de six packages différents :\begin{itemize}
-  \item {\itshape drawable}
-  \item {\itshape mechanics}
-  \item {\itshape menus}
-  \item {\itshape music}
-  \item {\itshape physics}
-  \item {\itshape units}
-  \end{itemize}
-  \paragraph{drawable}
+  \paragraph{drawables}
   Ici nous avons toutes les classes qui s'occupent de la partie graphique du jeu, par exemple la classe SpriteSheet qui permet d'initialiser et travailler facilement avec les spritesheets.
  \begin{figure}[!h]
  \centering
  \vspace{-45pt}
  \includegraphics[scale=0.3]{images/legs}
- \caption{Spritesheet des jambes des SigmaPi}
+ \end{figure}
+  \begin{figure}[!h]
+ \centering
+ \includegraphics[scale=0.3]{images/eyes}
+ \caption{Spritesheet des jambes et des yeux des SigmaPi}
+ \end{figure}
+ Le dessin des SigmaPis est composé de 4 sprites superposés : les jambes, le corps, l'oeil, et les bras. Pour faciliter la tâche, les 4 différents sprites font la même taille de vignette et sont alignés selon le même offset, ce qui permet de les afficher tous à la même position, les uns après les autres.
+ \begin{figure}[!h]
+ \centering
+ \includegraphics[scale=0.4]{images/Drawables}
+ \caption{Structure sommaire du package drawables}
  \end{figure}
   \paragraph{mechanics}
-  Ce package est axé sur la mécanique du jeu, c'est-à-dire gérer l'état des unités, instancier un niveau (les unités adverses et du joueur, etc).
+  Ce package est axé sur la mécanique du jeu, c'est-à-dire toutes les classes qui permettent le fonctionnement des éléments de base, comme gérer l'état des unités, instancier les niveaux, gérer la compagnie du joueur.
+ \begin{figure}[!h]
+ \centering
+ \includegraphics[scale=0.4]{images/Mechanics}
+ \caption{Structure sommaire du package mechanics}
+ \end{figure}
+ 
   \paragraph{menus}
-  Les différentes classes de ce niveau servent à générer des menus permettants de modifier les options du jeux, lancer une partie, etc. Pour l'instant nous n'avons pas implémenté ces fonctions, elles ne sont pas fondamentales.
+  \begin{figure}[!h]
+ \centering
+ \includegraphics[scale=0.4]{images/Menus}
+ \caption{Structure sommaire du package menus}
+ \end{figure}
+  Les différentes classes de ce niveau servent à générer des menus permettants de modifier les options du jeux, lancer une partie, etc. Pour l'instant nous n'avons pas implémenté ces fonctions, elles ne sont pas fondamentales et nous avons privilégié les autres fonctions.
+
   \paragraph{music}
-  Toute la gestion des séquences entrées par le joueur est traitée ici (reconnaissance).
+  \begin{figure}[!h]
+ \centering
+ \includegraphics[scale=0.4]{images/Music}
+ \caption{Structure sommaire du package music}
+ \end{figure}
+  Toute la gestion des séquences entrées par le joueur est traitée ici. On y crée les tambours, les séquences et on reconnait les séquence possibles tout en contrôlant le timing du joueur.
+  
   \paragraph{physics}
-  La physique est utile à plusieurs fonctions du jeu, notamment pour les flèches/lances et les hitboxes des unités.
+  \begin{figure}[!h]
+ \centering
+ \includegraphics[scale=0.4]{images/Physics}
+ \caption{Structure sommaire du package physics}
+ \end{figure}
+  La physique est utile à plusieurs fonctions du jeu, notamment pour les flèches/lances et les hitboxes des unités. Toutes les classes dans ce package influent sur la physique. Certaines sont également des objets affichables, mais nous avons préféré les mettre dans ce package plutôt que le package drawable, étant la place plus importante prise par la physique.
   \paragraph{units}
-  Ici nous avons toutes les classes qui s'occupent de la partie graphique du jeu, par exemple la classe SpriteSheet qui permet d'initialiser et travailler facilement avec les spritesheets.
+  \begin{figure}[!h]
+ \centering
+ \includegraphics[scale=0.4]{images/Units}
+ \caption{Structure sommaire du package units}
+ \end{figure}
+  Le package units contient toute la structure des compagnies, contenant sections, unités, etc. Quelques classes utiles pour les unités sont aussi présentes.
   
   \pagebreak 
   \section{Architecture}

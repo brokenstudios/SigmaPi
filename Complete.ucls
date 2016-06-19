@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.9" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+  <package id="1" language="java" name="hevs.fragil.patapon.menus" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/menus" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="131" y="126"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="2" language="java" name="hevs.fragil.patapon.music" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/music" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="343" y="126"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="3" language="java" name="hevs.fragil.patapon.drawables" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/drawables" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="565" y="126"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="4" language="java" name="hevs.fragil.patapon.physics" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/physics" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="792" y="126"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="5" language="java" name="hevs.fragil.patapon.units" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/units" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1003" y="126"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <package id="6" language="java" name="hevs.fragil.patapon.mechanics" project="SigmaPi" 
+    file="/SigmaPi/src/hevs/fragil/patapon/mechanics" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1224" y="126"/>    
+    <display autosize="true" stereotype="true" sort-features="false" accessors="true"/>  
+  </package>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="false"/>    
+    <operations public="false" package="false" protected="false" private="false" static="false"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>
