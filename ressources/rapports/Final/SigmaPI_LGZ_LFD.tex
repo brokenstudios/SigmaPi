@@ -96,7 +96,7 @@ Afin de gérer au mieux les versions de notre code, nous avons utilisé les fonc
  \caption{Les 6 packages des classes}
  \end{figure}
   \paragraph{drawables}
-  Ici nous avons toutes les classes qui s'occupent de la partie graphique du jeu, par exemple la classe SpriteSheet qui permet d'initialiser et travailler facilement avec les spritesheets.
+  Ici nous avons toutes les classes qui s'occupent de la partie graphique du jeu, par exemple la classe SpriteSheet qui permet d'initialiser et travailler facilement avec les spritesheets. Pour les nuages et les montagnes, il est possible de donner un effet de parallaxe à l'aide d'un paramètre.
  \begin{figure}[!h]
  \centering
  \vspace{-45pt}
@@ -155,6 +155,7 @@ Afin de gérer au mieux les versions de notre code, nous avons utilisé les fonc
   \pagebreak 
   \section{Architecture}
   Eclaircissons quelques points intéréssants du fonctionnement du jeu.
+
   \paragraph{Intelligence artificielle (AI)}
   Dans le jeu il y a deux types d'AI. La plus évidente est celle des adversaires. Lors d'une partie, ils sont créés et placés à une position x dans le niveau. Lorsque le joueur s'en approchera suffisamment, ils vont devenir agressifs et attaquer. Sachant que chaque unité à une certaine portée, ils vont se déplacer dans une zone définie afin de pouvoir nous atteindre.
   \newline Pour le joueur il existe un système similaire. C'est-à-dire que ses unités possèdent aussi une zone dans laquelle elle peuvent se déplacer pour faire correspondre leur portée à la position de la victime. La différence par rapport aux unités ennemies est que leur zone d'action bouge en fonction des actions du joueur.
@@ -166,9 +167,16 @@ Afin de gérer au mieux les versions de notre code, nous avons utilisé les fonc
   Pour créer une trajectoire réaliste, on applique un moment sur le projectile proportionnel à l'angle qu'il forme avec le sol. Cette technique a été inspirée du tutoriel d'iForce2D\footnote{Sticky Projectiles, http://www.iforce2d.net/b2dtut/sticky-projectiles}, qui parlait de créer des flèches qui se plantent à l'impact. \\
   Pour les faire se planter à l'impact, là aussi nous nous sommes largement inspirés du tutoriel qui proposait de créer des joints en passant des "StickyInfo", ce que nous avons entièrement repris. \\ 
   Lors de la collision, on applique les dégâts du projectile à la box de la victime. Ensuite, on change le CollisionGroup du projectile pour éviter d'autres collisions avec les autres victimes aux alentours, notamment lors de la mort de la victime (celle-ci bascule sur le côté).
-  
+ \pagebreak 
   \paragraph{Tours et explosions}
-  Les tours à détruire sont premièrement composées d'un box physique statique, qui empêche n'importe quel autre objet de la déplacer. Cela évite des problèmes de collisions et de forces inutiles. Lors de réception des dégâts, la tour baisse ses points de vie. Lorsque la tour n'a plus de points de vie, on détruit sa hitbox statique et on la remplace par une série de fragments, auxquels on applique directement une force pour la faire exploser. Cette force est aléatoire. Pour éviter des collisions hasardeuses avec la companie du joueur, les fragments sont dans le même CollisionGroup que les unités alliées.
+  Les tours à détruire sont premièrement composées d'un box physique statique, qui empêche n'importe quel autre objet de la déplacer. Cela évite des problèmes de collisions et de forces inutiles. Lors de réception des dégâts, la tour baisse ses points de vie. Lorsque la tour n'a plus de points de vie, on détruit sa hitbox statique et on la remplace par une série de fragments, auxquels on applique directement une force pour la faire exploser. Cette force est aléatoire. Pour éviter des collisions hasardeuses avec la compagnie du joueur, les fragments sont dans le même CollisionGroup que les unités alliées.
+ \begin{figure}[!h]
+ \centering
+ \vspace{-10pt}
+ \includegraphics[scale=0.45]{images/towers}
+ \caption{La tour avant et après}
+ \end{figure}
+
   
   \paragraph{Arbres récursifs}
   Dans le jeu on peut voir des arbres qui ondulent selon un vent fictif. Ces arbres sont générés avec les principes de récursivité et un peu d'aléatoire. Nous avons défini quelques motifs de base (ligne simple/double, hexagone vide/rempli, etc) et quelques règles (chaque section est composée d'un élément ligne, puis un élément hexagone et à nouveau une ligne ou juste un élément ligne seul). A partir de là on peut générer un arbre. 
@@ -177,7 +185,7 @@ Dans la classe de gestion du décor on peut donc appeler cette fonction de dessi
  \begin{figure}[!h]
  \centering
  \vspace{-10pt}
- \includegraphics[scale=0.3]{images/trees}
+ \includegraphics[scale=0.22]{images/trees}
  \caption{Deux arbres générés par le jeu}
  \end{figure}
   
@@ -202,17 +210,16 @@ Décors récursifs & 26.05.2016 & + \tabularnewline
 \end{tabular}}
 
  \paragraph{}
- Nous n'avons pas réellement respecté le planning, en fait des éléments se sont retrouvés très vite codé dans la timeline (par exemple les arbres récursifs ou les animations sans SpriteSheets) tandis que d'autres ne sont pas encore implémentés, notamment les différents niveaux de SigmaPis. 
- \newline Nous avons plutôt concentrés nos efforts sur une architecture de jeux puissante par sa souplesse. De cette façon, le gameplay sera relativement simple à implémenter puisque il n'y aura pas à créer beaucoup de choses, il suffira grossièrement d'instancier les élements nécessaires à un jeux agréable (niveaux de puissance des unités, modification de leurs paramètres, génération de décors uniques, etc..).
+ Nous n'avons pas réellement respecté le planning, en fait des éléments se sont retrouvés très vite codés dans la timeline (par exemple les arbres récursifs ou les animations sans SpriteSheets) tandis que d'autres ne sont pas encore implémentés, notamment les différents niveaux des SigmaPis, l'équilibrage, etc.
+ \newline Nous avons plutôt concentré nos efforts sur une architecture de jeux puissante par sa souplesse. De cette façon, le gameplay sera relativement simple à implémenter puisqu'il n'y aura pas à créer beaucoup de choses, il suffira grossièrement d'instancier les éléments nécessaires à un jeux agréable (niveaux de puissance des unités, modification de leurs paramètres, génération de décors uniques, etc..).
  
  \pagebreak
  \section{Conclusion}
  Le jeu est loin d'être fini du point de vue du gameplay, il manque en effet beaucoup d'éléments pour se rapprocher de la richesse de Patapon. En revanche nous avons maintenant une base solide qui offre l'architecture nécessaire au jeu.
- \newline Ce projet nous a beaucoup plu par tous les aspects abordés, que ce soit l'application de principes vu trop rapidements en théorie (ou pas du tout), l'utilisation de git, de fonctions obscures du Java ou encore des merveilles d'Illustrator pour générer les spritesheets.
- En résumé, beaucoup de plaisir!
- Merci à vous pour votre investissement, votre intérêt et votre constante et contagieuse bonne humeur!
- Bon été.
- 
+ \newline Ce projet nous a beaucoup plu par tous les aspects abordés, que ce soit l'application de principes vus rapidement en théorie (ou pas du tout !), l'utilisation de GitHub, de fonctions Java inconnues ou encore des merveilles d'Illustrator pour générer les spritesheets. Créer ce jeu a été un réel investissement personnel et l'on ne compte plus les soirées passées avec le sourire (parfois un peu moins souriant, mais quand même !).
+En résumé, beaucoup de plaisir !
+Merci à vous pour votre investissement, votre intérêt et votre constante et contagieuse bonne humeur !
+
  \vspace{30pt}
  \begin{wrapfigure}[0]{r}{6cm}
  \vspace{-52pt}
@@ -227,4 +234,11 @@ Décors récursifs & 26.05.2016 & + \tabularnewline
  \includegraphics[scale=1]{signfracheboud}
  \end{wrapfigure}
  \signature{Loïc Fracheboud}{Sion, le 19 juin 2016} 
+ 
+  \begin{figure}[!h]
+ \centering
+ \vspace{100pt}
+ \includegraphics[scale=0.3]{images/Broken-Games}
+ \end{figure}
+ 
  \end{document}
