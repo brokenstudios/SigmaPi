@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.9" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
-  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+<class-diagram version="1.1.9" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="hevs.fragil.patapon.physics.Projectile" project="SigmaPi" 
     file="/SigmaPi/src/hevs/fragil/patapon/physics/Projectile.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="465" y="276"/>    
@@ -100,23 +100,23 @@
       <operations public="false" package="false" protected="false" private="false" static="false"/>    
     </display>  
   </class>  
-  <realization id="12">    
+  <generalization id="12">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <realization id="13">    
     <bendpoint x="833" y="294"/>    
     <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="6"/>  
-  </realization>  
-  <realization id="13">    
-    <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="6"/>  
   </realization>  
   <generalization id="14">    
     <end type="SOURCE" refId="8"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <generalization id="15">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="10"/>  
-  </generalization>  
+  <realization id="15">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="6"/>  
+  </realization>  
   <generalization id="16">    
     <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="10"/>  
