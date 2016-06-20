@@ -31,8 +31,7 @@ public class GameManager extends PortableApplication {
 		
 		// Display the next screen with transition
 		if (keycode == Input.Keys.TAB)
-			screenManager.sliceTransitionToNext();
-		
+			screenManager.smoothTransitionToNext();		
 		//TODO must wait until screen transition finished ! 
 		//Otherwise this causes bugs
 		
