@@ -1,5 +1,6 @@
 package hevs.fragil.patapon.menus;
 
+import hevs.fragil.patapon.accessories.SpritesVisualizer;
 import hevs.fragil.patapon.mechanics.Level;
 import hevs.fragil.patapon.mechanics.Param;
 import ch.hevs.gdx2d.desktop.PortableApplication;
@@ -18,6 +19,7 @@ public class GameManager extends PortableApplication {
 //		screenManager.registerScreen(Menu.class);
 //		screenManager.registerScreen(LevelSelection.class);
 		screenManager.registerScreen(Level.class);
+		screenManager.registerScreen(SpritesVisualizer.class);
 //		screenManager.registerScreen(EndScreenVictory.class);
 //		screenManager.registerScreen(EndScreenLoose.class);
 

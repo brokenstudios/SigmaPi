@@ -82,7 +82,7 @@ public class SpriteSheet {
 		}
 		else {
 			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX, posY);
+			tmp.setPosition(posX-96, posY);
 		}
 		tmp.setRotation(0);
 		if(flipped && tmp.isFlipX() == false)
@@ -186,12 +186,12 @@ public class SpriteSheet {
 		spriteBatch.begin();
 		Sprite tmp = sprites[index];
 		if(flipped){
-			tmp.setOrigin(96+32, 58);
+//			tmp.setOrigin(96+32, 58);
 			tmp.setPosition(posX-32-96, posY);
 
 		}
 		else {
-			tmp.setOrigin(96, 58);
+//			tmp.setOrigin(96, 58);
 			tmp.setPosition(posX-96, posY);
 		}
 		if(flipped && tmp.isFlipX() == false)
