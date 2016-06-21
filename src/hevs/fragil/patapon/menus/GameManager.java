@@ -1,13 +1,13 @@
 package hevs.fragil.patapon.menus;
 
-import hevs.fragil.patapon.accessories.SpritesVisualizer;
-import hevs.fragil.patapon.mechanics.Level;
-import hevs.fragil.patapon.mechanics.Param;
+import com.badlogic.gdx.Input;
+
 import ch.hevs.gdx2d.desktop.PortableApplication;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.ScreenManager;
-
-import com.badlogic.gdx.Input;
+import hevs.fragil.patapon.accessories.SpritesVisualizer;
+import hevs.fragil.patapon.mechanics.Level;
+import hevs.fragil.patapon.mechanics.Param;
 
 public class GameManager extends PortableApplication {
 
@@ -16,7 +16,7 @@ public class GameManager extends PortableApplication {
 	@Override
 	public void onInit() {
 		setTitle("SIGMAPI - 2016 - Broken Studios - Loïc Fracheboud, Loïc Gillioz, S2d");
-//		screenManager.registerScreen(Menu.class);
+		screenManager.registerScreen(Menu.class);
 //		screenManager.registerScreen(LevelSelection.class);
 		screenManager.registerScreen(Level.class);
 		screenManager.registerScreen(SpritesVisualizer.class);
@@ -30,8 +30,8 @@ public class GameManager extends PortableApplication {
 		super.onKeyDown(keycode);
 		
 		// Display the next screen with transition
-		if (keycode == Input.Keys.TAB)
-			screenManager.smoothTransitionToNext();		
+		if (keycode == Input.Keys.ENTER)
+			screenManager.smoothTransitionToNext();
 		//TODO must wait until screen transition finished ! 
 		//Otherwise this causes bugs
 		
