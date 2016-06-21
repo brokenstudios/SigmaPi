@@ -20,7 +20,7 @@ public class SpriteSheet {
 	Sprite[] sprites;
 	SpriteBatch spriteBatch;
 	TextureRegion currentFrame;
-	
+	float o;
 	float frameDuration;
 	float preAnimDelay = 0f;
 	private boolean flipped = false;
@@ -30,11 +30,16 @@ public class SpriteSheet {
 	 * @param url : the image location
 	 * @param cols : number of cols in your spritesheet image
 	 * @param rows : number of rows in your spritesheet image
+	 * @param xOrigin : x center origin coordinate from bottom left corner
+	 * @param yOrigin : y center origin coordinate from bottom left corner
 	 * @param frameDuration : duration of each frame of the animation
 	 * @param flipped : true if flipped
 	 * @param looping : true if looping animation
 	 */
 	public SpriteSheet(String url, int cols, int rows, float frameDuration, boolean flipped, PlayMode playMode){
+		this(url, cols, rows, 96, frameDuration, flipped, playMode);
+	}
+	public SpriteSheet(String url, int cols, int rows, int xOrigin, float frameDuration, boolean flipped, PlayMode playMode){
 		this.flipped = flipped;
 		this.frameDuration = frameDuration;
 		
@@ -47,23 +52,24 @@ public class SpriteSheet {
                 sprites[index++] = new Sprite(tmp[i][j]);
             }
         }
-
+        o = xOrigin;
+        
         animation = new Animation(frameDuration, sprites);
         spriteBatch = new SpriteBatch();
         
         switch(playMode){
-        case LOOP 			:	animation.setPlayMode(PlayMode.LOOP);
-								break;
-        case LOOP_PINGPONG 	:	animation.setPlayMode(PlayMode.LOOP);
-								break;
-		case LOOP_RANDOM 	:	animation.setPlayMode(PlayMode.LOOP);
-								break;
-		case LOOP_REVERSED 	:	animation.setPlayMode(PlayMode.LOOP);
-								break;
-		case NORMAL 		:	animation.setPlayMode(PlayMode.LOOP);
-								break;
-		case REVERSED 		:	animation.setPlayMode(PlayMode.LOOP);
-								break;
+	        case LOOP 			:	animation.setPlayMode(PlayMode.LOOP);
+									break;
+	        case LOOP_PINGPONG 	:	animation.setPlayMode(PlayMode.LOOP);
+									break;
+			case LOOP_RANDOM 	:	animation.setPlayMode(PlayMode.LOOP);
+									break;
+			case LOOP_REVERSED 	:	animation.setPlayMode(PlayMode.LOOP);
+									break;
+			case NORMAL 		:	animation.setPlayMode(PlayMode.LOOP);
+									break;
+			case REVERSED 		:	animation.setPlayMode(PlayMode.LOOP);
+									break;
         }
 	}
 	/**
@@ -75,15 +81,16 @@ public class SpriteSheet {
 	public void drawFrame(int frameIndex, int posX, int posY){
 		spriteBatch.begin();
 		Sprite tmp = sprites[frameIndex];
+		
 		if(flipped){
-			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32, posY);
-
+			tmp.setOrigin(tmp.getWidth() - o, 58);
+			tmp.setPosition(posX - tmp.getWidth() + o, posY);
 		}
 		else {
-			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX-96, posY);
+			tmp.setOrigin(o, 58);
+			tmp.setPosition(posX - o, posY);
 		}
+		
 		tmp.setRotation(0);
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
@@ -115,13 +122,12 @@ public class SpriteSheet {
 						break;
 		}	
 		if(flipped){
-			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32-96, posY);
-
+			tmp.setOrigin(tmp.getWidth() - o, 58);
+			tmp.setPosition(posX - tmp.getWidth() + o, posY);
 		}
 		else {
-			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX-96, posY);
+			tmp.setOrigin(o, 58);
+			tmp.setPosition(posX - o, posY);
 		}
 		tmp.setRotation(angle);
 //		if(flipped && tmp.isFlipX() == false)
@@ -141,13 +147,12 @@ public class SpriteSheet {
 		Sprite tmp = sprites[spriteNumber];
 		Vector2 offset = new Vector2(0, (float)Math.sin(angle)*30);
 		if(flipped){
-			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32-96 + offset.x, posY + offset.y);
-
+			tmp.setOrigin(tmp.getWidth() - o, 58);
+			tmp.setPosition(posX - tmp.getWidth() + o  + offset.x, posY + offset.y);
 		}
 		else {
-			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX-96 + offset.x, posY + offset.y);
+			tmp.setOrigin(o, 58);
+			tmp.setPosition(posX - o + offset.x, posY + offset.y);
 		}
 		tmp.setRotation((float)Math.toDegrees(angle));
 		tmp.draw(spriteBatch);
@@ -160,13 +165,12 @@ public class SpriteSheet {
 		spriteBatch.begin();
 		Sprite tmp = sprites[index];
 		if(flipped){
-			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32-96, posY);
-
+			tmp.setOrigin(tmp.getWidth() - o, 58);
+			tmp.setPosition(posX - tmp.getWidth() + o, posY);
 		}
 		else {
-			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX-96, posY);
+			tmp.setOrigin(o, 58);
+			tmp.setPosition(posX - o, posY);
 		}
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
@@ -186,13 +190,12 @@ public class SpriteSheet {
 		spriteBatch.begin();
 		Sprite tmp = sprites[index];
 		if(flipped){
-//			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32-96, posY);
-
+			tmp.setOrigin(tmp.getWidth() - o, 58);
+			tmp.setPosition(posX - tmp.getWidth() + o, posY);
 		}
 		else {
-//			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX-96, posY);
+			tmp.setOrigin(o, 58);
+			tmp.setPosition(posX - o, posY);
 		}
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
@@ -207,13 +210,12 @@ public class SpriteSheet {
 		spriteBatch.begin();
 		Sprite tmp = sprites[frameIndex];
 		if(flipped){
-			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32-96, posY);
-
+			tmp.setOrigin(tmp.getWidth() - o, 58);
+			tmp.setPosition(posX - tmp.getWidth() + o, posY);
 		}
 		else {
-			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX-96, posY);
+			tmp.setOrigin(o, 58);
+			tmp.setPosition(posX - o, posY);
 		}
 		if(flipped && tmp.isFlipX() == false)
 			tmp.flip(true, false);
@@ -223,26 +225,16 @@ public class SpriteSheet {
 	public void drawRotatedFrameAlpha(int spriteNumber, float angle, float posX, float posY, float alpha) {
 		spriteBatch.begin();
 		Sprite tmp = sprites[spriteNumber];
+		Vector2 offset = new Vector2(0, (float)Math.sin(angle)*30);
 		if(flipped){
-			tmp.setOrigin(96+32, 58);
-			tmp.setPosition(posX-32-96, posY);
-
+			tmp.setOrigin(tmp.getWidth() - o, 58);
+			tmp.setPosition(posX - tmp.getWidth() + o  + offset.x, posY + offset.y);
 		}
 		else {
-			tmp.setOrigin(96, 58);
-			tmp.setPosition(posX-96, posY);
+			tmp.setOrigin(o, 58);
+			tmp.setPosition(posX - o + offset.x, posY + offset.y);
 		}
-		//rotate the sprite around the left down corner
 		tmp.setRotation((float)Math.toDegrees(angle));
-		if(flipped && tmp.isFlipX() == false)
-			tmp.flip(true, false);
-//		//location of the left down corner depends of offsets :
-//		float offsetX = 32 - tmp.getWidth()/2;
-//		float offsetY = tmp.getHeight()/2 - 38;
-//		Vector2 offset = new Vector2(offsetX, offsetY);
-//		Vector2 pos = new Vector2(posX, posY);
-//		offset.rotateRad(angle);
-//		pos.add(offset);
 		tmp.draw(spriteBatch, alpha);
 		spriteBatch.end();
 	}

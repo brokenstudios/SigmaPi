@@ -14,6 +14,7 @@ public abstract class Projectile extends PhysicsPolygon{
 	protected boolean stuck = false;
 	protected float life = 1.0f;
 	protected float damage;
+	private boolean isFromEnemy = false;
 	
 	protected Projectile(Vector2 startPos, int startAngle, int collisionGroup, int distance, int damage, Vector2[] vertices, String name) {
 		super(name, startPos, vertices, 1f, 0f, 1f, true);
@@ -29,8 +30,10 @@ public abstract class Projectile extends PhysicsPolygon{
 		enableCollisionListener();
 
 		applyBodyForceToCenter(processForce(startPos, distance), true);
-		if(distance<0)
+		if(distance<0){
 			startAngle = 180 - startAngle;
+			isFromEnemy = true;
+		}
 		
 		CurrentLevel.getLevel().add(this);
 	}
@@ -76,7 +79,7 @@ public abstract class Projectile extends PhysicsPolygon{
 			((CollidedObject)theOtherObject).applyDamage(damage);
 			setCollisionGroup(((CollidedObject)theOtherObject).getCollisionGroup());
 		}
-		if(theOtherObject instanceof Tower && !stuck){
+		if(theOtherObject instanceof Tower && !stuck && !isFromEnemy){
 			((CollidedObject)theOtherObject).applyDamage(damage);
 			setCollisionGroup(((CollidedObject)theOtherObject).getCollisionGroup());
 		}

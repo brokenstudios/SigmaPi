@@ -7,12 +7,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
+import ch.hevs.gdx2d.components.bitmaps.BitmapImage;
 import ch.hevs.gdx2d.components.screen_management.RenderingScreen;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import hevs.fragil.patapon.mechanics.Param;
 
 public class Menu extends RenderingScreen{
 	private BitmapFont font, bigFont;
+	private BitmapImage brokenStudios;
 
 	@Override
 	public void onInit() {
@@ -33,6 +35,8 @@ public class Menu extends RenderingScreen{
 		parameter.size = generator.scaleForPixelHeight(100);
 		parameter.color = Color.BLACK;
 		bigFont = generator.generateFont(parameter);
+		
+		brokenStudios = new BitmapImage("images/broken.png");
 	}
 
 	@Override
@@ -40,6 +44,8 @@ public class Menu extends RenderingScreen{
 		g.clear(Param.BACKGROUND);
 		g.drawStringCentered(600, "SIGMAPI", bigFont);
 		g.drawStringCentered(400, "Press ENTER to play", font);
+		
+		g.drawTransformedPicture(750, 150, 0, 0.5f, brokenStudios);
 	}
 
 }
