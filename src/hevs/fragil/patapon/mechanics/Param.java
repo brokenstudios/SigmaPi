@@ -1,6 +1,7 @@
 package hevs.fragil.patapon.mechanics;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
 
 import hevs.fragil.patapon.music.Drum;
@@ -108,4 +109,6 @@ public abstract class Param {
 		temp.b = (float)(b/255.0);
 		return temp;
 	}
+	
+	public static BitmapFont small, medium, large, xlarge;
 }

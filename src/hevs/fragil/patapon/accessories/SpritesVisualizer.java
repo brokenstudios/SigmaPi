@@ -1,12 +1,7 @@
 package hevs.fragil.patapon.accessories;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
 import ch.hevs.gdx2d.components.screen_management.RenderingScreen;
 import ch.hevs.gdx2d.lib.GdxGraphics;
@@ -17,7 +12,6 @@ public class SpritesVisualizer extends RenderingScreen {
 	SpriteSheet armsBows, armsSwords, armsSpears, legs, body, eye;
 	int index, armsType;
 	float stateTime ;
-	private BitmapFont font;
 	
 	@Override 
 	public void onInit() {
@@ -28,20 +22,6 @@ public class SpritesVisualizer extends RenderingScreen {
 		armsSwords = new SpriteSheet("images/arms_swords.png", 4, 6, 0.2f, false, PlayMode.LOOP);
 		armsSpears = new SpriteSheet("images/arms_spears.png", 4, 6, 0.2f, false, PlayMode.LOOP);
 		legs = new SpriteSheet("images/legs.png", 4, 1, 0.2f, false, PlayMode.LOOP);
-		
-		FileHandle woodstamp = Gdx.files.internal("data/font/Woodstamp.ttf");
-
-		// See all parameters available in the FreeTypeFontParameter
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-
-		/**
-		 * Generates the fonts images from the TTF file
-		 */
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(woodstamp);
-		parameter.size = generator.scaleForPixelHeight(60);
-		parameter.color = Color.BLACK;
-		font = generator.generateFont(parameter);
-
 	}
 
 	@Override
@@ -65,6 +45,6 @@ public class SpritesVisualizer extends RenderingScreen {
 				index ++ ;
 			}
 		}
-		g.drawStringCentered(850, "SPRITESHEET VIEWER", font);
+		g.drawStringCentered(850, "SPRITESHEET VIEWER", Param.large);
 	}
 }
