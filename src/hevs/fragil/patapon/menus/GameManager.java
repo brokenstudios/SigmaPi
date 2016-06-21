@@ -1,5 +1,7 @@
 package hevs.fragil.patapon.menus;
 
+import java.util.LinkedList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.files.FileHandle;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 
+import ch.hevs.gdx2d.components.audio.SoundSample;
 import ch.hevs.gdx2d.desktop.PortableApplication;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.ScreenManager;
@@ -15,19 +18,28 @@ import hevs.fragil.patapon.mechanics.Level;
 import hevs.fragil.patapon.mechanics.Param;
 
 public class GameManager extends PortableApplication {
-
+	private SoundSample menuLoop;
+	
 	private ScreenManager screenManager = new ScreenManager();
 
 	@Override
 	public void onInit() {
 		setTitle("SIGMAPI - 2016 - Broken Studios - Loïc Fracheboud, Loïc Gillioz, S2d");
 		screenManager.registerScreen(Menu.class);
-//		screenManager.registerScreen(LevelSelection.class);
+		screenManager.registerScreen(LevelSelection.class);
 		screenManager.registerScreen(Level.class);
 		screenManager.registerScreen(SpritesVisualizer.class);
 //		screenManager.registerScreen(EndScreenVictory.class);
 //		screenManager.registerScreen(EndScreenLoose.class);
 		
+		initFonts();
+		
+		menuLoop = new SoundSample("music/menu1.wav");
+		menuLoop.loop();
+
+	}
+
+	private void initFonts() {
 		FileHandle woodstamp = Gdx.files.internal("data/font/Woodstamp.ttf");
 
 		// See all parameters available in the FreeTypeFontParameter
@@ -55,7 +67,6 @@ public class GameManager extends PortableApplication {
 		parameter.size = generator.scaleForPixelHeight(130);
 		parameter.color = Color.BLACK;
 		Param.xlarge = generator.generateFont(parameter);
-
 	}
 
 	@Override

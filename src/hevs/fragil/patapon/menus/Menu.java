@@ -7,6 +7,7 @@ import hevs.fragil.patapon.mechanics.Param;
 
 public class Menu extends RenderingScreen{
 	private BitmapImage brokenStudios;
+	
 
 	@Override
 	public void onInit() {
