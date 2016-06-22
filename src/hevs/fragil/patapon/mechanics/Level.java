@@ -19,11 +19,12 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import ch.hevs.gdx2d.lib.physics.PhysicsWorld;
 import hevs.fragil.patapon.drawables.Clouds;
-import hevs.fragil.patapon.drawables.Scenery;
 import hevs.fragil.patapon.drawables.Frame;
 import hevs.fragil.patapon.drawables.Mountains;
+import hevs.fragil.patapon.drawables.Scenery;
 import hevs.fragil.patapon.music.Drum;
 import hevs.fragil.patapon.music.Sequence;
+import hevs.fragil.patapon.music.SigmaSoundSample;
 import hevs.fragil.patapon.physics.Floor;
 import hevs.fragil.patapon.physics.Fragment;
 import hevs.fragil.patapon.physics.Projectile;
@@ -46,12 +47,10 @@ public class Level extends RenderingScreen {
 	private Frame frame;
 	private Sequence sequence;
 	private SoundSample heNote, sNote, soNote, yesNote;
-	private SoundSample snap, track;
+	private SigmaSoundSample snap, track;
 	private Company enemies = new Company();
 
 	private boolean debugActive = false;
-	private MusicFlag snapState = MusicFlag.STOPPED;
-	private MusicFlag trackState = MusicFlag.TOPLAY;
 
 	DebugRenderer debugRenderer;
 
@@ -102,8 +101,8 @@ public class Level extends RenderingScreen {
 		sNote = new SoundSample("data/music/S.wav");
 		soNote = new SoundSample("data/music/SO.wav");
 		yesNote = new SoundSample("data/music/YES.wav");
-		snap = new SoundSample("data/music/loop2.wav");
-		track = new SoundSample("data/music/loop1.wav");
+		snap = new SigmaSoundSample("data/music/loop2.wav");
+		track = new SigmaSoundSample("data/music/loop1.wav");
 
 		// Create a default map and the floor that belong
 		frame = new Frame();
@@ -113,6 +112,7 @@ public class Level extends RenderingScreen {
 		SequenceTimer.loadFiles();
 
 		debugRenderer = new DebugRenderer();
+		track.playBistable();
 	}
 
 	public void onKeyDown(int keycode) {
@@ -146,28 +146,10 @@ public class Level extends RenderingScreen {
 			debugActive = !debugActive;
 		}
 		if (keycode == Keys.S) {
-			switch (snapState) {
-			case STOPPED:
-				snapState = MusicFlag.TOPLAY;
-				break;
-			case PLAYING:
-				snapState = MusicFlag.TOSTOP;
-				break;
-			default:
-				break;
-			}
+			snap.toggle();
 		}
 		if (keycode == Keys.T) {
-			switch (trackState) {
-			case STOPPED:
-				trackState = MusicFlag.TOPLAY;
-				break;
-			case PLAYING:
-				trackState = MusicFlag.TOSTOP;
-				break;
-			default:
-				break;
-			}
+			track.toggle();
 		}
 		
 		// Some manual actions to camera
@@ -365,39 +347,12 @@ public class Level extends RenderingScreen {
 
 		if (sinceLastRythm >= 0.5) {
 			// every 500ms
-			changeTrack();
+			track.sync();
+			snap.sync();
 			sinceLastRythm -= 0.5f;
 			frame.toggle();
 		}
 	}
-
-	private void changeTrack() {
-		switch (trackState) {
-		case TOSTOP:
-			track.stop();
-			trackState = MusicFlag.STOPPED;
-			break;
-		case TOPLAY:
-			track.loop();
-			trackState = MusicFlag.PLAYING;
-			break;
-		default:
-			break;
-		}
-		switch (snapState) {
-		case TOSTOP:
-			snap.stop();
-			snapState = MusicFlag.STOPPED;
-			break;
-		case TOPLAY:
-			snap.loop();
-			snapState = MusicFlag.PLAYING;
-			break;
-		default:
-			break;
-		}
-	}
-
 	private void action() {
 		SequenceTimer.run(PlayerCompany.getCompany(), sequence.getFever());
 		EnemiesTimer.run(enemies);

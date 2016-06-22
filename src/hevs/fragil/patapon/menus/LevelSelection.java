@@ -18,7 +18,12 @@ public class LevelSelection extends RenderingScreen{
 	@Override
 	public void onInit() {
 		readFiles();
-		
+		list.clear();
+		list.add(new MapInfo());
+		list.add(new MapInfo());
+		list.add(new MapInfo());
+		list.add(new MapInfo());
+		list.add(new MapInfo());
 		selection = new BitmapImage("images/selection.png");
 	}
 

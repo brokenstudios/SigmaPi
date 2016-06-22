@@ -9,11 +9,32 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
-public abstract class MapInfo {
+public class MapInfo {
 	private String name, loopUrl; 
 	
 	public String getName(){
-		return name;
+		return "coucou";
+	}
+	public void load(){
+		HashMap<String, Boolean> hashmap = new HashMap<String, Boolean>();
+		File file = new File("maps/1.map");
+		try {
+			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+			String l;
+			while((l = br.readLine()) != null)
+			{
+				String[] args = l.split("[,]", 2);
+				if(args.length != 2)continue;
+				String p = args[0].replaceAll(" ", "");
+				String b = args[1].replaceAll(" ", "");
+				if(b.equalsIgnoreCase("true"))hashmap.put(p, true);
+				else hashmap.put(p, false);
+			}
+			br.close();
+		}
+		catch (IOException e){
+			System.out.println("file not found.");
+		}
 	}
 	public void save(){
 		HashMap<String,Boolean> hashmap = new HashMap<String, Boolean>();
@@ -29,28 +50,7 @@ public abstract class MapInfo {
 		   bw.close();
 		}
 		catch (IOException e){
-            System.out.println("/player_toggle.yml' not found.");
-        }
-	}
-	public void load(){
-		HashMap<String, Boolean> hashmap = new HashMap<String, Boolean>();
-		File file = new File("maps/1.map");
-		try {
-		   BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-		   String l;
-		   while((l = br.readLine()) != null)
-		   {
-		      String[] args = l.split("[,]", 2);
-		      if(args.length != 2)continue;
-		      String p = args[0].replaceAll(" ", "");
-		      String b = args[1].replaceAll(" ", "");
-		      if(b.equalsIgnoreCase("true"))hashmap.put(p, true);
-		      else hashmap.put(p, false);
-		   }
-		   br.close();
-		}
-		catch (IOException e){
-			System.out.println("/player_toggle.yml' not found.");
+            System.out.println("file not found.");
         }
 	}
 }
