@@ -1,7 +1,11 @@
 package hevs.fragil.patapon.mechanics;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.math.Vector2;
 
 import hevs.fragil.patapon.music.Drum;
@@ -102,6 +106,12 @@ public abstract class Param {
 	//Colors
 	public static Color BACKGROUND = rgbToFloat(222,184,135);
 	
+	//Fonts
+	public static BitmapFont small = initFont(40, Color.BLACK);
+	public static BitmapFont medium = initFont(80, Color.BLACK);
+	public static BitmapFont large = initFont(120, Color.BLACK);
+	public static BitmapFont xlarge = initFont(160, Color.BLACK);
+	
 	private static Color rgbToFloat(int r, int g, int b){
 		Color temp = new Color();
 		temp.r = (float)(r/255.0);
@@ -110,5 +120,16 @@ public abstract class Param {
 		return temp;
 	}
 	
-	public static BitmapFont small, medium, large, xlarge;
+	private static BitmapFont initFont(int size, Color c) {
+		FileHandle woodstamp = Gdx.files.internal("data/font/Woodstamp.ttf");
+		// See all parameters available in the FreeTypeFontParameter
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		/**
+		 * Generates the fonts images from the TTF file
+		 */
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(woodstamp);
+		parameter.size = generator.scaleForPixelHeight(size);
+		parameter.color = c;
+		return generator.generateFont(parameter);
+	}
 }

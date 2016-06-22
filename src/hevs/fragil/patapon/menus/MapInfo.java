@@ -15,9 +15,9 @@ public class MapInfo {
 	public String getName(){
 		return "coucou";
 	}
-	public void load(){
+	public void load(int mapIndex){
 		HashMap<String, Boolean> hashmap = new HashMap<String, Boolean>();
-		File file = new File("maps/1.map");
+		File file = new File("maps/test.map");
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			String l;
