@@ -5,7 +5,6 @@ import java.util.Vector;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 
-import ch.hevs.gdx2d.components.geometry.Point;
 import ch.hevs.gdx2d.lib.GdxGraphics;
 import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.mechanics.Param;
@@ -37,11 +36,10 @@ public class Scenery {
 		this.width = w;
 		this.setBackground(b);
 		// Calculate a forest
-		Point<Float> origin = new Point<Float>(0f, (float) Param.FLOOR_DEPTH);
 		toDraw.add(new Clouds(100, 4));
 		toDraw.add(new Mountains(0, 2));
 		toDraw.add(new Mountains(3800, 2));
-		processForest(10, origin, 5, 200f, 5);
+		processForest(10, 0, 5, 200f, 5);
 		toDraw.add(new BasicTower(1500, 10));
 		toDraw.add(new BasicTower(2000, 10));
 		toDraw.add(new BasicTower(4000, 10));
@@ -110,7 +108,7 @@ public class Scenery {
 	 * Process a simple tree at given position
 	 * @param position
 	 */
-	public void processTree(Point<Float> position) {
+	public void processTree(int position) {
 		toDraw.add(new Tree(position, 3, 200f, 5));
 	}
 
@@ -122,8 +120,7 @@ public class Scenery {
 	 * @param size			give the trees size
 	 * @param penWidth		give the pen width, so the tree basic width
 	 */
-	public void processForest(int density, Point<Float> origin, int complexity, float size, int penWidth) {
-		float x = origin.x, y = origin.y;
+	public void processForest(int density, int x, int complexity, float size, int penWidth) {
 		float ratio = width/density;
 		
 		for (int i = 0; i < density; i++) {
@@ -138,7 +135,7 @@ public class Scenery {
 					x -= randomOffset;
 			}
 			
-			toDraw.add(new Tree(new Point<Float>(x, y), complexity, size, penWidth));
+			toDraw.add(new Tree(x, complexity, size, penWidth));
 			
 			randomOffset = 0;
 		}

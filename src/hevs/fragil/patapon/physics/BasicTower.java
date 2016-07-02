@@ -8,7 +8,6 @@ public class BasicTower extends Tower {
 
 	public BasicTower(int x, int h) {
 		super(x, h);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

@@ -8,7 +8,6 @@ public class HexaTower extends Tower {
 
 	public HexaTower(int x, int h) {
 		super(x, h);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

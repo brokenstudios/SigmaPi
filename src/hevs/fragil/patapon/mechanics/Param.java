@@ -112,6 +112,11 @@ public abstract class Param {
 	public static BitmapFont large = initFont(120, Color.BLACK);
 	public static BitmapFont xlarge = initFont(160, Color.BLACK);
 	
+	public static BitmapFont smallWhite = initFont(40, Color.WHITE);
+	public static BitmapFont mediumWhite = initFont(80, Color.WHITE);
+	public static BitmapFont largeWhite = initFont(120, Color.WHITE);
+	public static BitmapFont xlargeWhite = initFont(160, Color.WHITE);
+	
 	private static Color rgbToFloat(int r, int g, int b){
 		Color temp = new Color();
 		temp.r = (float)(r/255.0);

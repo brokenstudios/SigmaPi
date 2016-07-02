@@ -10,5 +10,4 @@ import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 public interface VisibleObject extends DrawableObject{
 	
 	public boolean isVisible(GdxGraphics g, float objectPos);
-
 }

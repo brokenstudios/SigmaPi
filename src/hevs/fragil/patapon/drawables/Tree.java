@@ -10,7 +10,7 @@ import hevs.fragil.patapon.mechanics.Param;
 /**
  * Recursive random hexagonal tree using a Logo-like drawing utility called Turtle.
  */
-public class Tree implements VisibleObject {
+public class Tree implements EditorObject {
 
 	private Random r;
 	private long seed;
@@ -21,8 +21,11 @@ public class Tree implements VisibleObject {
 	private float size;
 	private int width;
 
-	public Tree(Point<Float> pos, int complexity, float size, int width) {
-		this.location = pos;
+	public Tree() {
+		this(0,4,200f,5);
+	}
+	public Tree(int pos, int complexity, float size, int width) {
+		this.location = new Point<Float>((float)pos, (float) Param.FLOOR_DEPTH);
 		this.seed = (long) (Math.random() * 1000);
 		this.r = new Random(seed);
 		this.complexity = complexity;
@@ -226,5 +229,10 @@ public class Tree implements VisibleObject {
 			visible = false;
 		
 		return visible;
+	}
+
+	@Override
+	public void place(int x) {
+		location.x = (float) x;
 	}
 }

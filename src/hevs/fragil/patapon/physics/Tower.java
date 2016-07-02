@@ -4,11 +4,11 @@ import com.badlogic.gdx.math.Vector2;
 
 import ch.hevs.gdx2d.components.physics.primitives.PhysicsStaticBox;
 import ch.hevs.gdx2d.lib.GdxGraphics;
-import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
 import hevs.fragil.patapon.drawables.SpriteSheet;
+import hevs.fragil.patapon.drawables.VisibleObject;
 import hevs.fragil.patapon.mechanics.Param;
 
-public abstract class Tower extends PhysicsStaticBox implements DrawableObject, CollidedObject{
+public abstract class Tower extends PhysicsStaticBox implements VisibleObject, CollidedObject{
 	private int x;
 	private int h;
 	private float life = 10;
@@ -38,6 +38,10 @@ public abstract class Tower extends PhysicsStaticBox implements DrawableObject, 
 	@Override
 	public int getCollisionGroup() {
 		return 0;
+	}
+	@Override
+	public boolean isVisible(GdxGraphics g, float objectPos) {
+		return true;
 	}
 
 	@Override
