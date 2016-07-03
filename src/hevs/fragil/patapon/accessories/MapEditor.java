@@ -105,6 +105,7 @@ public class MapEditor extends PortableApplication {
 		g.drawString(150, getWindowHeight()-50, "Elements to add", Param.smallWhite, 1);
 		g.drawString(150, 50, "Mouse : " + cursor, 1);
 		g.drawFPS();
+		g.drawFilledRectangle(1050,15,1500,30,0,Color.BLACK);
 		// This is required for having the GUI work properly
 		stage.act();
 		stage.draw();

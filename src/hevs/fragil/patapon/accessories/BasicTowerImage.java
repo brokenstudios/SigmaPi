@@ -3,12 +3,11 @@ package hevs.fragil.patapon.accessories;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 
 import hevs.fragil.patapon.drawables.SpriteSheet;
-import hevs.fragil.patapon.mechanics.Param;
 
 public class BasicTowerImage extends TowerImage{
 	
 	public BasicTowerImage() {
-		super(0, Param.FLOOR_DEPTH);
+		super(0, 5);
 	}
 	@Override
 	public void loadFiles() {
