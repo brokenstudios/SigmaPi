@@ -20,8 +20,6 @@ import hevs.fragil.patapon.drawables.EditorObject;
 import hevs.fragil.patapon.drawables.Mountains;
 import hevs.fragil.patapon.drawables.Tree;
 import hevs.fragil.patapon.mechanics.Param;
-import hevs.fragil.patapon.physics.BasicTower;
-import hevs.fragil.patapon.physics.HexaTower;
 
 public class MapEditor extends PortableApplication {
 	Skin skin;
@@ -55,8 +53,8 @@ public class MapEditor extends PortableApplication {
 		availableObjects.add(Clouds.class);
 		availableObjects.add(Mountains.class);
 		availableObjects.add(Tree.class);
-		availableObjects.add(BasicTower.class);
-		availableObjects.add(HexaTower.class);
+		availableObjects.add(BasicTowerImage.class);
+		availableObjects.add(HexaTowerImage.class);
 		
 		for(int i = 0; i<5 ; i++){
 			addButton(i);
