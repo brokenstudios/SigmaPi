@@ -8,6 +8,5 @@ import ch.hevs.gdx2d.lib.interfaces.DrawableObject;
  * When {@code isVisible()} returns {@code true}, must be drawn by the Scenery class.
  */
 public interface VisibleObject extends DrawableObject{
-	
 	public boolean isVisible(GdxGraphics g, float objectPos);
 }

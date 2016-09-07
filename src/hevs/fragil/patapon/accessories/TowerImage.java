@@ -40,4 +40,10 @@ public abstract class TowerImage implements EditorObject{
 	public void place(int x) {
 		this.x = x;
 	}
+
+	@Override
+	public int getZ() {
+		return 3;
+	}
+	
 }

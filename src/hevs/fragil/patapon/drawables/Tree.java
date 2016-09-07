@@ -12,6 +12,7 @@ import hevs.fragil.patapon.mechanics.Param;
  */
 public class Tree implements EditorObject {
 
+	private final int z = 3;
 	private Random r;
 	private long seed;
 	private int time = 0;
@@ -234,5 +235,9 @@ public class Tree implements EditorObject {
 	@Override
 	public void place(int x) {
 		location.x = (float) x;
+	}
+	@Override
+	public int getZ() {
+		return z;
 	}
 }

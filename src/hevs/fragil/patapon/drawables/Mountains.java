@@ -7,7 +7,7 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 /**
  * Mountains image with parallax effect proportional to {@code zRatio}
  */
-public class Mountains implements EditorObject {
+public class Mountains implements EditorObject,VisibleObject {
 	private static SpriteSheet mountains;
 	private int x,z;
 	
@@ -36,6 +36,10 @@ public class Mountains implements EditorObject {
 	@Override
 	public boolean isVisible(GdxGraphics g, float objectPos) {
 		return true;
+	}
+	@Override
+	public int getZ() {
+		return z;
 	}
 
 	

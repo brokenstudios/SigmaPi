@@ -1,5 +1,7 @@
 package hevs.fragil.patapon.drawables;
 
-public interface EditorObject extends VisibleObject {
+import hevs.fragil.patapon.accessories.ZObject;
+
+public interface EditorObject extends ZObject {
 	public void place(int x);
 }

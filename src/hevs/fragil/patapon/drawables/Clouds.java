@@ -7,7 +7,7 @@ import ch.hevs.gdx2d.lib.GdxGraphics;
 /**
  * Cloud image with parallax effect proportional to {@code zRatio}
  */
-public class Clouds implements EditorObject {
+public class Clouds implements EditorObject,VisibleObject {
 	private static SpriteSheet clouds;
 	private int x,z;
 	
@@ -31,8 +31,12 @@ public class Clouds implements EditorObject {
 		this.x = x;
 	}
 	@Override
-	public boolean isVisible(GdxGraphics g, float objectPos) {
-		return true;
+	public int getZ() {
+		return z;
 	}
-
+	@Override
+	public boolean isVisible(GdxGraphics g, float objectPos) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

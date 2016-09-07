@@ -1,11 +1,7 @@
 package hevs.fragil.patapon.accessories;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 
 import ch.hevs.gdx2d.desktop.PortableApplication;
 import ch.hevs.gdx2d.lib.GdxGraphics;

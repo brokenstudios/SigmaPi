@@ -1,5 +1,8 @@
 package hevs.fragil.patapon.accessories;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
@@ -25,9 +28,8 @@ public class MapEditor extends PortableApplication {
 	Skin skin;
 	Stage stage;
 	Vector<TextButton> buttons = new Vector<TextButton>();
-	@SuppressWarnings("rawtypes")
 	Vector<Class> availableObjects = new Vector<Class>();
-	Vector<EditorObject> mapObjects = new Vector<EditorObject>();
+	List<EditorObject> mapObjects = new Vector<EditorObject>();
 	float stateTime;
 	Vector2 cursor = new Vector2(Gdx.input.getX(), Gdx.input.getY());
 	boolean dropMode;
@@ -90,6 +92,10 @@ public class MapEditor extends PortableApplication {
 			temp.place((int)cursor.x);
 			if(Gdx.input.justTouched() && cursor.x > 300){
 				mapObjects.add(temp);
+				// Comparaison de livres
+				Comparator<ZObject> sorter = new ZComparator();
+				// Tri des livres selon le Comparator
+				Collections.sort(mapObjects, sorter);
 				temp = null;
 				dropMode = false;
 			}
@@ -105,6 +111,7 @@ public class MapEditor extends PortableApplication {
 		g.drawString(150, getWindowHeight()-50, "Elements to add", Param.smallWhite, 1);
 		g.drawString(150, 50, "Mouse : " + cursor, 1);
 		g.drawFPS();
+		//draw the floor
 		g.drawFilledRectangle(1050,15,1500,30,0,Color.BLACK);
 		// This is required for having the GUI work properly
 		stage.act();
