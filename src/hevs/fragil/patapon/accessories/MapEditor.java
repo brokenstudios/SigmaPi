@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Vector;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -28,7 +29,7 @@ public class MapEditor extends PortableApplication {
 	Skin skin;
 	Stage stage;
 	Vector<TextButton> buttons = new Vector<TextButton>();
-	Vector<Class> availableObjects = new Vector<Class>();
+	Vector<EditorObject> availableObjects = new Vector<EditorObject>();
 	List<EditorObject> mapObjects = new Vector<EditorObject>();
 	float stateTime;
 	Vector2 cursor = new Vector2(Gdx.input.getX(), Gdx.input.getY());
@@ -41,7 +42,6 @@ public class MapEditor extends PortableApplication {
 	public static void main(String[] args) {
 		new MapEditor();
 	}
-
 	@Override
 	public void onInit() {
 		setTitle("SIGMAPI - 2016 - Broken Studios - Loïc Fracheboud, Loïc Gillioz, S2d - MAP EDITOR");
@@ -52,19 +52,26 @@ public class MapEditor extends PortableApplication {
 		// Load the default skin (which can be configured in the JSON file)
 		skin = new Skin(Gdx.files.internal("data/ui/uiskin.json"));
 		
-		availableObjects.add(Clouds.class);
-		availableObjects.add(Mountains.class);
-		availableObjects.add(Tree.class);
-		availableObjects.add(BasicTowerImage.class);
-		availableObjects.add(HexaTowerImage.class);
+		//add instantiable classes into the list
+		availableObjects.add(new Clouds());
+		availableObjects.add(new Mountains());
+		availableObjects.add(new Tree());
+		availableObjects.add(new BasicTowerImage());
+		availableObjects.add(new HexaTowerImage());
 		
-		for(int i = 0; i<5 ; i++){
-			addButton(i);
+		for (EditorObject c : availableObjects) {
+			addButton(c);
 		}
 	}
-
-	private void addButton(int i) {
-		buttons.add(new TextButton(availableObjects.elementAt(i).getSimpleName(), skin));
+	@Override
+	public void onKeyDown(int keycode) {
+		super.onKeyDown(keycode);
+		switch(keycode){
+			case Keys.LEFT : stage.getCamera().translate(-10, 0, 0);
+		}
+	}
+	private void addButton(EditorObject c) {
+		buttons.add(new TextButton(c.getClass().getSimpleName(), skin));
 		buttons.lastElement().setWidth(200);
 		buttons.lastElement().setHeight(30);
 		buttons.lastElement().setPosition(50, (buttons.size()+1)*50);
@@ -74,11 +81,12 @@ public class MapEditor extends PortableApplication {
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
 				try {
-					temp = (EditorObject) availableObjects.elementAt(i).newInstance();
+					//create a new object from the class
+					temp = c.getClass().newInstance();
 				} catch (InstantiationException | IllegalAccessException e) {
 					e.printStackTrace();
 					
-					Logger.log("Error instanciating new object.. Be sure the " + availableObjects.elementAt(i).getSimpleName() + " class has a null constructor");
+					Logger.log("Error instanciating new object.. Be sure the " + c.getClass().getSimpleName() + " class has a null constructor");
 				}
 				dropMode = true;
 			}
@@ -92,9 +100,9 @@ public class MapEditor extends PortableApplication {
 			temp.place((int)cursor.x);
 			if(Gdx.input.justTouched() && cursor.x > 300){
 				mapObjects.add(temp);
-				// Comparaison de livres
+				//objects comparison
 				Comparator<ZObject> sorter = new ZComparator();
-				// Tri des livres selon le Comparator
+				//objects sort according to the sorter
 				Collections.sort(mapObjects, sorter);
 				temp = null;
 				dropMode = false;
@@ -123,7 +131,6 @@ public class MapEditor extends PortableApplication {
 		stateTime += Gdx.graphics.getDeltaTime();
 		g.drawStringCentered(870, "MAP EDITOR", Param.medium);
 	}
-
 	@Override
 	public void onDispose() {
 		super.onDispose();

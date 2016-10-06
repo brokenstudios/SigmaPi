@@ -11,9 +11,15 @@ import java.util.HashMap;
 
 public class MapInfo {
 	private String name, loopUrl; 
+	private static int count;
+	private int nb;
 	
+	public MapInfo(){
+		count++;
+		nb = count;
+	}
 	public String getName(){
-		return "coucou";
+		return "map " + nb;
 	}
 	public void load(int mapIndex){
 		HashMap<String, Boolean> hashmap = new HashMap<String, Boolean>();
